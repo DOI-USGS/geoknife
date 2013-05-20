@@ -8,7 +8,20 @@ setClass(
 	representation = representation(
 		WFS_URL="character",PROCESS_URL="character",
 		datasetURI="character",algorithm="character",
-		PostInputs="list",feature="list",processID="character"))
+		PostInputs="list",feature="list",processID="character",
+		WPS_DEFAULT_VERSION="character",WFS_DEFAULT_VERSION="character",
+		WPS_DEFAULT_NAMESPACE="character",OWS_DEFAULT_NAMESPACE="character",
+		WPS_SCHEMA_LOCATION="character",XSI_SCHEMA_LOCATION="character",
+		GML_SCHEMA_LOCATION="character",DRAW_SCHEMA_LOCATION="character",
+		WFS_NAMESPACE="character",OGC_NAMESPACE="character",
+		GML_NAMESPACE="character",DRAW_NAMESPACE="character",
+		SMPL_NAMESPACE="character",UPLD_NAMESPACE="character",
+		CSW_NAMESPACE="character",XLINK_NAMESPACE="character",
+		XSI_NAMESPACE="character",UTILITY_URL="character",
+		UPLOAD_URL="character",algorithms="list",
+		upload="character",dataList="character",
+		timeList="character",emailK="character")
+		)
 
 setMethod(f="initialize",signature="GDP",
 	definition=function(.Object){
@@ -70,7 +83,10 @@ setMethod(f="initialize",signature="GDP",
 	})
 
 setGeneric(name="initializePostInputs",def=function(.Object){standardGeneric("initializePostInputs")})
-setGeneric(name="setProcessID",def=function(.Object){standardGeneric("setProcessID")})
+setGeneric(name="setProcessID",def=function(.Object,processID){standardGeneric("setProcessID")})
+setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapefiles")})
+setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric("getAttributes")})
+setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGeneric("getValues")})
 
 setMethod(f = "initializePostInputs",signature="GDP",
 	definition =	function(.Object){
@@ -87,6 +103,30 @@ setMethod(f = "initializePostInputs",signature="GDP",
 		return(.Object)
 		
 	})
+
+setMethod(f = "setProcessID",signature="GDP",
+	definition = function(.Object,processID){
+		.Object@processID = processID
+		return(.Object)
+	})
+	
+setMethod(f = "getShapefiles",signature="GDP",
+	definition = function(.Object){
+		shapefiles = c("1","2")
+		return(shapefiles)
+	})
+	
+setMethod(f = "getAttributes",signature="GDP",
+	definition = function(.Object,shapefile){
+		attributes = c("1","2")
+		return(attributes)
+	})
+setMethod(f = "getValues",signature="GDP",
+	definition = function(.Object,shapefile,attribute){
+		values = c("1","2")
+		return(values)
+	})
+		
 setMethod(f="print","GDP",
 	function(x,...){
 		cat("*** Class GDP, method Print *** \n")
