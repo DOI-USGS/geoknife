@@ -87,6 +87,7 @@ setGeneric(name="setProcessID",def=function(.Object,processID){standardGeneric("
 setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapefiles")})
 setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric("getAttributes")})
 setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGeneric("getValues")})
+setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
 
 setMethod(f = "initializePostInputs",signature="GDP",
 	definition =	function(.Object){
@@ -126,7 +127,13 @@ setMethod(f = "getValues",signature="GDP",
 		values = c("1","2")
 		return(values)
 	})
-		
+
+setMethod(f = "checkProcess",signature="GDP",
+	definition = function(.Object){
+		fileURL	<-	 NA
+		status	<-	"none"
+		return(list(fileURL=fileURL,status=status))	
+	})	
 setMethod(f="print","GDP",
 	function(x,...){
 		cat("*** Class GDP, method Print *** \n")
