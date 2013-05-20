@@ -217,7 +217,7 @@ parseXMLattributes	<-	function(xmlURL,parentKey,childKey,key="name"){
 	for (i in 1:length(nodes)){
 		values[[i]]	<-	xmlGetAttr(nodes[[i]],key)
 	}
-	# get rid of "the_geom" and empty here...
+	values	<-	values[values != "the_geom" & values != ""]
 	return(values)
 }
 setMethod(f = "print",signature = "GDP",
