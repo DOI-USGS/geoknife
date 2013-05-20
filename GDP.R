@@ -1,6 +1,6 @@
 
 
-
+library("XML")
 	
 # class properties: **PRIVATE** can be set by methods
 setClass(
@@ -121,7 +121,12 @@ setMethod(f = "setProcessID",signature="GDP",
 	
 setMethod(f = "getShapefiles",signature="GDP",
 	definition = function(.Object){
-		shapefiles	<-	c("1","2")
+		parentKey 	<-	"featuretypelist"
+		childKey	<-	"featuretype"
+		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
+			.Object@WFS_DEFAULT_VERSION,'&request=GetCapabilities'),collapse="")
+		
+		shapefiles	<-	parseXML(processURL,parentKey,childKey)
 		return(shapefiles)
 	})
 	
@@ -170,25 +175,13 @@ setMethod(f = "setDatasetURI",signature = "GDP",
 setMethod(f = "setPostInputs",signature = "GDP",
 	definition = function(.Object,postInputs){
 		.Object@PostInputs	<-	setList(.Object@PostInputs,postInputs)
-		
 		return(.Object)
 	})
-
-setList	<-	function(ObjectField,varList){
-	vNames	<-	names(varList)
-	for (n in 1:length(vNames)){
-		ObjectField[vNames[n]]	<-	varList[n]
-	}
-	return(ObjectField)
-}	
+	
 setMethod(f = "setFeature",signature = "GDP",
 	definition = function(.Object,feature){
-		Ftnames	<-	names(feature)
-		for (n in 1:length(Ftnames)){
-			.Object@feature[Ftnames[n]]	<-	feature[n]
-		}
-		
-		return(.Object)	
+		.Object@feature	<-	setList(.Object@feature,feature)
+		return(.Object)
 	})
 	
 setMethod(f = "setAlgorithm",signature = "GDP",
@@ -196,6 +189,22 @@ setMethod(f = "setAlgorithm",signature = "GDP",
 		return(.Object)
 	})
 
+setList	<-	function(ObjectField,varList){
+	if (!is.list(varList)){stop("field data must be a list")}
+	vNames	<-	names(varList)
+	for (n in 1:length(vNames)){
+		if (!any(names(ObjectField)==vNames[n])){stop("invalid field name")}
+		ObjectField[vNames[n]]	<-	varList[n]
+	}
+	return(ObjectField)
+	}
+
+parseXML	<-	function(xmlURL,parentKey,childKey,key="name"){
+	doc	<-	htmlParse(xmlURL,isURL=TRUE, useInternalNodes = TRUE)
+	nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"/",childKey,"/",key),collapse=""))
+	values	<-	sapply(nodes,xmlValue)
+	return(values)
+}
 setMethod(f = "print",signature = "GDP",
 	function(x,...){
 		cat("*** Class GDP, method Print *** \n")
