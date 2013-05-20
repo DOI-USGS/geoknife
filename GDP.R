@@ -88,6 +88,14 @@ setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapef
 setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric("getAttributes")})
 setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGeneric("getValues")})
 setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
+setGeneric(name="executePost",def=function(.Object){standardGeneric("executePost")})
+setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
+setGeneric(name="setDatasetURI",def=function(.Object,datasetURI){standardGeneric("setDatasetURI")})
+setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
+setGeneric(name="setPostInputs",def=function(.Object,postInputs){standardGeneric("setPostInputs")})
+setGeneric(name="setFeature",def=function(.Object,feature){standardGeneric("setFeature")})
+setGeneric(name="setAlgorithm",def=function(.Object,algorithm){standardGeneric("setAlgorithm")})
+
 
 setMethod(f = "initializePostInputs",signature="GDP",
 	definition =	function(.Object){
@@ -107,24 +115,24 @@ setMethod(f = "initializePostInputs",signature="GDP",
 
 setMethod(f = "setProcessID",signature="GDP",
 	definition = function(.Object,processID){
-		.Object@processID = processID
+		.Object@processID	<-	processID
 		return(.Object)
 	})
 	
 setMethod(f = "getShapefiles",signature="GDP",
 	definition = function(.Object){
-		shapefiles = c("1","2")
+		shapefiles	<-	c("1","2")
 		return(shapefiles)
 	})
 	
 setMethod(f = "getAttributes",signature="GDP",
 	definition = function(.Object,shapefile){
-		attributes = c("1","2")
+		attributes	<-	c("1","2")
 		return(attributes)
 	})
 setMethod(f = "getValues",signature="GDP",
 	definition = function(.Object,shapefile,attribute){
-		values = c("1","2")
+		values	<-	c("1","2")
 		return(values)
 	})
 
@@ -139,12 +147,61 @@ setMethod(f = "executePost",signature="GDP",
 	definition = function(.Object){
 		return(.Object)
 	})	
-setMethod(f="print","GDP",
+
+setMethod(f = "setWFS",signature="GDP",
+	definition = function(.Object,wfs){
+		.Object@WFS_URL	<-	wfs
+		return(.Object)
+	})
+
+setMethod(f = "setWPS",signature="GDP",
+	definition = function(.Object,wps){
+		.Object@PROCESS_URL	<-	wps
+		return(.Object)
+	})
+
+setMethod(f = "setDatasetURI",signature = "GDP",
+	definition = function(.Object,datasetURI){
+		.Object@datasetURI	<-	datasetURI
+		.Object	<-	setPostInputs(.Object,list(DATASET_URI=.Object@datasetURI))
+		return(.Object)
+	})
+	
+setMethod(f = "setPostInputs",signature = "GDP",
+	definition = function(.Object,postInputs){
+		.Object@PostInputs	<-	setList(.Object@PostInputs,postInputs)
+		
+		return(.Object)
+	})
+
+setList	<-	function(ObjectField,varList){
+	vNames	<-	names(varList)
+	for (n in 1:length(vNames)){
+		ObjectField[vNames[n]]	<-	varList[n]
+	}
+	return(ObjectField)
+}	
+setMethod(f = "setFeature",signature = "GDP",
+	definition = function(.Object,feature){
+		Ftnames	<-	names(feature)
+		for (n in 1:length(Ftnames)){
+			.Object@feature[Ftnames[n]]	<-	feature[n]
+		}
+		
+		return(.Object)	
+	})
+	
+setMethod(f = "setAlgorithm",signature = "GDP",
+	definition = function(.Object,algorithm){
+		return(.Object)
+	})
+
+setMethod(f = "print",signature = "GDP",
 	function(x,...){
 		cat("*** Class GDP, method Print *** \n")
 		cat("* WFS_URL:\t");cat(x@WFS_URL,"\n")
 		cat("* PROCESS_URL:\t");cat(x@PROCESS_URL,"\n")
-		cat("* datasetURI:\t");cat(x@PROCESS_URL,"\n")
+		cat("* datasetURI:\t");cat(x@datasetURI,"\n")
 		cat("* algorithm:\t");cat(x@algorithm,"\n")
 		cat("* ------PostInputs------\n")
 		Li	<-	unlist(x@PostInputs)
