@@ -134,6 +134,11 @@ setMethod(f = "checkProcess",signature="GDP",
 		status	<-	"none"
 		return(list(fileURL=fileURL,status=status))	
 	})	
+
+setMethod(f = "executePost",signature="GDP",
+	definition = function(.Object){
+		return(.Object)
+	})	
 setMethod(f="print","GDP",
 	function(x,...){
 		cat("*** Class GDP, method Print *** \n")
