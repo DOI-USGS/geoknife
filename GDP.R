@@ -196,6 +196,7 @@ setMethod(f = "setFeature",signature = "GDP",
 	
 setMethod(f = "setAlgorithm",signature = "GDP",
 	definition = function(.Object,algorithm){
+		.Object@algorithm	<-	algorithm
 		return(.Object)
 	})
 
