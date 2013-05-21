@@ -233,6 +233,11 @@ parseXMLvalues	<-	function(xmlURL,key){
 	values	<-	sapply(nodes,xmlValue)
 	return(values)
 }
+
+setProcessID	<-	function(.Object,processID){
+	.Object@processID	<-	processID
+	return(.Object)
+}
 setMethod(f = "print",signature = "GDP",
 	function(x,...){
 		cat("*** Class GDP, method Print *** \n")
