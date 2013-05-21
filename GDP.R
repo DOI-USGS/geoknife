@@ -228,7 +228,7 @@ parseXMLattributes	<-	function(xmlURL,parentKey,childKey,key="name"){
 }
 parseXMLvalues	<-	function(xmlURL,key){
 	doc	<-	htmlParse(xmlURL,isURL=TRUE, useInternalNodes = TRUE)
-	nodes	<-	getNodeSet(doc,paste(c("//",key),collapse=""))
+	nodes	<-	getNodeSet(doc,paste(c("//",tolower(key)),collapse=""))
 	# will error if none found
 	values	<-	sapply(nodes,xmlValue)
 	return(values)
