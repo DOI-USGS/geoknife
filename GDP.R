@@ -131,7 +131,7 @@ setMethod(f = "getShapefiles",signature="GDP",
 	})
 	
 setMethod(f = "getAttributes",signature="GDP",
-	definition = function(.Object,shapefile){
+	definition = function(.Object,shapefile=.Object@feature$FEATURECOLLECTION){
 		parentKey	<-	"element"
 		childKey	<-	"maxoccurs"
 		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
@@ -141,8 +141,13 @@ setMethod(f = "getAttributes",signature="GDP",
 		return(attributes)
 	})
 setMethod(f = "getValues",signature="GDP",
-	definition = function(.Object,shapefile,attribute){
-		values	<-	c("1","2")
+	definition = function(.Object,shapefile=.Object@feature$FEATURECOLLECTION,
+		attribute=.Object@feature$ATTRIBUTE){
+		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
+			.Object@WFS_DEFAULT_VERSION,'&request=GetFeature',
+			'&info_format=text%2Fxml&typename=',shapefile,
+			'&propertyname=',attribute),collapse="")
+		values	<-	parseXMLvalues(processURL,attribute)
 		return(values)
 	})
 
@@ -218,6 +223,13 @@ parseXMLattributes	<-	function(xmlURL,parentKey,childKey,key="name"){
 		values[[i]]	<-	xmlGetAttr(nodes[[i]],key)
 	}
 	values	<-	values[values != "the_geom" & values != ""]
+	return(values)
+}
+parseXMLvalues	<-	function(xmlURL,key){
+	doc	<-	htmlParse(xmlURL,isURL=TRUE, useInternalNodes = TRUE)
+	nodes	<-	getNodeSet(doc,paste(c("//",key),collapse=""))
+	# will error if none found
+	values	<-	sapply(nodes,xmlValue)
 	return(values)
 }
 setMethod(f = "print",signature = "GDP",
