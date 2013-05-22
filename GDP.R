@@ -32,7 +32,7 @@ setMethod(f="initialize",signature="GDP",
 		default_feat= list(
 			FEATURE_COLLECTION=NA,
 			ATTRIBUTE=NA,
-			GLM=NA)
+			GML=NA)
 		# class properties: **PRIVATE**
 		.Object@WPS_DEFAULT_VERSION = '1.0.0'
 		.Object@WFS_DEFAULT_VERSION = '1.1.0'
@@ -58,10 +58,10 @@ setMethod(f="initialize",signature="GDP",
 		.Object@UPLOAD_URL  = 'http://cida.usgs.gov/gdp/geoserver/'
 
 		.Object@algorithms = list(
-			FWGS	<-	'gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm',
-			FCOD	<-	'gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm',
-			FCI	<-	'gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageIntersectionAlgorithm',
-			FCGC	<-	'gov.usgs.cida.gdp.wps.algorithm.FeatureCategoricalGridCoverageAlgorithm')
+			FWGS='gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm',
+			FCOD='gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm',
+			FCI='gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageIntersectionAlgorithm',
+			FCGC='gov.usgs.cida.gdp.wps.algorithm.FeatureCategoricalGridCoverageAlgorithm')
 
 		# *list of utilities available to this module
 		.Object@upload      = 'gov.usgs.cida.gdp.wps.algorithm.filemanagement.ReceiveFiles'
@@ -234,10 +234,86 @@ parseXMLvalues	<-	function(xmlURL,key){
 	return(values)
 }
 
+postInputsToXML	<-	function(.Object){
+	top    <-	newXMLNode(name='wps:Execute',attrs=c('service'="WPS",'version'=.Object@WPS_DEFAULT_VERSION,
+		'xsi:schemaLocation'=paste(c(.Object@WPS_DEFAULT_NAMESPACE,.Object@WPS_SCHEMA_LOCATION),collapse=" ")),
+		namespaceDefinitions=c('wps'=.Object@WPS_DEFAULT_NAMESPACE,'ows'=.Object@OWS_DEFAULT_NAMESPACE,
+		'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE))
+	
+	
+	id	<-	newXMLNode("ows:Identifier",newXMLTextNode(.Object@algorithms[.Object@algorithm]),parent=top)
+	di	<-	newXMLNode("wps:DataInputs",parent=top)
+	addChildren(top,c(id,di))
+	
+	for (i in 1:length(.Object@PostInputs)){
+		postNm	<-	names(.Object@PostInputs[i])
+		postVl	<-	.Object@PostInputs[postNm]
+		inEL	<-	newXMLNode("wps:Input",parent=di)
+		addChildren(di,inEL)
+		
+		inIdEL   <- newXMLNode("ows:Identifier",newXMLTextNode(postNm),parent=inEL)
+		addChildren(inEL,inIdEL)
+		
+		inDatEL  <- newXMLNode("wps:Data")
+		addChildren(inEL,inDatEL);
+		
+		litDatEL	<-	newXMLNode('wps:LiteralData',newXMLTextNode(postVl))
+		addChildren(inDatEL,litDatEL)
+	}
+	# complex data
+	inEL	<-	newXMLNode("wps:Input")
+	addChildren(di,inEL)
+	inIdEL   <- newXMLNode('ows:Identifier',newXMLTextNode('FEATURE_COLLECTION'))
+	addChildren(inEL,inIdEL)
+	inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=.Object@WFS_URL))
+	addChildren(inEL,inDatEL)
+	
+	bodyEL   <-	newXMLNode('wps:Body')
+	addChildren(inDatEL,bodyEL)
+	
+	featEL   <-	newXMLNode('wfs:GetFeature',attrs=c("service"="WFS",
+		"version"=.Object@WFS_DEFAULT_VERSION,
+		"outputFormat"="text/xml; subtype=gml/3.1.1",
+		"xsi:schemaLocation"=.Object@XSI_SCHEMA_LOCATION),
+		namespaceDefinitions=c("wfs"=.Object@WFS_NAMESPACE,
+		"ogc"=.Object@OGC_NAMESPACE,
+		"gml"=.Object@GML_NAMESPACE,
+		"xsi"=.Object@XSI_NAMESPACE))
+	addChildren(bodyEL,featEL)
+	queryEL  <-	newXMLNode('wfs:Query',attrs=c("typeName"=as.character(.Object@feature['FEATURE_COLLECTION'])))
+	addChildren(featEL,queryEL)
+	propNmEL <-	newXMLNode('wfs:PropertyName',newXMLTextNode('the_geom'))
+	addChildren(queryEL,propNmEL)
+	propNmEL<-	newXMLNode('wfs:PropertyName',newXMLTextNode(.Object@feature['ATTRIBUTE']))
+	addChildren(queryEL,propNmEL)
+	if (any(names(.Object@feature)=='GML') & !is.na(.Object@feature['GML'])){
+		filterEL	<-	newXMLNode('ogc:Filter')
+		addChildren(queryEL,filterEL)
+		gmlObEL	<-	newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=.Object@feature['GML']))
+		addChildren(filterEL,gmlObEL)
+	}	
+	resForm	<-	newXMLNode('wps:ResponseForm')
+	addChildren(top,resForm)
+	
+	resDoc	<-	newXMLNode('wps:ResponseDocument',attrs=c('storeExecuteResponse'='true','status'='true'))
+	addChildren(resForm,resDoc)
+	
+	resOut	<-	newXMLNode('wps:Output',attrs=c('asReference'='true'))
+	addChildren(resDoc,resOut)
+	
+	outID	<-	newXMLNode('ows:Identifier',newXMLTextNode('OUTPUT'))
+	addChildren(resOut,outID)
+	
+	requestXML <-xmlDoc(top)
+	
+	return(requestXML)
+}
+
 setProcessID	<-	function(.Object,processID){
 	.Object@processID	<-	processID
 	return(.Object)
 }
+
 setMethod(f = "print",signature = "GDP",
 	function(x,...){
 		cat("*** Class GDP, method Print *** \n")
