@@ -1,4 +1,4 @@
-Package: GDP-R
+Package: rGDP
 Type: Package
 Title: GDP tools for R
 Version: 0.0.1
