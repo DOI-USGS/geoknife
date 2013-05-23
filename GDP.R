@@ -1,6 +1,7 @@
 
 
 library("XML")
+library("RCurl")
 	
 # class properties: **PRIVATE** can be set by methods
 setClass(
@@ -27,7 +28,7 @@ setMethod(f="initialize",signature="GDP",
 	definition=function(.Object){
 		default_WFS = 'http://cida-eros-gdp2.er.usgs.gov:8082/geoserver/wfs'
 		default_WPS = 'http://cida.usgs.gov/gdp/process/WebProcessingService'
-		default_URI = 'dods://cida.usgs.gov/qa/thredds/dodsC/prism'
+		default_URI = 'dods://cida.usgs.gov/thredds/dodsC/prism'
 		default_alg = 'FWGS'
 		default_feat= list(
 			FEATURE_COLLECTION=NA,
@@ -95,7 +96,8 @@ setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
 setGeneric(name="setPostInputs",def=function(.Object,postInputs){standardGeneric("setPostInputs")})
 setGeneric(name="setFeature",def=function(.Object,feature){standardGeneric("setFeature")})
 setGeneric(name="setAlgorithm",def=function(.Object,algorithm){standardGeneric("setAlgorithm")})
-
+setGeneric(name="executePost",def=function(.Object){standardGeneric("executePost")})
+setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
 
 setMethod(f = "initializePostInputs",signature="GDP",
 	definition =	function(.Object){
@@ -141,7 +143,7 @@ setMethod(f = "getAttributes",signature="GDP",
 		return(attributes)
 	})
 setMethod(f = "getValues",signature="GDP",
-	definition = function(.Object,shapefile=.Object@feature$FEATURECOLLECTION,
+	definition = function(.Object,shapefile=.Object@feature$FEATURE_COLLECTION,
 		attribute=.Object@feature$ATTRIBUTE){
 		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
 			.Object@WFS_DEFAULT_VERSION,'&request=GetFeature',
@@ -191,6 +193,8 @@ setMethod(f = "setPostInputs",signature = "GDP",
 setMethod(f = "setFeature",signature = "GDP",
 	definition = function(.Object,feature){
 		.Object@feature	<-	setList(.Object@feature,feature)
+		.Object@PostInputs	<-	setList(.Object@PostInputs,
+			list("FEATURE_ATTRIBUTE_NAME"=.Object@feature$ATTRIBUTE))
 		return(.Object)
 	})
 	
@@ -304,10 +308,46 @@ postInputsToXML	<-	function(.Object){
 	outID	<-	newXMLNode('ows:Identifier',newXMLTextNode('OUTPUT'))
 	addChildren(resOut,outID)
 	
-	requestXML <-xmlDoc(top)
+	requestXML <-toString.XMLNode(xmlDoc(top))
 	
 	return(requestXML)
 }
+
+setMethod(f = "executePost",signature = "GDP",definition = function(.Object){
+	
+	requestXML	<-	postInputsToXML(.Object)
+	myheader=c(Connection="close", 
+	           'Content-Type' = "application/xml")#text/xml?
+
+	data =  getURL(url = .Object@PROCESS_URL,
+	               postfields=requestXML, #requestXML,
+	               httpheader=myheader,
+	               verbose=TRUE)
+				
+	xmltext  <- xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
+	response <- xmlRoot(xmltext)
+	responseNS <- xmlNamespaceDefinitions(response, simplify = TRUE)  
+	processID <- xmlGetAttr(response,"statusLocation")
+	
+	.Object	<-	setProcessID(.Object,processID)
+	return(.Object)
+})
+
+setMethod(f = "checkProcess",signature = "GDP",definition = function(.Object){
+	checkForComplete	<-	getURL(url = .Object@processID, verbose=TRUE)
+	checkForCompleteResponse	<-	xmlTreeParse(checkForComplete, asText = TRUE,useInternalNodes=TRUE)
+	checkResponseNS <- xmlNamespaceDefinitions(checkForCompleteResponse, simplify = TRUE) 
+	root <- xmlRoot(checkForCompleteResponse)
+	status <- sapply(xmlChildren(root[["Status"]]), xmlName)
+	cat(status, "\n")
+
+	if ("ProcessSucceeded" == status){
+		root <- xmlRoot(checkForCompleteResponse)
+	    gdpURL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
+	    gdpID <- strsplit(gdpURL, "id=")[[1]][2]
+	    break
+	}
+})
 
 setProcessID	<-	function(.Object,processID){
 	.Object@processID	<-	processID
