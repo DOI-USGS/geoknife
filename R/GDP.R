@@ -1,9 +1,41 @@
+# 
+# 
+# library("XML")
+# library("RCurl")
+# 
+
+#' rGDP package 
+#'
+#' \tabular{ll}{
+#' Package: \tab rGDP\cr
+#' Type: \tab Package\cr
+#' Version: \tab 0.0.1\cr
+#' Date: \tab 2013-05-23\cr
+#' License: \tab Unlimited for this package, dependencies have more restrictive licensing.\cr
+#' Copyright: \tab This software is in the public domain because it contains materials
+#' that originally came from the United States Geological Survey, an agency of
+#' the United States Department of Interior. For more information, see the
+#' official USGS copyright policy at
+#' http://www.usgs.gov/visual-id/credit_usgs.html#copyright\cr
+#' LazyLoad: \tab yes\cr
+#' }
+#'
+#' Collection of functions to do GDP calls
+#'
+#' @name rGDP-package
+#' @docType package
+#' @import XML RCurl
+#' @author Jordan Read \email{jread@@usgs.gov}
+NULL
 
 
-library("XML")
-library("RCurl")
-	
-# class properties: **PRIVATE** can be set by methods
+#' GDP class
+#'
+#' Some details about the \code{GDP} class
+#'
+#' @name GDP-class
+#' @rdname GDP-class
+#' @exportClass GDP
 setClass(
 	Class = "GDP",
 	representation = representation(
@@ -24,6 +56,16 @@ setClass(
 		timeList="character",emailK="character")
 		)
 
+
+# 'Initialize Methods for \code{GDP} objects
+# '
+# 'Initialize the \code{GDP} object....
+# '
+# '@name initialize
+# '@aliases initialize
+# '@docType methods
+# '@keywords initialize
+# '@exportMethod initialize
 setMethod(f="initialize",signature="GDP",
 	definition=function(.Object){
 		default_WFS = 'http://cida-eros-gdp2.er.usgs.gov:8082/geoserver/wfs'
@@ -380,25 +422,26 @@ setMethod(f = "print",signature = "GDP",
 		cat("**** End Print (GDP)**** \n")
 	}
 )
-setMethod(f = "summary",signature = "GDP",
-	function(x,...){
-		cat("*** Class GDP, method Print *** \n")
-		cat("* WFS_URL:\t");cat(x@WFS_URL,"\n")
-		cat("* PROCESS_URL:\t");cat(x@PROCESS_URL,"\n")
-		cat("* datasetURI:\t");cat(x@datasetURI,"\n")
-		cat("* algorithm:\t");cat(x@algorithm,"\n")
-		cat("* ------PostInputs------\n")
-		Li	<-	unlist(x@PostInputs)
-		for (i in 1:length(Li)){cat("\t-",names(Li[i]));cat(":",Li[i],"\n")}
-		cat("* ------feature------\n")
-		Li	<-	unlist(x@feature)
-		for (i in 1:length(Li)){cat("\t-",names(Li[i]));cat(":",Li[i],"\n")}
-		cat("* processID:\t");cat(x@processID,"\n")
-		cat("**** End Print (GDP)**** \n")
-	}
-)
-		
-GDP = function(){
-	rGDP = new("GDP")
-	return(rGDP)
-}
+# setMethod(f = "summary",signature = "GDP",
+# 	function(x,...){
+# 		cat("*** Class GDP, method Print *** \n")
+# 		cat("* WFS_URL:\t");cat(x@WFS_URL,"\n")
+# 		cat("* PROCESS_URL:\t");cat(x@PROCESS_URL,"\n")
+# 		cat("* datasetURI:\t");cat(x@datasetURI,"\n")
+# 		cat("* algorithm:\t");cat(x@algorithm,"\n")
+# 		cat("* ------PostInputs------\n")
+# 		Li	<-	unlist(x@PostInputs)
+# 		for (i in 1:length(Li)){cat("\t-",names(Li[i]));cat(":",Li[i],"\n")}
+# 		cat("* ------feature------\n")
+# 		Li	<-	unlist(x@feature)
+# 		for (i in 1:length(Li)){cat("\t-",names(Li[i]));cat(":",Li[i],"\n")}
+# 		cat("* processID:\t");cat(x@processID,"\n")
+# 		cat("**** End Print (GDP)**** \n")
+# 	}
+# )
+# 
+
+# GDP = function(){
+# 	rGDP = new("GDP")
+# 	return(rGDP)
+# }

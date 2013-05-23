@@ -1,0 +1,3 @@
+exportClasses(GDP)
+import(RCurl)
+import(XML)
