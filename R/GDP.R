@@ -424,5 +424,3 @@ GDP = function(){
 	rGDP = new("GDP")
 	return(rGDP)
 }
-=======
-
