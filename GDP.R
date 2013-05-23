@@ -334,6 +334,13 @@ setMethod(f = "executePost",signature = "GDP",definition = function(.Object){
 })
 
 setMethod(f = "checkProcess",signature = "GDP",definition = function(.Object){
+	
+	if (.Object@processID=="Null"){
+		status	<-	'none'
+	}
+	else{
+		
+	}
 	checkForComplete	<-	getURL(url = .Object@processID, verbose=TRUE)
 	checkForCompleteResponse	<-	xmlTreeParse(checkForComplete, asText = TRUE,useInternalNodes=TRUE)
 	checkResponseNS <- xmlNamespaceDefinitions(checkForCompleteResponse, simplify = TRUE) 
@@ -354,7 +361,26 @@ setProcessID	<-	function(.Object,processID){
 	return(.Object)
 }
 
+# create summary method......
+
 setMethod(f = "print",signature = "GDP",
+	function(x,...){
+		cat("*** Class GDP, method Print *** \n")
+		cat("* WFS_URL:\t");cat(x@WFS_URL,"\n")
+		cat("* PROCESS_URL:\t");cat(x@PROCESS_URL,"\n")
+		cat("* datasetURI:\t");cat(x@datasetURI,"\n")
+		cat("* algorithm:\t");cat(x@algorithm,"\n")
+		cat("* ------PostInputs------\n")
+		Li	<-	unlist(x@PostInputs)
+		for (i in 1:length(Li)){cat("\t-",names(Li[i]));cat(":",Li[i],"\n")}
+		cat("* ------feature------\n")
+		Li	<-	unlist(x@feature)
+		for (i in 1:length(Li)){cat("\t-",names(Li[i]));cat(":",Li[i],"\n")}
+		cat("* processID:\t");cat(x@processID,"\n")
+		cat("**** End Print (GDP)**** \n")
+	}
+)
+setMethod(f = "summary",signature = "GDP",
 	function(x,...){
 		cat("*** Class GDP, method Print *** \n")
 		cat("* WFS_URL:\t");cat(x@WFS_URL,"\n")
