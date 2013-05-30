@@ -404,17 +404,19 @@ postInputsToXML	<-	function(.Object){
 	for (i in 1:length(.Object@PostInputs)){
 		postNm	<-	names(.Object@PostInputs[i])
 		postVl	<-	.Object@PostInputs[postNm]
-		inEL	<-	newXMLNode("wps:Input",parent=di)
-		addChildren(di,inEL)
+		if (!is.na(postVl)){
+			inEL	<-	newXMLNode("wps:Input",parent=di)
+			addChildren(di,inEL)
 		
-		inIdEL   <- newXMLNode("ows:Identifier",newXMLTextNode(postNm),parent=inEL)
-		addChildren(inEL,inIdEL)
+			inIdEL   <- newXMLNode("ows:Identifier",newXMLTextNode(postNm),parent=inEL)
+			addChildren(inEL,inIdEL)
 		
-		inDatEL  <- newXMLNode("wps:Data")
-		addChildren(inEL,inDatEL);
+			inDatEL  <- newXMLNode("wps:Data")
+			addChildren(inEL,inDatEL);
 		
-		litDatEL	<-	newXMLNode('wps:LiteralData',newXMLTextNode(postVl))
-		addChildren(inDatEL,litDatEL)
+			litDatEL	<-	newXMLNode('wps:LiteralData',newXMLTextNode(postVl))
+			addChildren(inDatEL,litDatEL)
+		}
 	}
 	# complex data
 	inEL	<-	newXMLNode("wps:Input")
@@ -459,9 +461,8 @@ postInputsToXML	<-	function(.Object){
 	
 	outID	<-	newXMLNode('ows:Identifier',newXMLTextNode('OUTPUT'))
 	addChildren(resOut,outID)
-	
 	requestXML <-toString.XMLNode(xmlDoc(top))
-	
+	print(top)
 	return(requestXML)
 }
 
@@ -471,14 +472,15 @@ setMethod(f = "executePost",signature = "rGDP",definition = function(.Object){
 	
 	requestXML	<-	postInputsToXML(.Object)
 	myheader=c(Connection="close", 
-	           'Content-Type' = "application/xml")#text/xml?
-
+	          'Content-Type' = "application/xml")#text/xml?
+	
 	data =  getURL(url = .Object@PROCESS_URL,
 	               postfields=requestXML, #requestXML,
 	               httpheader=myheader,
 	               verbose=TRUE)
-				
+	print(data)			
 	xmltext  <- xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
+  	print(xmltext)
 	response <- xmlRoot(xmltext)
 	responseNS <- xmlNamespaceDefinitions(response, simplify = TRUE)  
 	processID <- xmlGetAttr(response,"statusLocation")
