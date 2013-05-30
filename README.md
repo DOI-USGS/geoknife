@@ -1,4 +1,4 @@
-GDP-R
+rGDP
 =====
 
 R tools for accessing GDP
