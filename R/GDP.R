@@ -1,7 +1,3 @@
-# library("XML")
-# library("RCurl")
-# 
-
 #' rGDP package 
 #'
 #' \tabular{ll}{
@@ -22,20 +18,29 @@
 #'
 #' @name rGDP-package
 #' @docType package
-#' @import XML RCurl
+#' @import XML RCurl methods
 #' @author Jordan Read \email{jread@@usgs.gov}
 NULL
 
 
-#' GDP class
+#' rGDP class
 #'
-#' Some details about the \code{GDP} class
+#' Some details about the \code{rGDP} class
+#' \describe{
+#'		\item{WFS_URL}{endpoint for web feature service (WFS)}
+#'		\item{PROCESS_URL}{endpoint for web processing service (WPS)}
+#'		\item{algorithm}{acronym for WPS algorithm}
+#'		\item{datasetURI}{processing dataset URI}
+#'		\item{PostInputs}{a list of process parameters}
+#'		\item{feature}{a list of elements in the feature collection}
+#`		\item{processID}{unique identifier for a GDP process}
+#' }
 #'
-#' @name GDP-class
-#' @rdname GDP-class
-#' @exportClass GDP
+#' @name rGDP
+#' @rdname rGDP-class
+#' @export
 setClass(
-	Class = "GDP",
+	Class = "rGDP",
 	representation = representation(
 		WFS_URL="character",PROCESS_URL="character",
 		datasetURI="character",algorithm="character",
@@ -54,19 +59,18 @@ setClass(
 		timeList="character",emailK="character")
 		)
 
+#' @export
+# '@docType functions
+# '@rdname rGDP
+# '@keywords rGDP
+rGDP = function(){
+	rGDP = new("rGDP")
+	return(rGDP)
+}
 
-# 'Initialize Methods for \code{GDP} objects
-# '
-# 'Initialize the \code{GDP} object....
-# '
-# '@name initialize
-# '@aliases initialize
-# '@docType methods
-# '@keywords initialize
-# '@exportMethod initialize
-setMethod(f="initialize",signature="GDP",
+setMethod(f="initialize",signature="rGDP",
 	definition=function(.Object){
-		default_WFS = 'http://cida-eros-gdp2.er.usgs.gov:8082/geoserver/wfs'
+		default_WFS = 'http://cida.usgs.gov/gdp/geoserver/wfs'
 		default_WPS = 'http://cida.usgs.gov/gdp/process/WebProcessingService'
 		default_URI = 'dods://cida.usgs.gov/thredds/dodsC/prism'
 		default_alg = 'FWGS'
@@ -122,22 +126,133 @@ setMethod(f="initialize",signature="GDP",
 		
 		return(.Object)
 	})
+	setMethod(f = "show",signature = "rGDP",definition = function(object){print(object)})
+
+#'getShapefiles
+#'
+#'function for rGDP
+#'
+#'@param \code{rGDP} object with a valid WFS url.
+#'@return list of shapefiles for the \code{rGDP} WFS url.
+#'@docType methods
+#'@keywords getShapefiles
+#'@export
+setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapefiles")})
+#'getAttributes
+#'
+#'function for rGDP
+#'
+#'@param \code{rGDP} object with a valid WFS url.
+#'@param a valid shapefile name.
+#'@return list of attributes for the given shapefile at the \code{rGDP} WFS url.
+#'@docType methods
+#'@keywords getAttributes
+#'@export
+setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric("getAttributes")})
+#'getValues
+#'
+#'function for rGDP
+#'
+#'@param \code{rGDP} object with a valid WFS url.
+#'@param a valid shapefile name.
+#'@parama a valid attribute name for the shapefile.
+#'@return list of values for the given shapefile attribute at the \code{rGDP} WFS url.
+#'@docType methods
+#'@keywords getValues
+#'@export
+setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGeneric("getValues")})
+#'checkProcess
+#'
+#'function for rGDP
+#'
+#'@param \code{rGDP} object with an active GDP process request.
+#'@return status of \code{rGDP} process.
+#'@docType methods
+#'@keywords checkProcess
+#'@export
+setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
+#'executePost
+#'
+#'function for rGDP
+#'
+#'@param \code{rGDP} object ot be used to formulate GDP process request.
+#'@return An \code{rGDP} object.
+#'@docType methods
+#'@keywords executePost
+#'@export
+setGeneric(name="executePost",def=function(.Object){standardGeneric("executePost")})
+#'setWFS
+#'
+#'function for rGDP
+#'
+#'@param \code{rGDP} object.
+#'@param a Web Feature Service (WFS) endpoint.
+#'@return An \code{rGDP} object.
+#'@docType methods
+#'@keywords setWFS
+#'@export
+setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
+#'setWPS
+#'
+#'function for rGDP
+#'
+#'@param \code{rGDP} object.
+#'@param a Web Processing Service (WPS) endpoint.
+#'@return An \code{rGDP} object.
+#'@docType methods
+#'@keywords setWPS
+#'@export
+setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
+#'setDatasetURI
+#'
+#'function for rGDP
+#'
+#'@param \code{rGDP} object.
+#'@param a dataset URI.
+#'@return An \code{rGDP} object.
+#'@docType methods
+#'@keywords setDatasetURI
+#'@export
+setGeneric(name="setDatasetURI",def=function(.Object,datasetURI){standardGeneric("setDatasetURI")})
+#'setPostInputs
+#'
+#'function for rGDP
+#'
+#'@param An \code{rGDP} object.
+#'@param a list of valid postInputs.
+#'@return An \code{rGDP} object.
+#'@docType methods
+#'@keywords setPostInputs
+#'@export
+setGeneric(name="setPostInputs",def=function(.Object,postInputs){standardGeneric("setPostInputs")})
+#'setFeature
+#'
+#'function for rGDP
+#'
+#'@param An \code{rGDP} object.
+#'@param a list containing a valid feature collection, or a list of a subset of a valid feature collection.
+#'@return An \code{rGDP} object.
+#'@docType methods
+#'@keywords setFeature
+#'@export
+setGeneric(name="setFeature",def=function(.Object,feature){standardGeneric("setFeature")})
+#'setAlgorithm
+#'
+#'function for rGDP
+#'
+#'@param An \code{rGDP} object.
+#'@param a valid algorithm acronymn
+#'@return An \code{rGDP} object.
+#'@docType methods
+#'@keywords setAlgorithm
+#'@export
+setGeneric(name="setAlgorithm",def=function(.Object,algorithm){standardGeneric("setAlgorithm")})
+
 # move this//?
 setGeneric(name="initializePostInputs",def=function(.Object){standardGeneric("initializePostInputs")})
 setGeneric(name="setProcessID",def=function(.Object,processID){standardGeneric("setProcessID")})
-setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapefiles")})
-setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric("getAttributes")})
-setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGeneric("getValues")})
-setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
-setGeneric(name="executePost",def=function(.Object){standardGeneric("executePost")})
-setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
-setGeneric(name="setDatasetURI",def=function(.Object,datasetURI){standardGeneric("setDatasetURI")})
-setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
-setGeneric(name="setPostInputs",def=function(.Object,postInputs){standardGeneric("setPostInputs")})
-setGeneric(name="setFeature",def=function(.Object,feature){standardGeneric("setFeature")})
-setGeneric(name="setAlgorithm",def=function(.Object,algorithm){standardGeneric("setAlgorithm")})
 
-setMethod(f = "initializePostInputs",signature="GDP",
+setMethod(f = "initializePostInputs",signature="rGDP",
 	definition =	function(.Object){
 		algorithm	<-	.Object@algorithm
 		if (algorithm=="FWGS"){
@@ -153,25 +268,26 @@ setMethod(f = "initializePostInputs",signature="GDP",
 		
 	})
 
-setMethod(f = "setProcessID",signature="GDP",
+setMethod(f = "setProcessID",signature="rGDP",
 	definition = function(.Object,processID){
 		.Object@processID	<-	processID
 		return(.Object)
 	})
-	
-setMethod(f = "getShapefiles",signature="GDP",
+# '@rdname getShapefiles-methods
+# '@aliases getShapefiles,rGDP-method	
+setMethod(f = "getShapefiles",signature="rGDP",
 	definition = function(.Object){
 		parentKey 	<-	"featuretypelist"
 		childKey	<-	"featuretype"
 		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
 			.Object@WFS_DEFAULT_VERSION,'&request=GetCapabilities'),collapse="")
-		
 		shapefiles	<-	parseXMLnodes(processURL,parentKey,childKey)
 		return(shapefiles)
 	})
-	
-setMethod(f = "getAttributes",signature="GDP",
-	definition = function(.Object,shapefile=.Object@feature$FEATURECOLLECTION){
+# '@rdname getAttributes-methods
+# '@aliases getAttributes,rGDP-method	
+setMethod(f = "getAttributes",signature="rGDP",
+	definition = function(.Object,shapefile){
 		parentKey	<-	"element"
 		childKey	<-	"maxoccurs"
 		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
@@ -180,9 +296,11 @@ setMethod(f = "getAttributes",signature="GDP",
 		attributes	<-	parseXMLattributes(processURL,parentKey,childKey)
 		return(attributes)
 	})
-setMethod(f = "getValues",signature="GDP",
-	definition = function(.Object,shapefile=.Object@feature$FEATURE_COLLECTION,
-		attribute=.Object@feature$ATTRIBUTE){
+# '@rdname getValues-methods
+# '@aliases getValues,rGDP-method
+setMethod(f = "getValues",signature="rGDP",
+	definition = function(.Object,shapefile,
+		attribute){
 		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
 			.Object@WFS_DEFAULT_VERSION,'&request=GetFeature',
 			'&info_format=text%2Fxml&typename=',shapefile,
@@ -190,53 +308,48 @@ setMethod(f = "getValues",signature="GDP",
 		values	<-	parseXMLvalues(processURL,attribute)
 		return(values)
 	})
-
-setMethod(f = "checkProcess",signature="GDP",
-	definition = function(.Object){
-		fileURL	<-	 NA
-		status	<-	"none"
-		return(list(fileURL=fileURL,status=status))	
-	})	
-
-setMethod(f = "executePost",signature="GDP",
-	definition = function(.Object){
-		return(.Object)
-	})	
-
-setMethod(f = "setWFS",signature="GDP",
+	
+# '@rdname setWFS-methods
+# '@aliases setWFS,rGDP-method
+setMethod(f = "setWFS",signature="rGDP",
 	definition = function(.Object,wfs){
 		.Object@WFS_URL	<-	wfs
 		return(.Object)
 	})
-
-setMethod(f = "setWPS",signature="GDP",
+# '@rdname setWPS-methods
+# '@aliases setWPS,rGDP-method
+setMethod(f = "setWPS",signature="rGDP",
 	definition = function(.Object,wps){
 		.Object@PROCESS_URL	<-	wps
 		return(.Object)
 	})
-
-setMethod(f = "setDatasetURI",signature = "GDP",
+# '@rdname setDatasetURI-methods
+# '@aliases setDatasetURI,rGDP-method
+setMethod(f = "setDatasetURI",signature = "rGDP",
 	definition = function(.Object,datasetURI){
 		.Object@datasetURI	<-	datasetURI
 		.Object	<-	setPostInputs(.Object,list(DATASET_URI=.Object@datasetURI))
 		return(.Object)
 	})
-	
-setMethod(f = "setPostInputs",signature = "GDP",
+# '@rdname setPostInputs-methods
+# '@aliases setPostInputs,rGDP-method	
+setMethod(f = "setPostInputs",signature = "rGDP",
 	definition = function(.Object,postInputs){
 		.Object@PostInputs	<-	setList(.Object@PostInputs,postInputs)
 		return(.Object)
 	})
-	
-setMethod(f = "setFeature",signature = "GDP",
+# '@rdname setFeature-methods
+# '@aliases setFeature,rGDP-method	
+setMethod(f = "setFeature",signature = "rGDP",
 	definition = function(.Object,feature){
 		.Object@feature	<-	setList(.Object@feature,feature)
 		.Object@PostInputs	<-	setList(.Object@PostInputs,
 			list("FEATURE_ATTRIBUTE_NAME"=.Object@feature$ATTRIBUTE))
 		return(.Object)
 	})
-	
-setMethod(f = "setAlgorithm",signature = "GDP",
+# '@rdname setAlgorithm-methods
+# '@aliases setAlgorithm,rGDP-method	
+setMethod(f = "setAlgorithm",signature = "rGDP",
 	definition = function(.Object,algorithm){
 		.Object@algorithm	<-	algorithm
 		return(.Object)
@@ -262,10 +375,11 @@ parseXMLattributes	<-	function(xmlURL,parentKey,childKey,key="name"){
 	doc	<-	htmlParse(xmlURL,isURL=TRUE, useInternalNodes = TRUE)
 	nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"[@",childKey,"]"),collapse=""))
 	# will error if none found
+	values	<-	list()
 	for (i in 1:length(nodes)){
 		values[[i]]	<-	xmlGetAttr(nodes[[i]],key)
 	}
-	values	<-	values[values != "the_geom" & values != ""]
+	values	<-	unlist(values[values != "the_geom" & values != ""])
 	return(values)
 }
 parseXMLvalues	<-	function(xmlURL,key){
@@ -351,7 +465,9 @@ postInputsToXML	<-	function(.Object){
 	return(requestXML)
 }
 
-setMethod(f = "executePost",signature = "GDP",definition = function(.Object){
+# '@rdname executePost-methods
+# '@aliases executePost,rGDP-method
+setMethod(f = "executePost",signature = "rGDP",definition = function(.Object){
 	
 	requestXML	<-	postInputsToXML(.Object)
 	myheader=c(Connection="close", 
@@ -371,7 +487,10 @@ setMethod(f = "executePost",signature = "GDP",definition = function(.Object){
 	return(.Object)
 })
 
-setMethod(f = "checkProcess",signature = "GDP",definition = function(.Object){
+
+# '@rdname checkProcess-methods
+# '@aliases checkProcess,rGDP-method
+setMethod(f = "checkProcess",signature = "rGDP",definition = function(.Object){
 	
 	if (.Object@processID=="Null"){
 		status	<-	'none'
@@ -394,16 +513,11 @@ setMethod(f = "checkProcess",signature = "GDP",definition = function(.Object){
 	}
 })
 
-setProcessID	<-	function(.Object,processID){
-	.Object@processID	<-	processID
-	return(.Object)
-}
-
 # create summary method......
 
-setMethod(f = "print",signature = "GDP",
+setMethod(f = "print",signature = "rGDP",
 	function(x,...){
-		cat("*** Class GDP, method Print *** \n")
+		cat("*** Class rGDP, method Print *** \n")
 		cat("* WFS_URL:\t");cat(x@WFS_URL,"\n")
 		cat("* PROCESS_URL:\t");cat(x@PROCESS_URL,"\n")
 		cat("* datasetURI:\t");cat(x@datasetURI,"\n")
@@ -415,12 +529,6 @@ setMethod(f = "print",signature = "GDP",
 		Li	<-	unlist(x@feature)
 		for (i in 1:length(Li)){cat("\t-",names(Li[i]));cat(":",Li[i],"\n")}
 		cat("* processID:\t");cat(x@processID,"\n")
-		cat("**** End Print (GDP)**** \n")
+		cat("**** End Print (rGDP)**** \n")
 	}
 )
-setMethod(f = "show",signature = "GDP",definition = function(object){print(object)})
-		
-GDP = function(){
-	rGDP = new("GDP")
-	return(rGDP)
-}
