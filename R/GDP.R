@@ -74,8 +74,8 @@ setMethod(f="initialize",signature="rGDP",
 		default_alg = list()
 		default_post = list(empty=NULL)
 		default_feat= list(
-			FEATURE_COLLECTION=NA,
-			ATTRIBUTE=NA,
+			FEATURE_COLLECTION=NULL,
+			ATTRIBUTE=NULL,
 			GML=NA)
 		# class properties: **PRIVATE**
 		.Object@WPS_DEFAULT_VERSION = '1.0.0'
@@ -113,7 +113,7 @@ setMethod(f="initialize",signature="rGDP",
 		.Object@algorithm	<-	default_alg
 		.Object@postInputs	<-	default_post
 		.Object@feature	<-	default_feat
-		.Object@processID	<-	"Null"
+		.Object@processID	<-	'<no active job>'
 		
 		
 		return(.Object)
@@ -270,6 +270,15 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
 			
 		.Object@postInputs	<-	setList(.Object@postInputs,defaultLs)
+		
+		# now set any accepted values
+		allowNd    <-	getNodeSet(doc,'//datainputs/literaldata//parent::node()/allowedvalues/value[1]')
+		allowLs	<-	vector("list",length(sapply(allowNd,xmlValue)))
+		allowLs[]	<-	sapply(allowNd,xmlValue)
+		names(allowLs)	<-	sapply(getNodeSet(doc,'//datainputs/literaldata/allowedvalues/
+			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
+		.Object@postInputs	<-	setList(.Object@postInputs,allowLs)
+		
 		.Object@postInputs$FEATURE_COLLECTION	<-	NULL # handled elsewhere
 		return(.Object)
 		
@@ -547,8 +556,10 @@ setMethod(f = "print",signature = "rGDP",
 		nms	<-	names(PI)		
 		for (i in 1:length(nms)){cat("\t-",nms[i]);cat(":",PI[[i]],"\n")}
 		cat("* ------feature------\n")
-		Li	<-	unlist(x@feature)
-		for (i in 1:length(Li)){cat("\t-",names(Li[i]));cat(":",Li[i],"\n")}
+		PI	<-	x@feature
+		nms	<-	names(PI)
+		PI[is.na(PI)] = '[optional]'
+		for (i in 1:length(nms)){cat("\t-",nms[i]);cat(":",PI[[i]],"\n")}
 		cat("* processID:\t");cat(x@processID,"\n")
 		cat("**** End Print (rGDP)**** \n")
 	}
