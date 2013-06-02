@@ -43,7 +43,7 @@ setClass(
 	Class = "rGDP",
 	representation = representation(
 		WFS_URL="character",WPS_URL="character",
-		datasetURI="character",algorithm="character",
+		datasetURI="character",algorithm="list",
 		PostInputs="list",feature="list",processID="character",
 		WPS_DEFAULT_VERSION="character",WFS_DEFAULT_VERSION="character",
 		WPS_DEFAULT_NAMESPACE="character",OWS_DEFAULT_NAMESPACE="character",
@@ -73,7 +73,8 @@ setMethod(f="initialize",signature="rGDP",
 		default_WFS = 'http://cida.usgs.gov/gdp/geoserver/wfs'
 		default_WPS = 'http://cida.usgs.gov/gdp/process/WebProcessingService'
 		default_URI = 'dods://cida.usgs.gov/thredds/dodsC/prism'
-		default_alg = 'FWGS'
+		default_alg = list()
+		default_post = list()
 		default_feat= list(
 			FEATURE_COLLECTION=NA,
 			ATTRIBUTE=NA,
@@ -102,12 +103,6 @@ setMethod(f="initialize",signature="rGDP",
 		.Object@UTILITY_URL = 'http://cida.usgs.gov/gdp/utility/WebProcessingService'
 		.Object@UPLOAD_URL  = 'http://cida.usgs.gov/gdp/geoserver/'
 
-		.Object@algorithms = list(
-			FWGS='gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm',
-			FCOD='gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm',
-			FCI='gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageIntersectionAlgorithm',
-			FCGC='gov.usgs.cida.gdp.wps.algorithm.FeatureCategoricalGridCoverageAlgorithm')
-
 		# *list of utilities available to this module
 		.Object@upload      = 'gov.usgs.cida.gdp.wps.algorithm.filemanagement.ReceiveFiles'
 		.Object@dataList    = 'gov.usgs.cida.gdp.wps.algorithm.discovery.ListOpendapGrids'
@@ -119,7 +114,7 @@ setMethod(f="initialize",signature="rGDP",
 		.Object@WPS_URL <- default_WPS
 		.Object@datasetURI	<-	default_URI
 		.Object@algorithm	<-	default_alg
-		.Object	<-	initializePostInputs(.Object)
+		.Object@PostInputs	<-	default_post
 		.Object@feature	<-	default_feat
 		.Object@processID	<-	"Null"
 		
@@ -251,7 +246,7 @@ setGeneric(name="setFeature",def=function(.Object,feature){standardGeneric("setF
 #'function for rGDP
 #'
 #'@param An \code{rGDP} object.
-#'@param a valid algorithm acronymn
+#'@param a list for a valid algorithm, including values for name & location
 #'@return An \code{rGDP} object.
 #'@docType methods
 #'@keywords setAlgorithm
@@ -265,15 +260,21 @@ setGeneric(name="setProcessID",def=function(.Object,processID){standardGeneric("
 setMethod(f = "initializePostInputs",signature="rGDP",
 	definition =	function(.Object){
 		algorithm	<-	.Object@algorithm
-		if (algorithm=="FWGS"){
-			.Object@PostInputs	<-	list("FEATURE_ATTRIBUTE_NAME"=NA,
-				"DATASET_URI"=.Object@datasetURI,
-				"DATASET_ID"=NA,"TIME_START"=NA,
-				"TIME_END"=NA,"REQUIRE_FULL_COVERAGE"="true",
-				"DELIMITER"="TAB","STATISTICS"="MEAN",
-				"GROUP_BY"="STATISTIC","SUMMARIZE_TIMESTEP"="false",
-				"SUMMARIZE_FEATURE_ATTRIBUTE"="false")
-		}
+		processURL	<-	paste(c(.Object@WPS_URL,'?service=WPS&version=',
+			.Object@WPS_DEFAULT_VERSION,'&request=DescribeProcess',
+			'&identifier=',algorithm),collapse="")
+		optionNd	<-	getNodeSet(doc,'//datainputs/input[@minoccurs=0]/following-sibling::node()[1]')
+		optionLs	<-	vector("list",length(optionNd))
+		optionLs[]	<-	NA
+		names(optionLs)	<-	sapply(optionNd,xmlValue)
+		
+		requirNd	<-	getNodeSet(doc,'//datainputs/input[@minoccurs>0]/following-sibling::node()[1]')
+		requirLs	<-	vector("list",length(requirNd))
+		names(requirLs)	<-	sapply(requirNd,xmlValue)
+		
+		.Object@postInputs	<-	append(optionLs,requirLs)
+		.Object	<-	setPostInputs(.Object,requirLs)
+		# now set any defaults, and set any pre-sets (like datasetURI)
 		return(.Object)
 		
 	})
@@ -287,13 +288,15 @@ setMethod(f = "setProcessID",signature="rGDP",
 # '@aliases getAlgorithms,rGDP-method	
 setMethod(f = "getAlgorithms",signature="rGDP",
 	definition = function(.Object){
-		parentKey 	<-	"featuretypelist"
-		childKey	<-	"featuretype"
 		processURL	<-	paste(c(.Object@WPS_URL,'?service=WPS&version=',
 			.Object@WPS_DEFAULT_VERSION,'&request=GetCapabilities'),collapse="")
-			print(processURL)
-		algorithms = NA
-		#shapefiles	<-	parseXMLnodes(processURL,parentKey,childKey)
+		algorithm.Loc	<-	parseXMLnodes(processURL,"process","identifier",key=NA)
+		algorithm.Nm	<-	parseXMLnodes(processURL,"process","title",key=NA)
+		algorithms	<-	list()
+		for (i in 1:length(algorithm.Nm)){
+			algorithms[[i]]	<-	algorithm.Loc[i]
+		}
+		names(algorithms)	<-	algorithm.Nm
 		return(algorithms)
 	})
 # '@rdname getShapefiles-methods
@@ -375,6 +378,8 @@ setMethod(f = "setFeature",signature = "rGDP",
 setMethod(f = "setAlgorithm",signature = "rGDP",
 	definition = function(.Object,algorithm){
 		.Object@algorithm	<-	algorithm
+		# now, initialize posts
+		.Object	<-	initializePostInputs(.Object)
 		return(.Object)
 	})
 
@@ -390,7 +395,8 @@ setList	<-	function(ObjectField,varList){
 
 parseXMLnodes	<-	function(xmlURL,parentKey,childKey,key="name"){
 	doc	<-	htmlParse(xmlURL,isURL=TRUE, useInternalNodes = TRUE)
-	nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"/",childKey,"/",key),collapse=""))
+	if (is.na(key)){nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"/",childKey),collapse=""))}
+	else{nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"/",childKey,"/",key),collapse=""))}
 	values	<-	sapply(nodes,xmlValue)
 	return(values)
 }
@@ -411,6 +417,9 @@ parseXMLvalues	<-	function(xmlURL,key){
 	# will error if none found
 	values	<-	sapply(nodes,xmlValue)
 	return(values)
+}
+getPostInputs	<-	function(.Object){
+	# needs a valid algorithm
 }
 
 postInputsToXML	<-	function(.Object){
@@ -543,7 +552,7 @@ setMethod(f = "print",signature = "rGDP",
 		cat("* WFS_URL:\t");cat(x@WFS_URL,"\n")
 		cat("* WPS_URL:\t");cat(x@WPS_URL,"\n")
 		cat("* datasetURI:\t");cat(x@datasetURI,"\n")
-		cat("* algorithm:\t");cat(x@algorithm,"\n")
+		cat("* algorithm:\t");cat(names(x@algorithm),"\n")
 		cat("* ------PostInputs------\n")
 		Li	<-	unlist(x@PostInputs)
 		for (i in 1:length(Li)){cat("\t-",names(Li[i]));cat(":",Li[i],"\n")}
