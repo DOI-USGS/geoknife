@@ -11,6 +11,9 @@ var	<-	'Downward_shortwave_radiation_flux_surface'
 # ---- variables -----
 
 rGDP	<-	rGDP()
+rGDP	<-	setAlgorithm(rGDP,getAlgorithms(rGDP)[4])
+
+print(rGDP)
 
 rGDP	<-	setWFS(rGDP,WFS)
 rGDP	<-	setWPS(rGDP,WPS)
@@ -18,8 +21,8 @@ rGDP	<-	setFeature(rGDP,list('FEATURE_COLLECTION'=feature_collection,
 	'ATTRIBUTE'=attribute))
 rGDP	<-	setPostInputs(rGDP,list('DATASET_ID'=var,
                                 'TIME_START'="2000-01-01T00:00:00Z",
-                                'TIME_END'="2000-03-01T00:00:00Z"))
-rGDP	<-	setDatasetURI(rGDP,datasetURI)
+                                'TIME_END'="2000-03-01T00:00:00Z",
+								'DATASET_URI'=datasetURI))
 
 print(rGDP)
 
