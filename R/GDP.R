@@ -427,7 +427,7 @@ postInputsToXML	<-	function(.Object){
 		'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE))
 	
 	
-	id	<-	newXMLNode("ows:Identifier",newXMLTextNode(.Object@algorithms[.Object@algorithm]),parent=top)
+	id	<-	newXMLNode("ows:Identifier",newXMLTextNode(.Object@algorithm),parent=top)
 	di	<-	newXMLNode("wps:DataInputs",parent=top)
 	addChildren(top,c(id,di))
 	
