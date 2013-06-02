@@ -30,7 +30,7 @@ NULL
 #'		\item{WFS_URL}{endpoint for web feature service (WFS)}
 #'		\item{WPS_URL}{endpoint for web processing service (WPS)}
 #'		\item{algorithm}{acronym for WPS algorithm}
-#'		\item{PostInputs}{a list of process parameters}
+#'		\item{postInputs}{a list of process parameters}
 #'		\item{feature}{a list of elements in the feature collection}
 #`		\item{processID}{unique identifier for a GDP process}
 #' }
@@ -43,7 +43,7 @@ setClass(
 	representation = representation(
 		WFS_URL="character",WPS_URL="character",
 		algorithm="list",
-		PostInputs="list",feature="list",processID="character",
+		postInputs="list",feature="list",processID="character",
 		WPS_DEFAULT_VERSION="character",WFS_DEFAULT_VERSION="character",
 		WPS_DEFAULT_NAMESPACE="character",OWS_DEFAULT_NAMESPACE="character",
 		WPS_SCHEMA_LOCATION="character",XSI_SCHEMA_LOCATION="character",
@@ -111,7 +111,7 @@ setMethod(f="initialize",signature="rGDP",
 		.Object@WFS_URL	<-	default_WFS
 		.Object@WPS_URL <- default_WPS
 		.Object@algorithm	<-	default_alg
-		.Object@PostInputs	<-	default_post
+		.Object@postInputs	<-	default_post
 		.Object@feature	<-	default_feat
 		.Object@processID	<-	"Null"
 		
@@ -259,7 +259,7 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		requirLs	<-	vector("list",length(requirNd))
 		names(requirLs)	<-	sapply(requirNd,xmlValue)
 		
-		.Object@PostInputs	<-	append(optionLs,requirLs)
+		.Object@postInputs	<-	append(optionLs,requirLs)
 		.Object	<-	setPostInputs(.Object,requirLs)
 		
 		# now set any defaults
@@ -269,8 +269,8 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		names(defaultLs)	<-	sapply(getNodeSet(doc,'//datainputs/literaldata/defaultvalue/
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
 			
-		.Object@PostInputs	<-	setList(.Object@PostInputs,defaultLs)
-		.Object@PostInputs$FEATURE_COLLECTION	<-	NULL # handled elsewhere
+		.Object@postInputs	<-	setList(.Object@postInputs,defaultLs)
+		.Object@postInputs$FEATURE_COLLECTION	<-	NULL # handled elsewhere
 		return(.Object)
 		
 	})
@@ -350,7 +350,7 @@ setMethod(f = "setWPS",signature="rGDP",
 # '@aliases setPostInputs,rGDP-method	
 setMethod(f = "setPostInputs",signature = "rGDP",
 	definition = function(.Object,postInputs){
-		.Object@PostInputs	<-	setList(.Object@PostInputs,postInputs)
+		.Object@postInputs	<-	setList(.Object@postInputs,postInputs)
 		return(.Object)
 	})
 # '@rdname setFeature-methods
@@ -358,7 +358,7 @@ setMethod(f = "setPostInputs",signature = "rGDP",
 setMethod(f = "setFeature",signature = "rGDP",
 	definition = function(.Object,feature){
 		.Object@feature	<-	setList(.Object@feature,feature)
-		.Object@PostInputs	<-	setList(.Object@PostInputs,
+		.Object@postInputs	<-	setList(.Object@postInputs,
 			list("FEATURE_ATTRIBUTE_NAME"=.Object@feature$ATTRIBUTE))
 		return(.Object)
 	})
@@ -422,9 +422,9 @@ postInputsToXML	<-	function(.Object){
 	di	<-	newXMLNode("wps:DataInputs",parent=top)
 	addChildren(top,c(id,di))
 	
-	for (i in 1:length(.Object@PostInputs)){
-		postNm	<-	names(.Object@PostInputs[i])
-		postVl	<-	.Object@PostInputs[postNm]
+	for (i in 1:length(.Object@postInputs)){
+		postNm	<-	names(.Object@postInputs[i])
+		postVl	<-	.Object@postInputs[postNm]
 		if (!is.na(postVl)){
 			inEL	<-	newXMLNode("wps:Input",parent=di)
 			addChildren(di,inEL)
@@ -541,8 +541,8 @@ setMethod(f = "print",signature = "rGDP",
 		cat("* WFS_URL:\t");cat(x@WFS_URL,"\n")
 		cat("* WPS_URL:\t");cat(x@WPS_URL,"\n")
 		cat("* algorithm:\t");cat(names(x@algorithm),"\n")
-		cat("* ------PostInputs------\n")
-		PI	<-	x@PostInputs
+		cat("* ------postInputs------\n")
+		PI	<-	x@postInputs
 		PI[is.na(PI)] = '[optional]'
 		nms	<-	names(PI)		
 		for (i in 1:length(nms)){cat("\t-",nms[i]);cat(":",PI[[i]],"\n")}
