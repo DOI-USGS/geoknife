@@ -275,6 +275,13 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		.Object@postInputs	<-	append(optionLs,requirLs)
 		.Object	<-	setPostInputs(.Object,requirLs)
 		# now set any defaults, and set any pre-sets (like datasetURI)
+		
+		defaultNd	<-	getNodeSet(doc,'//datainputs/literaldata/defaultvalue/parent::node()[1]/defaultvalue')
+		defaultLs	<-	list(sapply(defaultNd,xmlValue))
+		names(defaultLs)	<-	sapply(getNodeSet(doc,'//datainputs/literaldata/defaultvalue/
+			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
+			
+		.Object@PostInputs	<-	setList(.Object@PostInputs,defaultLs)
 		return(.Object)
 		
 	})
