@@ -28,7 +28,7 @@ NULL
 #' Some details about the \code{rGDP} class
 #' \describe{
 #'		\item{WFS_URL}{endpoint for web feature service (WFS)}
-#'		\item{PROCESS_URL}{endpoint for web processing service (WPS)}
+#'		\item{WPS_URL}{endpoint for web processing service (WPS)}
 #'		\item{algorithm}{acronym for WPS algorithm}
 #'		\item{datasetURI}{processing dataset URI}
 #'		\item{PostInputs}{a list of process parameters}
@@ -42,7 +42,7 @@ NULL
 setClass(
 	Class = "rGDP",
 	representation = representation(
-		WFS_URL="character",PROCESS_URL="character",
+		WFS_URL="character",WPS_URL="character",
 		datasetURI="character",algorithm="character",
 		PostInputs="list",feature="list",processID="character",
 		WPS_DEFAULT_VERSION="character",WFS_DEFAULT_VERSION="character",
@@ -116,7 +116,7 @@ setMethod(f="initialize",signature="rGDP",
 
 		# public variables (available via print method)	
 		.Object@WFS_URL	<-	default_WFS
-		.Object@PROCESS_URL <- default_WPS
+		.Object@WPS_URL <- default_WPS
 		.Object@datasetURI	<-	default_URI
 		.Object@algorithm	<-	default_alg
 		.Object	<-	initializePostInputs(.Object)
@@ -128,6 +128,16 @@ setMethod(f="initialize",signature="rGDP",
 	})
 	setMethod(f = "show",signature = "rGDP",definition = function(object){print(object)})
 
+#'getAlgorithms
+#'
+#'function for rGDP
+#'
+#'@param \code{rGDP} object with a valid WPS url.
+#'@return list of available algorithms for the \code{rGDP} WPS url.
+#'@docType methods
+#'@keywords getAlgorithms
+#'@export
+setGeneric(name="getAlgorithms",def=function(.Object){standardGeneric("getAlgorithms")})
 #'getShapefiles
 #'
 #'function for rGDP
@@ -155,7 +165,7 @@ setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric(
 #'
 #'@param \code{rGDP} object with a valid WFS url.
 #'@param a valid shapefile name.
-#'@parama a valid attribute name for the shapefile.
+#'@param a valid attribute name for the shapefile.
 #'@return list of values for the given shapefile attribute at the \code{rGDP} WFS url.
 #'@docType methods
 #'@keywords getValues
@@ -273,6 +283,19 @@ setMethod(f = "setProcessID",signature="rGDP",
 		.Object@processID	<-	processID
 		return(.Object)
 	})
+# '@rdname getAlgorithms-methods
+# '@aliases getAlgorithms,rGDP-method	
+setMethod(f = "getAlgorithms",signature="rGDP",
+	definition = function(.Object){
+		parentKey 	<-	"featuretypelist"
+		childKey	<-	"featuretype"
+		processURL	<-	paste(c(.Object@WPS_URL,'?service=WPS&version=',
+			.Object@WPS_DEFAULT_VERSION,'&request=GetCapabilities'),collapse="")
+			print(processURL)
+		algorithms = NA
+		#shapefiles	<-	parseXMLnodes(processURL,parentKey,childKey)
+		return(algorithms)
+	})
 # '@rdname getShapefiles-methods
 # '@aliases getShapefiles,rGDP-method	
 setMethod(f = "getShapefiles",signature="rGDP",
@@ -320,7 +343,7 @@ setMethod(f = "setWFS",signature="rGDP",
 # '@aliases setWPS,rGDP-method
 setMethod(f = "setWPS",signature="rGDP",
 	definition = function(.Object,wps){
-		.Object@PROCESS_URL	<-	wps
+		.Object@WPS_URL	<-	wps
 		return(.Object)
 	})
 # '@rdname setDatasetURI-methods
@@ -462,7 +485,6 @@ postInputsToXML	<-	function(.Object){
 	outID	<-	newXMLNode('ows:Identifier',newXMLTextNode('OUTPUT'))
 	addChildren(resOut,outID)
 	requestXML <-toString.XMLNode(xmlDoc(top))
-	print(top)
 	return(requestXML)
 }
 
@@ -474,13 +496,11 @@ setMethod(f = "executePost",signature = "rGDP",definition = function(.Object){
 	myheader=c(Connection="close", 
 	          'Content-Type' = "application/xml")#text/xml?
 	
-	data =  getURL(url = .Object@PROCESS_URL,
+	data =  getURL(url = .Object@WPS_URL,
 	               postfields=requestXML, #requestXML,
 	               httpheader=myheader,
-	               verbose=TRUE)
-	print(data)			
+	               verbose=TRUE)		
 	xmltext  <- xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
-  	print(xmltext)
 	response <- xmlRoot(xmltext)
 	responseNS <- xmlNamespaceDefinitions(response, simplify = TRUE)  
 	processID <- xmlGetAttr(response,"statusLocation")
@@ -521,7 +541,7 @@ setMethod(f = "print",signature = "rGDP",
 	function(x,...){
 		cat("*** Class rGDP, method Print *** \n")
 		cat("* WFS_URL:\t");cat(x@WFS_URL,"\n")
-		cat("* PROCESS_URL:\t");cat(x@PROCESS_URL,"\n")
+		cat("* WPS_URL:\t");cat(x@WPS_URL,"\n")
 		cat("* datasetURI:\t");cat(x@datasetURI,"\n")
 		cat("* algorithm:\t");cat(x@algorithm,"\n")
 		cat("* ------PostInputs------\n")
