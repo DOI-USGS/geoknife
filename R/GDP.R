@@ -74,7 +74,7 @@ setMethod(f="initialize",signature="rGDP",
 		default_WPS = 'http://cida.usgs.gov/gdp/process/WebProcessingService'
 		default_URI = 'dods://cida.usgs.gov/thredds/dodsC/prism'
 		default_alg = list()
-		default_post = list()
+		default_post = list(empty=NULL)
 		default_feat= list(
 			FEATURE_COLLECTION=NA,
 			ATTRIBUTE=NA,
@@ -263,6 +263,7 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		processURL	<-	paste(c(.Object@WPS_URL,'?service=WPS&version=',
 			.Object@WPS_DEFAULT_VERSION,'&request=DescribeProcess',
 			'&identifier=',algorithm),collapse="")
+		doc	<-	htmlParse(processURL,isURL=TRUE, useInternalNodes = TRUE)
 		optionNd	<-	getNodeSet(doc,'//datainputs/input[@minoccurs=0]/following-sibling::node()[1]')
 		optionLs	<-	vector("list",length(optionNd))
 		optionLs[]	<-	NA
@@ -272,7 +273,7 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		requirLs	<-	vector("list",length(requirNd))
 		names(requirLs)	<-	sapply(requirNd,xmlValue)
 		
-		.Object@postInputs	<-	append(optionLs,requirLs)
+		.Object@PostInputs	<-	append(optionLs,requirLs)
 		.Object	<-	setPostInputs(.Object,requirLs)
 		# now set any defaults, and set any pre-sets (like datasetURI)
 		
@@ -386,7 +387,7 @@ setMethod(f = "setAlgorithm",signature = "rGDP",
 	definition = function(.Object,algorithm){
 		.Object@algorithm	<-	algorithm
 		# now, initialize posts
-		.Object	<-	initializePostInputs(.Object)
+		#.Object	<-	initializePostInputs(.Object)
 		return(.Object)
 	})
 
@@ -561,8 +562,10 @@ setMethod(f = "print",signature = "rGDP",
 		cat("* datasetURI:\t");cat(x@datasetURI,"\n")
 		cat("* algorithm:\t");cat(names(x@algorithm),"\n")
 		cat("* ------PostInputs------\n")
-		Li	<-	unlist(x@PostInputs)
-		for (i in 1:length(Li)){cat("\t-",names(Li[i]));cat(":",Li[i],"\n")}
+		PI	<-	x@PostInputs
+		PI[is.na(PI)] = '[optional]'
+		nms	<-	names(PI)		
+		for (i in 1:length(nms)){cat("\t-",nms[i]);cat(":",PI[[i]],"\n")}
 		cat("* ------feature------\n")
 		Li	<-	unlist(x@feature)
 		for (i in 1:length(Li)){cat("\t-",names(Li[i]));cat(":",Li[i],"\n")}
