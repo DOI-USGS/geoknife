@@ -278,7 +278,8 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		# now set any defaults, and set any pre-sets (like datasetURI)
 		
 		defaultNd	<-	getNodeSet(doc,'//datainputs/literaldata/defaultvalue/parent::node()[1]/defaultvalue')
-		defaultLs	<-	list(sapply(defaultNd,xmlValue))
+		defaultLs	<-	vector("list",length(sapply(defaultNd,xmlValue)))
+		defaultLs[]	<-	sapply(defaultNd,xmlValue)
 		names(defaultLs)	<-	sapply(getNodeSet(doc,'//datainputs/literaldata/defaultvalue/
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
 			
@@ -387,7 +388,7 @@ setMethod(f = "setAlgorithm",signature = "rGDP",
 	definition = function(.Object,algorithm){
 		.Object@algorithm	<-	algorithm
 		# now, initialize posts
-		#.Object	<-	initializePostInputs(.Object)
+		.Object	<-	initializePostInputs(.Object)
 		return(.Object)
 	})
 
