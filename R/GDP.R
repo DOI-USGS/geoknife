@@ -30,7 +30,6 @@ NULL
 #'		\item{WFS_URL}{endpoint for web feature service (WFS)}
 #'		\item{WPS_URL}{endpoint for web processing service (WPS)}
 #'		\item{algorithm}{acronym for WPS algorithm}
-#'		\item{datasetURI}{processing dataset URI}
 #'		\item{PostInputs}{a list of process parameters}
 #'		\item{feature}{a list of elements in the feature collection}
 #`		\item{processID}{unique identifier for a GDP process}
@@ -43,7 +42,7 @@ setClass(
 	Class = "rGDP",
 	representation = representation(
 		WFS_URL="character",WPS_URL="character",
-		datasetURI="character",algorithm="list",
+		algorithm="list",
 		PostInputs="list",feature="list",processID="character",
 		WPS_DEFAULT_VERSION="character",WFS_DEFAULT_VERSION="character",
 		WPS_DEFAULT_NAMESPACE="character",OWS_DEFAULT_NAMESPACE="character",
@@ -72,7 +71,6 @@ setMethod(f="initialize",signature="rGDP",
 	definition=function(.Object){
 		default_WFS = 'http://cida.usgs.gov/gdp/geoserver/wfs'
 		default_WPS = 'http://cida.usgs.gov/gdp/process/WebProcessingService'
-		default_URI = 'dods://cida.usgs.gov/thredds/dodsC/prism'
 		default_alg = list()
 		default_post = list(empty=NULL)
 		default_feat= list(
@@ -112,7 +110,6 @@ setMethod(f="initialize",signature="rGDP",
 		# public variables (available via print method)	
 		.Object@WFS_URL	<-	default_WFS
 		.Object@WPS_URL <- default_WPS
-		.Object@datasetURI	<-	default_URI
 		.Object@algorithm	<-	default_alg
 		.Object@PostInputs	<-	default_post
 		.Object@feature	<-	default_feat
@@ -208,17 +205,6 @@ setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
 #'@keywords setWPS
 #'@export
 setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
-#'setDatasetURI
-#'
-#'function for rGDP
-#'
-#'@param \code{rGDP} object.
-#'@param a dataset URI.
-#'@return An \code{rGDP} object.
-#'@docType methods
-#'@keywords setDatasetURI
-#'@export
-setGeneric(name="setDatasetURI",def=function(.Object,datasetURI){standardGeneric("setDatasetURI")})
 #'setPostInputs
 #'
 #'function for rGDP
@@ -275,8 +261,8 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		
 		.Object@PostInputs	<-	append(optionLs,requirLs)
 		.Object	<-	setPostInputs(.Object,requirLs)
-		# now set any defaults, and set any pre-sets (like datasetURI)
 		
+		# now set any defaults
 		defaultNd	<-	getNodeSet(doc,'//datainputs/literaldata/defaultvalue/parent::node()[1]/defaultvalue')
 		defaultLs	<-	vector("list",length(sapply(defaultNd,xmlValue)))
 		defaultLs[]	<-	sapply(defaultNd,xmlValue)
@@ -284,6 +270,7 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
 			
 		.Object@PostInputs	<-	setList(.Object@PostInputs,defaultLs)
+		.Object@PostInputs$FEATURE_COLLECTION	<-	NULL # handled elsewhere
 		return(.Object)
 		
 	})
@@ -358,14 +345,7 @@ setMethod(f = "setWPS",signature="rGDP",
 		.Object@WPS_URL	<-	wps
 		return(.Object)
 	})
-# '@rdname setDatasetURI-methods
-# '@aliases setDatasetURI,rGDP-method
-setMethod(f = "setDatasetURI",signature = "rGDP",
-	definition = function(.Object,datasetURI){
-		.Object@datasetURI	<-	datasetURI
-		.Object	<-	setPostInputs(.Object,list(DATASET_URI=.Object@datasetURI))
-		return(.Object)
-	})
+
 # '@rdname setPostInputs-methods
 # '@aliases setPostInputs,rGDP-method	
 setMethod(f = "setPostInputs",signature = "rGDP",
@@ -560,7 +540,6 @@ setMethod(f = "print",signature = "rGDP",
 		cat("*** Class rGDP, method Print *** \n")
 		cat("* WFS_URL:\t");cat(x@WFS_URL,"\n")
 		cat("* WPS_URL:\t");cat(x@WPS_URL,"\n")
-		cat("* datasetURI:\t");cat(x@datasetURI,"\n")
 		cat("* algorithm:\t");cat(names(x@algorithm),"\n")
 		cat("* ------PostInputs------\n")
 		PI	<-	x@PostInputs
