@@ -1,13 +1,11 @@
-
 library("rGDP")
 
 # ---- variables -----
-WFS	<-	'https://www.sciencebase.gov/catalogMaps/mapping/ows/5064a227e4b0050306263069'
 WPS	<-	'http://cida-wiwsc-gdp1qa.er.usgs.gov:8080/gdp-process-wps/WebProcessingService'
-feature_collection	<-	'sb:mendota_shape'
-attribute	<-	'ComID'
-datasetURI	<-	'dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best'
-var	<-	'Downward_shortwave_radiation_flux_surface'
+feature_collection	<-	"draw:layer"
+attribute	<-	'ID'
+datasetURI	<-	'dods://cida.usgs.gov/thredds/dodsC/prism'
+var	<-	'ppt'
 # ---- variables -----
 
 rGDP	<-	rGDP()
@@ -15,8 +13,10 @@ rGDP	<-	setAlgorithm(rGDP,getAlgorithms(rGDP)[4])
 
 print(rGDP)
 
-rGDP	<-	setWFS(rGDP,WFS)
-rGDP	<-	setWPS(rGDP,WPS)
+#rGDP	<-	setWPS(rGDP,WPS)
+
+getShapefiles(rGDP)
+getAttributes(rGDP,feature_collection)
 rGDP	<-	setFeature(rGDP,list('FEATURE_COLLECTION'=feature_collection,
 	'ATTRIBUTE'=attribute))
 rGDP	<-	setPostInputs(rGDP,list('DATASET_ID'=var,
