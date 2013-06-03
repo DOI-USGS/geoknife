@@ -5,7 +5,8 @@
 \arguments{
   \item{An}{\code{rGDP} object.}
 
-  \item{a}{valid algorithm acronymn}
+  \item{a}{list for a valid algorithm, including values for
+  name & location}
 }
 \value{
   An \code{rGDP} object.
