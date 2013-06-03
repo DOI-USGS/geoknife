@@ -269,7 +269,7 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		names(defaultLs)	<-	sapply(getNodeSet(doc,'//datainputs/literaldata/defaultvalue/
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
 			
-		.Object@postInputs	<-	setList(.Object@postInputs,defaultLs)
+		if (length(defaultLs)>0){.Object@postInputs	<-	setList(.Object@postInputs,defaultLs)}
 		
 		# now set any accepted values
 		allowNd    <-	getNodeSet(doc,'//datainputs/literaldata//parent::node()/allowedvalues/value[1]')
@@ -277,7 +277,7 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		allowLs[]	<-	sapply(allowNd,xmlValue)
 		names(allowLs)	<-	sapply(getNodeSet(doc,'//datainputs/literaldata/allowedvalues/
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
-		.Object@postInputs	<-	setList(.Object@postInputs,allowLs)
+		if (length(allowLs)>0){.Object@postInputs	<-	setList(.Object@postInputs,allowLs)}
 		
 		.Object@postInputs$FEATURE_COLLECTION	<-	NULL # handled elsewhere
 		return(.Object)
@@ -492,6 +492,7 @@ postInputsToXML	<-	function(.Object){
 	outID	<-	newXMLNode('ows:Identifier',newXMLTextNode('OUTPUT'))
 	addChildren(resOut,outID)
 	requestXML <-toString.XMLNode(xmlDoc(top))
+	print(top)
 	return(requestXML)
 }
 
