@@ -122,7 +122,7 @@ setMethod(f="initialize",signature="rGDP",
 
 #'getAlgorithms
 #'
-#'function for rGDP
+#'a \code{rGDP} method for finding algorithm names and locations from a valid WPS endpoint.
 #'
 #'@param \code{rGDP} object with a valid WPS url.
 #'@return list of available algorithms for the \code{rGDP} WPS url.
@@ -132,7 +132,7 @@ setMethod(f="initialize",signature="rGDP",
 setGeneric(name="getAlgorithms",def=function(.Object){standardGeneric("getAlgorithms")})
 #'getShapefiles
 #'
-#'function for rGDP
+#'a \code{rGDP} method for finding shapefile names at a valid WFS endpoint.
 #'
 #'@param \code{rGDP} object with a valid WFS url.
 #'@return list of shapefiles for the \code{rGDP} WFS url.
@@ -142,7 +142,7 @@ setGeneric(name="getAlgorithms",def=function(.Object){standardGeneric("getAlgori
 setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapefiles")})
 #'getAttributes
 #'
-#'function for rGDP
+#'a \code{rGDP} method for finding attribute names for a given shapefile at a valid WFS endpoint. 
 #'
 #'@param \code{rGDP} object with a valid WFS url.
 #'@param a valid shapefile name.
@@ -153,7 +153,7 @@ setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapef
 setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric("getAttributes")})
 #'getValues
 #'
-#'function for rGDP
+#'a \code{rGDP} method for finding value names for a given shapefile at a valid WFS endpoint. 
 #'
 #'@param \code{rGDP} object with a valid WFS url.
 #'@param a valid shapefile name.
@@ -229,7 +229,7 @@ setGeneric(name="setPostInputs",def=function(.Object,postInputs){standardGeneric
 setGeneric(name="setFeature",def=function(.Object,feature){standardGeneric("setFeature")})
 #'setAlgorithm
 #'
-#'function for rGDP
+#'method for setting the process algorithm of the \code{rGDP} object.
 #'
 #'@param An \code{rGDP} object.
 #'@param a list for a valid algorithm, including values for name & location
