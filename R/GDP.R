@@ -165,7 +165,7 @@ setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric(
 setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGeneric("getValues")})
 #'checkProcess
 #'
-#'function for rGDP
+#'function for checking the process status of an active (executed) \code{rGDP} object. 
 #'
 #'@param \code{rGDP} object with an active GDP process request.
 #'@return status of \code{rGDP} process.
@@ -175,7 +175,7 @@ setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGe
 setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
 #'executePost
 #'
-#'function for rGDP
+#'function for executing the \code{rGDP} object.
 #'
 #'@param \code{rGDP} object ot be used to formulate GDP process request.
 #'@return An \code{rGDP} object.
@@ -185,7 +185,7 @@ setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProce
 setGeneric(name="executePost",def=function(.Object){standardGeneric("executePost")})
 #'setWFS
 #'
-#'function for rGDP
+#'function for setting the web feature service (WFS) endpoint for a \code{rGDP} object. 
 #'
 #'@param \code{rGDP} object.
 #'@param a Web Feature Service (WFS) endpoint.
@@ -196,7 +196,7 @@ setGeneric(name="executePost",def=function(.Object){standardGeneric("executePost
 setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
 #'setWPS
 #'
-#'function for rGDP
+#'function for setting the web processing service (WPS) endpoint for a \code{rGDP} object. 
 #'
 #'@param \code{rGDP} object.
 #'@param a Web Processing Service (WPS) endpoint.
@@ -207,7 +207,7 @@ setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
 setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
 #'setPostInputs
 #'
-#'function for rGDP
+#'function for setting the (non-feature related) post inputs of the \code{rGDP} object. 
 #'
 #'@param An \code{rGDP} object.
 #'@param a list of valid postInputs.
@@ -218,7 +218,7 @@ setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
 setGeneric(name="setPostInputs",def=function(.Object,postInputs){standardGeneric("setPostInputs")})
 #'setFeature
 #'
-#'function for rGDP
+#'function for setting the feature elements of the \code{rGDP} object. 
 #'
 #'@param An \code{rGDP} object.
 #'@param a list containing a valid feature collection, or a list of a subset of a valid feature collection.
