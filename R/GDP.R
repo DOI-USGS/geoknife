@@ -122,7 +122,7 @@ setMethod(f="initialize",signature="rGDP",
 
 #'getAlgorithms
 #'
-#'function for rGDP
+#'a \code{rGDP} method for finding algorithm names and locations from a valid WPS endpoint.
 #'
 #'@param \code{rGDP} object with a valid WPS url.
 #'@return list of available algorithms for the \code{rGDP} WPS url.
@@ -132,7 +132,7 @@ setMethod(f="initialize",signature="rGDP",
 setGeneric(name="getAlgorithms",def=function(.Object){standardGeneric("getAlgorithms")})
 #'getShapefiles
 #'
-#'function for rGDP
+#'a \code{rGDP} method for finding shapefile names at a valid WFS endpoint.
 #'
 #'@param \code{rGDP} object with a valid WFS url.
 #'@return list of shapefiles for the \code{rGDP} WFS url.
@@ -142,7 +142,7 @@ setGeneric(name="getAlgorithms",def=function(.Object){standardGeneric("getAlgori
 setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapefiles")})
 #'getAttributes
 #'
-#'function for rGDP
+#'a \code{rGDP} method for finding attribute names for a given shapefile at a valid WFS endpoint. 
 #'
 #'@param \code{rGDP} object with a valid WFS url.
 #'@param a valid shapefile name.
@@ -153,7 +153,7 @@ setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapef
 setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric("getAttributes")})
 #'getValues
 #'
-#'function for rGDP
+#'a \code{rGDP} method for finding value names for a given shapefile at a valid WFS endpoint. 
 #'
 #'@param \code{rGDP} object with a valid WFS url.
 #'@param a valid shapefile name.
@@ -165,7 +165,7 @@ setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric(
 setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGeneric("getValues")})
 #'checkProcess
 #'
-#'function for rGDP
+#'method for checking the process status of an active (executed) \code{rGDP} object. 
 #'
 #'@param \code{rGDP} object with an active GDP process request.
 #'@return status of \code{rGDP} process.
@@ -175,7 +175,7 @@ setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGe
 setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
 #'executePost
 #'
-#'function for rGDP
+#'method for executing the \code{rGDP} object.
 #'
 #'@param \code{rGDP} object ot be used to formulate GDP process request.
 #'@return An \code{rGDP} object.
@@ -185,7 +185,7 @@ setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProce
 setGeneric(name="executePost",def=function(.Object){standardGeneric("executePost")})
 #'setWFS
 #'
-#'function for rGDP
+#'method for setting the web feature service (WFS) endpoint for a \code{rGDP} object. 
 #'
 #'@param \code{rGDP} object.
 #'@param a Web Feature Service (WFS) endpoint.
@@ -196,7 +196,7 @@ setGeneric(name="executePost",def=function(.Object){standardGeneric("executePost
 setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
 #'setWPS
 #'
-#'function for rGDP
+#'method for setting the web processing service (WPS) endpoint for a \code{rGDP} object. 
 #'
 #'@param \code{rGDP} object.
 #'@param a Web Processing Service (WPS) endpoint.
@@ -207,7 +207,7 @@ setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
 setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
 #'setPostInputs
 #'
-#'function for rGDP
+#'method for setting the (non-feature related) post inputs of the \code{rGDP} object. 
 #'
 #'@param An \code{rGDP} object.
 #'@param a list of valid postInputs.
@@ -218,7 +218,7 @@ setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
 setGeneric(name="setPostInputs",def=function(.Object,postInputs){standardGeneric("setPostInputs")})
 #'setFeature
 #'
-#'function for rGDP
+#'method for setting the feature elements of the \code{rGDP} object. 
 #'
 #'@param An \code{rGDP} object.
 #'@param a list containing a valid feature collection, or a list of a subset of a valid feature collection.
@@ -229,7 +229,7 @@ setGeneric(name="setPostInputs",def=function(.Object,postInputs){standardGeneric
 setGeneric(name="setFeature",def=function(.Object,feature){standardGeneric("setFeature")})
 #'setAlgorithm
 #'
-#'function for rGDP
+#'method for setting the process algorithm of the \code{rGDP} object.
 #'
 #'@param An \code{rGDP} object.
 #'@param a list for a valid algorithm, including values for name & location
@@ -344,6 +344,7 @@ setMethod(f = "getValues",signature="rGDP",
 # '@aliases setWFS,rGDP-method
 setMethod(f = "setWFS",signature="rGDP",
 	definition = function(.Object,wfs){
+		wfs	<-	gsub('https', 'http', wfs)
 		.Object@WFS_URL	<-	wfs
 		return(.Object)
 	})
@@ -351,6 +352,7 @@ setMethod(f = "setWFS",signature="rGDP",
 # '@aliases setWPS,rGDP-method
 setMethod(f = "setWPS",signature="rGDP",
 	definition = function(.Object,wps){
+		wps	<-	gsub('https', 'http', wps)
 		.Object@WPS_URL	<-	wps
 		return(.Object)
 	})
@@ -359,6 +361,11 @@ setMethod(f = "setWPS",signature="rGDP",
 # '@aliases setPostInputs,rGDP-method	
 setMethod(f = "setPostInputs",signature = "rGDP",
 	definition = function(.Object,postInputs){
+		if (("DATASET_URI" %in% names(postInputs)) & 
+			!is.null(postInputs["DATASET_URI"]) & 
+			grepl('dodsC',postInputs["DATASET_URI"])){
+			postInputs["DATASET_URI"]	<-	gsub('http', 'dods', postInputs["DATASET_URI"])
+		}
 		.Object@postInputs	<-	setList(.Object@postInputs,postInputs)
 		return(.Object)
 	})
@@ -492,7 +499,6 @@ postInputsToXML	<-	function(.Object){
 	outID	<-	newXMLNode('ows:Identifier',newXMLTextNode('OUTPUT'))
 	addChildren(resOut,outID)
 	requestXML <-toString.XMLNode(xmlDoc(top))
-	print(top)
 	return(requestXML)
 }
 
