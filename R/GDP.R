@@ -361,6 +361,11 @@ setMethod(f = "setWPS",signature="rGDP",
 # '@aliases setPostInputs,rGDP-method	
 setMethod(f = "setPostInputs",signature = "rGDP",
 	definition = function(.Object,postInputs){
+		if (("DATASET_URI" %in% names(postInputs)) & 
+			!is.null(postInputs["DATASET_URI"]) & 
+			grepl('dodsC',postInputs["DATASET_URI"])){
+			postInputs["DATASET_URI"]	<-	gsub('http', 'dods', postInputs["DATASET_URI"])
+		}
 		.Object@postInputs	<-	setList(.Object@postInputs,postInputs)
 		return(.Object)
 	})
