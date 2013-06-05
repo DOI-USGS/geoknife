@@ -11,7 +11,8 @@
   An \code{rGDP} object.
 }
 \description{
-  function for rGDP
+  method for setting the web processing service (WPS)
+  endpoint for a \code{rGDP} object.
 }
 \keyword{setWPS}
 

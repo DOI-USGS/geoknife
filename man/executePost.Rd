@@ -10,7 +10,7 @@
   An \code{rGDP} object.
 }
 \description{
-  function for rGDP
+  method for executing the \code{rGDP} object.
 }
 \keyword{executePost}
 

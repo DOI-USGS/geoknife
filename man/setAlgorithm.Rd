@@ -12,7 +12,8 @@
   An \code{rGDP} object.
 }
 \description{
-  function for rGDP
+  method for setting the process algorithm of the
+  \code{rGDP} object.
 }
 \keyword{setAlgorithm}
 

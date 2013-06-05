@@ -10,7 +10,8 @@
   status of \code{rGDP} process.
 }
 \description{
-  function for rGDP
+  method for checking the process status of an active
+  (executed) \code{rGDP} object.
 }
 \keyword{checkProcess}
 
