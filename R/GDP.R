@@ -344,6 +344,7 @@ setMethod(f = "getValues",signature="rGDP",
 # '@aliases setWFS,rGDP-method
 setMethod(f = "setWFS",signature="rGDP",
 	definition = function(.Object,wfs){
+		wfs	<-	gsub('https', 'http', wfs)
 		.Object@WFS_URL	<-	wfs
 		return(.Object)
 	})
@@ -351,6 +352,7 @@ setMethod(f = "setWFS",signature="rGDP",
 # '@aliases setWPS,rGDP-method
 setMethod(f = "setWPS",signature="rGDP",
 	definition = function(.Object,wps){
+		wps	<-	gsub('https', 'http', wps)
 		.Object@WPS_URL	<-	wps
 		return(.Object)
 	})
@@ -492,7 +494,6 @@ postInputsToXML	<-	function(.Object){
 	outID	<-	newXMLNode('ows:Identifier',newXMLTextNode('OUTPUT'))
 	addChildren(resOut,outID)
 	requestXML <-toString.XMLNode(xmlDoc(top))
-	print(top)
 	return(requestXML)
 }
 
