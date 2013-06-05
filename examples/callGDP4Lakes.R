@@ -2,8 +2,8 @@ library("rGDP")
 
 # ---- variables -----
 WPS	<-	'http://cida-wiwsc-gdp1qa.er.usgs.gov:8080/gdp-process-wps/WebProcessingService'
-feature_collection	<-	"draw:layer"
-attribute	<-	'ID'
+feature_collection	<-	"sb:mendota"
+attribute	<-	'ComID'
 datasetURI	<-	'dods://cida.usgs.gov/thredds/dodsC/prism'
 var	<-	'ppt'
 # ---- variables -----
@@ -13,7 +13,7 @@ rGDP	<-	setAlgorithm(rGDP,getAlgorithms(rGDP)[4])
 
 print(rGDP)
 
-#rGDP	<-	setWPS(rGDP,WPS)
+rGDP	<-	setWPS(rGDP,WFS)
 
 getShapefiles(rGDP)
 getAttributes(rGDP,feature_collection)
