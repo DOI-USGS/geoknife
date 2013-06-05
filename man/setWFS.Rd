@@ -11,7 +11,8 @@
   An \code{rGDP} object.
 }
 \description{
-  function for rGDP
+  method for setting the web feature service (WFS) endpoint
+  for a \code{rGDP} object.
 }
 \keyword{setWFS}
 

@@ -12,7 +12,8 @@
   \code{rGDP} WFS url.
 }
 \description{
-  function for rGDP
+  a \code{rGDP} method for finding attribute names for a
+  given shapefile at a valid WFS endpoint.
 }
 \keyword{getAttributes}
 

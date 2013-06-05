@@ -12,7 +12,8 @@
   An \code{rGDP} object.
 }
 \description{
-  function for rGDP
+  method for setting the feature elements of the
+  \code{rGDP} object.
 }
 \keyword{setFeature}
 
