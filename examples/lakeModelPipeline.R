@@ -1,4 +1,5 @@
-library("rGDP","RCurl")
+library("rGDP")
+library("RCurl")
 # ---- variables -----
 
 
