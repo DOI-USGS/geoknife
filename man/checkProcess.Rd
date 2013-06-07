@@ -7,7 +7,7 @@
   request.}
 }
 \value{
-  status of \code{rGDP} process.
+  process of \code{rGDP} process.
 }
 \description{
   method for checking the process status of an active
