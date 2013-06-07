@@ -374,8 +374,9 @@ setMethod(f = "setPostInputs",signature = "rGDP",
 setMethod(f = "setFeature",signature = "rGDP",
 	definition = function(.Object,feature){
 		.Object@feature	<-	setList(.Object@feature,feature)
+		if ("FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){
 		.Object@postInputs	<-	setList(.Object@postInputs,
-			list("FEATURE_ATTRIBUTE_NAME"=.Object@feature$ATTRIBUTE))
+			list("FEATURE_ATTRIBUTE_NAME"=.Object@feature$ATTRIBUTE))}
 		return(.Object)
 	})
 # '@rdname setAlgorithm-methods
