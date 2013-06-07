@@ -536,8 +536,10 @@ setMethod(f = "checkProcess",signature = "rGDP",definition = function(.Object){
 	else{
 		
 	}
-	tryCatch(expr={checkForComplete=getURL(url = .Object@processID, verbose=FALSE)},finally={process$status='unknown'})
-	if (process$status!='none' & process$status!='unknown'){
+
+	tryCatch({checkForComplete=getURL(url = .Object@processID, verbose=FALSE)},error = function(e) {process$status='unknown'})
+	print(process$status)
+	if (is.null(process$status)){
 		checkForCompleteResponse	<-	xmlTreeParse(checkForComplete, asText = TRUE,useInternalNodes=TRUE)
 		checkResponseNS <- xmlNamespaceDefinitions(checkForCompleteResponse, simplify = TRUE) 
 		root <- xmlRoot(checkForCompleteResponse)
