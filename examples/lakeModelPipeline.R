@@ -53,9 +53,13 @@ repeat{
     break
   }
   cat('checking process...\n')
-  Sys.sleep(30)
-  status_elv  <-  checkProcess(GDP_elv)
-  status_canopy <-  checkProcess(GDP_canopy)
+  Sys.sleep(10)
+  if (is.null(status_elv$URL)){
+    status_elv  <-  checkProcess(GDP_elv)
+  }
+  if (is.null(status_canopy$URL)){
+    status_canopy <-  checkProcess(GDP_canopy)
+  }
   status_driver <-  checkProcess(GDP_driver)
 }
 proc.time() - ptm
