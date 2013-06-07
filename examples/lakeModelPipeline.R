@@ -4,6 +4,7 @@ library("RCurl")
 
 
 WPS  <-	'http://cida.usgs.gov/qa/climate/gdp/process/WebProcessingService'
+WPS <- 'http://cida-wiwsc-gdp1qa.er.usgs.gov:8080/gdp-process-wps/WebProcessingService'
 WFS <-  'https://www.sciencebase.gov/catalogMaps/mapping/ows/51b1ef75e4b022a6a540fa5c'
 attribute  <-  'WBDY_WBIC'
 
