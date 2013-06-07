@@ -536,16 +536,19 @@ setMethod(f = "checkProcess",signature = "rGDP",definition = function(.Object){
 	else{
 		
 	}
-	checkForComplete	<-	getURL(url = .Object@processID, verbose=FALSE)
-	checkForCompleteResponse	<-	xmlTreeParse(checkForComplete, asText = TRUE,useInternalNodes=TRUE)
-	checkResponseNS <- xmlNamespaceDefinitions(checkForCompleteResponse, simplify = TRUE) 
-	root <- xmlRoot(checkForCompleteResponse)
-	status <- sapply(xmlChildren(root[["Status"]]),xmlValue)
-	process$status	<-	status[[1]]
-	if ("Process successful" == process$status){
+	tryCatch(expr={checkForComplete=getURL(url = .Object@processID, verbose=FALSE)},finally={process$status='unknown'})
+	if (process$status!='none' & process$status!='unknown'){
+		checkForCompleteResponse	<-	xmlTreeParse(checkForComplete, asText = TRUE,useInternalNodes=TRUE)
+		checkResponseNS <- xmlNamespaceDefinitions(checkForCompleteResponse, simplify = TRUE) 
 		root <- xmlRoot(checkForCompleteResponse)
-	    process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
+		status <- sapply(xmlChildren(root[["Status"]]),xmlValue)
+		process$status	<-	status[[1]]
+		if ("Process successful" == process$status){
+			root <- xmlRoot(checkForCompleteResponse)
+		    process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
+		}
 	}
+
 	return(process)
 })
 
