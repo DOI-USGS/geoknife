@@ -11,7 +11,8 @@
   An \code{rGDP} object.
 }
 \description{
-  function for rGDP
+  method for setting the (non-feature related) post inputs
+  of the \code{rGDP} object.
 }
 \keyword{setPostInputs}
 
