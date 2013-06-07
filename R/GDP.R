@@ -168,7 +168,7 @@ setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGe
 #'method for checking the process status of an active (executed) \code{rGDP} object. 
 #'
 #'@param \code{rGDP} object with an active GDP process request.
-#'@return status of \code{rGDP} process.
+#'@return process of \code{rGDP} process.
 #'@docType methods
 #'@keywords checkProcess
 #'@export
@@ -529,8 +529,9 @@ setMethod(f = "executePost",signature = "rGDP",definition = function(.Object){
 # '@aliases checkProcess,rGDP-method
 setMethod(f = "checkProcess",signature = "rGDP",definition = function(.Object){
 	
+	process	<-	list(status=NULL,URL=NULL)
 	if (.Object@processID=="Null"){
-		status	<-	'none'
+		process$status	<-	'none'
 	}
 	else{
 		
@@ -539,15 +540,13 @@ setMethod(f = "checkProcess",signature = "rGDP",definition = function(.Object){
 	checkForCompleteResponse	<-	xmlTreeParse(checkForComplete, asText = TRUE,useInternalNodes=TRUE)
 	checkResponseNS <- xmlNamespaceDefinitions(checkForCompleteResponse, simplify = TRUE) 
 	root <- xmlRoot(checkForCompleteResponse)
-	status <- sapply(xmlChildren(root[["Status"]]), xmlName)
-	cat(status, "\n")
+	process$status <- sapply(xmlChildren(root[["Status"]]), xmlName)
 
-	if ("ProcessSucceeded" == status){
+	if ("ProcessSucceeded" == process$status){
 		root <- xmlRoot(checkForCompleteResponse)
-	    gdpURL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
-	    gdpID <- strsplit(gdpURL, "id=")[[1]][2]
-	    break
+	    process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
 	}
+	return(process)
 })
 
 # create summary method......
