@@ -514,7 +514,7 @@ setMethod(f = "executePost",signature = "rGDP",definition = function(.Object){
 	data =  getURL(url = .Object@WPS_URL,
 	               postfields=requestXML, #requestXML,
 	               httpheader=myheader,
-	               verbose=TRUE)		
+	               verbose=FALSE)		
 	xmltext  <- xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
 	response <- xmlRoot(xmltext)
 	responseNS <- xmlNamespaceDefinitions(response, simplify = TRUE)  
