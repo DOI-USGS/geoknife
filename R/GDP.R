@@ -14,7 +14,7 @@
 #' LazyLoad: \tab yes\cr
 #' }
 #'
-#' Collection of functions to do GDP calls
+#' rGDP object executes user-specified calls to geo data portal (usgs.cida.gov/gdp) and checks process status. 
 #'
 #' @name rGDP-package
 #' @docType package
@@ -532,9 +532,6 @@ setMethod(f = "checkProcess",signature = "rGDP",definition = function(.Object){
 	process	<-	list(status=NULL,URL=NULL)
 	if (.Object@processID=="Null"){
 		process$status	<-	'none'
-	}
-	else{
-		
 	}
 
 	tryCatch({checkForComplete=getURL(url = .Object@processID, verbose=FALSE)},error = function(e) {process$status='unknown'})
