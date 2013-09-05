@@ -76,7 +76,8 @@ setMethod(f="initialize",signature="rGDP",
 		default_feat= list(
 			FEATURE_COLLECTION=NULL,
 			ATTRIBUTE=NULL,
-			GML=NA)
+			GML=NA,
+			LinearRing=NA)
 		# class properties: **PRIVATE**
 		.Object@WPS_DEFAULT_VERSION = '1.0.0'
 		.Object@WFS_DEFAULT_VERSION = '1.1.0'
@@ -373,10 +374,28 @@ setMethod(f = "setPostInputs",signature = "rGDP",
 # '@aliases setFeature,rGDP-method	
 setMethod(f = "setFeature",signature = "rGDP",
 	definition = function(.Object,feature){
-		.Object@feature	<-	setList(.Object@feature,feature)
-		if ("FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){
-		.Object@postInputs	<-	setList(.Object@postInputs,
-			list("FEATURE_ATTRIBUTE_NAME"=.Object@feature$ATTRIBUTE))}
+		
+		if ("LinearRing" %in% names(feature)){
+			# if we are setting the LinearRing, all other feature elements should be wiped
+			if (length(names(feature)) > 1){
+				stop('Cannot set LinearRing and WFS components for single feature')
+			} else {
+				sw.idx	<-	names(.Object@feature)!='LinearRing'
+				hid.feature	<-	.Object@feature[sw.idx]
+				hid.feature[]	<-	'hidden'
+				# set all other elements to 'hidden'
+				.Object@feature	<-	setList(.Object@feature,hid.feature)
+				.Object@feature	<-	setList(.Object@feature,feature)
+			}
+		} else {
+			.Object@feature	<-	setList(.Object@feature,feature)
+
+			if ("FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){
+			.Object@postInputs	<-	setList(.Object@postInputs,
+				list("FEATURE_ATTRIBUTE_NAME"=.Object@feature$ATTRIBUTE))}
+		}
+	
+		
 		return(.Object)
 	})
 # '@rdname setAlgorithm-methods
@@ -567,7 +586,14 @@ setMethod(f = "print",signature = "rGDP",
 		PI	<-	x@feature
 		nms	<-	names(PI)
 		PI[is.na(PI)] = '[optional]'
-		for (i in 1:length(nms)){cat("\t-",nms[i]);cat(":",PI[[i]],"\n")}
+		for (i in 1:length(nms)){
+			# will skip "hidden"
+			if (!is.null(PI[[i]]) && PI[[i]]!='hidden'){
+				cat("\t-",nms[i]);cat(":",PI[[i]],"\n")
+			} else if (is.null(PI[[i]])){
+				cat("\t-",nms[i]);cat(":",PI[[i]],"\n")
+			}
+		}
 		cat("* processID:\t");cat(x@processID,"\n")
 		cat("**** End Print (rGDP)**** \n")
 	}
