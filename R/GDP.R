@@ -461,6 +461,8 @@ postInputsToXML	<-	function(.Object){
 	addChildren(di,inEL)
 	inIdEL   <- newXMLNode('ows:Identifier',newXMLTextNode('FEATURE_COLLECTION'))
 	addChildren(inEL,inIdEL)
+	
+	# wfs not used for GML (e.g. linear ring input)
 	inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=.Object@WFS_URL))
 	addChildren(inEL,inDatEL)
 	
