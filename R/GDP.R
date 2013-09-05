@@ -14,7 +14,7 @@
 #' LazyLoad: \tab yes\cr
 #' }
 #'
-#' Collection of functions to do GDP calls
+#' rGDP object executes user-specified calls to geo data portal (usgs.cida.gov/gdp) and checks process status. 
 #'
 #' @name rGDP-package
 #' @docType package
@@ -461,6 +461,8 @@ postInputsToXML	<-	function(.Object){
 	addChildren(di,inEL)
 	inIdEL   <- newXMLNode('ows:Identifier',newXMLTextNode('FEATURE_COLLECTION'))
 	addChildren(inEL,inIdEL)
+	
+	# wfs not used for GML (e.g. linear ring input)
 	inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=.Object@WFS_URL))
 	addChildren(inEL,inDatEL)
 	
@@ -514,7 +516,7 @@ setMethod(f = "executePost",signature = "rGDP",definition = function(.Object){
 	data =  getURL(url = .Object@WPS_URL,
 	               postfields=requestXML, #requestXML,
 	               httpheader=myheader,
-	               verbose=TRUE)		
+	               verbose=FALSE)		
 	xmltext  <- xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
 	response <- xmlRoot(xmltext)
 	responseNS <- xmlNamespaceDefinitions(response, simplify = TRUE)  
@@ -533,19 +535,20 @@ setMethod(f = "checkProcess",signature = "rGDP",definition = function(.Object){
 	if (.Object@processID=="Null"){
 		process$status	<-	'none'
 	}
-	else{
-		
-	}
-	checkForComplete	<-	getURL(url = .Object@processID, verbose=FALSE)
-	checkForCompleteResponse	<-	xmlTreeParse(checkForComplete, asText = TRUE,useInternalNodes=TRUE)
-	checkResponseNS <- xmlNamespaceDefinitions(checkForCompleteResponse, simplify = TRUE) 
-	root <- xmlRoot(checkForCompleteResponse)
-	status <- sapply(xmlChildren(root[["Status"]]),xmlValue)
-	process$status	<-	status[[1]]
-	if ("Process successful" == process$status){
+
+	tryCatch({checkForComplete=getURL(url = .Object@processID, verbose=FALSE)},error = function(e) {process$status='unknown'})
+	if (is.null(process$status)){
+		checkForCompleteResponse	<-	xmlTreeParse(checkForComplete, asText = TRUE,useInternalNodes=TRUE)
+		checkResponseNS <- xmlNamespaceDefinitions(checkForCompleteResponse, simplify = TRUE) 
 		root <- xmlRoot(checkForCompleteResponse)
-	    process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
+		status <- sapply(xmlChildren(root[["Status"]]),xmlValue)
+		process$status	<-	status[[1]]
+		if ("Process successful" == process$status){
+			root <- xmlRoot(checkForCompleteResponse)
+		    process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
+		}
 	}
+
 	return(process)
 })
 
