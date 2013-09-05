@@ -479,35 +479,75 @@ postInputsToXML	<-	function(.Object){
 	# complex data
 	inEL	<-	newXMLNode("wps:Input")
 	addChildren(di,inEL)
+	
 	inIdEL   <- newXMLNode('ows:Identifier',newXMLTextNode('FEATURE_COLLECTION'))
 	addChildren(inEL,inIdEL)
-	inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=.Object@WFS_URL))
-	addChildren(inEL,inDatEL)
-	
-	bodyEL   <-	newXMLNode('wps:Body')
-	addChildren(inDatEL,bodyEL)
-	
-	featEL   <-	newXMLNode('wfs:GetFeature',attrs=c("service"="WFS",
-		"version"=.Object@WFS_DEFAULT_VERSION,
-		"outputFormat"="text/xml; subtype=gml/3.1.1",
-		"xsi:schemaLocation"=.Object@XSI_SCHEMA_LOCATION),
-		namespaceDefinitions=c("wfs"=.Object@WFS_NAMESPACE,
-		"ogc"=.Object@OGC_NAMESPACE,
-		"gml"=.Object@GML_NAMESPACE,
-		"xsi"=.Object@XSI_NAMESPACE))
-	addChildren(bodyEL,featEL)
-	queryEL  <-	newXMLNode('wfs:Query',attrs=c("typeName"=as.character(.Object@feature['FEATURE_COLLECTION'])))
-	addChildren(featEL,queryEL)
-	propNmEL <-	newXMLNode('wfs:PropertyName',newXMLTextNode('the_geom'))
-	addChildren(queryEL,propNmEL)
-	propNmEL<-	newXMLNode('wfs:PropertyName',newXMLTextNode(.Object@feature['ATTRIBUTE']))
-	addChildren(queryEL,propNmEL)
-	if (any(names(.Object@feature)=='GML') & !is.na(.Object@feature['GML'])){
-		filterEL	<-	newXMLNode('ogc:Filter')
-		addChildren(queryEL,filterEL)
-		gmlObEL	<-	newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=.Object@feature['GML']))
-		addChildren(filterEL,gmlObEL)
-	}	
+	# use WFS or LinearRing?
+	if (.Object@feature$LinearRing=='hidden' || is.na(.Object@feature$LinearRing)){
+		
+		inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=.Object@WFS_URL))
+		addChildren(inEL,inDatEL)
+
+		bodyEL   <-	newXMLNode('wps:Body')
+		addChildren(inDatEL,bodyEL)
+
+		featEL   <-	newXMLNode('wfs:GetFeature',attrs=c("service"="WFS",
+			"version"=.Object@WFS_DEFAULT_VERSION,
+			"outputFormat"="text/xml; subtype=gml/3.1.1",
+			"xsi:schemaLocation"=.Object@XSI_SCHEMA_LOCATION),
+			namespaceDefinitions=c("wfs"=.Object@WFS_NAMESPACE,
+			"ogc"=.Object@OGC_NAMESPACE,
+			"gml"=.Object@GML_NAMESPACE,
+			"xsi"=.Object@XSI_NAMESPACE))
+		addChildren(bodyEL,featEL)
+		queryEL  <-	newXMLNode('wfs:Query',attrs=c("typeName"=as.character(.Object@feature['FEATURE_COLLECTION'])))
+		addChildren(featEL,queryEL)
+		propNmEL <-	newXMLNode('wfs:PropertyName',newXMLTextNode('the_geom'))
+		addChildren(queryEL,propNmEL)
+		propNmEL<-	newXMLNode('wfs:PropertyName',newXMLTextNode(.Object@feature['ATTRIBUTE']))
+		addChildren(queryEL,propNmEL)
+		if (any(names(.Object@feature)=='GML') & !is.na(.Object@feature['GML'])){
+			filterEL	<-	newXMLNode('ogc:Filter')
+			addChildren(queryEL,filterEL)
+			gmlObEL	<-	newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=.Object@feature['GML']))
+			addChildren(filterEL,gmlObEL)
+		}
+	} else {
+		inDatEL	<-	newXMLNode('wps:Data')
+		addChildren(inEL,inDatEL)
+		
+		compDatEL	<-	newXMLNode('wps:ComplexData',attrs=c("mimeType"="text/xml","encoding"="UTF-8",
+			"schema"="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd")) # schema needed?
+		addChildren(compDatEL,inEL)
+		
+		gmlFeatEL	<-	newXMLNode('gml:featureMembers',namespaceDefinitions=c("gml"="http://www.opengis.net/gml"))
+		addChildren(gmlFeatEL,compDatEL)
+		
+		gmlBoxEL	<-	newXMLNode('gml:box',attrs=c("gml:id"="box.1"))
+		addChildren(gmlBoxEL,gmlFeatEL)
+		
+		gmlGeomEL	<-	newXMLNode('gml:the_geom')
+		addChildren(gmlGeomEL,gmlBoxEL)
+		
+		gmlPolyEL	<-	newXMLNode('gml:MultiPolygon',attrs=c("srsDimension"="2","srsName"="http://www.opengis.net/gml/srs/epsg.xml#4326"))
+		addChildren(gmlPolyEL,gmlGeomEL)
+		
+		gmlPmEL	<-	newXMLNode('gml:polygonMember')
+		addChildren(gmlPmEL,gmlPolyEL)
+		
+		gmlPgEL	<-	newXMLNode('gml:Polygon')
+		addChildren(gmlPgEL,gmlPmEL)
+		
+		gmlExEL	<-	newXMLNode('gml:exterior')
+		addChildren(gmlExEL,gmlPgEL)
+		
+		gmlLrEL	<-	newXMLNode('gml:LinearRing')
+		addChildren(gmlLrEL,gmlExEL)
+		
+		gmlPosEL	<-	newXMLNode('gml:posList',newXMLTextNode(paste(.Object@feature['LinerRing'],collapse=" "))
+		addChildren(gmlPosEL,gmlLrEL)
+	}
+		
 	resForm	<-	newXMLNode('wps:ResponseForm')
 	addChildren(top,resForm)
 	
