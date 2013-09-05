@@ -388,8 +388,9 @@ setMethod(f = "setFeature",signature = "rGDP",
 				.Object@feature	<-	setList(.Object@feature,feature)
 			}
 		} else {
+			hid.feature	<-	list(LinearRing='hidden')
 			.Object@feature	<-	setList(.Object@feature,feature)
-
+			.Object@feature	<-	setList(.Object@feature,hid.feature)
 			if ("FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){
 			.Object@postInputs	<-	setList(.Object@postInputs,
 				list("FEATURE_ATTRIBUTE_NAME"=.Object@feature$ATTRIBUTE))}
