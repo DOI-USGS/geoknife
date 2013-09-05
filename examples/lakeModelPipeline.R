@@ -30,7 +30,7 @@ GDP_canopy  <-  executePost(GDP_canopy)
 GDP_driver  <-  setPostInputs(rGDP,list('DATASET_ID'='Downward_shortwave_radiation_flux_surface',
                                         'DATASET_URI'='dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best',
                                         'TIME_START'='1979-01-02T00:00:00Z',
-                                        'TIME_END'='1979-01-31T23:00:00Z',
+                                        'TIME_END'='1980-01-01T23:00:00Z',
                                         'DELIMITER'='TAB'))
 
 GDP_driver  <-  executePost(GDP_driver)
