@@ -76,7 +76,8 @@ setMethod(f="initialize",signature="rGDP",
 		default_feat= list(
 			FEATURE_COLLECTION=NULL,
 			ATTRIBUTE=NULL,
-			GML=NA)
+			GML=NA,
+			LinearRing=NA)
 		# class properties: **PRIVATE**
 		.Object@WPS_DEFAULT_VERSION = '1.0.0'
 		.Object@WFS_DEFAULT_VERSION = '1.1.0'
@@ -367,16 +368,39 @@ setMethod(f = "setPostInputs",signature = "rGDP",
 			postInputs["DATASET_URI"]	<-	gsub('http', 'dods', postInputs["DATASET_URI"])
 		}
 		.Object@postInputs	<-	setList(.Object@postInputs,postInputs)
+		if ("LinearRing" %in% names(.Object@feature) && "FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){
+			.Object@postInputs$FEATURE_ATTRIBUTE_NAME	<-	'the_geom'
+		}
 		return(.Object)
 	})
 # '@rdname setFeature-methods
 # '@aliases setFeature,rGDP-method	
 setMethod(f = "setFeature",signature = "rGDP",
 	definition = function(.Object,feature){
-		.Object@feature	<-	setList(.Object@feature,feature)
-		if ("FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){
-		.Object@postInputs	<-	setList(.Object@postInputs,
-			list("FEATURE_ATTRIBUTE_NAME"=.Object@feature$ATTRIBUTE))}
+		
+		if ("LinearRing" %in% names(feature)){
+			# if we are setting the LinearRing, all other feature elements should be wiped
+			if (length(names(feature)) > 1){
+				stop('Cannot set LinearRing and WFS components for single feature')
+			} else {
+				sw.idx	<-	names(.Object@feature)!='LinearRing'
+				hid.feature	<-	.Object@feature[sw.idx]
+				hid.feature[]	<-	'hidden'
+				# set all other elements to 'hidden'
+				.Object@feature	<-	setList(.Object@feature,hid.feature)
+				.Object@feature	<-	setList(.Object@feature,feature)
+
+			}
+		} else {
+			hid.feature	<-	list(LinearRing='hidden')
+			.Object@feature	<-	setList(.Object@feature,feature)
+			.Object@feature	<-	setList(.Object@feature,hid.feature)
+			if ("FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){
+			.Object@postInputs	<-	setList(.Object@postInputs,
+				list("FEATURE_ATTRIBUTE_NAME"=.Object@feature$ATTRIBUTE))}
+		}
+	
+		
 		return(.Object)
 	})
 # '@rdname setAlgorithm-methods
@@ -432,7 +456,7 @@ postInputsToXML	<-	function(.Object){
 	top    <-	newXMLNode(name='wps:Execute',attrs=c('service'="WPS",'version'=.Object@WPS_DEFAULT_VERSION,
 		'xsi:schemaLocation'=paste(c(.Object@WPS_DEFAULT_NAMESPACE,.Object@WPS_SCHEMA_LOCATION),collapse=" ")),
 		namespaceDefinitions=c('wps'=.Object@WPS_DEFAULT_NAMESPACE,'ows'=.Object@OWS_DEFAULT_NAMESPACE,
-		'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE))
+		'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE)) # parameterize this...
 	
 	
 	id	<-	newXMLNode("ows:Identifier",newXMLTextNode(.Object@algorithm),parent=top)
@@ -459,37 +483,77 @@ postInputsToXML	<-	function(.Object){
 	# complex data
 	inEL	<-	newXMLNode("wps:Input")
 	addChildren(di,inEL)
+	
 	inIdEL   <- newXMLNode('ows:Identifier',newXMLTextNode('FEATURE_COLLECTION'))
 	addChildren(inEL,inIdEL)
-	
-	# wfs not used for GML (e.g. linear ring input)
-	inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=.Object@WFS_URL))
-	addChildren(inEL,inDatEL)
-	
-	bodyEL   <-	newXMLNode('wps:Body')
-	addChildren(inDatEL,bodyEL)
-	
-	featEL   <-	newXMLNode('wfs:GetFeature',attrs=c("service"="WFS",
-		"version"=.Object@WFS_DEFAULT_VERSION,
-		"outputFormat"="text/xml; subtype=gml/3.1.1",
-		"xsi:schemaLocation"=.Object@XSI_SCHEMA_LOCATION),
-		namespaceDefinitions=c("wfs"=.Object@WFS_NAMESPACE,
-		"ogc"=.Object@OGC_NAMESPACE,
-		"gml"=.Object@GML_NAMESPACE,
-		"xsi"=.Object@XSI_NAMESPACE))
-	addChildren(bodyEL,featEL)
-	queryEL  <-	newXMLNode('wfs:Query',attrs=c("typeName"=as.character(.Object@feature['FEATURE_COLLECTION'])))
-	addChildren(featEL,queryEL)
-	propNmEL <-	newXMLNode('wfs:PropertyName',newXMLTextNode('the_geom'))
-	addChildren(queryEL,propNmEL)
-	propNmEL<-	newXMLNode('wfs:PropertyName',newXMLTextNode(.Object@feature['ATTRIBUTE']))
-	addChildren(queryEL,propNmEL)
-	if (any(names(.Object@feature)=='GML') & !is.na(.Object@feature['GML'])){
-		filterEL	<-	newXMLNode('ogc:Filter')
-		addChildren(queryEL,filterEL)
-		gmlObEL	<-	newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=.Object@feature['GML']))
-		addChildren(filterEL,gmlObEL)
-	}	
+
+	# use WFS or LinearRing?
+	if (.Object@feature$LinearRing=='hidden' || is.na(.Object@feature$LinearRing)){
+		
+		inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=.Object@WFS_URL))
+		addChildren(inEL,inDatEL)
+
+		bodyEL   <-	newXMLNode('wps:Body')
+		addChildren(inDatEL,bodyEL)
+
+		featEL   <-	newXMLNode('wfs:GetFeature',attrs=c("service"="WFS",
+			"version"=.Object@WFS_DEFAULT_VERSION,
+			"outputFormat"="text/xml; subtype=gml/3.1.1",
+			"xsi:schemaLocation"=.Object@XSI_SCHEMA_LOCATION),
+			namespaceDefinitions=c("wfs"=.Object@WFS_NAMESPACE,
+			"ogc"=.Object@OGC_NAMESPACE,
+			"gml"=.Object@GML_NAMESPACE,
+			"xsi"=.Object@XSI_NAMESPACE))
+		addChildren(bodyEL,featEL)
+		queryEL  <-	newXMLNode('wfs:Query',attrs=c("typeName"=as.character(.Object@feature['FEATURE_COLLECTION'])))
+		addChildren(featEL,queryEL)
+		propNmEL <-	newXMLNode('wfs:PropertyName',newXMLTextNode('the_geom'))
+		addChildren(queryEL,propNmEL)
+		propNmEL<-	newXMLNode('wfs:PropertyName',newXMLTextNode(.Object@feature['ATTRIBUTE']))
+		addChildren(queryEL,propNmEL)
+		if (any(names(.Object@feature)=='GML') & !is.na(.Object@feature['GML'])){
+			filterEL	<-	newXMLNode('ogc:Filter')
+			addChildren(queryEL,filterEL)
+			gmlObEL	<-	newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=.Object@feature['GML']))
+			addChildren(filterEL,gmlObEL)
+		}
+	} else {
+		inDatEL	<-	newXMLNode('wps:Data')
+		addChildren(inEL,inDatEL)
+		
+		compDatEL	<-	newXMLNode('wps:ComplexData',attrs=c("mimeType"="text/xml",#,"encoding"="UTF-8",
+			"schema"="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd")) # schema needed?
+		addChildren(inDatEL,compDatEL)
+		
+		gmlFeatEL	<-	newXMLNode('gml:featureMembers',namespaceDefinitions=c('gml'="http://www.opengis.net/gml"),
+			attrs=c("xsi:schemaLocation"="gov.usgs.cida.gdp.draw http://cida.usgs.gov/qa/climate/derivative/xsd/draw.xsd"))
+		addChildren(compDatEL,gmlFeatEL)
+		
+		gmlBoxEL	<-	newXMLNode('gml:box',attrs=c("gml:id"="box.1"))
+		addChildren(gmlFeatEL,gmlBoxEL) # fail
+		
+		gmlGeomEL	<-	newXMLNode('gml:the_geom') # fail...
+		addChildren(gmlBoxEL,gmlGeomEL)
+		
+		gmlPolyEL	<-	newXMLNode('gml:MultiPolygon',attrs=c("srsDimension"="2","srsName"="http://www.opengis.net/gml/srs/epsg.xml#4326"))
+		addChildren(gmlGeomEL,gmlPolyEL)
+		
+		gmlPmEL	<-	newXMLNode('gml:polygonMember')
+		addChildren(gmlPolyEL,gmlPmEL)
+		
+		gmlPgEL	<-	newXMLNode('gml:Polygon')
+		addChildren(gmlPmEL,gmlPgEL)
+		
+		gmlExEL	<-	newXMLNode('gml:exterior')
+		addChildren(gmlPgEL,gmlExEL)
+		
+		gmlLrEL	<-	newXMLNode('gml:LinearRing')
+		addChildren(gmlExEL,gmlLrEL)
+		
+		gmlPosEL	<-	newXMLNode('gml:posList',newXMLTextNode(paste(.Object@feature[['LinearRing']],collapse=" ")))
+		addChildren(gmlLrEL,gmlPosEL)
+	}
+		
 	resForm	<-	newXMLNode('wps:ResponseForm')
 	addChildren(top,resForm)
 	
@@ -569,7 +633,14 @@ setMethod(f = "print",signature = "rGDP",
 		PI	<-	x@feature
 		nms	<-	names(PI)
 		PI[is.na(PI)] = '[optional]'
-		for (i in 1:length(nms)){cat("\t-",nms[i]);cat(":",PI[[i]],"\n")}
+		for (i in 1:length(nms)){
+			# will skip "hidden"
+			if (!is.null(PI[[i]]) && PI[[i]]!='hidden'){
+				cat("\t-",nms[i]);cat(":",PI[[i]],"\n")
+			} else if (is.null(PI[[i]])){
+				cat("\t-",nms[i]);cat(":",PI[[i]],"\n")
+			}
+		}
 		cat("* processID:\t");cat(x@processID,"\n")
 		cat("**** End Print (rGDP)**** \n")
 	}
