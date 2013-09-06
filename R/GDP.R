@@ -368,7 +368,7 @@ setMethod(f = "setPostInputs",signature = "rGDP",
 			postInputs["DATASET_URI"]	<-	gsub('http', 'dods', postInputs["DATASET_URI"])
 		}
 		.Object@postInputs	<-	setList(.Object@postInputs,postInputs)
-		if ("LinearRing" %in% names(.Object@feature) && "FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){){
+		if ("LinearRing" %in% names(.Object@feature) && "FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){
 			.Object@postInputs$FEATURE_ATTRIBUTE_NAME	<-	'the_geom'
 		}
 		return(.Object)

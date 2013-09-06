@@ -16,7 +16,8 @@
   LazyLoad: \tab yes\cr }
 }
 \details{
-  Collection of functions to do GDP calls
+  rGDP object executes user-specified calls to geo data
+  portal (usgs.cida.gov/gdp) and checks process status.
 }
 \author{
   Jordan Read \email{jread@usgs.gov}

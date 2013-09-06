@@ -1,7 +1,7 @@
 Package: rGDP
 Type: Package
 Title: GDP tools for R
-Version: 0.0.1
+Version: 0.0.3
 Date: 2013-05-23
 Author: Jordan S Read
 Maintainer: Jordan S Read <jread@usgs.gov>
