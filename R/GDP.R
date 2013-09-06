@@ -368,6 +368,9 @@ setMethod(f = "setPostInputs",signature = "rGDP",
 			postInputs["DATASET_URI"]	<-	gsub('http', 'dods', postInputs["DATASET_URI"])
 		}
 		.Object@postInputs	<-	setList(.Object@postInputs,postInputs)
+		if ("LinearRing" %in% names(.Object@feature) && "FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){){
+			.Object@postInputs$FEATURE_ATTRIBUTE_NAME	<-	'the_geom'
+		}
 		return(.Object)
 	})
 # '@rdname setFeature-methods
@@ -386,6 +389,7 @@ setMethod(f = "setFeature",signature = "rGDP",
 				# set all other elements to 'hidden'
 				.Object@feature	<-	setList(.Object@feature,hid.feature)
 				.Object@feature	<-	setList(.Object@feature,feature)
+
 			}
 		} else {
 			hid.feature	<-	list(LinearRing='hidden')
@@ -516,11 +520,12 @@ postInputsToXML	<-	function(.Object){
 		inDatEL	<-	newXMLNode('wps:Data')
 		addChildren(inEL,inDatEL)
 		
-		compDatEL	<-	newXMLNode('wps:ComplexData',attrs=c("mimeType"="text/xml","encoding"="UTF-8",
+		compDatEL	<-	newXMLNode('wps:ComplexData',attrs=c("mimeType"="text/xml",#,"encoding"="UTF-8",
 			"schema"="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd")) # schema needed?
 		addChildren(inDatEL,compDatEL)
 		
-		gmlFeatEL	<-	newXMLNode('gml:featureMembers',namespaceDefinitions=c('gml'="http://www.opengis.net/gml"))
+		gmlFeatEL	<-	newXMLNode('gml:featureMembers',namespaceDefinitions=c('gml'="http://www.opengis.net/gml"),
+			attrs=c("xsi:schemaLocation"="gov.usgs.cida.gdp.draw http://cida.usgs.gov/qa/climate/derivative/xsd/draw.xsd"))
 		addChildren(compDatEL,gmlFeatEL)
 		
 		gmlBoxEL	<-	newXMLNode('gml:box',attrs=c("gml:id"="box.1"))
