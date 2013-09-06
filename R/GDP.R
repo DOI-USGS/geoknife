@@ -486,6 +486,7 @@ postInputsToXML	<-	function(.Object){
 	
 	inIdEL   <- newXMLNode('ows:Identifier',newXMLTextNode('FEATURE_COLLECTION'))
 	addChildren(inEL,inIdEL)
+
 	# use WFS or LinearRing?
 	if (.Object@feature$LinearRing=='hidden' || is.na(.Object@feature$LinearRing)){
 		
