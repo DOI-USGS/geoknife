@@ -574,7 +574,7 @@ postInputsToXML	<-	function(.Object){
 # '@rdname executePost-methods
 # '@aliases executePost,rGDP-method
 setMethod(f = "executePost",signature = "rGDP",definition = function(.Object){
-	requestXML	<-	postInputsToXML(.Object)
+	requestXML	<-	suppressWarnings(postInputsToXML(.Object))
 	myheader	<-	c(Connection="close", 
 	          			'Content-Type' = "application/xml")#text/xml?
 	
