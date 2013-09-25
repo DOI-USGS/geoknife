@@ -1,0 +1,8 @@
+Package: rGDP
+Version: 0.0.4
+Depends: R (>= 2.15.0)
+Imports: XML, RCurl, methods
+License: file LICENSE
+MD5sum: 4dc06ec14ed15a7fff0fcbf7efda0b97
+NeedsCompilation: no
+
