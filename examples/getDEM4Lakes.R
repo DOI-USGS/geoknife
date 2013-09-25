@@ -33,7 +33,22 @@ print(rGDP)
 # execute what you have
 rGDP	<-	executePost(rGDP)
 
-checkProcess(rGDP)
-# the file available from the "processID" link
-# if it is incomplete, check it again
-# next, download and parse 
+status.rGDP  <-  checkProcess(rGDP)
+
+cat('checking status of GDP request. Large complex requests take longer to process.\n')
+repeat{
+	if (!is.null(status.rGDP$URL) | status.rGDP$status!=""){
+	    break
+	  }
+  cat('checking process...\n')
+  Sys.sleep(10)
+  if (is.null(status.rGDP$URL)){
+    status.rGDP  <-  checkProcess(rGDP)
+  }
+}
+
+if (status.rGDP$status=='Process successful'){
+	cat(paste(status.rGDP$status,'\nDownload available at: ',status.rGDP$URL,sep=''))
+} else {
+	cat(status.rGDP$status)
+}
