@@ -5,4 +5,5 @@ R tools for accessing processing features of the USGS's Geo Data Portal (GDP). S
 
 =====
 install this package using 
+
 	install.packages("rGDP", repos="http://USGS-R.github.com/rGDP",type='source')
