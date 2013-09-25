@@ -453,10 +453,12 @@ getPostInputs	<-	function(.Object){
 }
 
 postInputsToXML	<-	function(.Object){
+	
+	
 	top    <-	newXMLNode(name='wps:Execute',attrs=c('service'="WPS",'version'=.Object@WPS_DEFAULT_VERSION,
 		'xsi:schemaLocation'=paste(c(.Object@WPS_DEFAULT_NAMESPACE,.Object@WPS_SCHEMA_LOCATION),collapse=" ")),
 		namespaceDefinitions=c('wps'=.Object@WPS_DEFAULT_NAMESPACE,'ows'=.Object@OWS_DEFAULT_NAMESPACE,
-		'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE)) # parameterize this...
+		'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE)) 
 	
 	
 	id	<-	newXMLNode("ows:Identifier",newXMLTextNode(.Object@algorithm),parent=top)
@@ -520,7 +522,7 @@ postInputsToXML	<-	function(.Object){
 	} else {
 		inDatEL	<-	newXMLNode('wps:Data')
 		addChildren(inEL,inDatEL)
-		
+		# parameterize this...
 		compDatEL	<-	newXMLNode('wps:ComplexData',attrs=c("mimeType"="text/xml",#,"encoding"="UTF-8",
 			"schema"="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd")) # schema needed?
 		addChildren(inDatEL,compDatEL)
@@ -530,9 +532,9 @@ postInputsToXML	<-	function(.Object){
 		addChildren(compDatEL,gmlFeatEL)
 		
 		gmlBoxEL	<-	newXMLNode('gml:box',attrs=c("gml:id"="box.1"))
-		addChildren(gmlFeatEL,gmlBoxEL) # fail
+		addChildren(gmlFeatEL,gmlBoxEL) 
 		
-		gmlGeomEL	<-	newXMLNode('gml:the_geom') # fail...
+		gmlGeomEL	<-	newXMLNode('gml:the_geom') 
 		addChildren(gmlBoxEL,gmlGeomEL)
 		
 		gmlPolyEL	<-	newXMLNode('gml:MultiPolygon',attrs=c("srsDimension"="2","srsName"="http://www.opengis.net/gml/srs/epsg.xml#4326"))
@@ -572,19 +574,18 @@ postInputsToXML	<-	function(.Object){
 # '@rdname executePost-methods
 # '@aliases executePost,rGDP-method
 setMethod(f = "executePost",signature = "rGDP",definition = function(.Object){
-	
 	requestXML	<-	postInputsToXML(.Object)
-	myheader=c(Connection="close", 
-	          'Content-Type' = "application/xml")#text/xml?
+	myheader	<-	c(Connection="close", 
+	          			'Content-Type' = "application/xml")#text/xml?
 	
-	data =  getURL(url = .Object@WPS_URL,
-	               postfields=requestXML, #requestXML,
+	data	<-	getURL(url = .Object@WPS_URL,
+	               postfields=requestXML,
 	               httpheader=myheader,
 	               verbose=FALSE)		
-	xmltext  <- xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
-	response <- xmlRoot(xmltext)
-	responseNS <- xmlNamespaceDefinitions(response, simplify = TRUE)  
-	processID <- xmlGetAttr(response,"statusLocation")
+	xmltext 	<-	xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
+	response	<-	xmlRoot(xmltext)
+	responseNS	<-	xmlNamespaceDefinitions(response, simplify = TRUE)  
+	processID	<-	xmlGetAttr(response,"statusLocation")
 	
 	.Object	<-	setProcessID(.Object,processID)
 	return(.Object)
