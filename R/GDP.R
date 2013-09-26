@@ -367,6 +367,11 @@ setMethod(f = "setPostInputs",signature = "rGDP",
 			grepl('dodsC',postInputs["DATASET_URI"])){
 			postInputs["DATASET_URI"]	<-	gsub('http', 'dods', postInputs["DATASET_URI"])
 		}
+		if (("DATASET_URI" %in% names(postInputs)) & 
+			!is.null(postInputs["DATASET_URI"]) & 
+			grepl('opendap',postInputs["DATASET_URI"])){
+			postInputs["DATASET_URI"]	<-	gsub('http', 'opendap', postInputs["DATASET_URI"])
+		}
 		.Object@postInputs	<-	setList(.Object@postInputs,postInputs)
 		if ("LinearRing" %in% names(.Object@feature) && "FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){
 			.Object@postInputs$FEATURE_ATTRIBUTE_NAME	<-	'the_geom'
