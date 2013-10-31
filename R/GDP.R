@@ -383,6 +383,10 @@ setMethod(f = "setWPS",signature="rGDP",
 # '@aliases setPostInputs,rGDP-method	
 setMethod(f = "setPostInputs",signature = "rGDP",
 	definition = function(.Object,postInputs){
+		if ("empty" %in% names(.Object@postInputs)){
+			stop('an algorithm must be chosen before setting postInputs')
+		}
+		
 		if (("DATASET_URI" %in% names(postInputs)) & 
 			!is.null(postInputs["DATASET_URI"]) & 
 			grepl('dodsC',postInputs["DATASET_URI"])){
