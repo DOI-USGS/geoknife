@@ -356,9 +356,15 @@ setMethod(f = "getValues",signature="rGDP",
 setMethod(f = "getDataIDs",signature="rGDP",
 	definition = function(.Object){
 		# should fail with no PostInputs set!!!! (does not yet...)
-
-			algorithm	<-	'gov.usgs.cida.gdp.wps.algorithm.discovery.ListOpendapGrids'
-			requestXML	<-	generateRequest(.Object, algorithm)
+			if ("DATASET_URI" %in% names(.Object@postInputs)){
+				algorithm	<-	.Object@dataList
+				requestXML	<-	generateRequest(.Object, algorithm)
+				url = .Object@UTILITY_URL
+				genericExecute(url,requestXML)
+			} else {
+				stop('must have a DATASET_URI set as a postInput')
+			}
+			
 	})	
 
 
@@ -449,6 +455,7 @@ generateRequest	<-	function(.Object, algorithm){
 			'xsi:schemaLocation'=paste(c(.Object@WPS_DEFAULT_NAMESPACE,.Object@WPS_SCHEMA_LOCATION),collapse=" ")),
 			namespaceDefinitions=c('wps'=.Object@WPS_DEFAULT_NAMESPACE,'ows'=.Object@OWS_DEFAULT_NAMESPACE,
 			'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE))
+			
 		id	<-	newXMLNode("ows:Identifier",newXMLTextNode(algorithm),parent=top) #algorithm gov.usgs.cida.gdp.wps.algorithm.discovery.ListOpendapGrids
 		di	<-	newXMLNode("wps:DataInputs",parent=top)
 		addChildren(top,c(id,di))
@@ -478,8 +485,30 @@ generateRequest	<-	function(.Object, algorithm){
 		wpo	<-	newXMLNode("wps:Output",parent=wrd)
 		owi	<-	newXMLNode("ows:Identifier",newXMLTextNode("result"),parent=wpo)
 		addChildren(top,wrf)
-		requestXML <-toString.XMLNode(xmlDoc(top))
+		requestXML	<-	toString.XMLNode(xmlDoc(top))
+
 		return(requestXML)
+}
+
+genericExecute	<-	function(url,requestXML){
+	myheader	<-	c(Connection="close", 
+	          			'Content-Type' = "application/xml")
+	
+	data	<-	 getURL(url = url,
+	               postfields=requestXML,
+	               httpheader=myheader,
+	               verbose=FALSE)		
+	xmltext 	<-	xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
+	response	<-	xmlRoot(xmltext)
+	responseNS	<-	xmlNamespaceDefinitions(response, simplify = TRUE)  
+	print(response)
+
+	#response	<-	xmlRoot(xmltext)
+	#responseNS	<-	xmlNamespaceDefinitions(response, simplify = TRUE)  
+	#processID	<-	xmlGetAttr(response,"statusLocation")
+	
+	#.Object	<-	setProcessID(.Object,processID)
+	#return(.Object)
 }
 
 setList	<-	function(ObjectField,varList){
