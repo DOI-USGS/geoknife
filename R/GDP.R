@@ -164,6 +164,16 @@ setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric(
 #'@keywords getValues
 #'@export
 setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGeneric("getValues")})
+#'getDataIDs
+#'
+#'a \code{rGDP} method for finding dataset IDs (values) for an rGDP object with a valid URI. 
+#'
+#'@param \code{rGDP} object with a valid dataset URI.
+#'@return list of dataset IDs for the \code{rGDP} dataset URI.
+#'@docType methods
+#'@keywords getDataIDs
+#'@export
+setGeneric(name="getDataIDs",def=function(.Object){standardGeneric("getDataIDs")})
 #'checkProcess
 #'
 #'method for checking the process status of an active (executed) \code{rGDP} object. 
@@ -345,31 +355,11 @@ setMethod(f = "getValues",signature="rGDP",
 # '@aliases getDataIDs,rGDP-method
 setMethod(f = "getDataIDs",signature="rGDP",
 	definition = function(.Object){
-		# should fail with no PostInputs set
-		
+		# should fail with no PostInputs set!!!! (does not yet...)
 
-		
-		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
-			.Object@WFS_DEFAULT_VERSION,'&request=GetFeature',
-			'&info_format=text%2Fxml&typename=',shapefile,
-			'&propertyname=',attribute),collapse="")
-		values	<-	parseXMLvalues(processURL,attribute)
-		return(values)
+			algorithm	<-	'gov.usgs.cida.gdp.wps.algorithm.discovery.ListOpendapGrids'
+			requestXML	<-	generateRequest(.Object, algorithm)
 	})	
-
-
-# '@rdname getDataType-methods
-# '@aliases getDataType,rGDP-method
-setMethod(f = "getDataType",signature="rGDP",
-		definition = function(.Object){	
-#	        """
-#	        Set up a get Data type request given a dataSetURI. Returns a list of all available data types.
-#	        If verbose = True, will print on screen the waiting seq. for response document.
-#	        """
-#
-		algorithm	<-	'gov.usgs.cida.gdp.wps.algorithm.discovery.ListOpendapGrids'
-		requestXML	<-	generateRequest(.Object, algorithm)
-}
 
 
 # '@rdname setWFS-methods
