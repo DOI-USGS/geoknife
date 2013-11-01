@@ -360,11 +360,15 @@ setMethod(f = "getDataIDs",signature="rGDP",
 				algorithm	<-	.Object@dataList
 				requestXML	<-	generateRequest(.Object, algorithm)
 				url = .Object@UTILITY_URL
-				genericExecute(url,requestXML)
+				responseXML	<-	genericExecute(url,requestXML)
 			} else {
 				stop('must have a DATASET_URI set as a postInput')
 			}
-			
+			# get complex data
+			cData	<-	xmlValue(getNodeSet(responseXML, "//ns:LiteralData")[[1]])
+			cDataXML	<-	xmlInternalTreeParse(cData)
+			dataIDs	<-	sapply(getNodeSet(cDataXML,"//gdp:name"),xmlValue)
+			return(dataIDs)
 	})	
 
 
@@ -500,8 +504,7 @@ genericExecute	<-	function(url,requestXML){
 	               verbose=FALSE)		
 	xmltext 	<-	xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
 	response	<-	xmlRoot(xmltext)
-	responseNS	<-	xmlNamespaceDefinitions(response, simplify = TRUE)  
-	print(response)
+	return(response)
 
 	#response	<-	xmlRoot(xmltext)
 	#responseNS	<-	xmlNamespaceDefinitions(response, simplify = TRUE)  
