@@ -87,7 +87,7 @@ setMethod(f="initialize",signature="rGDP",
 		.Object@WPS_SCHEMA_LOCATION = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
 		.Object@XSI_SCHEMA_LOCATION = 'http://www.opengis.net/wfs ../wfs/1.1.0/WFS.xsd'
 		.Object@GML_SCHEMA_LOCATION = 'http://schemas.opengis.net/gml/3.1.1/base/feature.xsd'
-		.Object@DRAW_SCHEMA_LOCATION = 'http://cida.usgs.gov/qa/climate/derivative/xsd/draw.xsd'
+		.Object@DRAW_SCHEMA_LOCATION = 'http://cida.usgs.gov/climate/derivative/xsd/draw.xsd'
 		# *namesspace definitions
 		.Object@WFS_NAMESPACE   = 'http://www.opengis.net/wfs'
 		.Object@OGC_NAMESPACE   = 'http://www.opengis.net/ogc'
@@ -169,11 +169,12 @@ setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGe
 #'a \code{rGDP} method for finding dataset IDs (values) for an rGDP object with a valid URI. 
 #'
 #'@param \code{rGDP} object with a valid dataset URI.
+#'@param cachedResponse an optional input to allow cached response. Default as FALSE
 #'@return list of dataset IDs for the \code{rGDP} dataset URI.
 #'@docType methods
 #'@keywords getDataIDs
 #'@export
-setGeneric(name="getDataIDs",def=function(.Object){standardGeneric("getDataIDs")})
+setGeneric(name="getDataIDs",def=function(.Object,cachedResponse){standardGeneric("getDataIDs")})
 #'checkProcess
 #'
 #'method for checking the process status of an active (executed) \code{rGDP} object. 
@@ -354,11 +355,15 @@ setMethod(f = "getValues",signature="rGDP",
 # '@rdname getDataIDs-methods
 # '@aliases getDataIDs,rGDP-method
 setMethod(f = "getDataIDs",signature="rGDP",
-	definition = function(.Object){
+	definition = function(.Object,cachedResponse){
 		# should fail with no PostInputs set!!!! (does not yet...)
+		
+		if (missing(cachedResponse)){
+			cachedResponse=FALSE
+		}
 			if ("DATASET_URI" %in% names(.Object@postInputs)){
 				algorithm	<-	.Object@dataList
-				requestXML	<-	generateRequest(.Object, algorithm)
+				requestXML	<-	generateRequest(.Object, algorithm,cachedResponse)
 				url = .Object@UTILITY_URL
 				responseXML	<-	genericExecute(url,requestXML)
 			} else {
@@ -370,7 +375,6 @@ setMethod(f = "getDataIDs",signature="rGDP",
 			dataIDs	<-	sapply(getNodeSet(cDataXML,"//gdp:name"),xmlValue)
 			return(dataIDs)
 	})	
-
 
 # '@rdname setWFS-methods
 # '@aliases setWFS,rGDP-method
@@ -453,7 +457,7 @@ setMethod(f = "setAlgorithm",signature = "rGDP",
 		return(.Object)
 	})
 
-generateRequest	<-	function(.Object, algorithm){
+generateRequest	<-	function(.Object, algorithm,cachedResponse='false'){
 
 		top    <-	newXMLNode(name='wps:Execute',attrs=c('service'="WPS",'version'=.Object@WPS_DEFAULT_VERSION,
 			'xsi:schemaLocation'=paste(c(.Object@WPS_DEFAULT_NAMESPACE,.Object@WPS_SCHEMA_LOCATION),collapse=" ")),
@@ -481,7 +485,13 @@ generateRequest	<-	function(.Object, algorithm){
 		wpd	<-	newXMLNode("wps:Data",parent=wi)
 		addChildren(wi,c(owi,wpd))
 		
-		wpLd<-	newXMLNode("wps:LiteralData",newXMLTextNode('undefined'),parent=wpd)
+		if (!cachedResponse){
+			allowCachedResponse	<-	'false'
+		} else {
+			allowCachedResponse	<-	'true'
+		}
+		
+		wpLd<-	newXMLNode("wps:LiteralData",newXMLTextNode(allowCachedResponse),parent=wpd)
 		addChildren(wpd,wpLd)
 		
 		wrf	<-	newXMLNode("wps:ResponseForm",parent=top)
@@ -629,7 +639,7 @@ postInputsToXML	<-	function(.Object){
 		addChildren(inDatEL,compDatEL)
 		
 		gmlFeatEL	<-	newXMLNode('gml:featureMembers',namespaceDefinitions=c('gml'="http://www.opengis.net/gml"),
-			attrs=c("xsi:schemaLocation"="gov.usgs.cida.gdp.draw http://cida.usgs.gov/qa/climate/derivative/xsd/draw.xsd"))
+			attrs=c("xsi:schemaLocation"=paste(c(.Object@DRAW_NAMESPACE,.Object@DRAW_SCHEMA_LOCATION),collapse=' ')))
 		addChildren(compDatEL,gmlFeatEL)
 		
 		gmlBoxEL	<-	newXMLNode('gml:box',attrs=c("gml:id"="box.1"))

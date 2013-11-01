@@ -4,6 +4,9 @@
 \title{getDataIDs}
 \arguments{
   \item{\code{rGDP}}{object with a valid dataset URI.}
+
+  \item{cachedResponse}{an optional input to allow cached
+  response. Default as FALSE}
 }
 \value{
   list of dataset IDs for the \code{rGDP} dataset URI.
