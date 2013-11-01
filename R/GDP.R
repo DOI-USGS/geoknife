@@ -164,6 +164,16 @@ setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric(
 #'@keywords getValues
 #'@export
 setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGeneric("getValues")})
+#'getDataIDs
+#'
+#'a \code{rGDP} method for finding dataset IDs (values) for an rGDP object with a valid URI. 
+#'
+#'@param \code{rGDP} object with a valid dataset URI.
+#'@return list of dataset IDs for the \code{rGDP} dataset URI.
+#'@docType methods
+#'@keywords getDataIDs
+#'@export
+setGeneric(name="getDataIDs",def=function(.Object){standardGeneric("getDataIDs")})
 #'checkProcess
 #'
 #'method for checking the process status of an active (executed) \code{rGDP} object. 
@@ -340,7 +350,28 @@ setMethod(f = "getValues",signature="rGDP",
 		values	<-	parseXMLvalues(processURL,attribute)
 		return(values)
 	})
-	
+
+# '@rdname getDataIDs-methods
+# '@aliases getDataIDs,rGDP-method
+setMethod(f = "getDataIDs",signature="rGDP",
+	definition = function(.Object){
+		# should fail with no PostInputs set!!!! (does not yet...)
+			if ("DATASET_URI" %in% names(.Object@postInputs)){
+				algorithm	<-	.Object@dataList
+				requestXML	<-	generateRequest(.Object, algorithm)
+				url = .Object@UTILITY_URL
+				responseXML	<-	genericExecute(url,requestXML)
+			} else {
+				stop('must have a DATASET_URI set as a postInput')
+			}
+			# get complex data
+			cData	<-	xmlValue(getNodeSet(responseXML, "//ns:LiteralData")[[1]])
+			cDataXML	<-	xmlInternalTreeParse(cData)
+			dataIDs	<-	sapply(getNodeSet(cDataXML,"//gdp:name"),xmlValue)
+			return(dataIDs)
+	})	
+
+
 # '@rdname setWFS-methods
 # '@aliases setWFS,rGDP-method
 setMethod(f = "setWFS",signature="rGDP",
@@ -362,10 +393,19 @@ setMethod(f = "setWPS",signature="rGDP",
 # '@aliases setPostInputs,rGDP-method	
 setMethod(f = "setPostInputs",signature = "rGDP",
 	definition = function(.Object,postInputs){
+		if ("empty" %in% names(.Object@postInputs)){
+			stop('an algorithm must be chosen before setting postInputs')
+		}
+		
 		if (("DATASET_URI" %in% names(postInputs)) & 
 			!is.null(postInputs["DATASET_URI"]) & 
 			grepl('dodsC',postInputs["DATASET_URI"])){
 			postInputs["DATASET_URI"]	<-	gsub('http', 'dods', postInputs["DATASET_URI"])
+		}
+		if (("DATASET_URI" %in% names(postInputs)) & 
+			!is.null(postInputs["DATASET_URI"]) & 
+			grepl('opendap',postInputs["DATASET_URI"])){
+			postInputs["DATASET_URI"]	<-	gsub('http', 'opendap', postInputs["DATASET_URI"])
 		}
 		.Object@postInputs	<-	setList(.Object@postInputs,postInputs)
 		if ("LinearRing" %in% names(.Object@feature) && "FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){
@@ -412,6 +452,67 @@ setMethod(f = "setAlgorithm",signature = "rGDP",
 		.Object	<-	initializePostInputs(.Object)
 		return(.Object)
 	})
+
+generateRequest	<-	function(.Object, algorithm){
+
+		top    <-	newXMLNode(name='wps:Execute',attrs=c('service'="WPS",'version'=.Object@WPS_DEFAULT_VERSION,
+			'xsi:schemaLocation'=paste(c(.Object@WPS_DEFAULT_NAMESPACE,.Object@WPS_SCHEMA_LOCATION),collapse=" ")),
+			namespaceDefinitions=c('wps'=.Object@WPS_DEFAULT_NAMESPACE,'ows'=.Object@OWS_DEFAULT_NAMESPACE,
+			'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE))
+			
+		id	<-	newXMLNode("ows:Identifier",newXMLTextNode(algorithm),parent=top) #algorithm gov.usgs.cida.gdp.wps.algorithm.discovery.ListOpendapGrids
+		di	<-	newXMLNode("wps:DataInputs",parent=top)
+		addChildren(top,c(id,di))
+		
+		wi	<-	newXMLNode("wps:Input",parent=di)
+		addChildren(di,c(wi))
+		
+		oi	<-	newXMLNode("ows:Identifier",newXMLTextNode('catalog-url'),parent=wi)
+		wd	<-	newXMLNode("wps:Data",parent=wi)
+		addChildren(wi,c(oi,wd))
+		
+		wld	<-	newXMLNode("wps:LiteralData",newXMLTextNode(.Object@postInputs$DATASET_URI),parent=wd)
+		addChildren(wd,wld)
+		
+		wi	<-	newXMLNode("wps:Input",parent=di)
+		addChildren(di,wi)
+		
+		owi	<-	newXMLNode("ows:Identifier",newXMLTextNode('allow-cached-response'),parent=wi)
+		wpd	<-	newXMLNode("wps:Data",parent=wi)
+		addChildren(wi,c(owi,wpd))
+		
+		wpLd<-	newXMLNode("wps:LiteralData",newXMLTextNode('undefined'),parent=wpd)
+		addChildren(wpd,wpLd)
+		
+		wrf	<-	newXMLNode("wps:ResponseForm",parent=top)
+		wrd	<-	newXMLNode("wps:ResponseDocument",parent=wrf)
+		wpo	<-	newXMLNode("wps:Output",parent=wrd)
+		owi	<-	newXMLNode("ows:Identifier",newXMLTextNode("result"),parent=wpo)
+		addChildren(top,wrf)
+		requestXML	<-	toString.XMLNode(xmlDoc(top))
+
+		return(requestXML)
+}
+
+genericExecute	<-	function(url,requestXML){
+	myheader	<-	c(Connection="close", 
+	          			'Content-Type' = "application/xml")
+	
+	data	<-	 getURL(url = url,
+	               postfields=requestXML,
+	               httpheader=myheader,
+	               verbose=FALSE)		
+	xmltext 	<-	xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
+	response	<-	xmlRoot(xmltext)
+	return(response)
+
+	#response	<-	xmlRoot(xmltext)
+	#responseNS	<-	xmlNamespaceDefinitions(response, simplify = TRUE)  
+	#processID	<-	xmlGetAttr(response,"statusLocation")
+	
+	#.Object	<-	setProcessID(.Object,processID)
+	#return(.Object)
+}
 
 setList	<-	function(ObjectField,varList){
 	if (!is.list(varList)){stop("field data must be a list")}
@@ -578,7 +679,7 @@ setMethod(f = "executePost",signature = "rGDP",definition = function(.Object){
 	myheader	<-	c(Connection="close", 
 	          			'Content-Type' = "application/xml")#text/xml?
 	
-	data	<-	getURL(url = .Object@WPS_URL,
+	data	<-	 getURL(url = .Object@WPS_URL,
 	               postfields=requestXML,
 	               httpheader=myheader,
 	               verbose=FALSE)		
