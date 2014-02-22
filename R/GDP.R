@@ -187,9 +187,6 @@ setGeneric(name="setFeature",def=function(.Object,feature){standardGeneric("setF
 #'@export
 setGeneric(name="setAlgorithm",def=function(.Object,algorithm){standardGeneric("setAlgorithm")})
 
-
-setGeneric(name="setProcessID",def=function(.Object,processID){standardGeneric("setProcessID")})
-
 setProcessID	<-	function(.Object,processID){
 	.Object@processID	<-	processID
 	return(.Object)
