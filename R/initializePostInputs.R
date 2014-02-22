@@ -7,10 +7,13 @@ setGeneric(name="initializePostInputs",def=function(.Object){
 
 setMethod(f = "initializePostInputs",signature="rGDP",
 	definition =	function(.Object){
+		# this method is private to rGDP, and CREATES and SETS fields in the PostInputs
+		
 		algorithm	<-	.Object@algorithm
 		processURL	<-	paste(c(.Object@WPS_URL,'?service=WPS&version=',
 			.Object@WPS_DEFAULT_VERSION,'&request=DescribeProcess',
 			'&identifier=',algorithm),collapse="")	
+			
 		# test connection with processURL here, provide error if necessary
 		doc	<-	htmlParse(processURL,isURL=TRUE, useInternalNodes = TRUE)
 		optionNd	<-	getNodeSet(doc,'//datainputs/input[@minoccurs=0]/following-sibling::node()[1]')
@@ -22,20 +25,19 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		requirLs	<-	vector("list",length(requirNd))	# max > 0 is required
 		names(requirLs)	<-	sapply(requirNd,xmlValue)
 		
-		
-		#.Object@postInputs	<-	append(optionLs,requirLs)
+		# add fields for optionLs and requirLs
+		.Object@postInputs	<-	append(optionLs,requirLs)
 		.Object	<-	setPostInputs(.Object,requirLs)
 		.Object	<-	setPostInputs(.Object,optionLs)
-		print(.Object@postInputs)
-		# now set any defaults to their default values
+
+		# now find any defaults and set those fields to those default values
 		defaultNd	<-	getNodeSet(doc,'//datainputs/literaldata/defaultvalue/parent::node()[1]/defaultvalue')
 		defaultLs	<-	vector("list",length(sapply(defaultNd,xmlValue)))
 		defaultLs[]	<-	sapply(defaultNd,xmlValue)
 		names(defaultLs)	<-	sapply(getNodeSet(doc,'//datainputs/literaldata/defaultvalue/
-			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
-			
+			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)	
 		if (length(defaultLs) > 0){
-			.Object@postInputs	<-	setList(.Object@postInputs,defaultLs)
+			.Object	<-	setPostInputs(.Object,defaultLs)
 		}
 		
 		# now set any accepted values
@@ -44,8 +46,9 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		allowLs[]	<-	sapply(allowNd,xmlValue)
 		names(allowLs)	<-	sapply(getNodeSet(doc,'//datainputs/literaldata/allowedvalues/
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
+
 		if (length(allowLs)>0){
-			.Object@postInputs	<-	setList(.Object@postInputs,allowLs)
+			.Object	<-	setPostInputs(.Object,defaultLs)
 		}
 		
 		.Object@postInputs$FEATURE_COLLECTION	<-	NULL # handled elsewhere
