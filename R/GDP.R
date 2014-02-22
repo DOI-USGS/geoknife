@@ -357,7 +357,7 @@ setMethod(f = "setWPS",signature="rGDP",
 # '@aliases setPostInputs,rGDP-method	
 setMethod(f = "setPostInputs",signature = "rGDP",
 	definition = function(.Object,postInputs){
-		if ("empty" %in% names(.Object@postInputs)){
+		if ("empty" %in% names(.Object@algorithm)){
 			stop('an algorithm must be chosen before setting postInputs')
 		}
 		
@@ -485,10 +485,14 @@ genericExecute	<-	function(url,requestXML){
 }
 
 setList	<-	function(ObjectField,varList){
-	if (!is.list(varList)){stop("field data must be a list")}
+	if (!is.list(varList)){
+		stop("field data must be a list")
+	}
 	vNames	<-	names(varList)
 	for (n in 1:length(vNames)){
-		if (!any(names(ObjectField)==vNames[n])){stop("invalid field name")}
+		if (!any(names(ObjectField)==vNames[n])){
+			stop(paste(vNames[n],"is an invalid field name",sep=' '))
+		}
 		ObjectField[vNames[n]]	<-	varList[n]
 	}
 	return(ObjectField)
