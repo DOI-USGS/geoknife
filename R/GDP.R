@@ -488,19 +488,19 @@ setList	<-	function(ObjectField,varList){
 	if (!is.list(varList)){
 		stop("field data must be a list")
 	}
-	if (length(varList)==0){
-		# empty list passed to be set
-		return(ObjectField)
-	}
-	vNames	<-	names(varList)
-	for (n in 1:length(vNames)){
-		if (!any(names(ObjectField)==vNames[n])){
-			stop(paste(vNames[n],"is an invalid field name",sep=' '))
+	if (length(varList)>0){
+		# else, empty list passed to be set
+		vNames	<-	names(varList)
+		for (n in 1:length(vNames)){
+			if (!any(names(ObjectField)==vNames[n])){
+				stop(paste(vNames[n],"is an invalid field name",sep=' '))
+			}
+			ObjectField[vNames[n]]	<-	varList[n]
 		}
-		ObjectField[vNames[n]]	<-	varList[n]
 	}
+	
 	return(ObjectField)
-	}
+}
 
 parseXMLnodes	<-	function(xmlURL,parentKey,childKey,key="name"){
 	doc	<-	htmlParse(xmlURL,isURL=TRUE, useInternalNodes = TRUE)
