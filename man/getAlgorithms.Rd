@@ -1,23 +1,22 @@
 \docType{methods}
 \name{getAlgorithms}
 \alias{getAlgorithms}
-\title{getAlgorithms}
+\title{Get processing algorithms}
 \arguments{
-  \item{\code{rGDP}}{object with a valid WPS url.}
-
   \item{\code{rGDP}}{object with a valid WPS url.}
 }
 \value{
   list of available algorithms for the \code{rGDP} WPS url.
-
-  list of available algorithms for the \code{rGDP} WPS url.
 }
 \description{
-  a \code{rGDP} method for finding algorithm names and
-  locations from a valid WPS endpoint.
-
-  a \code{rGDP} method for finding algorithm names and
-  locations from a valid WPS endpoint.
+  Get algorithms for \code{rGDP}
+}
+\details{
+  getAlgorithms is a method for finding algorithm names and
+  locations for a \code{rGDP} object.
+}
+\seealso{
+  \code{setAlgorithm}
 }
 \keyword{getAlgorithms}
 

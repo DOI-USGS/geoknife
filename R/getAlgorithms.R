@@ -1,11 +1,13 @@
-#'getAlgorithms
-#'
-#'a \code{rGDP} method for finding algorithm names and locations from a valid WPS endpoint.
+#'@details getAlgorithms is a method for finding algorithm names and locations for
+#' a \code{rGDP} object.
 #'
 #'@param \code{rGDP} object with a valid WPS url.
 #'@return list of available algorithms for the \code{rGDP} WPS url.
 #'@docType methods
+#'@description Get algorithms for \code{rGDP}
+#'@title Get processing algorithms
 #'@keywords getAlgorithms
+#'@seealso \code{setAlgorithm}
 #'@export
 setGeneric(name="getAlgorithms",def=function(.Object){standardGeneric("getAlgorithms")})
 
