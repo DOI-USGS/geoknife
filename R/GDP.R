@@ -488,6 +488,10 @@ setList	<-	function(ObjectField,varList){
 	if (!is.list(varList)){
 		stop("field data must be a list")
 	}
+	if (length(varList)==0){
+		# empty list passed to be set
+		return(ObjectField)
+	}
 	vNames	<-	names(varList)
 	for (n in 1:length(vNames)){
 		if (!any(names(ObjectField)==vNames[n])){
