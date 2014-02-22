@@ -22,6 +22,7 @@ Collate:
     'checkProcess.R'
     'startProcess.R'
     'getDataIDs.R'
+    'getAlgorithms.R'
 Depends:
     R (>= 2.15.0)
 Imports:
