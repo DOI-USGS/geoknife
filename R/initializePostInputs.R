@@ -26,14 +26,16 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		.Object@postInputs	<-	append(optionLs,requirLs)
 		.Object	<-	setPostInputs(.Object,requirLs)
 		
-		# now set any defaults
+		# now set any defaults to their default values
 		defaultNd	<-	getNodeSet(doc,'//datainputs/literaldata/defaultvalue/parent::node()[1]/defaultvalue')
 		defaultLs	<-	vector("list",length(sapply(defaultNd,xmlValue)))
 		defaultLs[]	<-	sapply(defaultNd,xmlValue)
 		names(defaultLs)	<-	sapply(getNodeSet(doc,'//datainputs/literaldata/defaultvalue/
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
 			
-		if (length(defaultLs)>0){.Object@postInputs	<-	setList(.Object@postInputs,defaultLs)}
+		if (length(defaultLs) > 0){
+			.Object@postInputs	<-	setList(.Object@postInputs,defaultLs)
+		}
 		
 		# now set any accepted values
 		allowNd    <-	getNodeSet(doc,'//datainputs/literaldata//parent::node()/allowedvalues/value[1]')
