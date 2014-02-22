@@ -23,6 +23,7 @@ Collate:
     'startProcess.R'
     'getDataIDs.R'
     'getAlgorithms.R'
+    'setFeature.R'
 Depends:
     R (>= 2.15.0)
 Imports:
