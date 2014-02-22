@@ -1,12 +1,14 @@
-#'getDataIDs
-#'
-#'a \code{rGDP} method for finding dataset IDs (values) for an rGDP object with a valid URI. 
+#'@details getDataIDs is a method for finding dataset variables from a
+#' \code{rGDP} object with a valid dataset URI. Use setPostInputs to set a dataset URI.
 #'
 #'@param \code{rGDP} object with a valid dataset URI.
 #'@param cachedResponse an optional input to allow cached response. Default as FALSE
 #'@return list of dataset IDs for the \code{rGDP} dataset URI.
 #'@docType methods
+#'@description Find variables from \code{rGDP} dataset
+#'@title Find variables from dataset
 #'@keywords getDataIDs
+#'@seealso \code{setPostInputs}
 #'@export
 setGeneric(name="getDataIDs",def=function(.Object,cachedResponse){standardGeneric("getDataIDs")})
 
@@ -14,7 +16,6 @@ setGeneric(name="getDataIDs",def=function(.Object,cachedResponse){standardGeneri
 # '@aliases getDataIDs,rGDP-method
 setMethod(f = "getDataIDs",signature="rGDP",
 	definition = function(.Object,cachedResponse){
-		# should fail with no PostInputs set!!!! (does not yet...)
 		
 		if (missing(cachedResponse)){
 			cachedResponse=FALSE
