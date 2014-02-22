@@ -19,19 +19,23 @@ setMethod(f = "setProcessInputs",signature = "rGDP",
 			stop('an algorithm must be chosen before setting processInputs')
 		}
 		
-		if (("DATASET_URI" %in% names(processInputs)) & 
-			!is.null(processInputs["DATASET_URI"]) & 
-			grepl('dodsC',processInputs["DATASET_URI"])){
-			processInputs["DATASET_URI"]	<-	gsub('http', 'dods', processInputs["DATASET_URI"])
-		}
-		if (("DATASET_URI" %in% names(processInputs)) & 
-			!is.null(processInputs["DATASET_URI"]) & 
-			grepl('opendap',processInputs["DATASET_URI"])){
-			processInputs["DATASET_URI"]	<-	gsub('http', 'opendap', processInputs["DATASET_URI"])
-		}
 		.Object@processInputs	<-	setList(.Object@processInputs,processInputs)
 		if ("LinearRing" %in% names(.Object@feature) && "FEATURE_ATTRIBUTE_NAME" %in% names(.Object@processInputs)){
 			.Object@processInputs$FEATURE_ATTRIBUTE_NAME	<-	'the_geom'
 		}
+		.Object	<-	dodsReplace(.Object)
+		
 		return(.Object)
 	})
+	
+dodsReplace	<-	function(.Object){
+	# checks for dods or opendap, and replaces
+	if ("DATASET_URI" %in% names(.Object@processInputs) & 
+		!is.null(.Object@processInputs$DATASET_URI)) {
+		uri	<-	.Object@processInputs$DATASET_URI
+		uri	<-	gsub('http', 'dods', uri)
+		uri	<-	gsub('http', 'opendap', uri)
+		.Object@processInputs	<-	setList(.Object@processInputs,list('DATASET_URI'=uri))
+	}
+	return(.Object)
+}
