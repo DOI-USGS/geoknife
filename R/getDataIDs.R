@@ -20,17 +20,17 @@ setMethod(f = "getDataIDs",signature="rGDP",
 		if (missing(cachedResponse)){
 			cachedResponse=FALSE
 		}
-			if ("DATASET_URI" %in% names(.Object@postInputs)){
-				algorithm	<-	.Object@dataList
-				requestXML	<-	generateRequest(.Object, algorithm,cachedResponse)
-				url = .Object@UTILITY_URL
-				responseXML	<-	genericExecute(url,requestXML)
-			} else {
-				stop('must have a DATASET_URI set as a postInput')
-			}
-			# get complex data
-			cData	<-	xmlValue(getNodeSet(responseXML, "//ns:LiteralData")[[1]])
-			cDataXML	<-	xmlInternalTreeParse(cData)
-			dataIDs	<-	sapply(getNodeSet(cDataXML,"//gdp:name"),xmlValue)
-			return(dataIDs)
+		if ("DATASET_URI" %in% names(.Object@postInputs)){
+			algorithm	<-	.Object@dataList
+			requestXML	<-	generateRequest(.Object, algorithm,cachedResponse)
+			url = .Object@UTILITY_URL
+			responseXML	<-	genericExecute(url,requestXML)
+		} else {
+			stop('must have a DATASET_URI set as a postInput')
+		}
+		# get complex data
+		cData	<-	xmlValue(getNodeSet(responseXML, "//ns:LiteralData")[[1]])
+		cDataXML	<-	xmlInternalTreeParse(cData)
+		dataIDs	<-	sapply(getNodeSet(cDataXML,"//gdp:name"),xmlValue)
+		return(dataIDs)
 	})
