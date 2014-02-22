@@ -3,7 +3,7 @@
 #'method for checking the process status of an active (executed) \code{rGDP} object. 
 #'
 #'@param \code{rGDP} object with an active GDP process request.
-#'@return process of \code{rGDP} process.
+#'@return status of \code{rGDP} process.
 #'@docType methods
 #'@keywords checkProcess
 #'@title Checks status of processing request

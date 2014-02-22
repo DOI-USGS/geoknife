@@ -7,7 +7,7 @@
   request.}
 }
 \value{
-  process of \code{rGDP} process.
+  status of \code{rGDP} process.
 }
 \description{
   checkProcess
