@@ -536,8 +536,11 @@ setList	<-	function(ObjectField,varList){
 
 parseXMLnodes	<-	function(xmlURL,parentKey,childKey,key="name"){
 	doc	<-	htmlParse(xmlURL,isURL=TRUE, useInternalNodes = TRUE)
-	if (is.na(key)){nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"/",childKey),collapse=""))}
-	else{nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"/",childKey,"/",key),collapse=""))}
+	if (is.na(key)){
+		nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"/",childKey),collapse=""))
+	} else {
+		nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"/",childKey,"/",key),collapse=""))
+	}
 	values	<-	sapply(nodes,xmlValue)
 	return(values)
 }
