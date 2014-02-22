@@ -1,12 +1,17 @@
-#'checkProcess
-#'
-#'method for checking the process status of an active (executed) \code{rGDP} object. 
+#'@details checkProcess is a method for checking the process status of an active (executed)
+#' \code{rGDP} object. The method returns \code{process}, which is a list containing
+#' two fields: \code{status} and \code{URL}. If the \code{rGDP} object has not been executed
+#' (see \code{executePost}), this method returns \code{status}='none' and \code{URL}=NULL.
 #'
 #'@param \code{rGDP} object with an active GDP process request.
-#'@return status of \code{rGDP} process.
+#'@return \code{process}, a list containing
+#' \code{status} and \code{URL}. 
+#'
 #'@docType methods
 #'@keywords checkProcess
-#'@title Checks status of processing request
+#'@description Check status of processing request
+#'@title Check status of processing request
+#'@seealso \code{executePost}
 #'@export
 setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
 
