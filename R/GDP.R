@@ -530,7 +530,18 @@ parseXMLvalues	<-	function(xmlURL,key){
 	values	<-	sapply(nodes,xmlValue)
 	return(values)
 }
-getPostInputs	<-	function(.Object){
+
+#'printPostInputs
+#'
+#'function for printing postXML \code{rGDP} object. 
+#'
+#'@param An \code{rGDP} object.
+#'@keywords printPostInputs
+#'@export
+printPostInputs	<-	function(.Object){
+	requestXML	<-	suppressWarnings(postInputsToXML(.Object))
+	print(requestXML)
+	
 	# needs a valid algorithm
 }
 
@@ -649,14 +660,15 @@ postInputsToXML	<-	function(.Object){
 	
 	outID	<-	newXMLNode('ows:Identifier',newXMLTextNode('OUTPUT'))
 	addChildren(resOut,outID)
-	requestXML <-toString.XMLNode(xmlDoc(top))
+	requestXML <-	top
 	return(requestXML)
 }
 
 # '@rdname executePost-methods
 # '@aliases executePost,rGDP-method
 setMethod(f = "executePost",signature = "rGDP",definition = function(.Object){
-	requestXML	<-	suppressWarnings(postInputsToXML(.Object))
+	
+	requestXML	<-	toString.XMLNode(xmlDoc(suppressWarnings(postInputsToXML(.Object))))
 	myheader	<-	c(Connection="close", 
 	          			'Content-Type' = "application/xml")#text/xml?
 	
