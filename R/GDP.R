@@ -691,7 +691,7 @@ setMethod(f = "executePost",signature = "rGDP",definition = function(.Object){
 setMethod(f = "checkProcess",signature = "rGDP",definition = function(.Object){
 	
 	process	<-	list(status=NULL,URL=NULL)
-	if (.Object@processID=="Null"){
+	if (.Object@processID=="<no active job>"){
 		process$status	<-	'none'
 	}
 
