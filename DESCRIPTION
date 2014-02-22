@@ -15,6 +15,7 @@ Copyright: This software is in the public domain because it contains materials
     http://www.usgs.gov/visual-id/credit_usgs.html#copyright
 Collate:
     'GDP.R'
+    'printGDP.R'
 Depends:
     R (>= 2.15.0)
 Imports:
