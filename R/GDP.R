@@ -99,9 +99,9 @@ setMethod(f="initialize",signature="rGDP",
 
 
 
-#'getShapefiles
+#'@title get shapefiles from a web location
 #'
-#'a \code{rGDP} method for finding shapefile names at a valid WFS endpoint.
+#'@details  a \code{rGDP} method for finding shapefile names at a valid WFS endpoint.
 #'
 #'@param \code{rGDP} object with a valid WFS url.
 #'@return list of shapefiles for the \code{rGDP} WFS url.
