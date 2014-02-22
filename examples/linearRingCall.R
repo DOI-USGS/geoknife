@@ -22,7 +22,7 @@ rGDP <-  setPostInputs(rGDP,list('DATASET_ID'='Downward_longwave_radiation_flux_
 rGDP 
 
 # kick off your request
-rGDP <- executePost(rGDP)
+rGDP <- startProcess(rGDP)
 
 status.rGDP  <-  checkProcess(rGDP)
 

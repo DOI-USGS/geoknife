@@ -31,7 +31,7 @@ rGDP	<-	setPostInputs(rGDP,list('DATASET_ID'=var,
 print(rGDP)
 
 # execute what you have
-rGDP	<-	executePost(rGDP)
+rGDP	<-	startProcess(rGDP)
 
 status.rGDP  <-  checkProcess(rGDP)
 
