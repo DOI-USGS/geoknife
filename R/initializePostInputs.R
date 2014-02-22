@@ -48,8 +48,8 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
 
 		if (length(allowLs)>0){
-			.Object	<-	setPostInputs(.Object,defaultLs)
-		}
+			.Object	<-	setPostInputs(.Object,allowLs)
+		} 
 		
 		.Object@postInputs$FEATURE_COLLECTION	<-	NULL # handled elsewhere
 		return(.Object)
