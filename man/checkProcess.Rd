@@ -1,17 +1,29 @@
 \docType{methods}
 \name{checkProcess}
 \alias{checkProcess}
-\title{checkProcess}
+\title{Check status of processing request}
 \arguments{
   \item{\code{rGDP}}{object with an active GDP process
   request.}
 }
 \value{
-  process of \code{rGDP} process.
+  \code{process}, a list containing \code{status} and
+  \code{URL}.
 }
 \description{
-  method for checking the process status of an active
-  (executed) \code{rGDP} object.
+  Check status of processing request
+}
+\details{
+  checkProcess is a method for checking the process status
+  of an active (executed) \code{rGDP} object. The method
+  returns \code{process}, which is a list containing two
+  fields: \code{status} and \code{URL}. If the \code{rGDP}
+  object has not been executed (see \code{executePost}),
+  this method returns \code{status}='none' and
+  \code{URL}=NULL.
+}
+\seealso{
+  \code{executePost}
 }
 \keyword{checkProcess}
 

@@ -1,7 +1,7 @@
 \docType{methods}
 \name{getDataIDs}
 \alias{getDataIDs}
-\title{getDataIDs}
+\title{Find variables from dataset}
 \arguments{
   \item{\code{rGDP}}{object with a valid dataset URI.}
 
@@ -12,8 +12,15 @@
   list of dataset IDs for the \code{rGDP} dataset URI.
 }
 \description{
-  a \code{rGDP} method for finding dataset IDs (values) for
-  an rGDP object with a valid URI.
+  Find variables from \code{rGDP} dataset
+}
+\details{
+  getDataIDs is a method for finding dataset variables from
+  a \code{rGDP} object with a valid dataset URI. Use
+  setPostInputs to set a dataset URI.
+}
+\seealso{
+  \code{setPostInputs}
 }
 \keyword{getDataIDs}
 

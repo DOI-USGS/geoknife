@@ -24,14 +24,14 @@ rGDP	<-	setFeature(rGDP,list('FEATURE_COLLECTION'=feature_collection,
 	'ATTRIBUTE'=attribute))
 	
 # set the process inputs that you want to use
-rGDP	<-	setPostInputs(rGDP,list('DATASET_ID'=var,
+rGDP	<-	setProcessInputs(rGDP,list('DATASET_ID'=var,
 								'DATASET_URI'=datasetURI))
 
 # show what 'cha got
 print(rGDP)
 
 # execute what you have
-rGDP	<-	executePost(rGDP)
+rGDP	<-	startProcess(rGDP)
 
 status.rGDP  <-  checkProcess(rGDP)
 

@@ -5,3 +5,7 @@
 *-Ex.R
 .Rproj.user
 R/.DS_Store
+examples/.DS_Store
+rGDP.Rproj
+.Rbuildignore
+.DS_Store

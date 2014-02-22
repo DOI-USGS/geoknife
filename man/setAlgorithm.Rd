@@ -1,7 +1,7 @@
 \docType{methods}
 \name{setAlgorithm}
 \alias{setAlgorithm}
-\title{setAlgorithm}
+\title{set processing algorithm}
 \arguments{
   \item{An}{\code{rGDP} object.}
 
@@ -12,6 +12,9 @@
   An \code{rGDP} object.
 }
 \description{
+  set processing algorithm
+}
+\details{
   method for setting the process algorithm of the
   \code{rGDP} object.
 }

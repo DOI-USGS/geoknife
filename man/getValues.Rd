@@ -1,7 +1,7 @@
 \docType{methods}
 \name{getValues}
 \alias{getValues}
-\title{getValues}
+\title{get values from a shapefile at a web location}
 \arguments{
   \item{\code{rGDP}}{object with a valid WFS url.}
 
@@ -14,6 +14,9 @@
   \code{rGDP} WFS url.
 }
 \description{
+  get values from a shapefile at a web location
+}
+\details{
   a \code{rGDP} method for finding value names for a given
   shapefile at a valid WFS endpoint.
 }

@@ -1,7 +1,7 @@
 \docType{methods}
 \name{setFeature}
 \alias{setFeature}
-\title{setFeature}
+\title{Set feature geometry for processing}
 \arguments{
   \item{An}{\code{rGDP} object.}
 
@@ -12,8 +12,14 @@
   An \code{rGDP} object.
 }
 \description{
-  method for setting the feature elements of the
-  \code{rGDP} object.
+  Set feature for \code{rGDP}
+}
+\details{
+  setFeature is a method for setting or modifying the
+  feature elements of for \code{rGDP} object.
+}
+\seealso{
+  \code{setWFS}
 }
 \keyword{setFeature}
 

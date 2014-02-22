@@ -1,7 +1,7 @@
 Package: rGDP
 Type: Package
 Title: GDP tools for R
-Version: 0.0.5
+Version: 0.1.0
 Date: 2013-05-23
 Author: Jordan S Read
 Maintainer: Jordan S Read <jread@usgs.gov>
@@ -15,6 +15,15 @@ Copyright: This software is in the public domain because it contains materials
     http://www.usgs.gov/visual-id/credit_usgs.html#copyright
 Collate:
     'GDP.R'
+    'printGDP.R'
+    'initializeProcessInputs.R'
+    'setProcessInputs.R'
+    'processInputsToXML.R'
+    'checkProcess.R'
+    'startProcess.R'
+    'getDataIDs.R'
+    'getAlgorithms.R'
+    'setFeature.R'
 Depends:
     R (>= 2.15.0)
 Imports:

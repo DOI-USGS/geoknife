@@ -1,0 +1,41 @@
+#'@details checkProcess is a method for checking the process status of an active (executed)
+#' \code{rGDP} object. The method returns \code{process}, which is a list containing
+#' two fields: \code{status} and \code{URL}. If the \code{rGDP} object has not been executed
+#' (see \code{executePost}), this method returns \code{status}='none' and \code{URL}=NULL.
+#'
+#'@param \code{rGDP} object with an active GDP process request.
+#'@return \code{process}, a list containing
+#' \code{status} and \code{URL}. 
+#'
+#'@docType methods
+#'@keywords checkProcess
+#'@description Check status of processing request
+#'@title Check status of processing request
+#'@seealso \code{executePost}
+#'@export
+setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
+
+# '@rdname checkProcess-methods
+# '@aliases checkProcess,rGDP-method
+setMethod(f = "checkProcess",signature = "rGDP",definition = function(.Object){
+	
+	process	<-	list(status=NULL,URL=NULL)
+	if (.Object@processID=="<no active job>"){
+		process$status	<-	'none'
+	}
+
+	tryCatch({checkForComplete=getURL(url = .Object@processID, verbose=FALSE)},error = function(e) {process$status='unknown'})
+	if (is.null(process$status)){
+		checkForCompleteResponse	<-	xmlTreeParse(checkForComplete, asText = TRUE,useInternalNodes=TRUE)
+		checkResponseNS <- xmlNamespaceDefinitions(checkForCompleteResponse, simplify = TRUE) 
+		root <- xmlRoot(checkForCompleteResponse)
+		status <- sapply(xmlChildren(root[["Status"]]),xmlValue)
+		process$status	<-	status[[1]]
+		if ("Process successful" == process$status){
+			root <- xmlRoot(checkForCompleteResponse)
+		    process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
+		}
+	}
+
+	return(process)
+})
