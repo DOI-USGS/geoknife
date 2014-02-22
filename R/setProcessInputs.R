@@ -1,6 +1,6 @@
-#'setProcessInputs
+#'@title set inputs for web processing
 #'
-#'method for setting the (non-feature related) post inputs of the \code{rGDP} object. 
+#'@details method for setting the (non-feature related) post inputs of the \code{rGDP} object. 
 #'
 #'@param An \code{rGDP} object.
 #'@param a list of valid processInputs.
