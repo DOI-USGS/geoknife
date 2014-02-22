@@ -1,3 +1,4 @@
+export(printPostInputs)
 export(rGDP)
 exportClasses(rGDP)
 exportMethods(checkProcess)
