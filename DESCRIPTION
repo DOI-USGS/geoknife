@@ -20,6 +20,7 @@ Collate:
     'postInputsToXML.R'
     'checkProcess.R'
     'startProcess.R'
+    'getDataIDs.R'
 Depends:
     R (>= 2.15.0)
 Imports:
