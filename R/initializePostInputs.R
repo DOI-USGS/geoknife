@@ -3,8 +3,6 @@ setGeneric(name="initializePostInputs",def=function(.Object){
 	}
 )
 
-
-
 setMethod(f = "initializePostInputs",signature="rGDP",
 	definition =	function(.Object){
 		# this method is private to rGDP, and CREATES and SETS fields in the PostInputs
@@ -24,11 +22,6 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		requirNd	<-	getNodeSet(doc,'//datainputs/input[@minoccurs>0]/following-sibling::node()[1]')
 		requirLs	<-	vector("list",length(requirNd))	# max > 0 is required
 		names(requirLs)	<-	sapply(requirNd,xmlValue)
-		
-		# add fields for optionLs and requirLs
-		.Object@postInputs	<-	append(optionLs,requirLs)
-		.Object	<-	setPostInputs(.Object,requirLs)
-		.Object	<-	setPostInputs(.Object,optionLs)
 
 		# now find any defaults and set those fields to those default values
 		defaultNd	<-	getNodeSet(doc,'//datainputs/literaldata/defaultvalue/parent::node()[1]/defaultvalue')
@@ -36,9 +29,7 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		defaultLs[]	<-	sapply(defaultNd,xmlValue)
 		names(defaultLs)	<-	sapply(getNodeSet(doc,'//datainputs/literaldata/defaultvalue/
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)	
-		if (length(defaultLs) > 0){
-			.Object	<-	setPostInputs(.Object,defaultLs)
-		}
+		
 		
 		# now set any accepted values
 		allowNd    <-	getNodeSet(doc,'//datainputs/literaldata//parent::node()/allowedvalues/value[1]')
@@ -46,12 +37,19 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 		allowLs[]	<-	sapply(allowNd,xmlValue)
 		names(allowLs)	<-	sapply(getNodeSet(doc,'//datainputs/literaldata/allowedvalues/
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
-
-		if (length(allowLs)>0){
-			.Object	<-	setPostInputs(.Object,allowLs)
-		} 
 		
-		.Object@postInputs$FEATURE_COLLECTION	<-	NULL # handled elsewhere
+		# add fields for optionLs and requirLs
+		.Object@postInputs	<-	append(optionLs,requirLs)
+		
+		.Object	<-	setPostInputs(.Object,requirLs)
+		.Object	<-	setPostInputs(.Object,optionLs)
+		# set defaults and first of the allowed values
+		.Object	<-	setPostInputs(.Object,defaultLs)
+		.Object	<-	setPostInputs(.Object,allowLs)
+		
+		# remove Feature, as it is handled elsewhere
+		.Object@postInputs$FEATURE_COLLECTION	<-	NULL 
+
 		return(.Object)
 		
 	}
