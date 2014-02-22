@@ -16,6 +16,7 @@ Copyright: This software is in the public domain because it contains materials
 Collate:
     'GDP.R'
     'printGDP.R'
+    'initializePostInputs.R'
 Depends:
     R (>= 2.15.0)
 Imports:
