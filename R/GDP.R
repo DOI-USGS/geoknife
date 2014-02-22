@@ -190,12 +190,11 @@ setGeneric(name="setAlgorithm",def=function(.Object,algorithm){standardGeneric("
 
 setGeneric(name="setProcessID",def=function(.Object,processID){standardGeneric("setProcessID")})
 
+setProcessID	<-	function(.Object,processID){
+	.Object@processID	<-	processID
+	return(.Object)
+}
 
-setMethod(f = "setProcessID",signature="rGDP",
-	definition = function(.Object,processID){
-		.Object@processID	<-	processID
-		return(.Object)
-	})
 # '@rdname getAlgorithms-methods
 # '@aliases getAlgorithms,rGDP-method	
 setMethod(f = "getAlgorithms",signature="rGDP",
