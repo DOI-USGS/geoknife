@@ -1,11 +1,11 @@
-setGeneric(name="initializePostInputs",def=function(.Object){
-	standardGeneric("initializePostInputs")
+setGeneric(name="initializeProcessInputs",def=function(.Object){
+	standardGeneric("initializeProcessInputs")
 	}
 )
 
-setMethod(f = "initializePostInputs",signature="rGDP",
+setMethod(f = "initializeProcessInputs",signature="rGDP",
 	definition =	function(.Object){
-		# this method is private to rGDP, and CREATES and SETS fields in the PostInputs
+		# this method is private to rGDP, and CREATES and SETS fields in the ProcessInputs
 		
 		algorithm	<-	.Object@algorithm
 		processURL	<-	paste(c(.Object@WPS_URL,'?service=WPS&version=',
@@ -39,16 +39,16 @@ setMethod(f = "initializePostInputs",signature="rGDP",
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
 		
 		# add fields for optionLs and requirLs
-		.Object@postInputs	<-	append(optionLs,requirLs)
+		.Object@processInputs	<-	append(optionLs,requirLs)
 		
-		.Object	<-	setPostInputs(.Object,requirLs)
-		.Object	<-	setPostInputs(.Object,optionLs)
+		.Object	<-	setProcessInputs(.Object,requirLs)
+		.Object	<-	setProcessInputs(.Object,optionLs)
 		# set defaults and first of the allowed values
-		.Object	<-	setPostInputs(.Object,defaultLs)
-		.Object	<-	setPostInputs(.Object,allowLs)
+		.Object	<-	setProcessInputs(.Object,defaultLs)
+		.Object	<-	setProcessInputs(.Object,allowLs)
 		
 		# remove Feature, as it is handled elsewhere
-		.Object@postInputs$FEATURE_COLLECTION	<-	NULL 
+		.Object@processInputs$FEATURE_COLLECTION	<-	NULL 
 
 		return(.Object)
 		

@@ -16,7 +16,7 @@ setGeneric(name="startProcess",def=function(.Object){standardGeneric("startProce
 # '@aliases startProcess,rGDP-method
 setMethod(f = "startProcess",signature = "rGDP",definition = function(.Object){
 	
-	requestXML	<-	toString.XMLNode(xmlDoc(suppressWarnings(postInputsToXML(.Object))))
+	requestXML	<-	toString.XMLNode(xmlDoc(suppressWarnings(processInputsToXML(.Object))))
 	myheader	<-	c(Connection="close", 
 	          			'Content-Type' = "application/xml")#text/xml?
 	

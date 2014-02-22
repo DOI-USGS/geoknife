@@ -1,6 +1,6 @@
-postInputsToXML	<-	function(.Object){
+processInputsToXML	<-	function(.Object){
 	
-	# private function for rGDP that turns rGDP object into post xml
+	# private function for rGDP that turns rGDP object into process input xml
 	
 	top    <-	newXMLNode(name='wps:Execute',attrs=c('service'="WPS",'version'=.Object@WPS_DEFAULT_VERSION,
 		'xsi:schemaLocation'=paste(c(.Object@WPS_DEFAULT_NAMESPACE,.Object@WPS_SCHEMA_LOCATION),collapse=" ")),
@@ -12,9 +12,9 @@ postInputsToXML	<-	function(.Object){
 	di	<-	newXMLNode("wps:DataInputs",parent=top)
 	addChildren(top,c(id,di))
 	
-	for (i in 1:length(.Object@postInputs)){
-		postNm	<-	names(.Object@postInputs[i])
-		postVl	<-	.Object@postInputs[postNm]
+	for (i in 1:length(.Object@processInputs)){
+		postNm	<-	names(.Object@processInputs[i])
+		postVl	<-	.Object@processInputs[postNm]
 		if (!is.na(postVl)){
 			inEL	<-	newXMLNode("wps:Input",parent=di)
 			addChildren(di,inEL)

@@ -1,11 +1,11 @@
 \docType{methods}
-\name{setPostInputs}
-\alias{setPostInputs}
-\title{setPostInputs}
+\name{setProcessInputs}
+\alias{setProcessInputs}
+\title{setProcessInputs}
 \arguments{
   \item{An}{\code{rGDP} object.}
 
-  \item{a}{list of valid postInputs.}
+  \item{a}{list of valid processInputs.}
 }
 \value{
   An \code{rGDP} object.
@@ -14,5 +14,5 @@
   method for setting the (non-feature related) post inputs
   of the \code{rGDP} object.
 }
-\keyword{setPostInputs}
+\keyword{setProcessInputs}
 

@@ -6,7 +6,7 @@
 #'		\item{WFS_URL}{endpoint for web feature service (WFS)}
 #'		\item{WPS_URL}{endpoint for web processing service (WPS)}
 #'		\item{algorithm}{a length one list (name and location) of a WPS algorithm}
-#'		\item{postInputs}{a list of process parameters}
+#'		\item{processInputs}{a list of process parameters}
 #'		\item{feature}{a list of elements in the feature collection}
 #`		\item{processID}{unique identifier for a GDP process}
 #' }
@@ -19,7 +19,7 @@ setClass(
 	representation = representation(
 		WFS_URL="character",WPS_URL="character",
 		algorithm="list",
-		postInputs="list",feature="list",processID="character",
+		processInputs="list",feature="list",processID="character",
 		WPS_DEFAULT_VERSION="character",WFS_DEFAULT_VERSION="character",
 		WPS_DEFAULT_NAMESPACE="character",OWS_DEFAULT_NAMESPACE="character",
 		WPS_SCHEMA_LOCATION="character",XSI_SCHEMA_LOCATION="character",
@@ -88,7 +88,7 @@ setMethod(f="initialize",signature="rGDP",
 		.Object@WFS_URL	<-	default_WFS
 		.Object@WPS_URL <- default_WPS
 		.Object@algorithm	<-	default_alg
-		.Object@postInputs	<-	default_post
+		.Object@processInputs	<-	default_post
 		.Object@feature	<-	default_feat
 		.Object@processID	<-	'<no active job>'
 		
@@ -164,17 +164,6 @@ setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
 #'@keywords setWPS
 #'@export
 setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
-#'setPostInputs
-#'
-#'method for setting the (non-feature related) post inputs of the \code{rGDP} object. 
-#'
-#'@param An \code{rGDP} object.
-#'@param a list of valid postInputs.
-#'@return An \code{rGDP} object.
-#'@docType methods
-#'@keywords setPostInputs
-#'@export
-setGeneric(name="setPostInputs",def=function(.Object,postInputs){standardGeneric("setPostInputs")})
 #'setFeature
 #'
 #'method for setting the feature elements of the \code{rGDP} object. 
@@ -277,30 +266,6 @@ setMethod(f = "setWPS",signature="rGDP",
 		return(.Object)
 	})
 
-# '@rdname setPostInputs-methods
-# '@aliases setPostInputs,rGDP-method	
-setMethod(f = "setPostInputs",signature = "rGDP",
-	definition = function(.Object,postInputs){
-		if ("empty" %in% names(.Object@algorithm)){
-			stop('an algorithm must be chosen before setting postInputs')
-		}
-		
-		if (("DATASET_URI" %in% names(postInputs)) & 
-			!is.null(postInputs["DATASET_URI"]) & 
-			grepl('dodsC',postInputs["DATASET_URI"])){
-			postInputs["DATASET_URI"]	<-	gsub('http', 'dods', postInputs["DATASET_URI"])
-		}
-		if (("DATASET_URI" %in% names(postInputs)) & 
-			!is.null(postInputs["DATASET_URI"]) & 
-			grepl('opendap',postInputs["DATASET_URI"])){
-			postInputs["DATASET_URI"]	<-	gsub('http', 'opendap', postInputs["DATASET_URI"])
-		}
-		.Object@postInputs	<-	setList(.Object@postInputs,postInputs)
-		if ("LinearRing" %in% names(.Object@feature) && "FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){
-			.Object@postInputs$FEATURE_ATTRIBUTE_NAME	<-	'the_geom'
-		}
-		return(.Object)
-	})
 # '@rdname setFeature-methods
 # '@aliases setFeature,rGDP-method	
 setMethod(f = "setFeature",signature = "rGDP",
@@ -323,8 +288,8 @@ setMethod(f = "setFeature",signature = "rGDP",
 			hid.feature	<-	list(LinearRing='hidden')
 			.Object@feature	<-	setList(.Object@feature,feature)
 			.Object@feature	<-	setList(.Object@feature,hid.feature)
-			if ("FEATURE_ATTRIBUTE_NAME" %in% names(.Object@postInputs)){
-			.Object@postInputs	<-	setList(.Object@postInputs,
+			if ("FEATURE_ATTRIBUTE_NAME" %in% names(.Object@processInputs)){
+			.Object@processInputs	<-	setList(.Object@processInputs,
 				list("FEATURE_ATTRIBUTE_NAME"=.Object@feature$ATTRIBUTE))}
 		}
 	
@@ -337,7 +302,7 @@ setMethod(f = "setAlgorithm",signature = "rGDP",
 	definition = function(.Object,algorithm){
 		.Object@algorithm	<-	algorithm
 		# now, initialize posts
-		.Object	<-	initializePostInputs(.Object)
+		.Object	<-	initializeProcessInputs(.Object)
 		return(.Object)
 	})
 
@@ -359,7 +324,7 @@ generateRequest	<-	function(.Object, algorithm,cachedResponse='false'){
 		wd	<-	newXMLNode("wps:Data",parent=wi)
 		addChildren(wi,c(oi,wd))
 		
-		wld	<-	newXMLNode("wps:LiteralData",newXMLTextNode(.Object@postInputs$DATASET_URI),parent=wd)
+		wld	<-	newXMLNode("wps:LiteralData",newXMLTextNode(.Object@processInputs$DATASET_URI),parent=wd)
 		addChildren(wd,wld)
 		
 		wi	<-	newXMLNode("wps:Input",parent=di)
@@ -455,15 +420,15 @@ parseXMLvalues	<-	function(xmlURL,key){
 	return(values)
 }
 
-#'printPostInputs
+#'printProcessInputs
 #'
 #'function for printing postXML \code{rGDP} object. 
 #'
 #'@param An \code{rGDP} object.
-#'@keywords printPostInputs
+#'@keywords printProcessInputs
 #'@export
-printPostInputs	<-	function(.Object){
-	requestXML	<-	suppressWarnings(postInputsToXML(.Object))
+printProcessInputs	<-	function(.Object){
+	requestXML	<-	suppressWarnings(processInputsToXML(.Object))
 	print(requestXML)
 	
 	# needs a valid algorithm

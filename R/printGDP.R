@@ -14,8 +14,8 @@ setMethod(f = "print",signature = "rGDP",
 		cat(x@WPS_URL,"\n")
 		cat("* algorithm:\t")
 		cat(names(x@algorithm),"\n")
-		cat("* ------postInputs------\n")
-		PI	<-	x@postInputs
+		cat("* ------process inputs------\n")
+		PI	<-	x@processInputs
 		PI[is.na(PI)] = '[optional]'
 		nms	<-	names(PI)		
 		for (i in 1:length(nms)){

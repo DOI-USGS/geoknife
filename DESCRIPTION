@@ -16,8 +16,9 @@ Copyright: This software is in the public domain because it contains materials
 Collate:
     'GDP.R'
     'printGDP.R'
-    'initializePostInputs.R'
-    'postInputsToXML.R'
+    'initializeProcessInputs.R'
+    'setProcessInputs.R'
+    'processInputsToXML.R'
     'checkProcess.R'
     'startProcess.R'
     'getDataIDs.R'
