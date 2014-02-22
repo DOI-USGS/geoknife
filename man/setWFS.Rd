@@ -1,7 +1,7 @@
 \docType{methods}
 \name{setWFS}
 \alias{setWFS}
-\title{setWFS}
+\title{set web feature service location}
 \arguments{
   \item{\code{rGDP}}{object.}
 
@@ -11,6 +11,9 @@
   An \code{rGDP} object.
 }
 \description{
+  set web feature service location
+}
+\details{
   method for setting the web feature service (WFS) endpoint
   for a \code{rGDP} object.
 }

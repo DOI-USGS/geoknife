@@ -101,7 +101,7 @@ setMethod(f="initialize",signature="rGDP",
 
 #'@title get shapefiles from a web location
 #'
-#'@details  a \code{rGDP} method for finding shapefile names at a valid WFS endpoint.
+#'@details a \code{rGDP} method for finding shapefile names at a valid WFS endpoint.
 #'
 #'@param \code{rGDP} object with a valid WFS url.
 #'@return list of shapefiles for the \code{rGDP} WFS url.
@@ -109,9 +109,9 @@ setMethod(f="initialize",signature="rGDP",
 #'@keywords getShapefiles
 #'@export
 setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapefiles")})
-#'getAttributes
+#'@title get attributes from a shapefile at a web location
 #'
-#'a \code{rGDP} method for finding attribute names for a given shapefile at a valid WFS endpoint. 
+#'@details a \code{rGDP} method for finding attribute names for a given shapefile at a valid WFS endpoint. 
 #'
 #'@param \code{rGDP} object with a valid WFS url.
 #'@param a valid shapefile name.
@@ -120,9 +120,9 @@ setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapef
 #'@keywords getAttributes
 #'@export
 setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric("getAttributes")})
-#'getValues
+#'@title get values from a shapefile at a web location
 #'
-#'a \code{rGDP} method for finding value names for a given shapefile at a valid WFS endpoint. 
+#'@details a \code{rGDP} method for finding value names for a given shapefile at a valid WFS endpoint. 
 #'
 #'@param \code{rGDP} object with a valid WFS url.
 #'@param a valid shapefile name.
@@ -133,9 +133,9 @@ setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric(
 #'@export
 setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGeneric("getValues")})
 
-#'setWFS
+#'@title set web feature service location
 #'
-#'method for setting the web feature service (WFS) endpoint for a \code{rGDP} object. 
+#'@details method for setting the web feature service (WFS) endpoint for a \code{rGDP} object. 
 #'
 #'@param \code{rGDP} object.
 #'@param a Web Feature Service (WFS) endpoint.
@@ -144,9 +144,9 @@ setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGe
 #'@keywords setWFS
 #'@export
 setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
-#'setWPS
+#'@title set web processing service location
 #'
-#'method for setting the web processing service (WPS) endpoint for a \code{rGDP} object. 
+#'@details method for setting the web processing service (WPS) endpoint for a \code{rGDP} object. 
 #'
 #'@param \code{rGDP} object.
 #'@param a Web Processing Service (WPS) endpoint.
@@ -155,9 +155,9 @@ setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
 #'@keywords setWPS
 #'@export
 setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
-#'setAlgorithm
+#'@title set processing algorithm
 #'
-#'method for setting the process algorithm of the \code{rGDP} object.
+#'@details method for setting the process algorithm of the \code{rGDP} object.
 #'
 #'@param An \code{rGDP} object.
 #'@param a list for a valid algorithm, including values for name & location
