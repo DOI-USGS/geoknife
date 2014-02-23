@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/USGS-R/rGDP">View on GitHub</a>
 
           <h1 id="project_title">rGDP</h1>
-          <h2 id="project_tagline">Collection of functions for GDP calls</h2>
+          <h2 id="project_tagline">Methods for geo-web processing of gridded data</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/USGS-R/rGDP/zipball/master">Download this project as a .zip file</a>
@@ -28,16 +28,48 @@
         </header>
     </div>
 
-    <!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+        <h3>Introduction</h3>
 
-<p>rGDP tools for accessing Geo Data Portal (GDP) functionality</p>
+<p>The rGDP package was created to allow R users to script geo-processing requests to the USGS's <a href="http://cida.usgs.gov/gdp/client/?development=true" target="_blank">Geo Data Portal</a>.
+</p>
 
-<pre><code>install.packages("rGDP", repos="http://USGS-R.github.com/rGDP",type='source')
+<h3>Download and Installation Options:</h3>
+
+<h4> - New to R?</h4>
+<p>If you are new to R, you will need to first install the latest version of R, which can be found <a href="http://www.r-project.org/" target="_blank">here</a>.
+Although there are many options for running and editing R code, a nice environment to learn R is RStudio. RStudio can be downloaded <a href="http://rstudio.org/" target="_blank">here</a>.
+Once you have set up your R environment, proceed to the next section to install the rGDP package.
+
+</p>
+
+<h4> - R User?</h4>
+
+<p>To install the package, first install the required packages from CRAN:</p>
+<pre>
+<code>
+install.packages(c("XML","RCurl"))
+</code>
+</pre>
+
+<p>Then use the following command:</p>
+<pre><code>
+install.packages("rGDP", repos="https://github.com/USGS-R/rGDP", type="source")
 </code></pre>
+<h4> - R Developer?</h4>
+<p>If you are an experienced R developer, and have the package 'devtools' and all the required LaTex tools installed to create packages, you can build the working version of this package directly from gitHub.
+
+Windows tools can be found <a href="http://cran.r-project.org/bin/windows/Rtools/" target="_blank">here</a>. Carefully follow the directions, and note that you need to install Rtools from that page, as well as <a href="http://www.miktex.org/download" target="_blank">MikTex</a> (the Windows set of LaTex tools). The full set of Mac LaTex tools can be found <a href="http://www.tug.org/mactex/downloading.html" target="_blank">here</a>.</p>
+
+Once that is installed, you can use the function install_github to install this package directly from github:
+<pre><code>
+library('devtools')
+install_github(repo='rGDP',username='USGS-R')
+</code></pre>
+This will install the latest code that is currently committed to gitHub.
+</p>
 
 <h3>
 <a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
