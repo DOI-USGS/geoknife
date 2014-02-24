@@ -24,8 +24,8 @@ setClass(
 #'
 #'@export
 #'@rdname geoknife
-#'@imports XML
-#'@imports RCurl
+#'@import XML
+#'@import RCurl
 #'@keywords geoknife
 #'@examples geoknife <- geoknife() # create geoknife object
 #'geoknife # print geoknife object
