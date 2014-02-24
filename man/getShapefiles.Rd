@@ -3,16 +3,16 @@
 \alias{getShapefiles}
 \title{get shapefiles from a web location}
 \arguments{
-  \item{\code{rGDP}}{object with a valid WFS url.}
+  \item{\code{geoknife}}{object with a valid WFS url.}
 }
 \value{
-  list of shapefiles for the \code{rGDP} WFS url.
+  list of shapefiles for the \code{geoknife} WFS url.
 }
 \description{
   get shapefiles from a web location
 }
 \details{
-  a \code{rGDP} method for finding shapefile names at a
+  a \code{geoknife} method for finding shapefile names at a
   valid WFS endpoint.
 }
 \keyword{getShapefiles}

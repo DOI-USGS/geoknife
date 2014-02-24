@@ -3,7 +3,7 @@
 \alias{checkProcess}
 \title{Check status of processing request}
 \arguments{
-  \item{\code{rGDP}}{object with an active GDP process
+  \item{\code{geoknife}}{object with an active GDP process
   request.}
 }
 \value{
@@ -15,12 +15,12 @@
 }
 \details{
   checkProcess is a method for checking the process status
-  of an active (executed) \code{rGDP} object. The method
-  returns \code{process}, which is a list containing two
-  fields: \code{status} and \code{URL}. If the \code{rGDP}
-  object has not been executed (see \code{executePost}),
-  this method returns \code{status}='none' and
-  \code{URL}=NULL.
+  of an active (executed) \code{geoknife} object. The
+  method returns \code{process}, which is a list containing
+  two fields: \code{status} and \code{URL}. If the
+  \code{geoknife} object has not been executed (see
+  \code{executePost}), this method returns
+  \code{status}='none' and \code{URL}=NULL.
 }
 \seealso{
   \code{executePost}

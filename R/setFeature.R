@@ -1,21 +1,21 @@
 #'@details setFeature is a method for setting or modifying the feature elements
-#' of for \code{rGDP} object. 
+#' of for \code{geoknife} object. 
 #'
-#'@param An \code{rGDP} object.
+#'@param An \code{geoknife} object.
 #'@param a list containing a valid feature collection, or a list of a subset of a valid feature collection.
-#'@return An \code{rGDP} object.
+#'@return An \code{geoknife} object.
 #'
 #'@docType methods
 #'@keywords setFeature
-#'@description Set feature for \code{rGDP}
+#'@description Set feature for \code{geoknife}
 #'@title Set feature geometry for processing
 #'@seealso \code{setWFS}
 #'@export
 setGeneric(name="setFeature",def=function(.Object,feature){standardGeneric("setFeature")})
 
 # '@rdname setFeature-methods
-# '@aliases setFeature,rGDP-method	
-setMethod(f = "setFeature",signature = "rGDP",
+# '@aliases setFeature,geoknife-method	
+setMethod(f = "setFeature",signature = "geoknife",
 	definition = function(.Object,feature){
 		
 		if ("LinearRing" %in% names(feature)){

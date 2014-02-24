@@ -3,9 +3,9 @@ setGeneric(name="initializeProcessInputs",def=function(.Object){
 	}
 )
 
-setMethod(f = "initializeProcessInputs",signature="rGDP",
+setMethod(f = "initializeProcessInputs",signature="geoknife",
 	definition =	function(.Object){
-		# this method is private to rGDP, and CREATES and SETS fields in the ProcessInputs
+		# this method is private to geoknife, and CREATES and SETS fields in the ProcessInputs
 		
 		algorithm	<-	.Object@algorithm
 		processURL	<-	paste(c(.Object@WPS_URL,'?service=WPS&version=',

@@ -1,10 +1,10 @@
 #'@details getAlgorithms is a method for finding algorithm names and locations for
-#' a \code{rGDP} object.
+#' a \code{geoknife} object.
 #'
-#'@param \code{rGDP} object with a valid WPS url.
-#'@return list of available algorithms for the \code{rGDP} WPS url.
+#'@param \code{geoknife} object with a valid WPS url.
+#'@return list of available algorithms for the \code{geoknife} WPS url.
 #'@docType methods
-#'@description Get algorithms for \code{rGDP}
+#'@description Get algorithms for \code{geoknife}
 #'@title Get processing algorithms
 #'@keywords getAlgorithms
 #'@seealso \code{setAlgorithm}
@@ -12,8 +12,8 @@
 setGeneric(name="getAlgorithms",def=function(.Object){standardGeneric("getAlgorithms")})
 
 # '@rdname getAlgorithms-methods
-# '@aliases getAlgorithms,rGDP-method	
-setMethod(f = "getAlgorithms",signature="rGDP",
+# '@aliases getAlgorithms,geoknife-method	
+setMethod(f = "getAlgorithms",signature="geoknife",
 	definition = function(.Object){
 		processURL	<-	paste(c(.Object@WPS_URL,'?service=WPS&version=',
 			.Object@WPS_DEFAULT_VERSION,'&request=GetCapabilities'),collapse="")

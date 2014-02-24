@@ -3,19 +3,19 @@
 \alias{setProcessInputs}
 \title{set inputs for web processing}
 \arguments{
-  \item{An}{\code{rGDP} object.}
+  \item{An}{\code{geoknife} object.}
 
   \item{a}{list of valid processInputs.}
 }
 \value{
-  An \code{rGDP} object.
+  An \code{geoknife} object.
 }
 \description{
   set inputs for web processing
 }
 \details{
   method for setting the (non-feature related) post inputs
-  of the \code{rGDP} object.
+  of the \code{geoknife} object.
 }
 \keyword{setProcessInputs}
 

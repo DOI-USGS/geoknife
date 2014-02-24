@@ -1,11 +1,11 @@
 #'@details getDataIDs is a method for finding dataset variables from a
-#' \code{rGDP} object with a valid dataset URI. Use setProcessInputs to set a dataset URI.
+#' \code{geoknife} object with a valid dataset URI. Use setProcessInputs to set a dataset URI.
 #'
-#'@param \code{rGDP} object with a valid dataset URI.
+#'@param \code{geoknife} object with a valid dataset URI.
 #'@param cachedResponse an optional input to allow cached response. Default as FALSE
-#'@return list of dataset IDs for the \code{rGDP} dataset URI.
+#'@return list of dataset IDs for the \code{geoknife} dataset URI.
 #'@docType methods
-#'@description Find variables from \code{rGDP} dataset
+#'@description Find variables from \code{geoknife} dataset
 #'@title Find variables from dataset
 #'@keywords getDataIDs
 #'@seealso \code{setProcessInputs}
@@ -13,8 +13,8 @@
 setGeneric(name="getDataIDs",def=function(.Object,cachedResponse){standardGeneric("getDataIDs")})
 
 # '@rdname getDataIDs-methods
-# '@aliases getDataIDs,rGDP-method
-setMethod(f = "getDataIDs",signature="rGDP",
+# '@aliases getDataIDs,geoknife-method
+setMethod(f = "getDataIDs",signature="geoknife",
 	definition = function(.Object,cachedResponse){
 		
 		if (missing(cachedResponse)){

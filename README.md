@@ -1,12 +1,12 @@
-rGDP
+geoknife
 =====
 
-R tools for accessing processing features of the USGS's Geo Data Portal (GDP). See cida.usgs.gov/gdp for a web interface for the GDP. 
+R tools for geo-web processing of gridded data via the Geo Data Portal (cida.usgs.gov/gdp).
 
 =====
 install this package using 
 
-	install.packages("rGDP", repos="http://USGS-R.github.com/rGDP",type='source')
+	install.packages("geoknife", repos="http://USGS-R.github.com/geoknife",type='source')
 
 Disclaimer
 ----------
