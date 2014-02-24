@@ -7,5 +7,6 @@
 R/.DS_Store
 examples/.DS_Store
 geoknife.Rproj
+nbproject/
 .Rbuildignore
 .DS_Store
