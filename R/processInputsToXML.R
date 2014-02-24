@@ -82,30 +82,50 @@ processInputsToXML	<-	function(.Object){
 		gmlFeatEL	<-	newXMLNode('gml:featureMembers',namespaceDefinitions=c('gml'="http://www.opengis.net/gml"),
 			attrs=c("xsi:schemaLocation"=paste(c(.Object@DRAW_NAMESPACE,.Object@DRAW_SCHEMA_LOCATION),collapse=' ')))
 		addChildren(compDatEL,gmlFeatEL)
+		# loop this section for multiple polygons:
 		
-		gmlBoxEL	<-	newXMLNode('gml:box',attrs=c("gml:id"="box.1"))
-		addChildren(gmlFeatEL,gmlBoxEL) 
+
+		if (is.list(.Object@feature[['LinearRing']])){
+			lng	<-	length(.Object@feature[['LinearRing']])
+			lst	<-	TRUE
+		} else {
+			lng	<-	1
+			lst	<-	FALSE
+		}
+		for (j in 1:lng){
+
+			gmlBoxEL	<-	newXMLNode('gml:box',attrs=c("gml:id"=paste("box.",j,sep='')))
+			addChildren(gmlFeatEL,gmlBoxEL) 
+
 		
-		gmlGeomEL	<-	newXMLNode('gml:the_geom') 
-		addChildren(gmlBoxEL,gmlGeomEL)
+			gmlGeomEL	<-	newXMLNode('gml:the_geom') 
+			addChildren(gmlBoxEL,gmlGeomEL)
+
+			gmlPolyEL	<-	newXMLNode('gml:MultiPolygon',attrs=c("srsDimension"="2","srsName"="http://www.opengis.net/gml/srs/epsg.xml#4326"))
+			addChildren(gmlGeomEL,gmlPolyEL)
 		
-		gmlPolyEL	<-	newXMLNode('gml:MultiPolygon',attrs=c("srsDimension"="2","srsName"="http://www.opengis.net/gml/srs/epsg.xml#4326"))
-		addChildren(gmlGeomEL,gmlPolyEL)
+			gmlPmEL	<-	newXMLNode('gml:polygonMember')
+			addChildren(gmlPolyEL,gmlPmEL)
+
+			gmlPgEL	<-	newXMLNode('gml:Polygon')
+			addChildren(gmlPmEL,gmlPgEL)
+
+			gmlExEL	<-	newXMLNode('gml:exterior')
+			addChildren(gmlPgEL,gmlExEL)
+
+			gmlLrEL	<-	newXMLNode('gml:LinearRing')
+			addChildren(gmlExEL,gmlLrEL)
+			
+			if (lst){
+				ring.val	<-	paste(.Object@feature[['LinearRing']][[j]],collapse=" ")
+			} else {
+				ring.val	<-	paste(.Object@feature[['LinearRing']],collapse=" ")
+			}
+			
+			gmlPosEL	<-	newXMLNode('gml:posList',newXMLTextNode(ring.val))
+			addChildren(gmlLrEL,gmlPosEL)
+		}
 		
-		gmlPmEL	<-	newXMLNode('gml:polygonMember')
-		addChildren(gmlPolyEL,gmlPmEL)
-		
-		gmlPgEL	<-	newXMLNode('gml:Polygon')
-		addChildren(gmlPmEL,gmlPgEL)
-		
-		gmlExEL	<-	newXMLNode('gml:exterior')
-		addChildren(gmlPgEL,gmlExEL)
-		
-		gmlLrEL	<-	newXMLNode('gml:LinearRing')
-		addChildren(gmlExEL,gmlLrEL)
-		
-		gmlPosEL	<-	newXMLNode('gml:posList',newXMLTextNode(paste(.Object@feature[['LinearRing']],collapse=" ")))
-		addChildren(gmlLrEL,gmlPosEL)
 	}
 		
 	resForm	<-	newXMLNode('wps:ResponseForm')
