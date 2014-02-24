@@ -1,3 +1,4 @@
+export(bufferPoint)
 export(printProcessInputs)
 export(rGDP)
 exportClasses(rGDP)

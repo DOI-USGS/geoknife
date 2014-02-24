@@ -17,10 +17,10 @@
 \details{
   getDataIDs is a method for finding dataset variables from
   a \code{rGDP} object with a valid dataset URI. Use
-  setPostInputs to set a dataset URI.
+  setProcessInputs to set a dataset URI.
 }
 \seealso{
-  \code{setPostInputs}
+  \code{setProcessInputs}
 }
 \keyword{getDataIDs}
 

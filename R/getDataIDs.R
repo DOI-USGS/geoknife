@@ -1,5 +1,5 @@
 #'@details getDataIDs is a method for finding dataset variables from a
-#' \code{rGDP} object with a valid dataset URI. Use setPostInputs to set a dataset URI.
+#' \code{rGDP} object with a valid dataset URI. Use setProcessInputs to set a dataset URI.
 #'
 #'@param \code{rGDP} object with a valid dataset URI.
 #'@param cachedResponse an optional input to allow cached response. Default as FALSE
@@ -8,7 +8,7 @@
 #'@description Find variables from \code{rGDP} dataset
 #'@title Find variables from dataset
 #'@keywords getDataIDs
-#'@seealso \code{setPostInputs}
+#'@seealso \code{setProcessInputs}
 #'@export
 setGeneric(name="getDataIDs",def=function(.Object,cachedResponse){standardGeneric("getDataIDs")})
 
@@ -20,7 +20,7 @@ setMethod(f = "getDataIDs",signature="rGDP",
 		if (missing(cachedResponse)){
 			cachedResponse=FALSE
 		}
-		if ("DATASET_URI" %in% names(.Object@postInputs)){
+		if ("DATASET_URI" %in% names(.Object@processInputs)){
 			algorithm	<-	.Object@dataList
 			requestXML	<-	generateRequest(.Object, algorithm,cachedResponse)
 			url = .Object@UTILITY_URL

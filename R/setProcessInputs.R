@@ -30,11 +30,19 @@ setMethod(f = "setProcessInputs",signature = "rGDP",
 	
 dodsReplace	<-	function(.Object){
 	# checks for dods or opendap, and replaces
+	
+			
 	if ("DATASET_URI" %in% names(.Object@processInputs) & 
 		!is.null(.Object@processInputs$DATASET_URI)) {
+		
 		uri	<-	.Object@processInputs$DATASET_URI
-		uri	<-	gsub('http', 'dods', uri)
-		uri	<-	gsub('http', 'opendap', uri)
+		if (grepl('dodsC',uri)){
+			uri	<-	gsub('http', 'dods', uri)
+		}
+		if (grepl('opendap',uri)){
+			uri	<-	gsub('http', 'opendap', uri)
+		}
+
 		.Object@processInputs	<-	setList(.Object@processInputs,list('DATASET_URI'=uri))
 	}
 	return(.Object)

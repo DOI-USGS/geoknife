@@ -361,6 +361,7 @@ parseXMLvalues	<-	function(xmlURL,key){
 #'@keywords printProcessInputs
 #'@export
 printProcessInputs	<-	function(.Object){
+	# FAILS when process inputs are NULL...
 	requestXML	<-	suppressWarnings(processInputsToXML(.Object))
 	print(requestXML)
 	
