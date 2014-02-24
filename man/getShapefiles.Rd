@@ -15,5 +15,9 @@
   a \code{geoknife} method for finding shapefile names at a
   valid WFS endpoint.
 }
+\examples{
+gk<- geoknife() # create geoknife object
+getShapefiles(gk) # display shapefile names
+}
 \keyword{getShapefiles}
 

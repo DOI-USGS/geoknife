@@ -19,6 +19,14 @@
   a \code{geoknife} object with a valid dataset URI. Use
   setProcessInputs to set a dataset URI.
 }
+\examples{
+gk <- geoknife() # create geoknife object
+algorithm <- list("Area Grid Statistics (weighted)"=
+"gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
+gk <- setAlgorithm(gk,algorithm)
+gk <-  setProcessInputs(gk,list("DATASET_URI" = "dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best"))
+getDataIDs(gk)
+}
 \seealso{
   \code{setProcessInputs}
 }

@@ -1,21 +1,11 @@
-\docType{methods}
-\name{startProcess}
-\alias{startProcess}
-\title{Submit a GDP web processing request}
-\arguments{
-  \item{\code{geoknife}}{object ot be used to formulate GDP
-  process request.}
-}
-\value{
-  An \code{geoknife} object with an active GDP process
-  request.
+\name{geoknife}
+\alias{geoknife}
+\title{Create geoknife object}
+\usage{
+  geoknife()
 }
 \description{
-  Start process for \code{geoknife}
-}
-\details{
-  startProcess is a method for submitting a web processing
-  request for the \code{geoknife} object.
+  Create geoknife object
 }
 \examples{
 geoknife <- geoknife() # create geoknife object
@@ -40,10 +30,8 @@ geoknife # print geoknife object contents
 
 # kick off your request
 geoknife <- startProcess(geoknife)
-geoknife # display contents
+status.geoknife  <-  checkProcess(geoknife)
+checkProcess(geoknife) # check again and print to screen
 }
-\seealso{
-  \code{checkProcess}
-}
-\keyword{startProcess}
+\keyword{geoknife}
 

@@ -1,7 +1,7 @@
 Package: geoknife
 Type: Package
 Title: Geo-web processing of gridded data
-Version: 0.2.0
+Version: 0.2.1
 Date: 2013-05-23
 Author: Jordan S Read
 Maintainer: Jordan S Read <jread@usgs.gov>
@@ -25,6 +25,12 @@ Collate:
     'getAlgorithms.R'
     'setFeature.R'
     'bufferPoint.R'
+    'getShapefiles.R'
+    'getAttributes.R'
+    'getValues.R'
+    'setWFS.R'
+    'setWPS.R'
+    'setAlgorithm.R'
 Depends:
     R (>= 2.15.0)
 Imports:

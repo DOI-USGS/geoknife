@@ -8,6 +8,8 @@
 #'@title Get processing algorithms
 #'@keywords getAlgorithms
 #'@seealso \code{setAlgorithm}
+#'@examples gk <- geoknife() # create geoknife object
+#'getAlgorithms(gk) # list Geo Data Portal processing algorithms
 #'@export
 setGeneric(name="getAlgorithms",def=function(.Object){standardGeneric("getAlgorithms")})
 

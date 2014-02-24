@@ -16,6 +16,10 @@
   getAlgorithms is a method for finding algorithm names and
   locations for a \code{geoknife} object.
 }
+\examples{
+gk <- geoknife() # create geoknife object
+getAlgorithms(gk) # list Geo Data Portal processing algorithms
+}
 \seealso{
   \code{setAlgorithm}
 }

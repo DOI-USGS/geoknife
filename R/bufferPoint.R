@@ -8,6 +8,7 @@
 #'@description Buffer ring creation from point
 #'@title Create linear ring from point
 #'@seealso \code{setFeature}
+#'@examples linearRing = bufferPoint(c(-111.48, 36.95))
 #'@export
 bufferPoint	<-	function(point){
 	offset	<-	0.0001

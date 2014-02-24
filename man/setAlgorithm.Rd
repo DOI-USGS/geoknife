@@ -18,5 +18,11 @@
   method for setting the process algorithm of the
   \code{geoknife} object.
 }
+\examples{
+gk <- geoknife() # create geoknife object
+algorithm <- list("Area Grid Statistics (weighted)"=
+"gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
+gk <- setAlgorithm(gk,algorithm)
+}
 \keyword{setAlgorithm}
 

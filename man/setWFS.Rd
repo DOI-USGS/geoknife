@@ -17,5 +17,10 @@
   method for setting the web feature service (WFS) endpoint
   for a \code{geoknife} object.
 }
+\examples{
+gk <- geoknife() # create geoknife object
+WFS <- 'https://www.sciencebase.gov/catalogMaps/mapping/ows/51b0f5e5e4b030b51983cda1'
+gk <- setWFS(gk,WFS)
+}
 \keyword{setWFS}
 
