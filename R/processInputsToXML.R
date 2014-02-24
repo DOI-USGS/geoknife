@@ -16,17 +16,22 @@ processInputsToXML	<-	function(.Object){
 		postNm	<-	names(.Object@processInputs[i])
 		postVl	<-	.Object@processInputs[postNm]
 		if (!is.na(postVl)){
-			inEL	<-	newXMLNode("wps:Input",parent=di)
-			addChildren(di,inEL)
-		
-			inIdEL   <- newXMLNode("ows:Identifier",newXMLTextNode(postNm),parent=inEL)
-			addChildren(inEL,inIdEL)
-		
-			inDatEL  <- newXMLNode("wps:Data")
-			addChildren(inEL,inDatEL);
-		
-			litDatEL	<-	newXMLNode('wps:LiteralData',newXMLTextNode(postVl))
-			addChildren(inDatEL,litDatEL)
+			
+			num.vl	<-	length(unlist(postVl))
+			for (j in 1:num.vl){
+				postVl <- unlist(.Object@processInputs[postNm])[[j]]
+				inEL	<-	newXMLNode("wps:Input",parent=di)
+				addChildren(di,inEL)
+
+				inIdEL   <- newXMLNode("ows:Identifier",newXMLTextNode(postNm),parent=inEL)
+				addChildren(inEL,inIdEL)
+
+				inDatEL  <- newXMLNode("wps:Data")
+				addChildren(inEL,inDatEL);
+
+				litDatEL	<-	newXMLNode('wps:LiteralData',newXMLTextNode(postVl))
+				addChildren(inDatEL,litDatEL)
+			}
 		}
 	}
 	# complex data
