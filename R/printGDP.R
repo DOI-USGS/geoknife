@@ -19,8 +19,16 @@ setMethod(f = "print",signature = "rGDP",
 		PI[is.na(PI)] = '[optional]'
 		nms	<-	names(PI)		
 		for (i in 1:length(nms)){
-			cat("\t-", nms[i])
-			cat(":", PI[[i]], "\n")
+			if (length(PI[[i]])>1){
+				cat("\t-",nms[i], ":\n")
+				for (j in 1:length(PI[[i]])){
+					cat("\t",j,":", PI[[i]][j], "\n")
+				}
+			} else {
+				cat("\t-", nms[i])
+				cat(":", PI[[i]], "\n")
+			}
+			
 		}
 		cat("* ------feature------\n")
 		PI	<-	x@feature
