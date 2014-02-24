@@ -27,14 +27,24 @@ setMethod(f = "print",signature = "rGDP",
 		nms	<-	names(PI)
 		PI[is.na(PI)] = '[optional]'
 		for (i in 1:length(nms)){
-			# will skip "hidden"
-			if (!is.null(PI[[i]]) && PI[[i]]!='hidden'){
-				cat("\t-",nms[i])
-				cat(":", PI[[i]], "\n")
-			} else if (is.null(PI[[i]])){
-				cat("\t-", nms[i])
-				cat(":", PI[[i]], "\n")
+			
+			if (is.list(PI[[i]])){
+				cat("\t-",nms[i], ":\n")
+				for (j in 1:length(PI[[i]])){
+					cat("\t",j,":", PI[[i]][[j]], "\n")
+				}
+				
+			} else {
+				# will skip "hidden"
+				if (!is.null(PI[[i]]) && PI[[i]]!='hidden'){
+					cat("\t-",nms[i])
+					cat(":", PI[[i]], "\n")
+				} else if (is.null(PI[[i]])){
+					cat("\t-", nms[i])
+					cat(":", PI[[i]], "\n")
+				}
 			}
+			
 		}
 		cat("* processID:\t")
 		cat(x@processID,"\n")
