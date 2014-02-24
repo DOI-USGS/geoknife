@@ -1,13 +1,13 @@
 # show method calls print method
-setMethod(f = "show",signature = "rGDP",
+setMethod(f = "show",signature = "geoknife",
 	definition = function(object){
 		print(object)
 	}
 )
-# print method is a pretty print of the rGDP object, excluding hidden elements
-setMethod(f = "print",signature = "rGDP",
+# print method is a pretty print of the geoknife object, excluding hidden elements
+setMethod(f = "print",signature = "geoknife",
 	function(x,...){
-		cat("*** Class rGDP, method Print *** \n")
+		cat("*** Class geoknife, method Print *** \n")
 		cat("* WFS_URL:\t")
 		cat(x@WFS_URL,"\n")
 		cat("* WPS_URL:\t")
@@ -56,6 +56,6 @@ setMethod(f = "print",signature = "rGDP",
 		}
 		cat("* processID:\t")
 		cat(x@processID,"\n")
-		cat("**** End Print (rGDP)**** \n")
+		cat("**** End Print (geoknife)**** \n")
 	}
 )

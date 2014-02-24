@@ -1,10 +1,10 @@
 #'@title set inputs for web processing
 #'
-#'@details method for setting the (non-feature related) post inputs of the \code{rGDP} object. 
+#'@details method for setting the (non-feature related) post inputs of the \code{geoknife} object. 
 #'
-#'@param An \code{rGDP} object.
+#'@param An \code{geoknife} object.
 #'@param a list of valid processInputs.
-#'@return An \code{rGDP} object.
+#'@return An \code{geoknife} object.
 #'@docType methods
 #'@keywords setProcessInputs
 #'@export
@@ -12,8 +12,8 @@ setGeneric(name="setProcessInputs",def=function(.Object,processInputs){standardG
 
 
 # '@rdname setProcessInputs-methods
-# '@aliases setProcessInputs,rGDP-method	
-setMethod(f = "setProcessInputs",signature = "rGDP",
+# '@aliases setProcessInputs,geoknife-method	
+setMethod(f = "setProcessInputs",signature = "geoknife",
 	definition = function(.Object,processInputs){
 		if ("empty" %in% names(.Object@algorithm)){
 			stop('an algorithm must be chosen before setting processInputs')

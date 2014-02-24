@@ -1,7 +1,7 @@
 
-#' rGDP class
+#' geoknife class
 #'
-#' Some details about the \code{rGDP} class
+#' Some details about the \code{geoknife} class
 #' \describe{
 #'		\item{WFS_URL}{endpoint for web feature service (WFS)}
 #'		\item{WPS_URL}{endpoint for web processing service (WPS)}
@@ -11,11 +11,11 @@
 #`		\item{processID}{unique identifier for a GDP process}
 #' }
 #'
-#' @name rGDP
-#' @rdname rGDP-class
+#' @name geoknife
+#' @rdname geoknife-class
 #' @export
 setClass(
-	Class = "rGDP",
+	Class = "geoknife",
 	representation = representation(
 		WFS_URL="character",WPS_URL="character",
 		algorithm="list",
@@ -36,14 +36,14 @@ setClass(
 
 #' @export
 # '@docType functions
-# '@rdname rGDP
-# '@keywords rGDP
-rGDP = function(){
-	rGDP = new("rGDP")
-	return(rGDP)
+# '@rdname geoknife
+# '@keywords geoknife
+geoknife = function(){
+	geoknife = new("geoknife")
+	return(geoknife)
 }
 
-setMethod(f="initialize",signature="rGDP",
+setMethod(f="initialize",signature="geoknife",
 	definition=function(.Object){
 		default_WFS = 'http://cida.usgs.gov/gdp/geoserver/wfs'
 		default_WPS = 'http://cida.usgs.gov/gdp/process/WebProcessingService'
@@ -101,33 +101,33 @@ setMethod(f="initialize",signature="rGDP",
 
 #'@title get shapefiles from a web location
 #'
-#'@details a \code{rGDP} method for finding shapefile names at a valid WFS endpoint.
+#'@details a \code{geoknife} method for finding shapefile names at a valid WFS endpoint.
 #'
-#'@param \code{rGDP} object with a valid WFS url.
-#'@return list of shapefiles for the \code{rGDP} WFS url.
+#'@param \code{geoknife} object with a valid WFS url.
+#'@return list of shapefiles for the \code{geoknife} WFS url.
 #'@docType methods
 #'@keywords getShapefiles
 #'@export
 setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapefiles")})
 #'@title get attributes from a shapefile at a web location
 #'
-#'@details a \code{rGDP} method for finding attribute names for a given shapefile at a valid WFS endpoint. 
+#'@details a \code{geoknife} method for finding attribute names for a given shapefile at a valid WFS endpoint. 
 #'
-#'@param \code{rGDP} object with a valid WFS url.
+#'@param \code{geoknife} object with a valid WFS url.
 #'@param a valid shapefile name.
-#'@return list of attributes for the given shapefile at the \code{rGDP} WFS url.
+#'@return list of attributes for the given shapefile at the \code{geoknife} WFS url.
 #'@docType methods
 #'@keywords getAttributes
 #'@export
 setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric("getAttributes")})
 #'@title get values from a shapefile at a web location
 #'
-#'@details a \code{rGDP} method for finding value names for a given shapefile at a valid WFS endpoint. 
+#'@details a \code{geoknife} method for finding value names for a given shapefile at a valid WFS endpoint. 
 #'
-#'@param \code{rGDP} object with a valid WFS url.
+#'@param \code{geoknife} object with a valid WFS url.
 #'@param a valid shapefile name.
 #'@param a valid attribute name for the shapefile.
-#'@return list of values for the given shapefile attribute at the \code{rGDP} WFS url.
+#'@return list of values for the given shapefile attribute at the \code{geoknife} WFS url.
 #'@docType methods
 #'@keywords getValues
 #'@export
@@ -135,33 +135,33 @@ setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGe
 
 #'@title set web feature service location
 #'
-#'@details method for setting the web feature service (WFS) endpoint for a \code{rGDP} object. 
+#'@details method for setting the web feature service (WFS) endpoint for a \code{geoknife} object. 
 #'
-#'@param \code{rGDP} object.
+#'@param \code{geoknife} object.
 #'@param a Web Feature Service (WFS) endpoint.
-#'@return An \code{rGDP} object.
+#'@return An \code{geoknife} object.
 #'@docType methods
 #'@keywords setWFS
 #'@export
 setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
 #'@title set web processing service location
 #'
-#'@details method for setting the web processing service (WPS) endpoint for a \code{rGDP} object. 
+#'@details method for setting the web processing service (WPS) endpoint for a \code{geoknife} object. 
 #'
-#'@param \code{rGDP} object.
+#'@param \code{geoknife} object.
 #'@param a Web Processing Service (WPS) endpoint.
-#'@return An \code{rGDP} object.
+#'@return An \code{geoknife} object.
 #'@docType methods
 #'@keywords setWPS
 #'@export
 setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
 #'@title set processing algorithm
 #'
-#'@details method for setting the process algorithm of the \code{rGDP} object.
+#'@details method for setting the process algorithm of the \code{geoknife} object.
 #'
-#'@param An \code{rGDP} object.
+#'@param An \code{geoknife} object.
 #'@param a list for a valid algorithm, including values for name & location
-#'@return An \code{rGDP} object.
+#'@return An \code{geoknife} object.
 #'@docType methods
 #'@keywords setAlgorithm
 #'@export
@@ -174,8 +174,8 @@ setProcessID	<-	function(.Object,processID){
 
 
 # '@rdname getShapefiles-methods
-# '@aliases getShapefiles,rGDP-method	
-setMethod(f = "getShapefiles",signature="rGDP",
+# '@aliases getShapefiles,geoknife-method	
+setMethod(f = "getShapefiles",signature="geoknife",
 	definition = function(.Object){
 		parentKey 	<-	"featuretypelist"
 		childKey	<-	"featuretype"
@@ -185,8 +185,8 @@ setMethod(f = "getShapefiles",signature="rGDP",
 		return(shapefiles)
 	})
 # '@rdname getAttributes-methods
-# '@aliases getAttributes,rGDP-method	
-setMethod(f = "getAttributes",signature="rGDP",
+# '@aliases getAttributes,geoknife-method	
+setMethod(f = "getAttributes",signature="geoknife",
 	definition = function(.Object,shapefile){
 		parentKey	<-	"element"
 		childKey	<-	"maxoccurs"
@@ -197,8 +197,8 @@ setMethod(f = "getAttributes",signature="rGDP",
 		return(attributes)
 	})
 # '@rdname getValues-methods
-# '@aliases getValues,rGDP-method
-setMethod(f = "getValues",signature="rGDP",
+# '@aliases getValues,geoknife-method
+setMethod(f = "getValues",signature="geoknife",
 	definition = function(.Object,shapefile,
 		attribute){
 		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
@@ -212,16 +212,16 @@ setMethod(f = "getValues",signature="rGDP",
 
 
 # '@rdname setWFS-methods
-# '@aliases setWFS,rGDP-method
-setMethod(f = "setWFS",signature="rGDP",
+# '@aliases setWFS,geoknife-method
+setMethod(f = "setWFS",signature="geoknife",
 	definition = function(.Object,wfs){
 		wfs	<-	gsub('https', 'http', wfs)
 		.Object@WFS_URL	<-	wfs
 		return(.Object)
 	})
 # '@rdname setWPS-methods
-# '@aliases setWPS,rGDP-method
-setMethod(f = "setWPS",signature="rGDP",
+# '@aliases setWPS,geoknife-method
+setMethod(f = "setWPS",signature="geoknife",
 	definition = function(.Object,wps){
 		wps	<-	gsub('https', 'http', wps)
 		.Object@WPS_URL	<-	wps
@@ -230,8 +230,8 @@ setMethod(f = "setWPS",signature="rGDP",
 
 
 # '@rdname setAlgorithm-methods
-# '@aliases setAlgorithm,rGDP-method	
-setMethod(f = "setAlgorithm",signature = "rGDP",
+# '@aliases setAlgorithm,geoknife-method	
+setMethod(f = "setAlgorithm",signature = "geoknife",
 	definition = function(.Object,algorithm){
 		.Object@algorithm	<-	algorithm
 		# now, initialize posts
@@ -355,9 +355,9 @@ parseXMLvalues	<-	function(xmlURL,key){
 
 #'printProcessInputs
 #'
-#'function for printing postXML \code{rGDP} object. 
+#'function for printing postXML \code{geoknife} object. 
 #'
-#'@param An \code{rGDP} object.
+#'@param An \code{geoknife} object.
 #'@keywords printProcessInputs
 #'@export
 printProcessInputs	<-	function(.Object){

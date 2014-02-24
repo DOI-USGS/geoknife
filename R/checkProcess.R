@@ -1,9 +1,9 @@
 #'@details checkProcess is a method for checking the process status of an active (executed)
-#' \code{rGDP} object. The method returns \code{process}, which is a list containing
-#' two fields: \code{status} and \code{URL}. If the \code{rGDP} object has not been executed
+#' \code{geoknife} object. The method returns \code{process}, which is a list containing
+#' two fields: \code{status} and \code{URL}. If the \code{geoknife} object has not been executed
 #' (see \code{executePost}), this method returns \code{status}='none' and \code{URL}=NULL.
 #'
-#'@param \code{rGDP} object with an active GDP process request.
+#'@param \code{geoknife} object with an active GDP process request.
 #'@return \code{process}, a list containing
 #' \code{status} and \code{URL}. 
 #'
@@ -16,8 +16,8 @@
 setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
 
 # '@rdname checkProcess-methods
-# '@aliases checkProcess,rGDP-method
-setMethod(f = "checkProcess",signature = "rGDP",definition = function(.Object){
+# '@aliases checkProcess,geoknife-method
+setMethod(f = "checkProcess",signature = "geoknife",definition = function(.Object){
 	
 	process	<-	list(status=NULL,URL=NULL)
 	if (.Object@processID=="<no active job>"){

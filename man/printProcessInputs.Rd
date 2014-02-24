@@ -5,10 +5,10 @@
   printProcessInputs(.Object)
 }
 \arguments{
-  \item{An}{\code{rGDP} object.}
+  \item{An}{\code{geoknife} object.}
 }
 \description{
-  function for printing postXML \code{rGDP} object.
+  function for printing postXML \code{geoknife} object.
 }
 \keyword{printProcessInputs}
 

@@ -1,11 +1,11 @@
-#'@details startProcess is a method for submitting a web processing request for the \code{rGDP} object.
+#'@details startProcess is a method for submitting a web processing request for the \code{geoknife} object.
 #'
-#'@param \code{rGDP} object ot be used to formulate GDP process request.
-#'@return An \code{rGDP} object with an active GDP process request.
+#'@param \code{geoknife} object ot be used to formulate GDP process request.
+#'@return An \code{geoknife} object with an active GDP process request.
 #'
 #'@docType methods
 #'@keywords startProcess
-#'@description Start process for \code{rGDP}
+#'@description Start process for \code{geoknife}
 #'@title Submit a GDP web processing request
 #'@seealso \code{checkProcess}
 #'@export
@@ -13,8 +13,8 @@
 setGeneric(name="startProcess",def=function(.Object){standardGeneric("startProcess")})
 
 # '@rdname startProcess-methods
-# '@aliases startProcess,rGDP-method
-setMethod(f = "startProcess",signature = "rGDP",definition = function(.Object){
+# '@aliases startProcess,geoknife-method
+setMethod(f = "startProcess",signature = "geoknife",definition = function(.Object){
 	
 	requestXML	<-	toString.XMLNode(xmlDoc(suppressWarnings(processInputsToXML(.Object))))
 	myheader	<-	c(Connection="close", 

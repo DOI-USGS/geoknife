@@ -1,8 +1,8 @@
-\name{rGDP}
-\alias{rGDP}
-\title{rGDP class}
+\name{geoknife}
+\alias{geoknife}
+\title{geoknife class}
 \description{
-  Some details about the \code{rGDP} class \describe{
+  Some details about the \code{geoknife} class \describe{
   \item{WFS_URL}{endpoint for web feature service (WFS)}
   \item{WPS_URL}{endpoint for web processing service (WPS)}
   \item{algorithm}{a length one list (name and location) of

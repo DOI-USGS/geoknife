@@ -3,20 +3,20 @@
 \alias{getAttributes}
 \title{get attributes from a shapefile at a web location}
 \arguments{
-  \item{\code{rGDP}}{object with a valid WFS url.}
+  \item{\code{geoknife}}{object with a valid WFS url.}
 
   \item{a}{valid shapefile name.}
 }
 \value{
   list of attributes for the given shapefile at the
-  \code{rGDP} WFS url.
+  \code{geoknife} WFS url.
 }
 \description{
   get attributes from a shapefile at a web location
 }
 \details{
-  a \code{rGDP} method for finding attribute names for a
-  given shapefile at a valid WFS endpoint.
+  a \code{geoknife} method for finding attribute names for
+  a given shapefile at a valid WFS endpoint.
 }
 \keyword{getAttributes}
 
