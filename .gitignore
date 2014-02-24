@@ -6,6 +6,7 @@
 .Rproj.user
 R/.DS_Store
 examples/.DS_Store
-rGDP.Rproj
+geoknife.Rproj
+nbproject/
 .Rbuildignore
 .DS_Store
