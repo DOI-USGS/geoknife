@@ -3,7 +3,7 @@ require(rGDP)
 # create rGDP object w/ defaults
 rGDP <- rGDP()
 # give this rGDP object a linear ring as the feature of interest (will be adding multiple rings in the future, but...)
-linearRing = bufferRing(c(-111.48,36.95))
+linearRing = bufferPoint(c(-111.48,36.95))
 rGDP <- setFeature(rGDP,list(LinearRing=linearRing))
 
 # get a list of available processing algorithms

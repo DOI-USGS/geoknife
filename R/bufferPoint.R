@@ -1,15 +1,15 @@
-#'@details bufferRing is a function that takes a longitude and latitude pair and creates
+#'@details bufferPoint is a function that takes a longitude and latitude pair and creates
 #' a buffered ring (i.e., a feature with non-zero area) centered.
 #'
 #'@param A vector of longitude and latitude values
 #'@return A linear ring (with closure) as a numeric vector 
 #'
-#'@keywords bufferRing
+#'@keywords bufferPoint
 #'@description Buffer ring creation from point
 #'@title Create linear ring from point
 #'@seealso \code{setFeature}
 #'@export
-bufferRing	<-	function(point){
+bufferPoint	<-	function(point){
 	offset	<-	0.0001
 	
 	if (length(point) %% 2 != 0){

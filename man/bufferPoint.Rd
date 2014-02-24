@@ -1,8 +1,8 @@
-\name{bufferRing}
-\alias{bufferRing}
+\name{bufferPoint}
+\alias{bufferPoint}
 \title{Create linear ring from point}
 \usage{
-  bufferRing(point)
+  bufferPoint(point)
 }
 \arguments{
   \item{A}{vector of longitude and latitude values}
@@ -14,12 +14,12 @@
   Buffer ring creation from point
 }
 \details{
-  bufferRing is a function that takes a longitude and
+  bufferPoint is a function that takes a longitude and
   latitude pair and creates a buffered ring (i.e., a
   feature with non-zero area) centered.
 }
 \seealso{
   \code{setFeature}
 }
-\keyword{bufferRing}
+\keyword{bufferPoint}
 
