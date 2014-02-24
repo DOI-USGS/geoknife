@@ -8,6 +8,12 @@
 #'@description Find variables from \code{geoknife} dataset
 #'@title Find variables from dataset
 #'@keywords getDataIDs
+#'@examples gk <- geoknife() # create geoknife object
+#'algorithm <- list("Area Grid Statistics (weighted)"=
+#'"gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
+#'gk <- setAlgorithm(gk,algorithm)
+#'gk <-  setProcessInputs(gk,list("DATASET_URI" = "dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best"))
+#'getDataIDs(gk)
 #'@seealso \code{setProcessInputs}
 #'@export
 setGeneric(name="getDataIDs",def=function(.Object,cachedResponse){standardGeneric("getDataIDs")})
@@ -26,7 +32,7 @@ setMethod(f = "getDataIDs",signature="geoknife",
 			url = .Object@UTILITY_URL
 			responseXML	<-	genericExecute(url,requestXML)
 		} else {
-			stop('must have a DATASET_URI set as a postInput')
+			stop('must have a DATASET_URI set as a processInput')
 		}
 		# get complex data
 		cData	<-	xmlValue(getNodeSet(responseXML, "//ns:LiteralData")[[1]])

@@ -18,6 +18,9 @@
   latitude pair and creates a buffered ring (i.e., a
   feature with non-zero area) centered.
 }
+\examples{
+linearRing = bufferPoint(c(-111.48, 36.95))
+}
 \seealso{
   \code{setFeature}
 }

@@ -1,19 +1,5 @@
 
-#' geoknife class
-#'
-#' Some details about the \code{geoknife} class
-#' \describe{
-#'		\item{WFS_URL}{endpoint for web feature service (WFS)}
-#'		\item{WPS_URL}{endpoint for web processing service (WPS)}
-#'		\item{algorithm}{a length one list (name and location) of a WPS algorithm}
-#'		\item{processInputs}{a list of process parameters}
-#'		\item{feature}{a list of elements in the feature collection}
-#`		\item{processID}{unique identifier for a GDP process}
-#' }
-#'
-#' @name geoknife
-#' @rdname geoknife-class
-#' @export
+
 setClass(
 	Class = "geoknife",
 	representation = representation(
@@ -34,10 +20,38 @@ setClass(
 		timeList="character",emailK="character")
 		)
 
-#' @export
-# '@docType functions
-# '@rdname geoknife
-# '@keywords geoknife
+#' Create geoknife object 
+#'
+#'@export
+#'@rdname geoknife
+#'@imports XML
+#'@imports RCurl
+#'@keywords geoknife
+#'@examples geoknife <- geoknife() # create geoknife object
+#'geoknife # print geoknife object
+#'
+#'linearRing = bufferPoint(c(-111.48,36.95))
+#'geoknife <- setFeature(geoknife,list(LinearRing=linearRing))
+#'
+#' #get a list of available processing algorithms
+#'getAlgorithms(geoknife)
+#'
+#' #set processing algorithm to feature weighted grid statistics (unweighted will likely fail, because the ring won't intersect the centroids)
+#'geoknife <- setAlgorithm(geoknife,getAlgorithms(geoknife)[4]) # feature weighted
+#'
+#' # set the post inputs for the processing dataset
+#' geoknife <-  setProcessInputs(geoknife,list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
+#'                                        'DATASET_URI'='dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best',
+#'                                        'TIME_START'='2010-01-01T00:00:00Z',
+#'                                        'TIME_END'='2010-01-01T23:00:00Z',
+#'                                        'DELIMITER'='TAB'))
+#'geoknife # print geoknife object contents
+#'
+#' # kick off your request
+#'geoknife <- startProcess(geoknife)
+#'status.geoknife  <-  checkProcess(geoknife)
+#'checkProcess(geoknife) # check again and print to screen
+
 geoknife = function(){
 	geoknife = new("geoknife")
 	return(geoknife)
@@ -97,147 +111,12 @@ setMethod(f="initialize",signature="geoknife",
 	})
 
 
-
-
-#'@title get shapefiles from a web location
-#'
-#'@details a \code{geoknife} method for finding shapefile names at a valid WFS endpoint.
-#'
-#'@param \code{geoknife} object with a valid WFS url.
-#'@return list of shapefiles for the \code{geoknife} WFS url.
-#'@docType methods
-#'@keywords getShapefiles
-#'@export
-setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapefiles")})
-#'@title get attributes from a shapefile at a web location
-#'
-#'@details a \code{geoknife} method for finding attribute names for a given shapefile at a valid WFS endpoint. 
-#'
-#'@param \code{geoknife} object with a valid WFS url.
-#'@param a valid shapefile name.
-#'@return list of attributes for the given shapefile at the \code{geoknife} WFS url.
-#'@docType methods
-#'@keywords getAttributes
-#'@export
-setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric("getAttributes")})
-#'@title get values from a shapefile at a web location
-#'
-#'@details a \code{geoknife} method for finding value names for a given shapefile at a valid WFS endpoint. 
-#'
-#'@param \code{geoknife} object with a valid WFS url.
-#'@param a valid shapefile name.
-#'@param a valid attribute name for the shapefile.
-#'@return list of values for the given shapefile attribute at the \code{geoknife} WFS url.
-#'@docType methods
-#'@keywords getValues
-#'@export
-setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGeneric("getValues")})
-
-#'@title set web feature service location
-#'
-#'@details method for setting the web feature service (WFS) endpoint for a \code{geoknife} object. 
-#'
-#'@param \code{geoknife} object.
-#'@param a Web Feature Service (WFS) endpoint.
-#'@return An \code{geoknife} object.
-#'@docType methods
-#'@keywords setWFS
-#'@export
-setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
-#'@title set web processing service location
-#'
-#'@details method for setting the web processing service (WPS) endpoint for a \code{geoknife} object. 
-#'
-#'@param \code{geoknife} object.
-#'@param a Web Processing Service (WPS) endpoint.
-#'@return An \code{geoknife} object.
-#'@docType methods
-#'@keywords setWPS
-#'@export
-setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
-#'@title set processing algorithm
-#'
-#'@details method for setting the process algorithm of the \code{geoknife} object.
-#'
-#'@param An \code{geoknife} object.
-#'@param a list for a valid algorithm, including values for name & location
-#'@return An \code{geoknife} object.
-#'@docType methods
-#'@keywords setAlgorithm
-#'@export
-setGeneric(name="setAlgorithm",def=function(.Object,algorithm){standardGeneric("setAlgorithm")})
-
 setProcessID	<-	function(.Object,processID){
 	.Object@processID	<-	processID
 	return(.Object)
 }
 
 
-# '@rdname getShapefiles-methods
-# '@aliases getShapefiles,geoknife-method	
-setMethod(f = "getShapefiles",signature="geoknife",
-	definition = function(.Object){
-		parentKey 	<-	"featuretypelist"
-		childKey	<-	"featuretype"
-		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
-			.Object@WFS_DEFAULT_VERSION,'&request=GetCapabilities'),collapse="")
-		shapefiles	<-	parseXMLnodes(processURL,parentKey,childKey)
-		return(shapefiles)
-	})
-# '@rdname getAttributes-methods
-# '@aliases getAttributes,geoknife-method	
-setMethod(f = "getAttributes",signature="geoknife",
-	definition = function(.Object,shapefile){
-		parentKey	<-	"element"
-		childKey	<-	"maxoccurs"
-		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
-			.Object@WFS_DEFAULT_VERSION,'&request=DescribeFeatureType',
-			'&typename=',shapefile),collapse="")
-		attributes	<-	parseXMLattributes(processURL,parentKey,childKey)
-		return(attributes)
-	})
-# '@rdname getValues-methods
-# '@aliases getValues,geoknife-method
-setMethod(f = "getValues",signature="geoknife",
-	definition = function(.Object,shapefile,
-		attribute){
-		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
-			.Object@WFS_DEFAULT_VERSION,'&request=GetFeature',
-			'&info_format=text%2Fxml&typename=',shapefile,
-			'&propertyname=',attribute),collapse="")
-		values	<-	parseXMLvalues(processURL,attribute)
-		return(values)
-	})
-
-
-
-# '@rdname setWFS-methods
-# '@aliases setWFS,geoknife-method
-setMethod(f = "setWFS",signature="geoknife",
-	definition = function(.Object,wfs){
-		wfs	<-	gsub('https', 'http', wfs)
-		.Object@WFS_URL	<-	wfs
-		return(.Object)
-	})
-# '@rdname setWPS-methods
-# '@aliases setWPS,geoknife-method
-setMethod(f = "setWPS",signature="geoknife",
-	definition = function(.Object,wps){
-		wps	<-	gsub('https', 'http', wps)
-		.Object@WPS_URL	<-	wps
-		return(.Object)
-	})
-
-
-# '@rdname setAlgorithm-methods
-# '@aliases setAlgorithm,geoknife-method	
-setMethod(f = "setAlgorithm",signature = "geoknife",
-	definition = function(.Object,algorithm){
-		.Object@algorithm	<-	algorithm
-		# now, initialize posts
-		.Object	<-	initializeProcessInputs(.Object)
-		return(.Object)
-	})
 
 generateRequest	<-	function(.Object, algorithm,cachedResponse='false'){
 
@@ -355,7 +234,7 @@ parseXMLvalues	<-	function(xmlURL,key){
 
 #'printProcessInputs
 #'
-#'function for printing postXML \code{geoknife} object. 
+#'function for printing processXML \code{geoknife} object. 
 #'
 #'@param An \code{geoknife} object.
 #'@keywords printProcessInputs

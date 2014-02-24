@@ -19,6 +19,10 @@ print(geoknife)
 # set the web feature service
 geoknife	<-	setWFS(geoknife,WFS)
 
+# set the web processing service
+WPS <- 'http://cida-eros-gdp2qa.er.usgs.gov/gdp/process/WebProcessingService'
+geoknife <- setWPS(geoknife,WPS)
+
 # set the feature collection for the element in the service that you want to use
 geoknife	<-	setFeature(geoknife,list('FEATURE_COLLECTION'=feature_collection,
 	'ATTRIBUTE'=attribute))

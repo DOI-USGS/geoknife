@@ -17,5 +17,10 @@
   method for setting the web processing service (WPS)
   endpoint for a \code{geoknife} object.
 }
+\examples{
+gk <- geoknife() # create geoknife object
+WPS <- 'http://cida-eros-gdp2qa.er.usgs.gov/gdp/process/WebProcessingService'
+gk <- setWPS(gk,WPS)
+}
 \keyword{setWPS}
 

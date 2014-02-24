@@ -18,5 +18,10 @@
   a \code{geoknife} method for finding attribute names for
   a given shapefile at a valid WFS endpoint.
 }
+\examples{
+gk<- geoknife() # create geoknife object
+shps <- getShapefiles(gk) # get shapefile names
+getAttributes(gk,shapefile=shps[2])
+}
 \keyword{getAttributes}
 

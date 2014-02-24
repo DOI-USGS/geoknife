@@ -6,6 +6,10 @@
 #'@return list of shapefiles for the \code{geoknife} WFS url.
 #'@docType methods
 #'@keywords getShapefiles
+#'@examples gk<- geoknife() # create geoknife object
+#'getShapefiles(gk) # display shapefile names
+#'@import XML
+#'@import RCurl
 #'@export
 setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapefiles")})
 

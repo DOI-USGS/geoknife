@@ -8,7 +8,7 @@
   \item{An}{\code{geoknife} object.}
 }
 \description{
-  function for printing postXML \code{geoknife} object.
+  function for printing processXML \code{geoknife} object.
 }
 \keyword{printProcessInputs}
 
