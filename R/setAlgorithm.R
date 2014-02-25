@@ -12,15 +12,15 @@
 #'"gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
 #'gk <- setAlgorithm(gk,algorithm)
 #'@export
-setGeneric(name="setAlgorithm",def=function(.Object,algorithm){standardGeneric("setAlgorithm")})
+setGeneric(name="setAlgorithm<-",def=function(.Object,value){standardGeneric("setAlgorithm<-")})
 
 
 
 # '@rdname setAlgorithm-methods
 # '@aliases setAlgorithm,geoknife-method	
-setMethod(f = "setAlgorithm",signature = "geoknife",
-	definition = function(.Object,algorithm){
-		.Object@algorithm	<-	algorithm
+setReplaceMethod(f = "setAlgorithm",signature = "geoknife",
+	definition = function(.Object,value){
+		.Object@algorithm	<-	value
 		# now, initialize posts
 		.Object	<-	initializeProcessInputs(.Object)
 		return(.Object)
