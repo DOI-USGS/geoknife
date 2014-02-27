@@ -37,3 +37,4 @@ Imports:
     XML,
     RCurl,
     methods
+VignetteBuilder: knitr
