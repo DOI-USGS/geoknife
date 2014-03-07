@@ -1,23 +1,25 @@
-\name{geoknife}
-\alias{geoknife}
-\title{Create geoknife object}
-\usage{
-  geoknife()
+\docType{methods}
+\name{setProcessInputs<-}
+\alias{setProcessInputs<-}
+\title{set inputs for web processing}
+\arguments{
+  \item{An}{\code{geoknife} object.}
+
+  \item{a}{list of valid processInputs.}
+}
+\value{
+  An \code{geoknife} object.
 }
 \description{
-  Create geoknife object
+  set inputs for web processing
+}
+\details{
+  method for setting the (non-feature related) post inputs
+  of the \code{geoknife} object.
 }
 \examples{
 geoknife <- geoknife() # create geoknife object
-geoknife # print geoknife object
 
-linearRing = bufferPoint(c(-111.48,36.95))
-geoknife <- setFeature(geoknife,list(LinearRing=linearRing))
-
-#get a list of available processing algorithms
-getAlgorithms(geoknife)
-
-#set processing algorithm to feature weighted grid statistics (unweighted will likely fail, because the ring won't intersect the centroids)
 setAlgorithm(geoknife) <- getAlgorithms(geoknife)[4] # feature weighted
 
 # set the post inputs for the processing dataset
@@ -27,11 +29,6 @@ setProcessInputs(geoknife) <- list('DATASET_ID'='Downward_longwave_radiation_flu
                                        'TIME_END'='2010-01-01T23:00:00Z',
                                        'DELIMITER'='TAB')
 geoknife # print geoknife object contents
-
-# kick off your request
-geoknife <- startProcess(geoknife)
-status.geoknife  <-  checkProcess(geoknife)
-checkProcess(geoknife) # check again and print to screen
 }
-\keyword{geoknife}
+\keyword{setProcessInputs}
 

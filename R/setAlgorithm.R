@@ -10,7 +10,7 @@
 #'@examples gk <- geoknife() # create geoknife object
 #'algorithm <- list("Area Grid Statistics (weighted)"=
 #'"gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
-#'gk <- setAlgorithm(gk,algorithm)
+#'setAlgorithm(gk) <- algorithm
 #'@export
 setGeneric(name="setAlgorithm<-",def=function(.Object,value){standardGeneric("setAlgorithm<-")})
 

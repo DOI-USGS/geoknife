@@ -31,7 +31,7 @@
 #'
 #' # kick off your request
 #'geoknife <- startProcess(geoknife)
-#'geoknife # display contents
+#'geoknife # display content
 
 setGeneric(name="startProcess",def=function(.Object){standardGeneric("startProcess")})
 

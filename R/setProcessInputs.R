@@ -9,29 +9,32 @@
 #'@keywords setProcessInputs
 #'@examples geoknife <- geoknife() # create geoknife object
 #'
-#'geoknife <- setAlgorithm(geoknife,getAlgorithms(geoknife)[4]) # feature weighted
+#'setAlgorithm(geoknife) <- getAlgorithms(geoknife)[4] # feature weighted
 #'
 #' # set the post inputs for the processing dataset
-#' geoknife <-  setProcessInputs(geoknife,list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
+#' setProcessInputs(geoknife) <- list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
 #'                                        'DATASET_URI'='dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best',
 #'                                        'TIME_START'='2010-01-01T00:00:00Z',
 #'                                        'TIME_END'='2010-01-01T23:00:00Z',
-#'                                        'DELIMITER'='TAB'))
+#'                                        'DELIMITER'='TAB')
 #'geoknife # print geoknife object contents
 #'@export
-setGeneric(name="setProcessInputs",def=function(.Object,processInputs){standardGeneric("setProcessInputs")})
+setGeneric(name="setProcessInputs<-",def=function(.Object,value){standardGeneric("setProcessInputs<-")})
 
 
 # '@rdname setProcessInputs-methods
 # '@aliases setProcessInputs,geoknife-method	
-setMethod(f = "setProcessInputs",signature = "geoknife",
-	definition = function(.Object,processInputs){
+setReplaceMethod(f = "setProcessInputs",signature = "geoknife",
+	definition = function(.Object,value){
+		
 		if ("empty" %in% names(.Object@algorithm)){
 			stop('an algorithm must be chosen before setting processInputs')
 		}
+		for (i in 1:length(names(value))){
+			.Object@processInputs[names(value[i])]	<-	value[[i]]
+		}
 		
-		.Object@processInputs	<-	setList(.Object@processInputs,processInputs)
-		if ("LinearRing" %in% names(.Object@feature) && "FEATURE_ATTRIBUTE_NAME" %in% names(.Object@processInputs)){
+		if ("LinearRing" %in% names(.Object@feature)){# && "FEATURE_ATTRIBUTE_NAME" %in% names(.Object@processInputs)){
 			.Object@processInputs$FEATURE_ATTRIBUTE_NAME	<-	'the_geom'
 		}
 		.Object	<-	dodsReplace(.Object)

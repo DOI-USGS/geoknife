@@ -40,7 +40,7 @@ geoknife # print geoknife object contents
 
 # kick off your request
 geoknife <- startProcess(geoknife)
-geoknife # display contents
+geoknife # display content
 }
 \seealso{
   \code{checkProcess}
