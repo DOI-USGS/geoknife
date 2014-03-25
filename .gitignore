@@ -5,6 +5,7 @@
 *-Ex.R
 .Rproj.user
 R/.DS_Store
+man/.DS_Store
 examples/.DS_Store
 geoknife.Rproj
 nbproject/
