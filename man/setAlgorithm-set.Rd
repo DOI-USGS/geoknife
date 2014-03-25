@@ -1,6 +1,6 @@
 \docType{methods}
-\name{setAlgorithm}
-\alias{setAlgorithm}
+\name{setAlgorithm<-}
+\alias{setAlgorithm<-}
 \title{set processing algorithm}
 \arguments{
   \item{An}{\code{geoknife} object.}
@@ -22,7 +22,7 @@
 gk <- geoknife() # create geoknife object
 algorithm <- list("Area Grid Statistics (weighted)"=
 "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
-gk <- setAlgorithm(gk,algorithm)
+setAlgorithm(gk) <- algorithm
 }
 \keyword{setAlgorithm}
 

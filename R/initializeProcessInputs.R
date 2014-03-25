@@ -41,11 +41,11 @@ setMethod(f = "initializeProcessInputs",signature="geoknife",
 		# add fields for optionLs and requirLs
 		.Object@processInputs	<-	append(optionLs,requirLs)
 		
-		.Object	<-	setProcessInputs(.Object,requirLs)
-		.Object	<-	setProcessInputs(.Object,optionLs)
+		setProcessInputs(.Object)	<-	requirLs
+		setProcessInputs(.Object)	<-	optionLs
 		# set defaults and first of the allowed values
-		.Object	<-	setProcessInputs(.Object,defaultLs)
-		.Object	<-	setProcessInputs(.Object,allowLs)
+		setProcessInputs(.Object)	<-	defaultLs
+		setProcessInputs(.Object)	<-	allowLs
 		
 		# remove Feature, as it is handled elsewhere
 		.Object@processInputs$FEATURE_COLLECTION	<-	NULL 
