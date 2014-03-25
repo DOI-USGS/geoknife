@@ -1,13 +1,12 @@
 # History files
-.Rhistory
-
+**/.Rhistory
+**/.Rapp.history
 # Example code in package build process
 *-Ex.R
 .Rproj.user
-R/.DS_Store
-man/.DS_Store
-examples/.DS_Store
+**/.DS_Store
+
 geoknife.Rproj
 nbproject/
 .Rbuildignore
-.DS_Store
+
