@@ -27,6 +27,11 @@ setGeneric(name="setProcessInputs<-",def=function(.Object,value){standardGeneric
 setReplaceMethod(f = "setProcessInputs",signature = "geoknife",
 	definition = function(.Object,value){
 		
+    if (is.null(value)){
+      # warn?
+      return(.Object)
+    }
+    
 		if ("empty" %in% names(.Object@algorithm)){
 			stop('an algorithm must be chosen before setting processInputs')
 		}
