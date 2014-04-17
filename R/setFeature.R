@@ -11,6 +11,14 @@
 #'@title Set feature geometry for processing
 #'@seealso \code{setWFS}
 #'@export
+#'@examples gk <- geoknife() # create geoknife object
+#'linearRing = bufferPoint(c(-111.48,36.95))
+#'setFeature(gk) <- list(LinearRing=linearRing)
+#'
+#'gk2 <- geoknife() # create geoknife object
+#'feature_collection  <-  'sb:WBIC_190900'
+#'attribute  <-  'WBDY_WBIC'
+#'setFeature(gk2) <- list('FEATURE_COLLECTION'=feature_collection,'ATTRIBUTE'=attribute)
 setGeneric(name="setFeature<-",def=function(.Object,value){standardGeneric("setFeature<-")})
 
 # '@rdname setFeature-methods

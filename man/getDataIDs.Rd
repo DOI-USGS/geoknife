@@ -23,8 +23,8 @@
 gk <- geoknife() # create geoknife object
 algorithm <- list("Area Grid Statistics (weighted)"=
 "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
-gk <- setAlgorithm(gk,algorithm)
-gk <-  setProcessInputs(gk,list("DATASET_URI" = "dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best"))
+setAlgorithm(gk) <- algorithm
+setProcessInputs(gk) <- list("DATASET_URI" = "dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best")
 getDataIDs(gk)
 }
 \seealso{

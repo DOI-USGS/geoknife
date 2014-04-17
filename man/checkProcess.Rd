@@ -19,7 +19,7 @@
   method returns \code{process}, which is a list containing
   two fields: \code{status} and \code{URL}. If the
   \code{geoknife} object has not been executed (see
-  \code{executePost}), this method returns
+  \code{startProcess}), this method returns
   \code{status}='none' and \code{URL}=NULL.
 }
 \examples{
@@ -27,7 +27,7 @@ gk <- geoknife() # create geoknife object
 checkProcess(gk) # no process for empty geoknife object
 }
 \seealso{
-  \code{executePost}
+  \code{startProcess}
 }
 \keyword{checkProcess}
 

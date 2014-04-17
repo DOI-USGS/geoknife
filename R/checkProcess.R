@@ -1,7 +1,7 @@
 #'@details checkProcess is a method for checking the process status of an active (executed)
 #' \code{geoknife} object. The method returns \code{process}, which is a list containing
 #' two fields: \code{status} and \code{URL}. If the \code{geoknife} object has not been executed
-#' (see \code{executePost}), this method returns \code{status}='none' and \code{URL}=NULL.
+#' (see \code{startProcess}), this method returns \code{status}='none' and \code{URL}=NULL.
 #'
 #'@param \code{geoknife} object with an active GDP process request.
 #'@return \code{process}, a list containing
@@ -11,7 +11,7 @@
 #'@keywords checkProcess
 #'@description Check status of processing request
 #'@title Check status of processing request
-#'@seealso \code{executePost}
+#'@seealso \code{startProcess}
 #'@import XML
 #'@import RCurl
 #'@examples gk <- geoknife() # create geoknife object
