@@ -19,7 +19,7 @@ setProcessInputs(geoknife) <- list('DATASET_ID'='Downward_longwave_radiation_flu
                                         'TIME_END'='2010-01-01T23:00:00Z',
                                         'DELIMITER'='TAB')
 
-# print it out so you know what's up
+# print it out so you know how the geoknife object is defined at this point
 geoknife 
 
 # kick off your request
