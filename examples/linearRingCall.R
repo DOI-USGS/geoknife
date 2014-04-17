@@ -10,7 +10,7 @@ geoknife <- setFeature(geoknife,list(LinearRing=linearRing))
 getAlgorithms(geoknife)
 
 # set processing algorithm to feature weighted grid statistics (unweighted will likely fail, because the ring won't intersect the centroids)
-geoknife <- setAlgorithm(geoknife,getAlgorithms(geoknife)[4]) # feature weighted
+setAlgorithm(geoknife) <- getAlgorithms(geoknife)[4]) # feature weighted
 
 # set the post inputs for the processing dataset
 geoknife <-  setProcessInputs(geoknife,list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
