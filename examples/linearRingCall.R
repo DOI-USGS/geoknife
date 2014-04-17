@@ -4,7 +4,7 @@ require(geoknife)
 geoknife <- geoknife()
 # give this geoknife object a linear ring as the feature of interest (will be adding multiple rings in the future, but...)
 linearRing = bufferPoint(c(-111.48,36.95))
-geoknife <- setFeature(geoknife,list(LinearRing=linearRing))
+setFeature(geoknife) <- list(LinearRing=linearRing)
 
 # get a list of available processing algorithms
 getAlgorithms(geoknife)
