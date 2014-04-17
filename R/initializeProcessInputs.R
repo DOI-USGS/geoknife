@@ -41,6 +41,9 @@ setMethod(f = "initializeProcessInputs",signature="geoknife",
 		# add fields for optionLs and requirLs
 		.Object@processInputs	<-	append(optionLs,requirLs)
 		
+    # if required elements are NULL, they are set to text --required--
+		#requirLs[]  <-	sapply(requirLs,function(x) {if (is.null(x)){'--required--'}})
+    
 		setProcessInputs(.Object)	<-	requirLs
 		setProcessInputs(.Object)	<-	optionLs
 		# set defaults and first of the allowed values
