@@ -45,7 +45,10 @@ setMethod(f = "initializeProcessInputs",signature="geoknife",
 		#requirLs[]  <-	sapply(requirLs,function(x) {if (is.null(x)){'--required--'}})
     
 		setProcessInputs(.Object)	<-	requirLs
-		setProcessInputs(.Object)	<-	optionLs
+		if("FEATURE_ATTRIBUTE_NAME" %in% names(requirLs)){
+		  .Object@processInputs$FEATURE_ATTRIBUTE_NAME  <-	'the_geom'
+		}
+    setProcessInputs(.Object)	<-	optionLs
 		# set defaults and first of the allowed values
 		setProcessInputs(.Object)	<-	defaultLs
 		setProcessInputs(.Object)	<-	allowLs
