@@ -35,7 +35,7 @@ setReplaceMethod(f = "setProcessInputs",signature = "geoknife",
 			.Object@processInputs[names(value[i])]	<-	value[[i]]
 		}
 		
-		if ("LinearRing" %in% names(.Object@feature)){# && "FEATURE_ATTRIBUTE_NAME" %in% names(.Object@processInputs)){
+		if ("LinearRing" %in% names(.Object@feature) & is.null(.Object@processInputs$FEATURE_ATTRIBUTE_NAME)){
 			.Object@processInputs$FEATURE_ATTRIBUTE_NAME	<-	'the_geom'
 		}
 		.Object	<-	dodsReplace(.Object)
