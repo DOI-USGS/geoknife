@@ -11,7 +11,7 @@ var	<-	'1'
 # instantiate geoknife object	
 geoknife	<-	geoknife()
 # the first available algorithm is a get WCS subset, which returns a geotiff
-geoknife	<-	setAlgorithm(geoknife,getAlgorithms(geoknife)[1])
+setAlgorithm(geoknife) <- getAlgorithms(geoknife)[1]
 
 # show what 'cha got
 print(geoknife)
