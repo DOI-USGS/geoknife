@@ -2,8 +2,8 @@ library("geoknife")
 
 # ---- variables -----
 WFS <-  'https://www.sciencebase.gov/catalogMaps/mapping/ows/51b0f5e5e4b030b51983cda1'
-feature_collection  <-	'sb:WBIC_190900'
-attribute  <-	'WBDY_WBIC'
+feature_collection  <-	'draw:junk'
+attribute  <-	'ID'
 datasetURI	<-	'http://ags.cr.usgs.gov/ArcGIS/services/NED_1/MapServer/WCSServer'
 var	<-	'1'
 # ---- variables -----
@@ -17,7 +17,7 @@ setAlgorithm(geoknife) <- getAlgorithms(geoknife)[1]
 print(geoknife)
 
 # set the web feature service
-geoknife	<-	setWFS(geoknife,WFS)
+#geoknife	<-	setWFS(geoknife,WFS)
 
 # set the feature collection for the element in the service that you want to use
 geoknife	<-	setFeature(geoknife,list('FEATURE_COLLECTION'=feature_collection,
