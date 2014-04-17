@@ -27,7 +27,7 @@ setFeature(geoknife) <- list('FEATURE_COLLECTION'=feature_collection,
 setProcessInputs(geoknife) <- list('DATASET_ID'=var,
 								'DATASET_URI'=datasetURI)
 
-# show what 'cha got
+# print it out so you know how the geoknife object is defined at this point
 print(geoknife)
 
 # execute what you have
