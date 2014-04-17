@@ -17,6 +17,7 @@ setMethod(f = "print",signature = "geoknife",
 		cat("* ------process inputs------\n")
 		PI	<-	x@processInputs
 		PI[is.na(PI)] = '[optional]'
+    PI[is.null(PI)] = ' '
 		nms	<-	names(PI)		
 		for (i in 1:length(nms)){
 			if (length(PI[[i]])>1){
