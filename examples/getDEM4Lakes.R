@@ -20,8 +20,8 @@ print(geoknife)
 geoknife	<-	setWFS(geoknife,WFS)
 
 # set the feature collection for the element in the service that you want to use
-geoknife	<-	setFeature(geoknife,list('FEATURE_COLLECTION'=feature_collection,
-	'ATTRIBUTE'=attribute))
+setFeature(geoknife) <- list('FEATURE_COLLECTION'=feature_collection,
+	'ATTRIBUTE'=attribute)
 	
 # set the process inputs that you want to use
 setProcessInputs(geoknife) <- list('DATASET_ID'=var,

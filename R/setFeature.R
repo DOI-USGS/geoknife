@@ -11,33 +11,34 @@
 #'@title Set feature geometry for processing
 #'@seealso \code{setWFS}
 #'@export
-setGeneric(name="setFeature",def=function(.Object,feature){standardGeneric("setFeature")})
+setGeneric(name="setFeature<-",def=function(.Object,value){standardGeneric("setFeature<-")})
 
 # '@rdname setFeature-methods
 # '@aliases setFeature,geoknife-method	
-setMethod(f = "setFeature",signature = "geoknife",
-	definition = function(.Object,feature){
+                   
+setReplaceMethod(f = "setFeature",signature = "geoknife",
+	definition = function(.Object,value){
 		
-		if ("LinearRing" %in% names(feature)){
+		if ("LinearRing" %in% names(value)){
 			# if we are setting the LinearRing, all other feature elements should be wiped
-			if (length(names(feature)) > 1){
+			if (length(names(value)) > 1){
 				stop('Cannot set LinearRing and WFS components for single feature')
 			} else {
 				sw.idx	<-	names(.Object@feature)!='LinearRing'
 				hid.feature	<-	.Object@feature[sw.idx]
 				hid.feature[]	<-	'hidden'
 				# set all other elements to 'hidden'
+
 				.Object@feature	<-	setList(.Object@feature,hid.feature)
-				.Object@feature	<-	setList(.Object@feature,feature)
+				.Object@feature	<-	setList(.Object@feature,value)
 
 			}
 		} else {
 			hid.feature	<-	list(LinearRing='hidden')
-			.Object@feature	<-	setList(.Object@feature,feature)
+			.Object@feature	<-	setList(.Object@feature,value)
 			.Object@feature	<-	setList(.Object@feature,hid.feature)
 			if ("FEATURE_ATTRIBUTE_NAME" %in% names(.Object@processInputs)){
-			.Object@processInputs	<-	setList(.Object@processInputs,
-				list("FEATURE_ATTRIBUTE_NAME"=.Object@feature$ATTRIBUTE))}
+			setProcessInputs(.Object)	<-	list("FEATURE_ATTRIBUTE_NAME"=.Object@feature$ATTRIBUTE)}
 		}
 	
 		
