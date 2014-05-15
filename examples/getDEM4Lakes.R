@@ -17,7 +17,7 @@ setAlgorithm(geoknife) <- getAlgorithms(geoknife)[1]
 print(geoknife)
 
 # set the web feature service
-setWFS(geoknife <- WFS
+setWFS(geoknife) <- WFS
 
 # set the feature collection for the element in the service that you want to use
 setFeature(geoknife) <- list('FEATURE_COLLECTION'=feature_collection,
