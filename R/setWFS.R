@@ -9,16 +9,15 @@
 #'@keywords setWFS
 #'@examples gk <- geoknife() # create geoknife object
 #'WFS <- 'https://www.sciencebase.gov/catalogMaps/mapping/ows/51b0f5e5e4b030b51983cda1'
-#'gk <- setWFS(gk,WFS)
-
+#'setWFS(gk) <- WFS
 #'@export
-setGeneric(name="setWFS",def=function(.Object,wfs){standardGeneric("setWFS")})
+setGeneric(name="setWFS<-",def=function(.Object,value){standardGeneric("setWFS<-")})
 
 # '@rdname setWFS-methods
 # '@aliases setWFS,geoknife-method
-setMethod(f = "setWFS",signature="geoknife",
-	definition = function(.Object,wfs){
-		wfs	<-	gsub('https', 'http', wfs)
+setReplaceMethod(f = "setWFS",signature="geoknife",
+	definition = function(.Object,value){
+		wfs	<-	gsub('https', 'http', value)
 		.Object@WFS_URL	<-	wfs
 		return(.Object)
 	})

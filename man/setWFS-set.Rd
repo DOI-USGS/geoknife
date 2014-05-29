@@ -1,6 +1,6 @@
 \docType{methods}
-\name{setWFS}
-\alias{setWFS}
+\name{setWFS<-}
+\alias{setWFS<-}
 \title{set web feature service location}
 \arguments{
   \item{\code{geoknife}}{object.}
@@ -20,7 +20,7 @@
 \examples{
 gk <- geoknife() # create geoknife object
 WFS <- 'https://www.sciencebase.gov/catalogMaps/mapping/ows/51b0f5e5e4b030b51983cda1'
-gk <- setWFS(gk,WFS)
+setWFS(gk) <- WFS
 }
 \keyword{setWFS}
 

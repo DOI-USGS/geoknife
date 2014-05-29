@@ -1,6 +1,6 @@
 \docType{methods}
-\name{setFeature}
-\alias{setFeature}
+\name{setFeature<-}
+\alias{setFeature<-}
 \title{Set feature geometry for processing}
 \arguments{
   \item{An}{\code{geoknife} object.}
@@ -17,6 +17,16 @@
 \details{
   setFeature is a method for setting or modifying the
   feature elements of for \code{geoknife} object.
+}
+\examples{
+gk <- geoknife() # create geoknife object
+linearRing = bufferPoint(c(-111.48,36.95))
+setFeature(gk) <- list(LinearRing=linearRing)
+
+gk2 <- geoknife() # create geoknife object
+feature_collection  <-  'sb:WBIC_190900'
+attribute  <-  'WBDY_WBIC'
+setFeature(gk2) <- list('FEATURE_COLLECTION'=feature_collection,'ATTRIBUTE'=attribute)
 }
 \seealso{
   \code{setWFS}

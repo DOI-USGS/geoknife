@@ -21,7 +21,7 @@ gk <- geoknife() # create geoknife object
 getAlgorithms(gk) # list Geo Data Portal processing algorithms
 }
 \seealso{
-  \code{setAlgorithm}
+  \code{setAlgorithm<-}
 }
 \keyword{getAlgorithms}
 

@@ -4,22 +4,22 @@ require(geoknife)
 geoknife <- geoknife()
 # give this geoknife object a linear ring as the feature of interest (will be adding multiple rings in the future, but...)
 linearRing = bufferPoint(c(-111.48,36.95))
-geoknife <- setFeature(geoknife,list(LinearRing=linearRing))
+setFeature(geoknife) <- list(LinearRing=linearRing)
 
 # get a list of available processing algorithms
 getAlgorithms(geoknife)
 
 # set processing algorithm to feature weighted grid statistics (unweighted will likely fail, because the ring won't intersect the centroids)
-geoknife <- setAlgorithm(geoknife,getAlgorithms(geoknife)[4]) # feature weighted
+setAlgorithm(geoknife) <- getAlgorithms(geoknife)[4] # feature weighted
 
 # set the post inputs for the processing dataset
-geoknife <-  setProcessInputs(geoknife,list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
+setProcessInputs(geoknife) <- list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
                                         'DATASET_URI'='dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best',
                                         'TIME_START'='2010-01-01T00:00:00Z',
                                         'TIME_END'='2010-01-01T23:00:00Z',
-                                        'DELIMITER'='TAB'))
+                                        'DELIMITER'='TAB')
 
-# print it out so you know what's up
+# print it out so you know how the geoknife object is defined at this point
 geoknife 
 
 # kick off your request

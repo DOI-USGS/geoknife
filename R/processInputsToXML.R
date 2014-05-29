@@ -98,7 +98,7 @@ processInputsToXML	<-	function(.Object){
 			addChildren(gmlFeatEL,gmlBoxEL) 
 
 		
-			gmlGeomEL	<-	newXMLNode('gml:the_geom') 
+			gmlGeomEL	<-	newXMLNode('gml:the_geom')
 			addChildren(gmlBoxEL,gmlGeomEL)
 
 			gmlPolyEL	<-	newXMLNode('gml:MultiPolygon',attrs=c("srsDimension"="2","srsName"="http://www.opengis.net/gml/srs/epsg.xml#4326"))

@@ -27,30 +27,30 @@ setClass(
 #'@import XML
 #'@import RCurl
 #'@keywords geoknife
-#'@examples geoknife <- geoknife() # create geoknife object
-#'geoknife # print geoknife object
+#'@examples gk <- geoknife() # create geoknife object
+#'gk # print geoknife object
 #'
 #'linearRing = bufferPoint(c(-111.48,36.95))
-#'geoknife <- setFeature(geoknife,list(LinearRing=linearRing))
+#'setFeature(gk) <-list(LinearRing=linearRing)
 #'
 #' #get a list of available processing algorithms
-#'getAlgorithms(geoknife)
+#'getAlgorithms(gk)
 #'
 #' #set processing algorithm to feature weighted grid statistics (unweighted will likely fail, because the ring won't intersect the centroids)
-#'setAlgorithm(geoknife) <- getAlgorithms(geoknife)[4] # feature weighted
+#'setAlgorithm(gk) <- getAlgorithms(gk)[4] # feature weighted
 #'
 #' # set the post inputs for the processing dataset
-#'setProcessInputs(geoknife) <- list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
+#'setProcessInputs(gk) <- list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
 #'                                        'DATASET_URI'='dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best',
 #'                                        'TIME_START'='2010-01-01T00:00:00Z',
 #'                                        'TIME_END'='2010-01-01T23:00:00Z',
 #'                                        'DELIMITER'='TAB')
-#'geoknife # print geoknife object contents
+#'gk # print geoknife object contents
 #'
 #' # kick off your request
-#'geoknife <- startProcess(geoknife)
-#'status.geoknife  <-  checkProcess(geoknife)
-#'checkProcess(geoknife) # check again and print to screen
+#'gk <- startProcess(gk)
+#'status.gk  <-  checkProcess(gk)
+#'checkProcess(gk) # check again and print to screen
 
 geoknife = function(){
 	geoknife = new("geoknife")
@@ -239,6 +239,15 @@ parseXMLvalues	<-	function(xmlURL,key){
 #'@param An \code{geoknife} object.
 #'@keywords printProcessInputs
 #'@export
+#'@examples gk <- geoknife() # create geoknife object
+#'linearRing = bufferPoint(c(-111.48,36.95))
+#'setFeature(gk) <- list(LinearRing=linearRing)
+#'
+#'algorithm <- list("Area Grid Statistics (weighted)"=
+#'"gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
+#'setAlgorithm(gk) <- algorithm
+#'setProcessInputs(gk) <- list("DATASET_URI" = "dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best")
+#'printProcessInputs(gk)
 printProcessInputs	<-	function(.Object){
 	# FAILS when process inputs are NULL...
 	requestXML	<-	suppressWarnings(processInputsToXML(.Object))

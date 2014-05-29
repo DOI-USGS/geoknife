@@ -1,6 +1,6 @@
 \docType{methods}
-\name{setWPS}
-\alias{setWPS}
+\name{setWPS<-}
+\alias{setWPS<-}
 \title{set web processing service location}
 \arguments{
   \item{\code{geoknife}}{object.}
@@ -19,8 +19,8 @@
 }
 \examples{
 gk <- geoknife() # create geoknife object
-WPS <- 'http://cida-eros-gdp2qa.er.usgs.gov/gdp/process/WebProcessingService'
-gk <- setWPS(gk,WPS)
+WPS <- 'http://cida-eros-gdp2qa.er.usgs.gov:8080/gdp-utility-wps/WebProcessingService'
+setWPS(gk) <- WPS
 }
 \keyword{setWPS}
 

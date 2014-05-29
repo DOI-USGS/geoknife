@@ -4,20 +4,20 @@
 #'
 #'@param An \code{geoknife} object.
 #'@param a list of valid processInputs.
-#'@return An \code{geoknife} object.
+#'@return An \code{geoknife} object with updated postInputs.
 #'@docType methods
 #'@keywords setProcessInputs
-#'@examples geoknife <- geoknife() # create geoknife object
+#'@examples gk <- geoknife() # create geoknife object
 #'
-#'setAlgorithm(geoknife) <- getAlgorithms(geoknife)[4] # feature weighted
+#'setAlgorithm(gk) <- getAlgorithms(geoknife)[4] # feature weighted
 #'
 #' # set the post inputs for the processing dataset
-#' setProcessInputs(geoknife) <- list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
+#' setProcessInputs(gk) <- list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
 #'                                        'DATASET_URI'='dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best',
 #'                                        'TIME_START'='2010-01-01T00:00:00Z',
 #'                                        'TIME_END'='2010-01-01T23:00:00Z',
 #'                                        'DELIMITER'='TAB')
-#'geoknife # print geoknife object contents
+#'gk # print geoknife object contents
 #'@export
 setGeneric(name="setProcessInputs<-",def=function(.Object,value){standardGeneric("setProcessInputs<-")})
 
@@ -27,16 +27,14 @@ setGeneric(name="setProcessInputs<-",def=function(.Object,value){standardGeneric
 setReplaceMethod(f = "setProcessInputs",signature = "geoknife",
 	definition = function(.Object,value){
 		
+    
 		if ("empty" %in% names(.Object@algorithm)){
 			stop('an algorithm must be chosen before setting processInputs')
 		}
-		for (i in 1:length(names(value))){
+		for (i in seq_len(length(names(value)))){
 			.Object@processInputs[names(value[i])]	<-	value[[i]]
 		}
 		
-		if ("LinearRing" %in% names(.Object@feature)){# && "FEATURE_ATTRIBUTE_NAME" %in% names(.Object@processInputs)){
-			.Object@processInputs$FEATURE_ATTRIBUTE_NAME	<-	'the_geom'
-		}
 		.Object	<-	dodsReplace(.Object)
 		
 		return(.Object)

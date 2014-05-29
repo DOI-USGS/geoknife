@@ -8,16 +8,16 @@
 #'@docType methods
 #'@keywords setWPS
 #'@examples gk <- geoknife() # create geoknife object
-#'WPS <- 'http://cida-eros-gdp2qa.er.usgs.gov/gdp/process/WebProcessingService'
-#'gk <- setWPS(gk,WPS)
+#'WPS <- 'http://cida-eros-gdp2qa.er.usgs.gov:8080/gdp-utility-wps/WebProcessingService'
+#'setWPS(gk) <- WPS
 #'@export
-setGeneric(name="setWPS",def=function(.Object,wps){standardGeneric("setWPS")})
+setGeneric(name="setWPS<-",def=function(.Object,value){standardGeneric("setWPS<-")})
 
 # '@rdname setWPS-methods
 # '@aliases setWPS,geoknife-method
-setMethod(f = "setWPS",signature="geoknife",
-	definition = function(.Object,wps){
-		wps	<-	gsub('https', 'http', wps)
+setReplaceMethod(f = "setWPS",signature="geoknife",
+	definition = function(.Object,value){
+		wps	<-	gsub('https', 'http', value)
 		.Object@WPS_URL	<-	wps
 		return(.Object)
 	})
