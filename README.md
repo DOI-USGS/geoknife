@@ -4,9 +4,13 @@ geoknife
 R tools for geo-web processing of gridded data via the Geo Data Portal (cida.usgs.gov/gdp).
 
 =====
-install this package using 
+install this package using
 
 	install.packages("geoknife", repos="http://USGS-R.github.com/geoknife",type='source')
+
+Or install with the `devtools` package
+
+	devtools::install_github("USGS-R/geoknife")
 
 Disclaimer
 ----------
