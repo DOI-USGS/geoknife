@@ -52,3 +52,5 @@ if (status.geoknife$status=='Process successful'){
 } else {
 	cat(status.geoknife$status)
 }
+
+# browseURL(status.geoknife$URL)
