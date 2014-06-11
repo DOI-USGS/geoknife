@@ -7,7 +7,9 @@
 #'@return An \code{geoknife} object with updated postInputs.
 #'@docType methods
 #'@keywords setProcessInputs
-#'@examples gk <- geoknife() # create geoknife object
+#'@examples 
+#'\dontrun{
+#'gk <- geoknife() # create geoknife object
 #'algorithm <- list("Area Grid Statistics (weighted)"=
 #'                    "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
 #'setAlgorithm(gk) <- algorithm
@@ -18,6 +20,7 @@
 #'                                        'TIME_END'='2010-01-01T23:00:00Z',
 #'                                        'DELIMITER'='TAB')
 #'gk # print geoknife object contents
+#'}
 #'@export
 setGeneric(name="setProcessInputs<-",def=function(.Object,value){standardGeneric("setProcessInputs<-")})
 
@@ -27,6 +30,10 @@ setGeneric(name="setProcessInputs<-",def=function(.Object,value){standardGeneric
 setReplaceMethod(f = "setProcessInputs",signature = "geoknife",
                  definition = function(.Object,value){
                    
+                   if (!is.list(value)){stop(paste0(value,' needs to be a valid list'))}
+                   #if (!all(names(value) %in% names(.Object@processInputs))){
+                    # stop(paste0(value,' needs names supported by processInputs'))
+                   #}
                    
                    if ("empty" %in% names(.Object@algorithm)){
                      stop('an algorithm must be chosen before setting processInputs')

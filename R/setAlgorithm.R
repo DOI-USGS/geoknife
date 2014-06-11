@@ -7,10 +7,13 @@
 #'@return An \code{geoknife} object.
 #'@docType methods
 #'@keywords setAlgorithm
-#'@examples gk <- geoknife() # create geoknife object
+#'@examples 
+#'\dontrun{
+#'gk <- geoknife() # create geoknife object
 #'algorithm <- list("Area Grid Statistics (weighted)"=
 #'"gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
 #'setAlgorithm(gk) <- algorithm
+#'}
 #'@export
 setGeneric(name="setAlgorithm<-",def=function(.Object,value){standardGeneric("setAlgorithm<-")})
 
