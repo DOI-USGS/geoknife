@@ -8,6 +8,7 @@
   Create geoknife object
 }
 \examples{
+\dontrun{
 gk <- geoknife() # create geoknife object
 gk # print geoknife object
 
@@ -32,6 +33,7 @@ gk # print geoknife object contents
 gk <- startProcess(gk)
 status.gk  <-  checkProcess(gk)
 checkProcess(gk) # check again and print to screen
+}
 }
 \keyword{geoknife}
 

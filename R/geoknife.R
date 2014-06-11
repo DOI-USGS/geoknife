@@ -27,7 +27,9 @@ setClass(
 #'@import XML
 #'@import RCurl
 #'@keywords geoknife
-#'@examples gk <- geoknife() # create geoknife object
+#'@examples 
+#'\dontrun{
+#'gk <- geoknife() # create geoknife object
 #'gk # print geoknife object
 #'
 #'linearRing = bufferPoint(c(-111.48,36.95))
@@ -51,7 +53,7 @@ setClass(
 #'gk <- startProcess(gk)
 #'status.gk  <-  checkProcess(gk)
 #'checkProcess(gk) # check again and print to screen
-
+#'}
 geoknife = function(){
 	geoknife = new("geoknife")
 	return(geoknife)

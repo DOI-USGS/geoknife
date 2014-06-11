@@ -18,6 +18,7 @@
   of the \code{geoknife} object.
 }
 \examples{
+\dontrun{
 gk <- geoknife() # create geoknife object
 algorithm <- list("Area Grid Statistics (weighted)"=
                    "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
@@ -29,6 +30,7 @@ setProcessInputs(gk) <- list('DATASET_ID'='Downward_longwave_radiation_flux_surf
                                        'TIME_END'='2010-01-01T23:00:00Z',
                                        'DELIMITER'='TAB')
 gk # print geoknife object contents
+}
 }
 \keyword{setProcessInputs}
 
