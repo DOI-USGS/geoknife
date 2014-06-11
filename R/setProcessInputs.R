@@ -9,7 +9,7 @@
 #'@keywords setProcessInputs
 #'@examples gk <- geoknife() # create geoknife object
 #'
-#'setAlgorithm(gk) <- getAlgorithms(geoknife)[4] # feature weighted
+#'setAlgorithm(gk) <- getAlgorithms(geoknife)[[4] # feature weighted
 #'
 #' # set the post inputs for the processing dataset
 #' setProcessInputs(gk) <- list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
