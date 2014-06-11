@@ -14,6 +14,11 @@ setMethod(f = "initializeProcessInputs",signature="geoknife",
 			
 		# test connection with processURL here, provide error if necessary
 		doc	<-	htmlParse(processURL,isURL=TRUE, useInternalNodes = TRUE)
+    
+		if(length(getNodeSet(doc,'//exception/exceptiontext'))>0){
+      stop(xmlValue(getNodeSet(doc,'//exception/exceptiontext')[[1]]))
+		}
+    
 		optionNd	<-	getNodeSet(doc,'//datainputs/input[@minoccurs=0]/following-sibling::node()[1]')
 		optionLs	<-	vector("list",length(optionNd))
 		optionLs[]	<-	NA # "NA" is the equivalent of "optional" as an input
