@@ -14,26 +14,26 @@ Copyright: This software is in the public domain because it contains materials
     official USGS copyright policy at
     http://www.usgs.gov/visual-id/credit_usgs.html#copyright
 Collate:
-    'geoknife.R'
-    'printGeoknife.R'
-    'initializeProcessInputs.R'
-    'setProcessInputs.R'
-    'processInputsToXML.R'
-    'checkProcess.R'
-    'startProcess.R'
-    'getDataIDs.R'
-    'getAlgorithms.R'
-    'setFeature.R'
     'bufferPoint.R'
-    'getShapefiles.R'
+    'checkProcess.R'
+    'geoknife.R'
+    'getAlgorithms.R'
     'getAttributes.R'
+    'getDataIDs.R'
+    'getShapefiles.R'
     'getValues.R'
+    'initializeProcessInputs.R'
+    'printGeoknife.R'
+    'processInputsToXML.R'
+    'setAlgorithm.R'
+    'setFeature.R'
+    'setProcessInputs.R'
     'setWFS.R'
     'setWPS.R'
-    'setAlgorithm.R'
-Depends:
-    R (>= 2.15.0)
+    'startProcess.R'
 Imports:
     XML,
-    RCurl,
+    RCurl
+Suggests:
+    testthat,
     methods
