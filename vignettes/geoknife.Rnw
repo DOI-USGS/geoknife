@@ -1,0 +1,159 @@
+%\VignetteIndexEntry{Introduction to the geoknife package}
+%\VignetteEngine{knitr::knitr}
+%\VignetteDepends{}
+%\VignetteSuggests{}
+%\VignetteImports{}
+%\VignettePackage{geoknife}
+
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage[numbers, round]{natbib}
+\usepackage[american]{babel}
+\usepackage{authblk}
+\usepackage{subfig}
+\usepackage{placeins}
+\usepackage{footnote}
+\usepackage{tabularx}
+\renewcommand\Affilfont{\itshape\small}
+
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\textfraction}{0.1}
+\usepackage{graphicx}
+
+
+\textwidth=6.2in
+\textheight=8.5in
+\parskip=.3cm
+\oddsidemargin=.1in
+\evensidemargin=.1in
+\headheight=-.3in
+
+%------------------------------------------------------------
+% newcommand
+%------------------------------------------------------------
+\newcommand{\scscst}{\scriptscriptstyle}
+\newcommand{\scst}{\scriptstyle}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Rclass}[1]{\textit{#1}}
+\newcommand{\Rpackage}[1]{\textit{#1}}
+\newcommand{\Rexpression}[1]{\texttt{#1}}
+\newcommand{\Rmethod}[1]{{\texttt{#1}}}
+\newcommand{\Rfunarg}[1]{{\texttt{#1}}}
+
+\begin{document}
+
+
+<<openLibrary, echo=FALSE>>=
+library(knitr)
+options(continue=" ")
+options(width=60)
+
+
+@
+
+
+%------------------------------------------------------------
+\title{The geoknife package}
+%------------------------------------------------------------
+\author[1]{Jordan Read}
+\affil[1]{United States Geological Survey}
+
+
+<<include=TRUE ,echo=FALSE,eval=TRUE>>=
+opts_chunk$set(highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE, tidy=FALSE,comment="")
+knit_hooks$set(inline = function(x) {
+   if (is.numeric(x)) round(x, 3)})
+knit_hooks$set(crop = hook_pdfcrop)
+@
+
+
+\maketitle
+\tableofcontents
+
+%------------------------------------------------------------
+\section{Introduction to geoknife}
+%------------------------------------------------------------ 
+For information on getting started in R and installing the package.
+
+
+%------------------------------------------------------------
+\section{General Workflow}
+%------------------------------------------------------------ 
+
+<<workflow,eval = TRUE>>=
+library(geoknife)
+@
+
+<<workflowNotRun,eval = FALSE,echo=TRUE>>=
+# create geoknife object w/ defaults
+geoknife <- geoknife()
+# give this geoknife object a linear ring as the 
+# feature of interest (will be adding multiple rings in the future)
+linearRing = bufferPoint(c(-111.48,36.95))
+geoknife <- setFeature(geoknife,list(LinearRing=linearRing))
+
+# get a list of available processing algorithms
+getAlgorithms(geoknife)
+
+# set processing algorithm to feature weighted grid statistics
+# feature weighted:
+geoknife <- setAlgorithm(geoknife,getAlgorithms(geoknife)[4]) 
+
+# set the post inputs for the processing dataset
+geoknife <- setProcessInputs(geoknife,
+   list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
+   'DATASET_URI'='dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best',
+   'TIME_START'='2010-01-01T00:00:00Z',
+   'TIME_END'='2010-01-01T23:00:00Z',
+   'DELIMITER'='TAB'))
+
+# print it out so you know what's up
+geoknife
+
+# kick off your request
+geoknife <- startProcess(geoknife)
+
+status.geoknife <- checkProcess(geoknife)
+
+cat('checking status of GDP request. 
+    Large complex requests take longer to process.\n')
+
+repeat{
+  if (!is.null(status.geoknife$URL) | status.geoknife$status!=""){
+    break
+  }
+  cat('checking process...\n')
+  Sys.sleep(10)
+  if (is.null(status.geoknife$URL)){
+    status.geoknife <- checkProcess(geoknife)
+  }
+}
+
+if (status.geoknife$status=='Process successful'){
+  cat(paste(status.geoknife$status,
+            '\nDownload available at: ',status.geoknife$URL,sep=''))
+} else {
+  cat(status.geoknife$status)
+}
+@
+
+
+%------------------------------------------------------------
+\subsection{Introduction}
+%------------------------------------------------------------
+
+
+\FloatBarrier
+
+
+\clearpage
+
+
+
+\end{document}
+
+\end{document}
