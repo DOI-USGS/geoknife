@@ -7,7 +7,7 @@
 checkProcess(.Object)
 }
 \arguments{
-\item{\code{geoknife}}{object with an active GDP process request.}
+\item{.Object}{a \code{geoknife} object with an active GDP process request.}
 }
 \value{
 \code{process}, a list containing
