@@ -11,11 +11,13 @@
 #'@keywords checkProcess
 #'@description Check status of processing request
 #'@title Check status of processing request
+#'@author Jordan S. Read
 #'@seealso \code{startProcess}
 #'@import XML
 #'@import RCurl
-#'@examples gk <- geoknife() # create geoknife object
-#' checkProcess(gk) # no process for empty geoknife object
+#'@examples 
+#'gk <- geoknife() # create geoknife object
+#'checkProcess(gk) # no process for empty geoknife object
 #'@export
 setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
 

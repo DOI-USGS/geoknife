@@ -27,6 +27,7 @@ setClass(
 #'@import XML
 #'@import RCurl
 #'@keywords geoknife
+#'@author Jordan S. Read
 #'@examples 
 #'\dontrun{
 #'gk <- geoknife() # create geoknife object

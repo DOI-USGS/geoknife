@@ -22,5 +22,8 @@ a \code{geoknife} method for finding shapefile names at a valid WFS endpoint.
 gk<- geoknife() # create geoknife object
 getShapefiles(gk) # display shapefile names
 }
-\keyword{getShapefiles}
+\author{
+Jordan S. Read
+}
+\keyword{methods}
 

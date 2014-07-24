@@ -4,9 +4,10 @@
 #'@param A vector of longitude and latitude values
 #'@return A linear ring (with closure) as a numeric vector 
 #'
-#'@keywords bufferPoint
+#'@keywords methods
 #'@description Buffer ring creation from point
 #'@title Create linear ring from point
+#'@author Jordan S. Read
 #'@seealso \code{setFeature}
 #'@examples linearRing = bufferPoint(c(-111.48, 36.95))
 #'@export

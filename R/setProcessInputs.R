@@ -2,11 +2,11 @@
 #'
 #'@details method for setting the (non-feature related) post inputs of the \code{geoknife} object. 
 #'
-#'@param An \code{geoknife} object.
-#'@param a list of valid processInputs.
+#'@param .Object a \code{geoknife} object.
+#'@param value a list of valid processInputs.
 #'@return An \code{geoknife} object with updated postInputs.
 #'@docType methods
-#'@keywords setProcessInputs
+#'@keywords methods
 #'@examples 
 #'\dontrun{
 #'gk <- geoknife() # create geoknife object
@@ -21,6 +21,7 @@
 #'                                        'DELIMITER'='TAB')
 #'gk # print geoknife object contents
 #'}
+#'@author Jordan S. Read
 #'@export
 setGeneric(name="setProcessInputs<-",def=function(.Object,value){standardGeneric("setProcessInputs<-")})
 

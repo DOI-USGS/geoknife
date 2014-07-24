@@ -26,6 +26,9 @@ two fields: \code{status} and \code{URL}. If the \code{geoknife} object has not 
 gk <- geoknife() # create geoknife object
 checkProcess(gk) # no process for empty geoknife object
 }
+\author{
+Jordan S. Read
+}
 \seealso{
 \code{startProcess}
 }

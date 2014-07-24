@@ -29,8 +29,11 @@ setAlgorithm(gk) <- algorithm
 setProcessInputs(gk) <- list("DATASET_URI" = "dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best")
 getDataIDs(gk)
 }
+\author{
+Jordan S. Read
+}
 \seealso{
 \code{setProcessInputs}
 }
-\keyword{getDataIDs}
+\keyword{methods}
 

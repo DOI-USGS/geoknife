@@ -7,9 +7,9 @@
 setFeature(.Object) <- value
 }
 \arguments{
-\item{An}{\code{geoknife} object.}
+\item{.Object}{a \code{geoknife} object.}
 
-\item{a}{list containing a valid feature collection, or a list of a subset of a valid feature collection.}
+\item{value}{a list containing a valid feature collection, or a list of a subset of a valid feature collection.}
 }
 \value{
 An \code{geoknife} object.
@@ -30,6 +30,9 @@ gk2 <- geoknife() # create geoknife object
 feature_collection  <-  'sb:WBIC_190900'
 attribute  <-  'WBDY_WBIC'
 setFeature(gk2) <- list('FEATURE_COLLECTION'=feature_collection,'ATTRIBUTE'=attribute)
+}
+\author{
+Jordan S. Read
 }
 \seealso{
 \code{setWFS}

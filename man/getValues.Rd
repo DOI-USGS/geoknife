@@ -7,7 +7,7 @@
 getValues(.Object, shapefile, attribute)
 }
 \arguments{
-\item{\code{geoknife}}{object with a valid WFS url.}
+\item{.Object}{a \code{geoknife} object with a valid WFS url.}
 
 \item{a}{valid shapefile name.}
 
@@ -28,5 +28,8 @@ shps <- getShapefiles(gk) # get shapefile names
 atts <- getAttributes(gk,shapefile=shps[2])
 getValues(gk,shapefile=shps[2],attribute=atts[4])
 }
-\keyword{getValues}
+\author{
+Jordan S. Read
+}
+\keyword{methods}
 

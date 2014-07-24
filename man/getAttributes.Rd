@@ -25,5 +25,8 @@ gk<- geoknife() # create geoknife object
 shps <- getShapefiles(gk) # get shapefile names
 getAttributes(gk,shapefile=shps[2])
 }
+\author{
+Jordan S. Read
+}
 \keyword{getAttributes}
 

@@ -36,5 +36,8 @@ status.gk  <-  checkProcess(gk)
 checkProcess(gk) # check again and print to screen
 }
 }
+\author{
+Jordan S. Read
+}
 \keyword{geoknife}
 

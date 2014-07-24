@@ -23,6 +23,9 @@ a \code{geoknife} object.
 gk <- geoknife() # create geoknife object
 getAlgorithms(gk) # list Geo Data Portal processing algorithms
 }
+\author{
+Jordan S. Read
+}
 \seealso{
 \code{setAlgorithm<-}
 }
