@@ -7,9 +7,9 @@
 setProcessInputs(.Object) <- value
 }
 \arguments{
-\item{An}{\code{geoknife} object.}
+\item{.Object}{a \code{geoknife} object.}
 
-\item{a}{list of valid processInputs.}
+\item{value}{a list of valid processInputs.}
 }
 \value{
 An \code{geoknife} object with updated postInputs.
@@ -35,5 +35,8 @@ setProcessInputs(gk) <- list('DATASET_ID'='Downward_longwave_radiation_flux_surf
 gk # print geoknife object contents
 }
 }
-\keyword{setProcessInputs}
+\author{
+Jordan S. Read
+}
+\keyword{methods}
 

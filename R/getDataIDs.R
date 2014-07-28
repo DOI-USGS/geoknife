@@ -7,13 +7,14 @@
 #'@docType methods
 #'@description Find variables from \code{geoknife} dataset
 #'@title Find variables from dataset
-#'@keywords getDataIDs
+#'@keywords methods
 #'@examples gk <- geoknife() # create geoknife object
 #'algorithm <- list("Area Grid Statistics (weighted)"=
 #'"gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
 #'setAlgorithm(gk) <- algorithm
 #'setProcessInputs(gk) <- list("DATASET_URI" = "dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best")
 #'getDataIDs(gk)
+#'@author Jordan S. Read
 #'@seealso \code{setProcessInputs}
 #'@export
 setGeneric(name="getDataIDs",def=function(.Object,cachedResponse){standardGeneric("getDataIDs")})

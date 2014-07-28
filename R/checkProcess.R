@@ -3,7 +3,7 @@
 #' two fields: \code{status} and \code{URL}. If the \code{geoknife} object has not been executed
 #' (see \code{startProcess}), this method returns \code{status}='none' and \code{URL}=NULL.
 #'
-#'@param \code{geoknife} object with an active GDP process request.
+#'@param .Object a \code{geoknife} object with an active GDP process request.
 #'@return \code{process}, a list containing
 #' \code{status} and \code{URL}. 
 #'
@@ -11,17 +11,19 @@
 #'@keywords checkProcess
 #'@description Check status of processing request
 #'@title Check status of processing request
+#'@author Jordan S. Read
 #'@seealso \code{startProcess}
 #'@import XML
 #'@import RCurl
-#'@examples gk <- geoknife() # create geoknife object
-#' checkProcess(gk) # no process for empty geoknife object
-#'@export
+#'@examples 
+#'gk <- geoknife() # create geoknife object
+#'checkProcess(gk) # no process for empty geoknife object
+#'@export            
 setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
 
 # '@rdname checkProcess-methods
 # '@aliases checkProcess,geoknife-method
-setMethod(f = "checkProcess",signature = "geoknife",definition = function(.Object){
+setMethod(f = "checkProcess",signature = "geoknife", definition = function(.Object){
 	
 	process	<-	list(status=NULL,URL=NULL)
 	if (.Object@processID=="<no active job>"){

@@ -6,14 +6,13 @@
 #'@param a list for a valid algorithm, including values for name & location
 #'@return An \code{geoknife} object.
 #'@docType methods
-#'@keywords setAlgorithm
+#'@keywords methods
 #'@examples 
-#'\dontrun{
 #'gk <- geoknife() # create geoknife object
 #'algorithm <- list("Area Grid Statistics (weighted)"=
 #'"gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
 #'setAlgorithm(gk) <- algorithm
-#'}
+#'@author Jordan S. Read
 #'@export
 setGeneric(name="setAlgorithm<-",def=function(.Object,value){standardGeneric("setAlgorithm<-")})
 

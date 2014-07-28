@@ -21,12 +21,13 @@ set processing algorithm
 method for setting the process algorithm of the \code{geoknife} object.
 }
 \examples{
-\dontrun{
 gk <- geoknife() # create geoknife object
 algorithm <- list("Area Grid Statistics (weighted)"=
 "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
 setAlgorithm(gk) <- algorithm
 }
+\author{
+Jordan S. Read
 }
-\keyword{setAlgorithm}
+\keyword{methods}
 

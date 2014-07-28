@@ -7,7 +7,7 @@
 checkProcess(.Object)
 }
 \arguments{
-\item{\code{geoknife}}{object with an active GDP process request.}
+\item{.Object}{a \code{geoknife} object with an active GDP process request.}
 }
 \value{
 \code{process}, a list containing
@@ -25,6 +25,9 @@ two fields: \code{status} and \code{URL}. If the \code{geoknife} object has not 
 \examples{
 gk <- geoknife() # create geoknife object
 checkProcess(gk) # no process for empty geoknife object
+}
+\author{
+Jordan S. Read
 }
 \seealso{
 \code{startProcess}

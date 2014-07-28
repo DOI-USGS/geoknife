@@ -23,10 +23,10 @@ getAlgorithms(gk)
 setAlgorithm(gk) <- getAlgorithms(gk)[4] # feature weighted
 
 # set the post inputs for the processing dataset
-setProcessInputs(gk) <- list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
-                                       'DATASET_URI'='dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best',
+setProcessInputs(gk) <- list('DATASET_ID'='prcp',
+                                       'DATASET_URI'='http://thredds.daac.ornl.gov/thredds/dodsC/daymet-agg/daymet-agg.ncml',
                                        'TIME_START'='2010-01-01T00:00:00Z',
-                                       'TIME_END'='2010-01-01T23:00:00Z',
+                                       'TIME_END'='2010-01-03T00:00:00Z',
                                        'DELIMITER'='TAB')
 gk # print geoknife object contents
 
@@ -35,6 +35,9 @@ gk <- startProcess(gk)
 status.gk  <-  checkProcess(gk)
 checkProcess(gk) # check again and print to screen
 }
+}
+\author{
+Jordan S. Read
 }
 \keyword{geoknife}
 
