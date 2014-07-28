@@ -17,15 +17,93 @@
 \usepackage{placeins}
 \usepackage{footnote}
 \usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{threeparttable}
 \renewcommand\Affilfont{\itshape\small}
+
+\usepackage{csquotes}
+\usepackage{setspace}
+
+\doublespacing
 
 \renewcommand{\topfraction}{0.85}
 \renewcommand{\textfraction}{0.1}
 \usepackage{graphicx}
 
 
-\textwidth=6.2in
-\textheight=8.5in
+\usepackage{mathptmx}% Times Roman font
+\usepackage[scaled=.90]{helvet}% Helvetica, served as a model for arial
+
+\usepackage{indentfirst}
+\setlength{\parskip}{0pt}
+
+\usepackage{courier}
+
+\usepackage{titlesec}
+\usepackage{titletoc}
+
+\titleformat{\section}
+  {\normalfont\sffamily\bfseries\LARGE}
+  {\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\sffamily\bfseries\Large}
+  {\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}
+  {\normalfont\sffamily\large}
+  {\thesubsubsection}{0.5em}{}
+  
+\titlecontents{section}
+[2.3em]                 % adjust left margin
+{\sffamily}             % font formatting
+{\contentslabel{2.3em}} % section label and offset
+{\hspace*{-2.3em}}
+{\titlerule*[0.25pc]{.}\contentspage}
+  
+\titlecontents{subsection}
+[4.6em]                 % adjust left margin
+{\sffamily}             % font formatting
+{\contentslabel{2.3em}} % section label and offset
+{\hspace*{-2.3em}}
+{\titlerule*[0.25pc]{.}\contentspage}
+  
+\titlecontents{subsubsection}
+[6.9em]                 % adjust left margin
+{\sffamily}             % font formatting
+{\contentslabel{2.3em}} % section label and offset
+{\hspace*{-2.3em}}
+{\titlerule*[0.25pc]{.}\contentspage}
+
+\titlecontents{table}
+[0em]                 % adjust left margin
+{\sffamily}             % font formatting
+{\textbf{Table}\hspace*{2em} \contentslabel {2em}} % section label and offset
+{\hspace*{4em}}
+{\titlerule*[0.25pc]{.}\contentspage}
+
+\titlecontents{figure}
+[0em]                 % adjust left margin
+{\sffamily}             % font formatting
+{\textbf{Figure}\hspace*{2em} \contentslabel {2em}} % section label and offset
+{\hspace*{4em}}
+{\titlerule*[0.25pc]{.}\contentspage}
+
+%Italisize and change font of urls:
+\urlstyle{sf}
+\renewcommand\UrlFont\itshape
+
+\usepackage{caption}
+\captionsetup{
+  font={sf},
+  labelfont={bf,sf},
+  labelsep=period,
+  justification=justified,
+  singlelinecheck=false
+}
+
+\setlength\parindent{20pt}
+
+\textwidth=6.5in
+\textheight=9.2in
 \parskip=.3cm
 \oddsidemargin=.1in
 \evensidemargin=.1in
@@ -45,13 +123,16 @@
 \newcommand{\Rfunarg}[1]{{\texttt{#1}}}
 
 \begin{document}
-\SweaveOpts{concordance=TRUE}
 
+\renewenvironment{knitrout}{\begin{singlespace}}{\end{singlespace}}
+\renewcommand*\listfigurename{Figures}
+\renewcommand*\listtablename{Tables}
 
 <<openLibrary, echo=FALSE>>=
-library(knitr)
+library(xtable)
 options(continue=" ")
 options(width=60)
+library(knitr)
 
 
 @
@@ -65,7 +146,7 @@ options(width=60)
 
 
 <<include=TRUE ,echo=FALSE,eval=TRUE>>=
-opts_chunk$set(highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE, tidy=FALSE,comment="")
+opts_chunk$set(highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE, concordance=TRUE,tidy=FALSE,comment="")
 knit_hooks$set(inline = function(x) {
    if (is.numeric(x)) round(x, 3)})
 knit_hooks$set(crop = hook_pdfcrop)
