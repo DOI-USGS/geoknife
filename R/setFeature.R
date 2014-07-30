@@ -1,8 +1,8 @@
 #'@details setFeature is a method for setting or modifying the feature elements
 #' of for \code{geoknife} object. 
 #'
-#'@param An \code{geoknife} object.
-#'@param a list containing a valid feature collection, or a list of a subset of a valid feature collection.
+#'@param .Object a \code{geoknife} object.
+#'@param value a list containing a valid feature collection, or a list of a subset of a valid feature collection.
 #'@return An \code{geoknife} object.
 #'
 #'@docType methods
@@ -10,7 +10,6 @@
 #'@description Set feature for \code{geoknife}
 #'@title Set feature geometry for processing
 #'@seealso \code{setWFS}
-#'@export
 #'@examples gk <- geoknife() # create geoknife object
 #'linearRing = bufferPoint(c(-111.48,36.95))
 #'setFeature(gk) <- list(LinearRing=linearRing)
@@ -19,6 +18,8 @@
 #'feature_collection  <-  'sb:WBIC_190900'
 #'attribute  <-  'WBDY_WBIC'
 #'setFeature(gk2) <- list('FEATURE_COLLECTION'=feature_collection,'ATTRIBUTE'=attribute)
+#'@author Jordan S. Read
+#'@export
 setGeneric(name="setFeature<-",def=function(.Object,value){standardGeneric("setFeature<-")})
 
 # '@rdname setFeature-methods

@@ -7,6 +7,7 @@
 #'@return list of attributes for the given shapefile at the \code{geoknife} WFS url.
 #'@docType methods
 #'@keywords getAttributes
+#'@author Jordan S. Read
 #'@import XML
 #'@import RCurl
 #'@examples gk<- geoknife() # create geoknife object

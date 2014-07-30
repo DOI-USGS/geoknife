@@ -7,6 +7,7 @@
 #'@description Get algorithms for \code{geoknife}
 #'@title Get processing algorithms
 #'@keywords getAlgorithms
+#'@author Jordan S. Read
 #'@seealso \code{setAlgorithm<-}
 #'@examples gk <- geoknife() # create geoknife object
 #'getAlgorithms(gk) # list Geo Data Portal processing algorithms

@@ -134,7 +134,13 @@ processInputsToXML	<-	function(.Object){
 	resDoc	<-	newXMLNode('wps:ResponseDocument',attrs=c('storeExecuteResponse'='true','status'='true'))
 	addChildren(resForm,resDoc)
 	
-	resOut	<-	newXMLNode('wps:Output',attrs=c('asReference'='true'))
+  #if text/tab-separated-values"
+	if (!is.null(.Object@processInputs$DELIMITER) && .Object@processInputs$DELIMITER=="TAB"){
+	  resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='text/tab-separated-values'))
+	} else {
+	  resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true'))
+	}
+	
 	addChildren(resDoc,resOut)
 	
 	outID	<-	newXMLNode('ows:Identifier',newXMLTextNode('OUTPUT'))
