@@ -1,12 +1,13 @@
 geoknife
 =====
 
-R tools for geo-web processing of gridded data via the Geo Data Portal (cida.usgs.gov/gdp). geoknife slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. 
+Tools for geo-web processing of gridded data via the [Geo Data Portal](http://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
 
+![alt tag](http://github.usgs-r.io/images/geoknife.png)
 =====
 install this package using
 
-	install.packages("geoknife", repos="http://usgs-r.github.com/geoknife",type='source')
+	install.packages("geoknife", repos="http://usgs-r.github.com",type='source')
 
 Or install with the `devtools` package
 
