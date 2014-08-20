@@ -222,22 +222,21 @@ The main elements of setting up and carrying out a geoknife 'job' are to define 
 \hlcom{# give this geoknife object a linear ring as the }
 \hlcom{# feature of interest (will be adding multiple rings in the future)}
 \hlstd{linearRing} \hlkwb{=} \hlkwd{bufferPoint}\hlstd{(}\hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{111.48}\hlstd{,}\hlnum{36.95}\hlstd{))}
-\hlstd{geoknife} \hlkwb{<-} \hlkwd{setFeature}\hlstd{(geoknife,}\hlkwd{list}\hlstd{(}\hlkwc{LinearRing}\hlstd{=linearRing))}
+\hlkwd{setFeature}\hlstd{(gk)} \hlkwb{<-}\hlkwd{list}\hlstd{(}\hlkwc{LinearRing}\hlstd{=linearRing)}
 
 \hlcom{# get a list of available processing algorithms}
 \hlkwd{getAlgorithms}\hlstd{(geoknife)}
 
 \hlcom{# set processing algorithm to feature weighted grid statistics}
 \hlcom{# feature weighted:}
-\hlstd{geoknife} \hlkwb{<-} \hlkwd{setAlgorithm}\hlstd{(geoknife,}\hlkwd{getAlgorithms}\hlstd{(geoknife)[}\hlnum{4}\hlstd{])}
+\hlkwd{setAlgorithm}\hlstd{(gk)} \hlkwb{<-} \hlkwd{getAlgorithms}\hlstd{(gk)[}\hlnum{4}\hlstd{]} \hlcom{# feature weighted}
 
 \hlcom{# set the post inputs for the processing dataset}
-\hlstd{geoknife} \hlkwb{<-} \hlkwd{setProcessInputs}\hlstd{(geoknife,}
-   \hlkwd{list}\hlstd{(}\hlstr{'DATASET_ID'}\hlstd{=}\hlstr{'Downward_longwave_radiation_flux_surface'}\hlstd{,}
-   \hlstr{'DATASET_URI'}\hlstd{=}\hlstr{'dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best'}\hlstd{,}
-   \hlstr{'TIME_START'}\hlstd{=}\hlstr{'2010-01-01T00:00:00Z'}\hlstd{,}
-   \hlstr{'TIME_END'}\hlstd{=}\hlstr{'2010-01-01T23:00:00Z'}\hlstd{,}
-   \hlstr{'DELIMITER'}\hlstd{=}\hlstr{'TAB'}\hlstd{))}
+\hlkwd{setProcessInputs}\hlstd{(gk)} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlstr{'DATASET_ID'}\hlstd{=}\hlstr{'ppt'}\hlstd{,}
+                             \hlstr{'DATASET_URI'}\hlstd{=}\hlstr{'http://cida.usgs.gov/thredds/dodsC/prism'}\hlstd{,}
+                             \hlstr{'TIME_START'}\hlstd{=}\hlstr{'1895-01-01T00:00:00Z'}\hlstd{,}
+                             \hlstr{'TIME_END'}\hlstd{=}\hlstr{'1900-01-01T00:00:00Z'}\hlstd{,}
+                             \hlstr{'DELIMITER'}\hlstd{=}\hlstr{'TAB'}\hlstd{)}
 
 \hlcom{# printing geoknife object displays the important properties in a readable way}
 \hlstd{geoknife}
@@ -249,8 +248,8 @@ The main elements of setting up and carrying out a geoknife 'job' are to define 
 
 \hlstd{status.geoknife} \hlkwb{<-} \hlkwd{checkProcess}\hlstd{(geoknife)}
 
-\hlkwd{cat}\hlstd{(}\hlstr{'checking status of GDP request. 
-    Large complex requests take longer to process.\textbackslash{}n'}\hlstd{)}
+\hlkwd{cat}\hlstd{(}\hlstr{'checking status of GDP request.'}\hlstd{)}
+\hlkwd{cat}\hlstd{(}\hlstr{' Large complex requests take longer to process.\textbackslash{}n'}\hlstd{)}
 
 \hlkwa{repeat}\hlstd{\{}
   \hlkwa{if} \hlstd{(}\hlopt{!}\hlkwd{is.null}\hlstd{(status.geoknife}\hlopt{$}\hlstd{URL)} \hlopt{|} \hlstd{status.geoknife}\hlopt{$}\hlstd{status}\hlopt{!=}\hlstr{""}\hlstd{)\{}
