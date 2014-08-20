@@ -37,8 +37,8 @@ The main elements of setting up and carrying out a `geoknife` 'job' are to defin
 | `setAlgorithm<-` | Set processing algorithm |
 | `setFeature<-` | Set feature geometry for processing |
 | `setProcessInputs<-` | Set inputs for web processing |
-| `setWFS<-` | set web feature service location |
-| `setWPS<-` | set web processing service location |
+| `setWFS<-` | Set web feature service location |
+| `setWPS<-` | Set web processing service location |
 | `startProcess` | Submit a GDP web processing request |
 
 ##What libraries does `geoknife` need?
