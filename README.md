@@ -9,13 +9,9 @@ Tools for geo-web processing of gridded data via the [Geo Data Portal](http://ci
 ###Installing `geoknife`
 install this package using
 
-	install.packages("geoknife", repos = c("http://usgs-r.github.com", "http://cran.us.r-project.org"),
-        dependencies = TRUE,
-        type = "both")
-
-Or install with the `devtools` package
-
-	devtools::install_github("USGS-R/geoknife")
+	install.packages("geoknife", 
+        repos = c("http://usgs-r.github.com", "http://cran.us.r-project.org"),
+        dependencies = TRUE, type = "both")
 
 ###`geoknife` overview (as of v0.2.2)
 The `geoknife` package was created support web-based geoprocessing of large gridded datasets according to their overlap with landscape (or aquatic/ocean) features that are often irregularly shaped. `geoknife` creates data access and subsequent geoprocessing requests for the USGS's Geo Data Portal to carry out on a web server. The results of these requests are available for download after the process(es) have been completed. This type of workflow has three main advantages: 1) it allows the user to avoid downloading large datasets, and 2) it avoids reinventing the wheel for the creation and optimization of complex geoprocessing algorithms, 3) computing resources are dedicated elsewhere, so `geoknife` operations do not have much of an impact on a local computer. 
