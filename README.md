@@ -5,22 +5,6 @@ Tools for geo-web processing of gridded data via the [Geo Data Portal](http://ci
 
 ![alt tag](http://github.usgs-r.io/images/geoknife.png)
 
-###`geoknife` Functions (as of v0.2.2)
-| Function       | Title           |
-| ------------- |:-------------|
-| `bufferPoint` | Create linear ring from point |
-| `checkProcess`  | Check status of processing request |
-| `geoknife` | Create geoknife object |
-| `getAlgorithms` | Get processing algorithms |
-| `getAttributes` | Get attributes from a shapefile at a web location |
-| `getDataIDs` | Find variables from dataset |
-| `printProcessInputs` | Print out the process request xml for diagnostic purposes |
-| `setAlgorithm<-` | Set processing algorithm |
-| `setFeature<-` | Set feature geometry for processing |
-| `setProcessInputs<-` | Set inputs for web processing |
-| `setWFS<-` | set web feature service location |
-| `setWPS<-` | set web processing service location |
-| `startProcess` | Submit a GDP web processing request |
 
 ###Installing `geoknife`
 install this package using
@@ -40,7 +24,27 @@ The `geoknife` package was created support web-based geoprocessing of large grid
 
 The main elements of setting up and carrying out a `geoknife` 'job' are to define the processing algorithm that will be used, choosing an area of interest, filling out the details for the job details (including the dataset to be used; these details are called "process inputs"), and sending off the job request.
 
+###`geoknife` Functions (as of v0.2.2)
+| Function       | Title           |
+| ------------- |:-------------|
+| `bufferPoint` | Create linear ring from point |
+| `checkProcess`  | Check status of processing request |
+| `geoknife` | Create geoknife object |
+| `getAlgorithms` | Get processing algorithms |
+| `getAttributes` | Get attributes from a shapefile at a web location |
+| `getDataIDs` | Find variables from dataset |
+| `printProcessInputs` | Print out the process request xml for diagnostic purposes |
+| `setAlgorithm<-` | Set processing algorithm |
+| `setFeature<-` | Set feature geometry for processing |
+| `setProcessInputs<-` | Set inputs for web processing |
+| `setWFS<-` | set web feature service location |
+| `setWPS<-` | set web processing service location |
+| `startProcess` | Submit a GDP web processing request |
+
+##What libraries does `geoknife` need?
+This version requires `RCurl`, and `XML`. Both of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
+
 ##Disclaimer
-This software is in the public domain because it contains materials that originally came from the United States Geological Survey, an agency of the United States Department of Interior. For more information, see the official USGS copyright policy at [http://www.usgs.gov/visual-id/credit_usgs.html#copyright](http://www.usgs.gov/visual-id/credit_usgs.html#copyright)
+This software is in the public domain because it contains materials that originally came from the United States Geological Survey, an agency of the United States Department of Interior. For more information, see the [official USGS copyright policy](http://www.usgs.gov/visual-id/credit_usgs.html#copyright/ "official USGS copyright policy")
 
 This software is provided "AS IS".
