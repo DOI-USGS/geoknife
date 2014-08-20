@@ -235,7 +235,7 @@ parseXMLvalues	<-	function(xmlURL,key){
 	return(values)
 }
 
-#'printProcessInputs
+#'Print out the process request xml for diagnostic purposes
 #'
 #'function for printing processXML \code{geoknife} object. 
 #'
