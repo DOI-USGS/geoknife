@@ -18,7 +18,7 @@ The `geoknife` package was created support web-based geoprocessing of large grid
 
 `geoknife` interacts with a remote server to figure out what types of processing capabilities are available, in addition to seeing what types of geospatial features are already available to be used as an area of interest (commonly user-uploaded shapefiles). Because communication with web resources are central to `geoknife` operations, users must have an active internet connection. 
 
-The main elements of setting up and carrying out a `geoknife` 'job' are to define the processing algorithm that will be used, choosing an area of interest, filling out the details for the job details (including the dataset to be used; these details are called "process inputs"), and sending off the job request.
+The main elements of setting up and carrying out a `geoknife` 'job' are include defining the processing algorithm that will be used, choosing an area of interest, filling out the details for the job details (including the dataset to be used; these details are called 'process inputs'), and sending off the job request (see documentation for `setFeature<-`, `setProcessInputs<-`, and `startProcess` for more information).
 
 ###`geoknife` Functions (as of v0.2.2)
 | Function       | Title           |
