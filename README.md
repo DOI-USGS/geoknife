@@ -2,8 +2,10 @@
 =====
 
 Tools for geo-web processing of gridded data via the [Geo Data Portal](http://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
+<p align="center">
+  <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
+</p>
 
-<img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
 
 
 ###Installing `geoknife`
