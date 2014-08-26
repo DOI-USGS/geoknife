@@ -1,6 +1,6 @@
 `geoknife`
 =====
-[![Build status](https://ci.appveyor.com/api/projects/status/exkru2fljjpysp9v/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)  
+[![Build status](https://ci.appveyor.com/api/projects/status/7ceajbwlce2om3co/branch/master)](https://ci.appveyor.com/project/USGS-R/geoknife/branch/master)  
 Tools for geo-web processing of gridded data via the [Geo Data Portal](http://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
   <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
