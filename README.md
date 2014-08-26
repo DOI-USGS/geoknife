@@ -1,9 +1,11 @@
 `geoknife`
 =====
-
+[![Build status](https://ci.appveyor.com/api/projects/status/exkru2fljjpysp9v/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)  
 Tools for geo-web processing of gridded data via the [Geo Data Portal](http://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
+<p align="center">
+  <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
+</p>
 
-<img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
 
 
 ###Installing `geoknife`
@@ -13,7 +15,7 @@ install this package using
         repos = c("http://usgs-r.github.com", "http://cran.us.r-project.org"),
         dependencies = TRUE, type = "both")
 
-###`geoknife` overview (as of v0.2.2)
+###`geoknife` overview
 The `geoknife` package was created to support web-based geoprocessing of large gridded datasets according to their overlap with landscape (or aquatic/ocean) features that are often irregularly shaped. `geoknife` creates data access and subsequent geoprocessing requests for the USGS's Geo Data Portal to carry out on a web server. The results of these requests are available for download after the processes have been completed. This type of workflow has three main advantages: 1) it allows the user to avoid downloading large datasets, 2) it avoids reinventing the wheel for the creation and optimization of complex geoprocessing algorithms, and 3) computing resources are dedicated elsewhere, so `geoknife` operations do not have much of an impact on a local computer. 
 
 `geoknife` interacts with a remote server to figure out what types of processing capabilities are available, in addition to seeing what types of geospatial features are already available to be used as an area of interest (commonly, these are user-uploaded shapefiles). Because communication with web resources are central to `geoknife` operations, users must have an active internet connection. 

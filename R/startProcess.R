@@ -1,6 +1,6 @@
 #'@details startProcess is a method for submitting a web processing request for the \code{geoknife} object.
 #'
-#'@param \code{geoknife} object ot be used to formulate GDP process request.
+#'@param .Object a \code{geoknife} object ot be used to formulate GDP process request.
 #'@return An \code{geoknife} object with an active GDP process request.
 #'
 #'@docType methods

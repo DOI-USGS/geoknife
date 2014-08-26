@@ -1,7 +1,7 @@
 #'@details getDataIDs is a method for finding dataset variables from a
 #' \code{geoknife} object with a valid dataset URI. Use setProcessInputs to set a dataset URI.
 #'
-#'@param \code{geoknife} object with a valid dataset URI.
+#'@param .Object a \code{geoknife} object with a valid dataset URI.
 #'@param cachedResponse an optional input to allow cached response. Default as FALSE
 #'@return list of dataset IDs for the \code{geoknife} dataset URI.
 #'@docType methods
@@ -17,7 +17,7 @@
 #'@author Jordan S. Read
 #'@seealso \code{setProcessInputs}
 #'@export
-setGeneric(name="getDataIDs",def=function(.Object,cachedResponse){standardGeneric("getDataIDs")})
+setGeneric(name="getDataIDs",def=function(.Object, cachedResponse){standardGeneric("getDataIDs")})
 
 # '@rdname getDataIDs-methods
 # '@aliases getDataIDs,geoknife-method

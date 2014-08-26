@@ -7,9 +7,9 @@
 setWPS(.Object) <- value
 }
 \arguments{
-\item{\code{geoknife}}{object.}
+\item{.Object}{a \code{geoknife} object.}
 
-\item{a}{Web Processing Service (WPS) endpoint.}
+\item{value}{a Web Processing Service (WPS) endpoint.}
 }
 \value{
 An \code{geoknife} object.
