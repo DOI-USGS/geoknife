@@ -7,7 +7,7 @@
 getDataIDs(.Object, cachedResponse)
 }
 \arguments{
-\item{\code{geoknife}}{object with a valid dataset URI.}
+\item{.Object}{a \code{geoknife} object with a valid dataset URI.}
 
 \item{cachedResponse}{an optional input to allow cached response. Default as FALSE}
 }

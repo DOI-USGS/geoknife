@@ -1,7 +1,7 @@
 #'@details getAlgorithms is a method for finding algorithm names and locations for
 #' a \code{geoknife} object.
 #'
-#'@param \code{geoknife} object with a valid WPS url.
+#'@param .Object a \code{geoknife} object with a valid WPS url.
 #'@return list of available algorithms for the \code{geoknife} WPS url.
 #'@docType methods
 #'@description Get algorithms for \code{geoknife}

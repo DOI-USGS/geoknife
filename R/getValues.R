@@ -3,8 +3,8 @@
 #'@details a \code{geoknife} method for finding value names for a given shapefile at a valid WFS endpoint. 
 #'
 #'@param .Object a \code{geoknife} object with a valid WFS url.
-#'@param a valid shapefile name.
-#'@param a valid attribute name for the shapefile.
+#'@param shapefile a valid shapefile name.
+#'@param attribute a valid attribute name for the shapefile.
 #'@return list of values for the given shapefile attribute at the \code{geoknife} WFS url.
 #'@docType methods
 #'@keywords methods

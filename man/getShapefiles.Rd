@@ -7,7 +7,7 @@
 getShapefiles(.Object)
 }
 \arguments{
-\item{\code{geoknife}}{object with a valid WFS url.}
+\item{.Object}{a \code{geoknife} object with a valid WFS url.}
 }
 \value{
 list of shapefiles for the \code{geoknife} WFS url.

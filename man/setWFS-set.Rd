@@ -7,9 +7,9 @@
 setWFS(.Object) <- value
 }
 \arguments{
-\item{\code{geoknife}}{object.}
+\item{.Object}{a \code{geoknife} object.}
 
-\item{a}{Web Feature Service (WFS) endpoint.}
+\item{value}{a Web Feature Service (WFS) endpoint.}
 }
 \value{
 An \code{geoknife} object.

@@ -9,9 +9,9 @@ getValues(.Object, shapefile, attribute)
 \arguments{
 \item{.Object}{a \code{geoknife} object with a valid WFS url.}
 
-\item{a}{valid shapefile name.}
+\item{shapefile}{a valid shapefile name.}
 
-\item{a}{valid attribute name for the shapefile.}
+\item{attribute}{a valid attribute name for the shapefile.}
 }
 \value{
 list of values for the given shapefile attribute at the \code{geoknife} WFS url.

@@ -2,8 +2,8 @@
 #'
 #'@details method for setting the process algorithm of the \code{geoknife} object.
 #'
-#'@param An \code{geoknife} object.
-#'@param a list for a valid algorithm, including values for name & location
+#'@param .Object a \code{geoknife} object.
+#'@param value a list for a valid algorithm, including values for name & location
 #'@return An \code{geoknife} object.
 #'@docType methods
 #'@keywords methods

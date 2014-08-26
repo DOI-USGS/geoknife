@@ -1,7 +1,7 @@
 #'@details bufferPoint is a function that takes a longitude and latitude pair and creates
 #' a buffered ring (i.e., a feature with non-zero area) centered.
 #'
-#'@param A vector of longitude and latitude values
+#'@param point A vector of longitude and latitude values
 #'@return A linear ring (with closure) as a numeric vector 
 #'
 #'@keywords methods

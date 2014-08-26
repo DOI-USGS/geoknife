@@ -6,7 +6,7 @@
 bufferPoint(point)
 }
 \arguments{
-\item{A}{vector of longitude and latitude values}
+\item{point}{A vector of longitude and latitude values}
 }
 \value{
 A linear ring (with closure) as a numeric vector

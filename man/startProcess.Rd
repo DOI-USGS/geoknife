@@ -7,7 +7,7 @@
 startProcess(.Object)
 }
 \arguments{
-\item{\code{geoknife}}{object ot be used to formulate GDP process request.}
+\item{.Object}{a \code{geoknife} object ot be used to formulate GDP process request.}
 }
 \value{
 An \code{geoknife} object with an active GDP process request.

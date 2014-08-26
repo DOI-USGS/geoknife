@@ -2,8 +2,8 @@
 #'
 #'@details method for setting the web processing service (WPS) endpoint for a \code{geoknife} object. 
 #'
-#'@param \code{geoknife} object.
-#'@param a Web Processing Service (WPS) endpoint.
+#'@param .Object a \code{geoknife} object.
+#'@param value a Web Processing Service (WPS) endpoint.
 #'@return An \code{geoknife} object.
 #'@docType methods
 #'@keywords setWPS

@@ -6,7 +6,7 @@
 printProcessInputs(.Object)
 }
 \arguments{
-\item{An}{\code{geoknife} object.}
+\item{.Object}{a \code{geoknife} object.}
 }
 \description{
 function for printing processXML \code{geoknife} object.
@@ -22,5 +22,5 @@ setAlgorithm(gk) <- algorithm
 setProcessInputs(gk) <- list("DATASET_URI" = "dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best")
 printProcessInputs(gk)
 }
-\keyword{printProcessInputs}
+\keyword{methods}
 

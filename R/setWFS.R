@@ -2,8 +2,8 @@
 #'
 #'@details method for setting the web feature service (WFS) endpoint for a \code{geoknife} object. 
 #'
-#'@param \code{geoknife} object.
-#'@param a Web Feature Service (WFS) endpoint.
+#'@param .Object a \code{geoknife} object.
+#'@param value a Web Feature Service (WFS) endpoint.
 #'@return An \code{geoknife} object.
 #'@docType methods
 #'@keywords setWFS

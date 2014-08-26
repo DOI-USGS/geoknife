@@ -7,7 +7,7 @@
 getAlgorithms(.Object)
 }
 \arguments{
-\item{\code{geoknife}}{object with a valid WPS url.}
+\item{.Object}{a \code{geoknife} object with a valid WPS url.}
 }
 \value{
 list of available algorithms for the \code{geoknife} WPS url.

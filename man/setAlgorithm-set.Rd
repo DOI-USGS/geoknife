@@ -7,9 +7,9 @@
 setAlgorithm(.Object) <- value
 }
 \arguments{
-\item{An}{\code{geoknife} object.}
+\item{.Object}{a \code{geoknife} object.}
 
-\item{a}{list for a valid algorithm, including values for name & location}
+\item{value}{a list for a valid algorithm, including values for name & location}
 }
 \value{
 An \code{geoknife} object.

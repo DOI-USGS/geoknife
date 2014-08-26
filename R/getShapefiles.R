@@ -2,7 +2,7 @@
 #'
 #'@details a \code{geoknife} method for finding shapefile names at a valid WFS endpoint.
 #'
-#'@param \code{geoknife} object with a valid WFS url.
+#'@param .Object a \code{geoknife} object with a valid WFS url.
 #'@return list of shapefiles for the \code{geoknife} WFS url.
 #'@docType methods
 #'@keywords methods
