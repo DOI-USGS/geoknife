@@ -56,7 +56,7 @@ setMethod(f = "isSuccessful",signature = "geoknife", definition = function(.Obje
 	
 	status = checkProcess(.Object)
 	
-	return(status$status == 'Process successful')
+	return(status$statusType == "ProcessSucceeded")
 	
 })
 	
