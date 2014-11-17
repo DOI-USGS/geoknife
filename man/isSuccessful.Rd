@@ -42,7 +42,7 @@ gk # print geoknife object contents
 # kick off your request
 gk <- startProcess(gk)
 
-isProcessing(gk)
+isRunning(gk)
 isError(gk)
 isSuccessful(gk)
 }
