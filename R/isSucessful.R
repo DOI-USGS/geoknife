@@ -1,13 +1,13 @@
 #'@title Convenience function for GDP process state
 #'@aliases
 #'isSuccessful
-#'isProcessing
+#'isRunning
 #'isError
 #'
 #'@usage
 #'isSuccessful(.Object)
 #'isError(.Object)
-#'isProcessing(.Object)
+#'isRunning(.Object)
 #'
 #'@param .Object a \code{geoknife} object with an active GDP process request.
 #'@return TRUE/FALSE indicating if process is in the given state (error, processing, successful)
