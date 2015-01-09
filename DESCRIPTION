@@ -19,5 +19,6 @@ Imports:
 Suggests:
     testthat,
     methods,
+    xtable,
     knitr
 VignetteBuilder: knitr
