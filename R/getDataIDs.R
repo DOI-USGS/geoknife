@@ -8,13 +8,15 @@
 #'@description Find variables from \code{geoknife} dataset
 #'@title Find variables from dataset
 #'@keywords methods
-#'@examples gk <- geoknife() # create geoknife object
+#'@examples 
+#'gk <- geoknife() # create geoknife object
 #'algorithm <- list("Area Grid Statistics (weighted)"=
 #'"gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
 #'setAlgorithm(gk) <- algorithm
-#'setProcessInputs(gk) <- list("DATASET_URI" = "dods://igsarm-cida-thredds1.er.usgs.gov:8081/qa/thredds/dodsC/nldas/best")
+#'setProcessInputs(gk) <- list("DATASET_URI" = "dods://hydro1.sci.gsfc.nasa.gov:80/dods/NLDAS_FORA0125_H.002")
 #'getDataIDs(gk)
 #'@author Jordan S. Read
+#'@importFrom jsonlite fromJSON
 #'@seealso \code{setProcessInputs}
 #'@export
 setGeneric(name="getDataIDs",def=function(.Object, cachedResponse){standardGeneric("getDataIDs")})
@@ -31,13 +33,11 @@ setMethod(f = "getDataIDs",signature="geoknife",
 			algorithm	<-	.Object@dataList
 			requestXML	<-	generateRequest(.Object, algorithm,cachedResponse)
 			url = .Object@UTILITY_URL
-			responseXML	<-	genericExecute(url,requestXML)
+			responseJSON	<-	genericExecute(url,requestXML)
 		} else {
 			stop('must have a DATASET_URI set as a processInput')
 		}
 		# get complex data
-		cData	<-	xmlValue(getNodeSet(responseXML, "//ns:LiteralData")[[1]])
-		cDataXML	<-	xmlInternalTreeParse(cData)
-		dataIDs	<-	sapply(getNodeSet(cDataXML,"//gdp:name"),xmlValue)
+		dataIDs <- fromJSON(responseJSON)$datatypecollection$types$name
 		return(dataIDs)
 	})

@@ -159,9 +159,8 @@ generateRequest	<-	function(.Object, algorithm,cachedResponse='false'){
 		addChildren(wpd,wpLd)
 		
 		wrf	<-	newXMLNode("wps:ResponseForm",parent=top)
-		wrd	<-	newXMLNode("wps:ResponseDocument",parent=wrf)
-		wpo	<-	newXMLNode("wps:Output",parent=wrd)
-		owi	<-	newXMLNode("ows:Identifier",newXMLTextNode("result"),parent=wpo)
+		wrd	<-	newXMLNode("wps:RawDataOutput",attrs=c("mimeType"="application/json"), parent=wrf)
+		owi	<-	newXMLNode("ows:Identifier",newXMLTextNode("result_as_json"),parent=wrd)
 		addChildren(top,wrf)
 		requestXML	<-	toString.XMLNode(xmlDoc(top))
 
@@ -172,20 +171,13 @@ genericExecute	<-	function(url,requestXML){
 	myheader	<-	c(Connection="close", 
 	          			'Content-Type' = "application/xml")
 	
-	data	<-	 getURL(url = url,
+	response	<-	 getURL(url = url,
 	               postfields=requestXML,
 	               httpheader=myheader,
 	               verbose=FALSE)		
-	xmltext 	<-	xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
-	response	<-	xmlRoot(xmltext)
+
 	return(response)
 
-	#response	<-	xmlRoot(xmltext)
-	#responseNS	<-	xmlNamespaceDefinitions(response, simplify = TRUE)  
-	#processID	<-	xmlGetAttr(response,"statusLocation")
-	
-	#.Object	<-	setProcessID(.Object,processID)
-	#return(.Object)
 }
 
 setList	<-	function(ObjectField,varList){
