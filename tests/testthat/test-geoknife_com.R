@@ -1,5 +1,5 @@
 context("Test geoknife connection to GDP")
-
+library(methods)
 gk <- geoknife()
 algs <- getAlgorithms(gk)
 

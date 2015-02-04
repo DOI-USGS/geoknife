@@ -1,5 +1,5 @@
 context("Test setting of geoknife algorithms and process inputs")
-
+library(methods)
 gk <- geoknife()
 algs <- getAlgorithms(gk)
 algorithm <- list("Area Grid Statistics (weighted)"=
