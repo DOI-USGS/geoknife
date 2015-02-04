@@ -1,5 +1,5 @@
 
-library(methods)
+
 setClass(
 	Class = "geoknife",
 	representation = representation(
