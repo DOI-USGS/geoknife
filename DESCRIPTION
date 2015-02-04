@@ -20,7 +20,6 @@ Imports:
     methods
 Suggests:
     testthat,
-    methods,
     xtable,
     knitr
 VignetteBuilder: knitr

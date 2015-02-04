@@ -23,8 +23,8 @@
 #'@export
 setGeneric(name="getDataIDs",def=function(.Object, cachedResponse){standardGeneric("getDataIDs")})
 
-#'@rdname getDataIDs-methods
-#'@aliases getDataIDs,geoknife-method
+# '  @rdname getDataIDs-methods
+# ' @aliases getDataIDs,geoknife-method
 setMethod(f = "getDataIDs",signature="geoknife",
 	definition = function(.Object,cachedResponse){
 		
