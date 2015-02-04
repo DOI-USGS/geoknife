@@ -18,6 +18,7 @@
 #'getDataIDs(gk)
 #'}
 #'@author Jordan S. Read
+#'@importFrom jsonlite fromJSON
 #'@seealso \code{setProcessInputs}
 #'@export
 setGeneric(name="getDataIDs",def=function(.Object, cachedResponse){standardGeneric("getDataIDs")})
@@ -34,13 +35,11 @@ setMethod(f = "getDataIDs",signature="geoknife",
 			algorithm	<-	.Object@dataList
 			requestXML	<-	generateRequest(.Object, algorithm,cachedResponse)
 			url = .Object@UTILITY_URL
-			responseXML	<-	genericExecute(url,requestXML)
+			responseJSON	<-	genericExecute(url,requestXML)
 		} else {
 			stop('must have a DATASET_URI set as a processInput')
 		}
 		# get complex data
-		cData	<-	xmlValue(getNodeSet(responseXML, "//ns:LiteralData")[[1]])
-		cDataXML	<-	xmlInternalTreeParse(cData)
-		dataIDs	<-	sapply(getNodeSet(cDataXML,"//gdp:name"),xmlValue)
+		dataIDs <- fromJSON(responseJSON)$datatypecollection$types$name
 		return(dataIDs)
 	})

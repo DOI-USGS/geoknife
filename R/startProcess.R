@@ -22,6 +22,8 @@
 #' #set processing algorithm to feature weighted grid statistics (unweighted will likely fail, because the ring won't intersect the centroids)
 #'setAlgorithm(gk) <- algs[4] # feature weighted
 #'
+#'\dontrun{
+#'
 #' # set the post inputs for the processing dataset
 #'setProcessInputs(gk) <- list('DATASET_ID'='Prcp',
 #'                                        'DATASET_URI'='dods://cida.usgs.gov/thredds/dodsC/gmo/GMO_w_meta.ncml',
@@ -33,7 +35,7 @@
 #' # kick off your request
 #'gk <- startProcess(gk)
 #'gk # display contents
-
+#'}
 setGeneric(name="startProcess",def=function(.Object){standardGeneric("startProcess")})
 
 # '@rdname startProcess-methods
