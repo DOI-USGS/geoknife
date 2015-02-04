@@ -25,3 +25,16 @@ test_that("geoknife can set process inputs", {
 	setProcessInputs(gk)<- dataset
 	expect_equal(gk@processInputs[names(dataset)][[1]],dataset[[1]])
 })
+
+test_that("geoknife can set WFS and WPS", {
+  WFS = 'WFS_fake'
+  setWFS(gk) <- WFS
+  expect_equal(gk@WFS_URL, WFS)
+  WPS = 'WPS_fake'
+  setWPS(gk) <- WPS
+  expect_equal(gk@WPS_URL, WPS)
+})
+
+test_that("geoknife can check empty process", {
+  expect_equal(checkProcess(gk)$status,'none')
+})
