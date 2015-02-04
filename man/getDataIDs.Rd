@@ -23,12 +23,14 @@ getDataIDs is a method for finding dataset variables from a
 \code{geoknife} object with a valid dataset URI. Use setProcessInputs to set a dataset URI.
 }
 \examples{
+\dontrun{
 gk <- geoknife() # create geoknife object
 algorithm <- list("Area Grid Statistics (weighted)"=
 "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
 setAlgorithm(gk) <- algorithm
-setProcessInputs(gk) <- list("DATASET_URI" = "dods://hydro1.sci.gsfc.nasa.gov:80/dods/NLDAS_FORA0125_H.002")
+setProcessInputs(gk) <- list("DATASET_URI" = "dods://cida.usgs.gov/thredds/dodsC/gmo/GMO_w_meta.ncml")
 getDataIDs(gk)
+}
 }
 \author{
 Jordan S. Read

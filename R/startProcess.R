@@ -9,7 +9,8 @@
 #'@title Submit a GDP web processing request
 #'@seealso \code{checkProcess}
 #'@export
-#'@examples gk <- geoknife() # create geoknife object
+#'@examples 
+#'gk <- geoknife() # create geoknife object
 #'gk # print geoknife object
 #'
 #'linearRing = bufferPoint(c(-111.48,36.95))
@@ -24,10 +25,10 @@
 #'\dontrun{
 #'
 #' # set the post inputs for the processing dataset
-#'setProcessInputs(gk) <- list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
-#'                                        'DATASET_URI'='dods://hydro1.sci.gsfc.nasa.gov:80/dods/NLDAS_FORA0125_H.002',
+#'setProcessInputs(gk) <- list('DATASET_ID'='Prcp',
+#'                                        'DATASET_URI'='dods://cida.usgs.gov/thredds/dodsC/gmo/GMO_w_meta.ncml',
 #'                                        'TIME_START'='2010-01-01T00:00:00Z',
-#'                                        'TIME_END'='2010-01-01T23:00:00Z',
+#'                                        'TIME_END'='2010-05-01T00:00:00Z',
 #'                                        'DELIMITER'='TAB')
 #'gk # print geoknife object contents
 #'

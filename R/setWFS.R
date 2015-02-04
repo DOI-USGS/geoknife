@@ -17,7 +17,6 @@ setGeneric(name="setWFS<-",def=function(.Object,value){standardGeneric("setWFS<-
 # '@aliases setWFS,geoknife-method
 setReplaceMethod(f = "setWFS",signature="geoknife",
 	definition = function(.Object,value){
-		wfs	<-	gsub('https', 'http', value)
-		.Object@WFS_URL	<-	wfs
+		.Object@WFS_URL	<-	value
 		return(.Object)
 	})

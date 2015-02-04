@@ -1,6 +1,8 @@
 `geoknife`
 =====
-[![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)  
+[![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)
+[![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife)
+[![Coverage Status](https://img.shields.io/coveralls/USGS-R/geoknife.svg)](https://coveralls.io/r/USGS-R/geoknife)
 Tools for geo-web processing of gridded data via the [Geo Data Portal](http://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
   <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
@@ -43,6 +45,8 @@ The main elements of setting up and carrying out a `geoknife` 'job' are include 
 This version requires `RCurl`, and `XML`. Both of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
 
 ##Disclaimer
-This software is in the public domain because it contains materials that originally came from the United States Geological Survey, an agency of the United States Department of Interior. For more information, see the [official USGS copyright policy](http://www.usgs.gov/visual-id/credit_usgs.html#copyright/ "official USGS copyright policy")
+This software is in the public domain because it contains materials that originally came from the U.S. Geological Survey, an agency of the United States Department of Interior. For more information, see the [official USGS copyright policy](http://www.usgs.gov/visual-id/credit_usgs.html#copyright/ "official USGS copyright policy")
 
-This software is provided "AS IS".
+Although this software program has been used by the U.S. Geological Survey (USGS), no warranty, expressed or implied, is made by the USGS or the U.S. Government as to the accuracy and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and no responsibility is assumed by the USGS in connection therewith.
+
+This software is provided "AS IS."

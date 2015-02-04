@@ -28,6 +28,7 @@ setMethod(f = "checkProcess",signature = "geoknife", definition = function(.Obje
 	process	<-	list(status=NULL,URL=NULL)
 	if (.Object@processID=="<no active job>"){
 		process$status	<-	'none'
+		process$statusType <- 'none'
 	}
 
 	tryCatch({checkForComplete=getURL(url = .Object@processID, verbose=FALSE)},error = function(e) {process$status='unknown'})
@@ -37,6 +38,8 @@ setMethod(f = "checkProcess",signature = "geoknife", definition = function(.Obje
 		root <- xmlRoot(checkForCompleteResponse)
 		status <- sapply(xmlChildren(root[["Status"]]),xmlValue)
 		process$status	<-	status[[1]]
+		process$statusType <- sapply(xmlChildren(root[["Status"]]),xmlName)[[1]]
+		
 		if ("Process successful" == process$status){
 			root <- xmlRoot(checkForCompleteResponse)
 		    process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
