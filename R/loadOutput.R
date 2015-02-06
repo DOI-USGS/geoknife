@@ -39,7 +39,7 @@ setGeneric(name="loadOutput",def=function(.Object){standardGeneric("loadOutput")
 setMethod(f = "loadOutput",signature="geoknife",
   definition = function(.Object){
             if (isSuccessful(.Object)){
-              output <- outputParse(processID = .Object@processID)
+              output <- outputParse(.Object)
               return(output)
             } else {
               stop('processing is incomplete or has failed. See checkProcess()')
@@ -48,15 +48,17 @@ setMethod(f = "loadOutput",signature="geoknife",
           }
   )
 
-outputParse = function(processID){
-  funcInfo <- getParseFunction(processID)
-  output <- do.call(funcInfo$function_name, args = list('delim' = funcInfo$delim))
+outputParse = function(.Object){
+  funcInfo <- getParseFunction(.Object@processID)
+  fileLocation <- checkProcess(.Object)$URL
+  output <- do.call(funcInfo$function_name, args = list(file = fileLocation, 'delim' = funcInfo$delim))
   return(output)
 }
 
 getParseFunction <- function(processID){
   function_handlers <- list("text/tab-separated-values" = list(function_name = 'parseTimeseries', delim='\t'),
-                            "text/csv" = list(function_name = 'parseTimeseries', delim=','))
+                            "text/csv" = list(function_name = 'parseTimeseries', delim=','),
+                            'text/plain' = list(function_name = 'parseTimeseries', delim=' '))
   # find output type
   doc    <-  htmlParse(processID, isURL=TRUE, useInternalNodes = TRUE)
   type <- xmlGetAttr(getNodeSet(doc,"//reference[@mimetype]")[[1]],'mimetype')
@@ -67,6 +69,6 @@ getParseFunction <- function(processID){
   return(function_handlers[[type]])
 }
 
-parseTimeseries <- function(file, delim = '\t'){
-  return(delim)
+parseCategorical <- function(file, delim){
+  stop("function 'parseCategorical' not implemented yet. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new")
 }
