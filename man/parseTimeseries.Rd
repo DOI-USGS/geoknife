@@ -26,7 +26,7 @@ local_file <- system.file('extdata','tsv_linear_ring.tsv', package = 'geoknife')
 output <- parseTimeseries(local_file, delim = '\\t')
 }
 \author{
-Jordan S. Read
+Luke A. Winslow, Jordan S. Read
 }
 \keyword{methods}
 

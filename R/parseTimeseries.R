@@ -8,7 +8,7 @@
 #'@param delim the file delimiter
 #'@return list of timeseries values.
 #'@keywords methods
-#'@author Jordan S. Read
+#'@author Luke A. Winslow, Jordan S. Read
 #'@export
 #'@examples
 #'local_file <- system.file('extdata','tsv_linear_ring.tsv', package = 'geoknife')
