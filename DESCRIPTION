@@ -1,7 +1,7 @@
 Package: geoknife
 Type: Package
 Title: Geo-web processing of gridded data
-Version: 0.3.2
+Version: 0.3.3
 Date: 2013-05-23
 Author: Jordan S Read
 Maintainer: Jordan S Read <jread@usgs.gov>
@@ -17,7 +17,8 @@ Imports:
     XML,
     RCurl,
     jsonlite,
-    methods
+    methods,
+    lubridate
 Suggests:
     testthat,
     xtable,
