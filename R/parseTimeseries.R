@@ -6,7 +6,7 @@
 #'@param file a \code{\link{geoknife}} timeseries processing result file location
 #'(See \code{\link{checkProcess}}).
 #'@param delim the file delimiter
-#'@return list of timeseries values.
+#'@return a data.frame of timeseries values.
 #'@keywords methods
 #'@author Luke A. Winslow, Jordan S. Read
 #'@export
@@ -16,30 +16,68 @@
 #'@importFrom lubridate parse_date_time2
 parseTimeseries <- function(file, delim){
   
-  ## open file
-  fid = file(file, open='r')
-  # drop the first line, just variable name 
-  firstLine <- readLines(fid, 1)
-  varName = substr(x = firstLine, start = 3, stop = nchar(firstLine))
+  config = parseConfig(file, delim)
   
-  ids = strsplit(readLines(fid, 1), delim, fixed=T)[[1]]
+  dataOut <- data.frame(
+    row.names = c('TIMESTEP',config[['features']], 'variable', 'statistic'))
   
-  #read the full data table
-  
-  data= read.table(fid, sep=delim, header=TRUE, as.is=TRUE)
-  tryCatch({
-    statName = strsplit(unique(names(data[-1])),'.', fixed = T)[[1]][1]
-  }, error = function(e) {close(fid);stop('delimiter parse fail. ',e)})
-  close(fid)
-  
-  #parse the date into POSIXct format
-  data$TIMESTEP = parse_date_time2(data$TIMESTEP, 'YmdHMS')
-  
-  ids[1] = 'DateTime'
-  if (ncol(data) != length(ids)) warning('col names were likely truncated due to conflict with delimiter. try TAB next time')
-  names(data) = ids[1:ncol(data)] # delim can be in colnames...no fix for this.
-  output <- list(data)
-  names(output) <- paste0(varName,'_',statName)
-  return(output)
+  for (blk in 1:length(config[['vars']])){
+    blockData <- read.table(file, sep = delim, 
+                  header = TRUE, 
+                  nrows = config[['nrows']][blk], 
+                  skip = config[['skip']][blk], 
+                  as.is=TRUE, check.names = FALSE)
+    #parse the date into POSIXct format
+    blockData$TIMESTEP = parse_date_time2(blockData$TIMESTEP, 'YmdHMS')
+    statNames <- unique(names(blockData)[-1])
+    for (st in 1:length(statNames)){
+      # select data columns based on stat code
+      statI <- which(names(blockData) == statNames[st])
+      statData <- blockData[, c(1,statI)]
+      
+      tryCatch({
+        names(statData)[-1] <- config[['features']]
+      }, warning = function(w) {
+        stop('Delimiter parse fail.')
+      }, error = function(e) {
+        stop('Delimiter parse fail.')
+        }
+      )
+      
+      
+      statData = cbind(statData, data.frame(
+        'variable' = rep(as.character(config[['vars']][blk]), length.out = nrow(statData)),
+        'statistic' = rep(statNames[st], length.out = nrow(statData)))
+      )
+      dataOut <- rbind(dataOut, statData)
+    }
+    
+  }
+
+  names(dataOut)[1] = 'DateTime'
+  return(dataOut)
 }
 
+parseConfig = function(file, delim){
+  featureLine = 2
+  skipHead = 1
+  varMarker = '# '
+  c <- file(file,"r") 
+  fileLines <- readLines(c)
+  close(c)
+  nRead <- length(fileLines)
+  blockStart <- grep(varMarker, fileLines)
+  skips = blockStart+skipHead
+  blockEnd = c(blockStart[-1] - 1, nRead)
+  nrows = blockEnd - skips - 1
+  features = unique(strsplit(fileLines[featureLine], split = delim)[[1]][-1])
+  vars = sub(varMarker,"",fileLines[blockStart])
+  config = list(vars = vars, features = features, skip = skips, nrows = nrows)
+  return(config)
+}
+parseChunk = function(lines, delim, use_cols){
+  # won't know var name, will return d.f
+  
+  df <- data.frame()
+  return(df)
+}
