@@ -10,7 +10,8 @@
 #'@author Jordan S. Read
 #'@import XML
 #'@import RCurl
-#'@examples gk<- geoknife() # create geoknife object
+#'@examples 
+#'gk<- geoknife() # create geoknife object
 #'shps <- getShapefiles(gk) # get shapefile names
 #'getAttributes(gk,shapefile=shps[2])
 #'@export
@@ -25,6 +26,6 @@ setMethod(f = "getAttributes",signature="geoknife",
 		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
 			.Object@WFS_DEFAULT_VERSION,'&request=DescribeFeatureType',
 			'&typename=',shapefile),collapse="")
-		attributes	<-	parseXMLattributes(processURL,parentKey,childKey)
+		attributes	<-	unique(parseXMLattributes(processURL,parentKey,childKey))
 		return(attributes)
 	})

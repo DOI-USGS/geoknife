@@ -10,10 +10,11 @@
 #'@keywords methods
 #'@import XML
 #'@import RCurl
-#'@examples gk<- geoknife() # create geoknife object
+#'@examples 
+#'gk<- geoknife() # create geoknife object
 #'shps <- getShapefiles(gk) # get shapefile names
 #'atts <- getAttributes(gk,shapefile=shps[2])
-#'getValues(gk,shapefile=shps[2],attribute=atts[4])
+#'getValues(gk,shapefile=shps[2],attribute=atts[1])
 #'@author Jordan S. Read
 #'@export
 setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGeneric("getValues")})
@@ -27,6 +28,6 @@ setMethod(f = "getValues",signature="geoknife",
 			.Object@WFS_DEFAULT_VERSION,'&request=GetFeature',
 			'&info_format=text%2Fxml&typename=',shapefile,
 			'&propertyname=',attribute),collapse="")
-		values	<-	parseXMLvalues(processURL,attribute)
+		values	<-	unique(parseXMLvalues(processURL,attribute))
 		return(values)
 	})
