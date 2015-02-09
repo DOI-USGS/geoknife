@@ -26,6 +26,6 @@ setMethod(f = "getAttributes",signature="geoknife",
 		URL <- sprintf('%s?service=WFS&version=%s&request=DescribeFeatureType&typename=%s',
                    .Object@WFS_URL, .Object@WFS_DEFAULT_VERSION, shapefile)
     describeDoc <- GET(URL)
-		attributes	<-	unique(parseXMLattributes(describeDoc,parentKey,childKey))
+		attributes	<-	parseXMLattributes(describeDoc,parentKey,childKey, rm.duplicates = TRUE)
 		return(attributes)
 	})

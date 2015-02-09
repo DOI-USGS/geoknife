@@ -206,7 +206,7 @@ parseXMLnodes	<-	function(xml,parentKey,childKey,key="name"){
 	return(values)
 }
 
-parseXMLattributes	<-	function(xmlURL,parentKey,childKey,key="name"){
+parseXMLattributes	<-	function(xmlURL,parentKey,childKey,key="name", rm.duplicates = FALSE){
 	doc	<-	htmlParse(xmlURL,useInternalNodes = TRUE)
 	nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"[@",childKey,"]"),collapse=""))
 	# will error if none found
@@ -215,13 +215,19 @@ parseXMLattributes	<-	function(xmlURL,parentKey,childKey,key="name"){
 		values[[i]]	<-	xmlGetAttr(nodes[[i]],key)
 	}
 	values	<-	unlist(values[values != "the_geom" & values != ""])
+  if (rm.duplicates){
+    values = unique(values)
+  }
 	return(values)
 }
-parseXMLvalues	<-	function(xmlURL,key){
+parseXMLvalues	<-	function(xmlURL,key,  rm.duplicates = FALSE){
 	doc	<-	htmlParse(xmlURL,useInternalNodes = TRUE)
 	nodes	<-	getNodeSet(doc,paste(c("//",tolower(key)),collapse=""))
 	# will error if none found
 	values	<-	sapply(nodes,xmlValue)
+  if (rm.duplicates){
+    values = unique(values)
+  }
 	return(values)
 }
 
