@@ -18,7 +18,8 @@ Imports:
     RCurl,
     jsonlite,
     methods,
-    lubridate
+    lubridate,
+    httr
 Suggests:
     testthat,
     xtable,

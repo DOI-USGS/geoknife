@@ -6,10 +6,11 @@
 #'@return list of shapefiles for the \code{geoknife} WFS url.
 #'@docType methods
 #'@keywords methods
-#'@examples gk<- geoknife() # create geoknife object
+#'@examples 
+#'gk<- geoknife() # create geoknife object
 #'getShapefiles(gk) # display shapefile names
 #'@import XML
-#'@import RCurl
+#'@importFrom httr GET
 #'@author Jordan S. Read
 #'@export
 setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapefiles")})
@@ -18,10 +19,10 @@ setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapef
 # '@aliases getShapefiles,geoknife-method	
 setMethod(f = "getShapefiles",signature="geoknife",
 	definition = function(.Object){
-		parentKey 	<-	"featuretypelist"
-		childKey	<-	"featuretype"
-		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
-			.Object@WFS_DEFAULT_VERSION,'&request=GetCapabilities'),collapse="")
-		shapefiles	<-	parseXMLnodes(processURL,parentKey,childKey)
+		parentKey <- "featuretypelist"
+		childKey <- "featuretype"
+		processURL <- sprintf('%s?service=WFS&version=%s&request=GetCapabilities',.Object@WFS_URL, .Object@WFS_DEFAULT_VERSION)
+    getCapsDoc <- GET(processURL)
+		shapefiles <- parseXMLnodes(getCapsDoc,parentKey,childKey)
 		return(shapefiles)
 	})

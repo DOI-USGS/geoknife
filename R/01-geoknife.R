@@ -167,14 +167,11 @@ generateRequest	<-	function(.Object, algorithm,cachedResponse='false'){
 		return(requestXML)
 }
 
+#'@importFrom httr POST
 genericExecute	<-	function(url,requestXML){
-	myheader	<-	c(Connection="close", 
-	          			'Content-Type' = "application/xml")
-	
-	response	<-	 getURL(url = url,
-	               postfields=requestXML,
-	               httpheader=myheader,
-	               verbose=FALSE)		
+
+	response <-	POST(url,content_type_xml(),
+                  body = requestXML)		
 
 	return(response)
 
@@ -198,18 +195,19 @@ setList	<-	function(ObjectField,varList){
 	return(ObjectField)
 }
 
-parseXMLnodes	<-	function(xmlURL,parentKey,childKey,key="name"){
-	doc	<-	htmlParse(xmlURL,isURL=TRUE, useInternalNodes = TRUE)
-	if (is.na(key)){
-		nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"/",childKey),collapse=""))
-	} else {
-		nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"/",childKey,"/",key),collapse=""))
-	}
+parseXMLnodes	<-	function(xml,parentKey,childKey,key="name"){
+	doc	<-	htmlParse(xml, useInternalNodes = TRUE)
+  xpath <- sprintf('//%s/%s',parentKey,childKey)
+  if (!is.na(key)){
+    xpath = paste0(xpath,'/',key)
+  }
+  nodes <- getNodeSet(doc, xpath)
 	values	<-	sapply(nodes,xmlValue)
 	return(values)
 }
+
 parseXMLattributes	<-	function(xmlURL,parentKey,childKey,key="name"){
-	doc	<-	htmlParse(xmlURL,isURL=TRUE, useInternalNodes = TRUE)
+	doc	<-	htmlParse(xmlURL,useInternalNodes = TRUE)
 	nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"[@",childKey,"]"),collapse=""))
 	# will error if none found
 	values	<-	list()
@@ -220,7 +218,7 @@ parseXMLattributes	<-	function(xmlURL,parentKey,childKey,key="name"){
 	return(values)
 }
 parseXMLvalues	<-	function(xmlURL,key){
-	doc	<-	htmlParse(xmlURL,isURL=TRUE, useInternalNodes = TRUE)
+	doc	<-	htmlParse(xmlURL,useInternalNodes = TRUE)
 	nodes	<-	getNodeSet(doc,paste(c("//",tolower(key)),collapse=""))
 	# will error if none found
 	values	<-	sapply(nodes,xmlValue)

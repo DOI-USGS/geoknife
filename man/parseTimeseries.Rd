@@ -13,7 +13,7 @@ parseTimeseries(file, delim)
 \item{delim}{the file delimiter}
 }
 \value{
-list of timeseries values.
+a data.frame of timeseries values.
 }
 \description{
 parse timeseries file into R environment

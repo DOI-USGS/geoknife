@@ -42,7 +42,8 @@ setMethod(f = "loadOutput",signature="geoknife",
               output <- outputParse(.Object)
               return(output)
             } else {
-              stop('processing is incomplete or has failed. See checkProcess()')
+              stop('processing is incomplete or has failed. See checkProcess(). Processing status: ',
+                   checkProcess(.Object)$statusType)
             }
             
           }
