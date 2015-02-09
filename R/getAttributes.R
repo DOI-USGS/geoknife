@@ -9,7 +9,7 @@
 #'@keywords getAttributes
 #'@author Jordan S. Read
 #'@import XML
-#'@import RCurl
+#'@importFrom httr GET
 #'@examples 
 #'gk<- geoknife() # create geoknife object
 #'shps <- getShapefiles(gk) # get shapefile names
@@ -23,9 +23,9 @@ setMethod(f = "getAttributes",signature="geoknife",
 	definition = function(.Object,shapefile){
 		parentKey	<-	"element"
 		childKey	<-	"maxoccurs"
-		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
-			.Object@WFS_DEFAULT_VERSION,'&request=DescribeFeatureType',
-			'&typename=',shapefile),collapse="")
-		attributes	<-	unique(parseXMLattributes(processURL,parentKey,childKey))
+		URL <- sprintf('%s?service=WFS&version=%s&request=DescribeFeatureType&typename=%s',
+                   .Object@WFS_URL, .Object@WFS_DEFAULT_VERSION, shapefile)
+    describeDoc <- GET(URL)
+		attributes	<-	unique(parseXMLattributes(describeDoc,parentKey,childKey))
 		return(attributes)
 	})

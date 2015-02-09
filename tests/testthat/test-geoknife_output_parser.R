@@ -1,4 +1,4 @@
-context("Test file parsing")
+context("Test output file parsing")
 
 test_that("timeseries parser works on multi feature, single variable", {
   local_file <- system.file('extdata','tsv_multi_feature.tsv', package = 'geoknife')

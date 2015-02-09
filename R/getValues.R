@@ -9,7 +9,7 @@
 #'@docType methods
 #'@keywords methods
 #'@import XML
-#'@import RCurl
+#'@importFrom httr GET
 #'@examples 
 #'gk<- geoknife() # create geoknife object
 #'shps <- getShapefiles(gk) # get shapefile names
@@ -24,10 +24,9 @@ setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGe
 setMethod(f = "getValues",signature="geoknife",
 	definition = function(.Object,shapefile,
 		attribute){
-		processURL	<-	paste(c(.Object@WFS_URL,'?service=WFS&version=',
-			.Object@WFS_DEFAULT_VERSION,'&request=GetFeature',
-			'&info_format=text%2Fxml&typename=',shapefile,
-			'&propertyname=',attribute),collapse="")
-		values	<-	unique(parseXMLvalues(processURL,attribute))
+		processURL <- sprintf('%s?service=WFS&version=%s&request=GetFeature&typename=%s&propertyname=%s',
+		                      .Object@WFS_URL, .Object@WFS_DEFAULT_VERSION, shapefile, attribute)
+		getCapsDoc <- GET(processURL)
+		values	<-	unique(parseXMLvalues(getCapsDoc,attribute))
 		return(values)
 	})
