@@ -31,11 +31,9 @@ setGeneric(name="setProcessInputs<-",def=function(.Object,value){standardGeneric
 setReplaceMethod(f = "setProcessInputs",signature = "geoknife",
                  definition = function(.Object,value){
                    
-                   if (!is.list(value)){stop(paste0(value,' needs to be a valid list'))}
-                   #if (!all(names(value) %in% names(.Object@processInputs))){
-                    # stop(paste0(value,' needs names supported by processInputs'))
-                   #}
-                   
+                   if (!is.list(value)){
+                     stop(value,' needs to be a valid list')
+                   }
                    if ("empty" %in% names(.Object@algorithm)){
                      stop('an algorithm must be chosen before setting processInputs')
                    }

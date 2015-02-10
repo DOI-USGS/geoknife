@@ -22,11 +22,11 @@ setGeneric(name="getValues",def=function(.Object,shapefile,attribute){standardGe
 # '@rdname getValues-methods
 # '@aliases getValues,geoknife-method
 setMethod(f = "getValues",signature="geoknife",
-	definition = function(.Object,shapefile,
-		attribute){
+	definition = function(.Object,shapefile,attribute){
 		processURL <- sprintf('%s?service=WFS&version=%s&request=GetFeature&typename=%s&propertyname=%s',
 		                      .Object@WFS_URL, .Object@WFS_DEFAULT_VERSION, shapefile, attribute)
 		getCapsDoc <- GET(processURL)
-		values	<-	unique(parseXMLvalues(getCapsDoc,attribute))
+		values	<-	parseXMLvalues(getCapsDoc,attribute, rm.duplicates = TRUE)
 		return(values)
-	})
+	}
+)

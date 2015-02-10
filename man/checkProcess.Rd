@@ -21,7 +21,7 @@ Check status of processing request
 checkProcess is a method for checking the process status of an active (executed)
 \code{geoknife} object. The method returns \code{process}, which is a list containing
 two fields: \code{status} and \code{URL}. If the \code{geoknife} object has not been executed
-(see \code{startProcess}), this method returns \code{status}='none' and \code{URL}=NULL.
+(see \code{\link{startProcess}}), this method returns \code{status}='none' and \code{URL}=NULL.
 }
 \examples{
 gk <- geoknife() # create geoknife object
@@ -31,7 +31,7 @@ checkProcess(gk) # no process for empty geoknife object
 Jordan S. Read
 }
 \seealso{
-\code{startProcess}
+\code{\link{startProcess}}
 }
 \keyword{checkProcess}
 
