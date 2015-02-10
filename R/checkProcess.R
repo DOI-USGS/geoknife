@@ -1,18 +1,18 @@
 #'@details checkProcess is a method for checking the process status of an active (executed)
 #' \code{geoknife} object. The method returns \code{process}, which is a list containing
 #' two fields: \code{status} and \code{URL}. If the \code{geoknife} object has not been executed
-#' (see \code{startProcess}), this method returns \code{status}='none' and \code{URL}=NULL.
+#' (see \code{\link{startProcess}}), this method returns \code{status}='none' and \code{URL}=NULL.
 #'
 #'@param .Object a \code{geoknife} object with an active GDP process request.
 #'@return \code{process}, a list containing
 #' \code{status} and \code{URL}. 
 #'
-#'@docType methods
+#' @docType methods
 #'@keywords checkProcess
 #'@description Check status of processing request
 #'@title Check status of processing request
 #'@author Jordan S. Read
-#'@seealso \code{startProcess}
+#'@seealso \code{\link{startProcess}}
 #'@import XML
 #'@import RCurl
 #'@examples 
@@ -21,8 +21,8 @@
 #'@export            
 setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
 
-# '@rdname checkProcess-methods
-# '@aliases checkProcess,geoknife-method
+
+# '@rdname checkProcess
 setMethod(f = "checkProcess",signature = "geoknife", definition = function(.Object){
 	
 	process	<-	list(status=NULL,URL=NULL)

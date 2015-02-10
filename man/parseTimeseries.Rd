@@ -4,13 +4,15 @@
 \alias{parseTimeseries}
 \title{parse timeseries file into R environment}
 \usage{
-parseTimeseries(file, delim)
+parseTimeseries(file, delim, keep.units = FALSE)
 }
 \arguments{
 \item{file}{a \code{\link{geoknife}} timeseries processing result file location
 (See \code{\link{checkProcess}}).}
 
 \item{delim}{the file delimiter}
+
+\item{keep.units}{boolean for including a units column in returned data.frame}
 }
 \value{
 a data.frame of timeseries values.
