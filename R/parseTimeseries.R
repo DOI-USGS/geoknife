@@ -6,6 +6,7 @@
 #'@param file a \code{\link{geoknife}} timeseries processing result file location
 #'(See \code{\link{checkProcess}}).
 #'@param delim the file delimiter
+#'@param keep.units boolean for including a units column in returned data.frame
 #'@return a data.frame of timeseries values.
 #'@keywords methods
 #'@author Luke A. Winslow, Jordan S. Read
@@ -14,7 +15,7 @@
 #'local_file <- system.file('extdata','tsv_linear_ring.tsv', package = 'geoknife')
 #'output <- parseTimeseries(local_file, delim = '\t')
 #'@importFrom lubridate parse_date_time2
-parseTimeseries <- function(file, delim){
+parseTimeseries <- function(file, delim, keep.units = FALSE){
   
   config = parseConfig(file, delim)
   
@@ -44,11 +45,18 @@ parseTimeseries <- function(file, delim){
         }
       )
       
+      #remove units from stats names
+      statSplit = strsplit(x = statNames[st], split = '[()]')[[1]]
+      cleanStat <- statSplit[1]
+      units <- statSplit[2]
       
       statData = cbind(statData, data.frame(
         'variable' = rep(as.character(config[['vars']][blk]), length.out = nrow(statData)),
-        'statistic' = rep(statNames[st], length.out = nrow(statData)))
+        'statistic' = rep(cleanStat, length.out = nrow(statData)))
       )
+      if (keep.units){
+        statData = cbind(statData, data.frame('units'=rep(units, length.out = nrow(statData))))
+      }
       dataOut <- rbind(dataOut, statData)
     }
     
