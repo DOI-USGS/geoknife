@@ -14,7 +14,7 @@
 #'@author Jordan S. Read
 #'@seealso \code{\link{startProcess}}
 #'@import XML
-#'@import RCurl
+#'@importFrom httr GET
 #'@examples 
 #'gk <- geoknife() # create geoknife object
 #'checkProcess(gk) # no process for empty geoknife object
@@ -31,7 +31,15 @@ setMethod(f = "checkProcess",signature = "geoknife", definition = function(.Obje
 		process$statusType <- 'none'
 	}
 
-	tryCatch({checkForComplete=getURL(url = .Object@processID, verbose=FALSE)},error = function(e) {process$status='unknown'})
+	checkForComplete = tryCatch({
+    GET(url = .Object@processID)
+    },error = function(e) {
+      return(NULL)
+      }
+    )
+  if (is.null(checkForComplete)){
+    process$status <- 'unknown'
+  }
 	if (is.null(process$status)){
 		checkForCompleteResponse	<-	xmlTreeParse(checkForComplete, asText = TRUE,useInternalNodes=TRUE)
 		checkResponseNS <- xmlNamespaceDefinitions(checkForCompleteResponse, simplify = TRUE) 

@@ -25,7 +25,6 @@ setClass(
 #'@export
 #'@rdname geoknife
 #'@import XML
-#'@import RCurl
 #'@keywords geoknife
 #'@author Jordan S. Read
 #'@examples 
@@ -167,7 +166,7 @@ generateRequest	<-	function(.Object, algorithm,cachedResponse='false'){
 		return(requestXML)
 }
 
-#'@importFrom httr POST
+#'@importFrom httr POST content_type_xml
 genericExecute	<-	function(url,requestXML){
 
 	response <-	POST(url,content_type_xml(),
