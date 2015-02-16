@@ -5,7 +5,7 @@ processInputsToXML	<-	function(.Object){
 	top    <-	newXMLNode(name='wps:Execute',attrs=c('service'="WPS",'version'=.Object@WPS_DEFAULT_VERSION,
 		'xsi:schemaLocation'=paste(c(.Object@WPS_DEFAULT_NAMESPACE,.Object@WPS_SCHEMA_LOCATION),collapse=" ")),
 		namespaceDefinitions=c('wps'=.Object@WPS_DEFAULT_NAMESPACE,'ows'=.Object@OWS_DEFAULT_NAMESPACE,
-		'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE)) 
+		'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE, 'draw' = .Object@DRAW_NAMESPACE)) 
 	
 	
 	id	<-	newXMLNode("ows:Identifier",newXMLTextNode(.Object@algorithm),parent=top)
@@ -79,8 +79,12 @@ processInputsToXML	<-	function(.Object){
 			"schema"="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd")) # schema needed?
 		addChildren(inDatEL,compDatEL)
 		
-		gmlFeatEL	<-	newXMLNode('gml:featureMembers',namespaceDefinitions=c('gml'="http://www.opengis.net/gml"),
-			attrs=c("xsi:schemaLocation"=paste(c(.Object@DRAW_NAMESPACE,.Object@DRAW_SCHEMA_LOCATION),collapse=' ')))
+		gmlFeatEL	<-	newXMLNode('gml:featureMembers',
+                            namespaceDefinitions=c(
+                              'gml'="http://www.opengis.net/gml"),
+                            attrs=c(
+                              "xsi:schemaLocation"=paste(c(.Object@DRAW_NAMESPACE,.Object@DRAW_SCHEMA_LOCATION),collapse=' '))
+                            )
 		addChildren(compDatEL,gmlFeatEL)
 		# loop this section for multiple polygons:
 		
@@ -94,37 +98,46 @@ processInputsToXML	<-	function(.Object){
 		}
 		for (j in 1:lng){
 
-			gmlBoxEL	<-	newXMLNode('draw:poly',attrs=c("gml:id"=paste("poly.",j,sep='')))
+		  gmlBoxEL  <-	newXMLNode('draw:poly',attrs=c("gml:id"=paste("poly.",j,sep='')))
       
 			addChildren(gmlFeatEL,gmlBoxEL) 
 
 		
-			gmlGeomEL	<-	newXMLNode('draw:the_geom')
-			drawID <- paste0('poly.',j)
+			gmlGeomEL  <-	newXMLNode('draw:the_geom')
+      
+			if (lst){
+			  ring.val	<-	paste(.Object@feature[['LinearRing']][[j]],collapse=" ")
+			  drawID <- names(.Object@feature[['LinearRing']])[j]
+			} else {
+			  ring.val	<-	paste(.Object@feature[['LinearRing']],collapse=" ")
+			  drawID <- paste0('poly.',j)
+			}
+			
+      
+			
 			drawName  <-	newXMLNode('draw:ID', newXMLTextNode(drawID))
-			addChildren(gmlBoxEL,gmlGeomEL)#,drawName)
-
-			gmlPolyEL	<-	newXMLNode('gml:MultiPolygon',attrs=c("srsDimension"="2","srsName"="http://www.opengis.net/gml/srs/epsg.xml#4326"))
+			addChildren(gmlBoxEL,gmlGeomEL, drawName)
+      
+			gmlPolyEL	<-	newXMLNode('gml:MultiSurface',
+                              attrs=c("srsDimension"="2",
+                                      "srsName"="http://www.opengis.net/gml/srs/epsg.xml#4326")
+                              )
 			addChildren(gmlGeomEL,gmlPolyEL)
 		
-			gmlPmEL	<-	newXMLNode('gml:surfaceMember')
+			gmlPmEL  <-	newXMLNode('gml:surfaceMember')
 			addChildren(gmlPolyEL,gmlPmEL)
 
-			gmlPgEL	<-	newXMLNode('gml:Polygon')
+			gmlPgEL	<-	newXMLNode('gml:Polygon',attrs=c("srsDimension"="2"))
 			addChildren(gmlPmEL,gmlPgEL)
 
 			gmlExEL	<-	newXMLNode('gml:exterior')
 			addChildren(gmlPgEL,gmlExEL)
 
-			gmlLrEL	<-	newXMLNode('gml:LinearRing')
+			gmlLrEL	<-	newXMLNode('gml:LinearRing',attrs=c("srsDimension"="2"))
 			addChildren(gmlExEL,gmlLrEL)
 			
-			if (lst){
-				ring.val	<-	paste(.Object@feature[['LinearRing']][[j]],collapse=" ")
-			} else {
-				ring.val	<-	paste(.Object@feature[['LinearRing']],collapse=" ")
-			}
 			
+      
 			gmlPosEL	<-	newXMLNode('gml:posList',newXMLTextNode(ring.val))
 			addChildren(gmlLrEL,gmlPosEL)
 		}

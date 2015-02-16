@@ -40,6 +40,9 @@ setReplaceMethod(f = "setFeature",signature = "geoknife",
 
 				.Object@feature	<-	setList(.Object@feature,hid.feature)
 				.Object@feature	<-	setList(.Object@feature,value)
+				if ("FEATURE_ATTRIBUTE_NAME" %in% names(.Object@processInputs)){
+				  setProcessInputs(.Object)  <-	list("FEATURE_ATTRIBUTE_NAME"="ID")
+				}
 
 			}
 		} else {
