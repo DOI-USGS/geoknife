@@ -37,4 +37,7 @@ test_that("geoknife can set WFS and WPS", {
 
 test_that("geoknife can check empty process", {
   expect_equal(checkProcess(gk)$status,'none')
+  gk@processID = 'www.fakeurlbreakprocess.com'
+  expect_equal(checkProcess(gk)$status,'unknown')
+  
 })

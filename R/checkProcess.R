@@ -29,6 +29,7 @@ setMethod(f = "checkProcess",signature = "geoknife", definition = function(.Obje
 	if (.Object@processID=="<no active job>"){
 		process$status	<-	'none'
 		process$statusType <- 'none'
+    return(process)
 	}
 
 	checkForComplete = tryCatch({
