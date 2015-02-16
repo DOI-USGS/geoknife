@@ -94,17 +94,20 @@ processInputsToXML	<-	function(.Object){
 		}
 		for (j in 1:lng){
 
-			gmlBoxEL	<-	newXMLNode('gml:box',attrs=c("gml:id"=paste("box.",j,sep='')))
+			gmlBoxEL	<-	newXMLNode('draw:poly',attrs=c("gml:id"=paste("poly.",j,sep='')))
+      
 			addChildren(gmlFeatEL,gmlBoxEL) 
 
 		
-			gmlGeomEL	<-	newXMLNode('gml:the_geom')
-			addChildren(gmlBoxEL,gmlGeomEL)
+			gmlGeomEL	<-	newXMLNode('draw:the_geom')
+			drawID <- paste0('poly.',j)
+			drawName  <-	newXMLNode('draw:ID', newXMLTextNode(drawID))
+			addChildren(gmlBoxEL,gmlGeomEL)#,drawName)
 
 			gmlPolyEL	<-	newXMLNode('gml:MultiPolygon',attrs=c("srsDimension"="2","srsName"="http://www.opengis.net/gml/srs/epsg.xml#4326"))
 			addChildren(gmlGeomEL,gmlPolyEL)
 		
-			gmlPmEL	<-	newXMLNode('gml:polygonMember')
+			gmlPmEL	<-	newXMLNode('gml:surfaceMember')
 			addChildren(gmlPolyEL,gmlPmEL)
 
 			gmlPgEL	<-	newXMLNode('gml:Polygon')
