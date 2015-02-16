@@ -43,13 +43,8 @@ setGeneric(name="startProcess",def=function(.Object){standardGeneric("startProce
 setMethod(f = "startProcess",signature = "geoknife",definition = function(.Object){
 	
 	requestXML	<-	toString.XMLNode(xmlDoc(suppressWarnings(processInputsToXML(.Object))))
-	myheader	<-	c(Connection="close", 
-	          			'Content-Type' = "application/xml")#text/xml?
-	
-	data	<-	 getURL(url = .Object@WPS_URL,
-	               postfields=requestXML,
-	               httpheader=myheader,
-	               verbose=FALSE)		
+	data <- genericExecute(url = .Object@WPS_URL, requestXML)
+  
 	xmltext 	<-	xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
 	response	<-	xmlRoot(xmltext)
 	responseNS	<-	xmlNamespaceDefinitions(response, simplify = TRUE)  

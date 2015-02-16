@@ -8,7 +8,6 @@
 #'@docType methods
 #'@keywords methods
 #'@import XML
-#'@import RCurl
 #'@author Jordan S. Read
 #'@export
 #'@examples
