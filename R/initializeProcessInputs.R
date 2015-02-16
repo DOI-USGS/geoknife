@@ -51,7 +51,12 @@ setMethod(f = "initializeProcessInputs",signature="geoknife",
     
 		setProcessInputs(.Object)	<-	requirLs
 		if("FEATURE_ATTRIBUTE_NAME" %in% names(requirLs)){
-		  .Object@processInputs$FEATURE_ATTRIBUTE_NAME  <-	'the_geom'
+      if (is.na(.Object@feature$LinearRing) || .Object@feature$LinearRing == 'hidden'){
+        .Object@processInputs$FEATURE_ATTRIBUTE_NAME  <-  'the_geom'
+      } else {
+        .Object@processInputs$FEATURE_ATTRIBUTE_NAME  <-  'ID'
+      }
+		  
 		}
     setProcessInputs(.Object)	<-	optionLs
 		# set defaults and first of the allowed values

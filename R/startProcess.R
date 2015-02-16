@@ -27,8 +27,8 @@
 #' # set the post inputs for the processing dataset
 #'setProcessInputs(gk) <- list('DATASET_ID'='Prcp',
 #'                                        'DATASET_URI'='dods://cida.usgs.gov/thredds/dodsC/gmo/GMO_w_meta.ncml',
-#'                                        'TIME_START'='2010-01-01T00:00:00Z',
-#'                                        'TIME_END'='2010-05-01T00:00:00Z',
+#'                                        'TIME_START'='1980-01-01T00:00:00Z',
+#'                                        'TIME_END'='1980-05-01T00:00:00Z',
 #'                                        'DELIMITER'='TAB')
 #'gk # print geoknife object contents
 #'
