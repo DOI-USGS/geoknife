@@ -14,7 +14,7 @@ Tools for geo-web processing of gridded data via the [Geo Data Portal](http://ci
 install this package using
 
 	install.packages("geoknife", 
-        repos = c("http://usgs-r.github.com", "http://cran.us.r-project.org"),
+        repos = c("http://owi.usgs.gov/R", "http://cran.us.r-project.org"),
         dependencies = TRUE, type = "both")
 
 ###`geoknife` overview
@@ -24,7 +24,7 @@ The `geoknife` package was created to support web-based geoprocessing of large g
 
 The main elements of setting up and carrying out a `geoknife` 'job' are include defining the processing algorithm that will be used, choosing an area of interest, filling out the details for the job details (including the dataset to be used; these details are called 'process inputs'), and sending off the job request (see documentation for `setFeature<-`, `setProcessInputs<-`, and `startProcess` for more information).
 
-###`geoknife` Functions (as of v0.2.2)
+###`geoknife` Functions (as of v0.4.1)
 | Function       | Title           |
 | ------------- |:-------------|
 | `bufferPoint` | Create linear ring from point |
@@ -33,6 +33,12 @@ The main elements of setting up and carrying out a `geoknife` 'job' are include 
 | `getAlgorithms` | Get processing algorithms |
 | `getAttributes` | Get attributes from a shapefile at a web location |
 | `getDataIDs` | Find variables from dataset |
+| `getValues` | get values from a shapefile at a web location |
+| `isError` | Convenience function for GDP process state |
+| `isRunning` | Convenience function for GDP process state |
+| `isSuccessful` | Convenience function for GDP process state |
+| `loadOutput` | parse process output into R environment |
+| `parseTimeseries` | parse timeseries file into R environment |
 | `printProcessInputs` | Print out the process request xml for diagnostic purposes |
 | `setAlgorithm<-` | Set processing algorithm |
 | `setFeature<-` | Set feature geometry for processing |
