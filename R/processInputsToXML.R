@@ -120,7 +120,7 @@ processInputsToXML	<-	function(.Object){
       
 			gmlPolyEL	<-	newXMLNode('gml:MultiSurface',
                               attrs=c("srsDimension"="2",
-                                      "srsName"="http://www.opengis.net/gml/srs/epsg.xml#4326")
+                                      "srsName"="EPSG:4326")
                               )
 			addChildren(gmlGeomEL,gmlPolyEL)
 		
