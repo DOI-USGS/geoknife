@@ -6,6 +6,14 @@
 \alias{times,webdata-method}
 \alias{times<-}
 \alias{times<-,webdata-method}
+\alias{url}
+\alias{url,webdata-method}
+\alias{url<-}
+\alias{url<-,webdata-method}
+\alias{variables}
+\alias{variables,webdata-method}
+\alias{variables<-}
+\alias{variables<-,webdata-method}
 \alias{webdata}
 \alias{webdata,ANY-method}
 \alias{webdata,webdata-method}
@@ -15,9 +23,18 @@ webdata(...)
 
 \S4method{webdata}{ANY}(...)
 
-times(.Object, values) <- value
+times(webdata()) <- as.POXIXct(c("2012-11-04", "2012-11-12"))
+times(webdata())[1] <- as.POXIXct("2012-11-04")
 
 times(.Object)
+
+url(.Object, values) <- value
+
+url(.Object)
+
+variables(.Object)
+
+variables(.Object, values) <- value
 }
 \value{
 the webdata object representing a dataset and parameters
@@ -36,9 +53,5 @@ A class representing a web dataset.
 }}
 \author{
 Jordan S Read
-
-Jordan S. Read
-
-Jordan S. Read
 }
 
