@@ -9,7 +9,7 @@ setClass(
 setMethod("initialize", signature = "webdata", 
           definition = function(.Object, times = as.POSIXct(c(NA,NA)), url = as.character(NA), variables = as.character(NA)){
             
-            times(.Object) = times
+            .Object@times = times
             .Object@url = url
             .Object@variables = variables
             return(.Object)
@@ -56,7 +56,7 @@ setReplaceMethod(f = "times",signature = "webdata",
                    }
                    .Object@times <- values
                    
-                   if (values[1] >= values[2]){
+                   if (!any(is.na(values)) && values[1] >= values[2]){
                      stop('time start must proceed time stop in "times" slot for webdata')
                    }
                    return(.Object)
@@ -78,14 +78,10 @@ setMethod(f = "times",signature = "webdata",
 #'@export
 setGeneric(name="url<-",def=function(.Object, values){standardGeneric("url<-")})
 
-setMethod(f = "url<-",signature = "webdata",
-          definition = function(.Object, values){
-            if (length(values) != 1){
-              stop('url must be a single character string')
-            }
-            .Object@url <- values
-            return(.Object)
-          })
+setMethod(f = "url<-",signature = "webdata", definition = function(.Object, values){
+  setURL(.Object, values)}
+)
+
 
 #'@rdname webdata-methods
 #'@aliases url,webdata-method
