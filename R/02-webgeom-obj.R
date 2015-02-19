@@ -13,7 +13,10 @@ setClass(
     url = "character",
     geom = "character",
     attribute = "character",
-    IDs = "character")
+    IDs = "character",
+    wfs_version = "character",
+    WFS_NAMESPACE = "character",
+    GML_SCHEMA_LOCATION = "character")
 )
 
 
@@ -21,17 +24,24 @@ setMethod("initialize", signature = "webgeom",
           function(
             .Object,
             url, geom = as.character(NA), 
-            attribute = as.character(NA), IDs = as.character(NA))
+            attribute = as.character(NA), IDs = as.character(NA),wfs_version)
             {
               
             if (missing(url)){
               url = "http://cida.usgs.gov/gdp/geoserver/wfs"
             }
             
+            if (missing(wfs_version)){
+              wfs_version = '1.1.0'
+            }
+            
             .Object@url= url
             .Object@geom = geom
             .Object@attribute = attribute
             .Object@IDs = IDs
+            .Object@wfs_version = wfs_version
+            .Object@WFS_NAMESPACE   = 'http://www.opengis.net/wfs'
+            .Object@GML_SCHEMA_LOCATION = 'http://schemas.opengis.net/gml/3.1.1/base/feature.xsd'
             return(.Object)
           })
 
