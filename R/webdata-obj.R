@@ -4,7 +4,9 @@ setClass(
   representation = representation(
     times = 'POSIXct',
     url = "character",
-    variables = "character")
+    variables = "character",
+    dataList = "character",
+    timeList = "character")
 )
 setMethod("initialize", signature = "webdata", 
           definition = function(.Object, times = as.POSIXct(c(NA,NA)), url = as.character(NA), variables = as.character(NA)){
@@ -12,6 +14,8 @@ setMethod("initialize", signature = "webdata",
             .Object@times = times
             .Object@url = url
             .Object@variables = variables
+            .Object@dataList    = 'gov.usgs.cida.gdp.wps.algorithm.discovery.ListOpendapGrids'
+            .Object@timeList    = 'gov.usgs.cida.gdp.wps.algorithm.discovery.GetGridTimeRange'
             return(.Object)
           })
 
