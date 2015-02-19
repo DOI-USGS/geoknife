@@ -2,6 +2,8 @@
 % Please edit documentation in R/02-webgeom-obj.R
 \docType{methods}
 \name{webgeom}
+\alias{XML}
+\alias{XML,webgeom-method}
 \alias{url<-}
 \alias{url<-,webgeom-method}
 \alias{webgeom}
@@ -14,6 +16,8 @@ webgeom(...)
 url(.Object, values) <- value
 
 \S4method{webgeom}{ANY}(...)
+
+XML(.Object)
 }
 \value{
 the webgeom object representing a dataset and parameters
