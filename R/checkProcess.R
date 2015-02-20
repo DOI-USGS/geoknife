@@ -23,7 +23,7 @@ setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProce
 
 
 # '@rdname checkProcess
-setMethod(f = "checkProcess",signature = "geoknife", definition = function(.Object){
+setMethod(f = "checkProcess",signature = "geojob", definition = function(.Object){
 	
 	process	<-	list(status=NULL,URL=NULL)
 	if (.Object@processID=="<no active job>"){

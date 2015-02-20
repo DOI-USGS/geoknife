@@ -17,7 +17,7 @@ setGeneric(name="getShapefiles",def=function(.Object){standardGeneric("getShapef
 
 # '@rdname getShapefiles-methods
 # '@aliases getShapefiles,geoknife-method	
-setMethod(f = "getShapefiles",signature="geoknife",
+setMethod(f = "getShapefiles",signature="webgeom",
 	definition = function(.Object){
 		parentKey <- "featuretypelist"
 		childKey <- "featuretype"

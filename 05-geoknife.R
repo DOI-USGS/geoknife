@@ -6,6 +6,7 @@
 setGeneric(name="butcher",def=function(.Object, x, ...){standardGeneric("butcher")})
 
 setMethod("butcher", signature = c("geojob", "webgeom"), 
+          # WILL PROBABLY need to butcher to XML...
           definition = function(.Object, x,  ...)  {
             cat('butcher geojob into webgeom\n')
             return(webgeom())

@@ -52,7 +52,7 @@ setGeneric(name="isSuccessful",def=function(.Object){standardGeneric("isSuccessf
 
 # '@rdname isSuccessful-methods
 # '@aliases isSuccessful,geoknife-method
-setMethod(f = "isSuccessful",signature = "geoknife", definition = function(.Object){
+setMethod(f = "isSuccessful",signature = "geojob", definition = function(.Object){
 	
 	status = checkProcess(.Object)
 	

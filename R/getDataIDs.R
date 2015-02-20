@@ -25,7 +25,7 @@ setGeneric(name="getDataIDs",def=function(.Object, cachedResponse){standardGener
 
 # '  @rdname getDataIDs-methods
 # ' @aliases getDataIDs,geoknife-method
-setMethod(f = "getDataIDs",signature="geoknife",
+setMethod(f = "getDataIDs",signature="webdata",
 	definition = function(.Object,cachedResponse){
 		
 		if (missing(cachedResponse)){

@@ -53,7 +53,7 @@
 # })
 # 
 # #'@describeIn algorithm
-# setMethod(f = "algorithm",signature="geoknife",
+# setMethod(f = "algorithm",signature="webprocess",
 #           definition = function(.Object){
 #             return(.Object@algorithm)
 #           }
