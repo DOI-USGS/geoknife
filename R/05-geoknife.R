@@ -20,7 +20,10 @@ setMethod("butcher", signature = c("character", "webgeom"),
 )
 setMethod("butcher", signature = c("numeric", "webgeom"), 
           definition = function(.Object, x,  ...) {
-            cat('butcher numeric into webgeom\n')
+            # force to be point pair (for now)
+            if (length(.Object) != 2) stop('input must be a lat/lon pair')
+            ring <- bufferPoint(.Object)
+            cat('butcher numeric into linear ring\n');cat(ring);cat('\n')
             return(webgeom())
           }
 )
