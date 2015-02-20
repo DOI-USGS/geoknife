@@ -2,119 +2,106 @@
   packageStartupMessage("Although this software program has been used by the U.S. Geological Survey (USGS), no warranty, expressed or implied, is made by the USGS or the U.S. Government as to the accuracy and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and no responsibility is assumed by the USGS in connection therewith.")
 }
 
-library(methods)
-setClass(
-	Class = "geoknife",
-	representation = representation(
-		WFS_URL="character",WPS_URL="character",
-		algorithm="list",
-		processInputs="list",feature="list",processID="character",
-		WPS_DEFAULT_VERSION="character",WFS_DEFAULT_VERSION="character",
-		WPS_DEFAULT_NAMESPACE="character",OWS_DEFAULT_NAMESPACE="character",
-		WPS_SCHEMA_LOCATION="character",XSI_SCHEMA_LOCATION="character",
-		GML_SCHEMA_LOCATION="character",DRAW_SCHEMA_LOCATION="character",
-		WFS_NAMESPACE="character",OGC_NAMESPACE="character",
-		GML_NAMESPACE="character",DRAW_NAMESPACE="character",
-		SMPL_NAMESPACE="character",UPLD_NAMESPACE="character",
-		CSW_NAMESPACE="character",XLINK_NAMESPACE="character",
-		XSI_NAMESPACE="character",UTILITY_URL="character",
-		UPLOAD_URL="character",algorithms="list",
-		upload="character",dataList="character",
-		timeList="character",emailK="character")
-		)
 
-#' Create geoknife object 
-#'
+setGeneric(name="butcher",def=function(.Object, x, ...){standardGeneric("butcher")})
+
+setMethod("butcher", signature = c("geojob", "webgeom"), 
+          definition = function(.Object, x,  ...)  {
+            cat('butcher geojob into webgeom\n')
+            return(webgeom())
+          }
+)
+
+setMethod("butcher", signature = c("numeric", "webgeom"), 
+          definition = function(.Object, x,  ...) {
+            cat('butcher numeric into webgeom\n')
+            return(webgeom())
+          }
+)
+setMethod("butcher", signature = c("webgeom", "webgeom"), 
+          definition = function(.Object, x,  ...) return(.Object) 
+)
+
+setMethod("butcher", signature = c("geojob", "webdata"), 
+          definition = function(.Object, x,  ...)  {
+            cat('butcher geojob into webdata\n')
+            return(webdata())
+          }
+)
+setMethod("butcher", signature = c("character", "webdata"), 
+          definition = function(.Object, x,  ...) {
+            cat('butcher character into webdat\n')
+            return(webdata())
+          }
+)
+setMethod("butcher", signature = c("webdata", "webdata"), 
+          definition = function(.Object, x,  ...) return(.Object) 
+)
+
+setMethod("butcher", signature = c("geojob", "webprocess"), 
+          definition = function(.Object, x,  ...)  {
+            cat('butcher geojob into webprocess\n')
+            return(webprocess())
+          }
+)
+setMethod("butcher", signature = c("webprocess", "webprocess"), 
+          definition = function(.Object, x,  ...) return(.Object) 
+)
+
+#'@title geoknife-fcn
+#'@rdname geoknife-function
 #'@export
-#'@rdname geoknife
-#'@import XML
-#'@keywords geoknife
-#'@author Jordan S. Read
-#'@examples 
-#'\dontrun{
-#'gk <- geoknife() # create geoknife object
-#'gk # print geoknife object
-#'
-#'linearRing = bufferPoint(c(-111.48,36.95))
-#'setFeature(gk) <-list(LinearRing=linearRing)
-#'
-#' #get a list of available processing algorithms
-#'getAlgorithms(gk)
-#'
-#' #set processing algorithm to feature weighted grid statistics (unweighted will likely fail, because the ring won't intersect the centroids)
-#'setAlgorithm(gk) <- getAlgorithms(gk)[4] # feature weighted
-#'
-#' # set the post inputs for the processing dataset
-#'setProcessInputs(gk) <- list('DATASET_ID'='prcp',
-#'                                        'DATASET_URI'='http://thredds.daac.ornl.gov/thredds/dodsC/daymet-agg/daymet-agg.ncml',
-#'                                        'TIME_START'='2010-01-01T00:00:00Z',
-#'                                        'TIME_END'='2010-01-03T00:00:00Z',
-#'                                        'DELIMITER'='TAB')
-#'gk # print geoknife object contents
-#'
-#' # kick off your request
-#'gk <- startProcess(gk)
-#'status.gk  <-  checkProcess(gk)
-#'checkProcess(gk) # check again and print to screen
-#'}
-geoknife = function(){
-	geoknife = new("geoknife")
-	return(geoknife)
-}
+setGeneric(name="geoknife",def=function(stencil, fabric, knife, ...){standardGeneric("geoknife")},
+           useAsDefault=)
 
-setMethod(f="initialize",signature="geoknife",
-	definition=function(.Object){
-		default_WFS = 'http://cida.usgs.gov/gdp/geoserver/wfs'
-		default_WPS = 'http://cida.usgs.gov/gdp/process/WebProcessingService'
-		default_alg = list()
-		default_post = list(empty=NULL)
-		default_feat= list(
-			FEATURE_COLLECTION=NULL,
-			ATTRIBUTE=NULL,
-			GML=NA,
-			LinearRing=NA)
-		# class properties: **PRIVATE**
-		.Object@WPS_DEFAULT_VERSION = '1.0.0'
-		.Object@WFS_DEFAULT_VERSION = '1.1.0'
-		.Object@WPS_DEFAULT_NAMESPACE='http://www.opengis.net/wps/1.0.0'
-		.Object@OWS_DEFAULT_NAMESPACE='http://www.opengis.net/ows/1.1'
-		# *schema definitions
-		.Object@WPS_SCHEMA_LOCATION = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
-		.Object@XSI_SCHEMA_LOCATION = 'http://www.opengis.net/wfs ../wfs/1.1.0/WFS.xsd'
-		.Object@GML_SCHEMA_LOCATION = 'http://schemas.opengis.net/gml/3.1.1/base/feature.xsd'
-		.Object@DRAW_SCHEMA_LOCATION = 'http://cida.usgs.gov/climate/derivative/xsd/draw.xsd'
-		# *namesspace definitions
-		.Object@WFS_NAMESPACE   = 'http://www.opengis.net/wfs'
-		.Object@OGC_NAMESPACE   = 'http://www.opengis.net/ogc'
-		.Object@GML_NAMESPACE   = 'http://www.opengis.net/gml'
-		.Object@DRAW_NAMESPACE  = 'gov.usgs.cida.gdp.draw'
-		.Object@SMPL_NAMESPACE  = 'gov.usgs.cida.gdp.sample'
-		.Object@UPLD_NAMESPACE  = 'gov.usgs.cida.gdp.upload'
-		.Object@CSW_NAMESPACE   = 'http://www.opengis.net/cat/csw/2.0.2'
-		.Object@XLINK_NAMESPACE = 'http://www.w3.org/1999/xlink'
-		.Object@XSI_NAMESPACE   = 'http://www.w3.org/2001/XMLSchema-instance'
+setMethod("geoknife", signature = c("webgeom", "webdata", "webprocess"), 
+          definition = function(stencil, fabric, knife,  ...) {
+            cat('all objects are good\n')
+            return('!geojob!')
+          }
+)
 
-		.Object@UTILITY_URL = 'http://cida.usgs.gov/gdp/utility/WebProcessingService'
-		.Object@UPLOAD_URL  = 'http://cida.usgs.gov/gdp/geoserver/'
+setMethod("geoknife", signature = c("ANY", "ANY", "webprocess"), 
+          definition = function(stencil, fabric, knife, ...) {
+            cat('basic, all items can be butchered into objects\n')
+            webgeom <- butcher(stencil, webgeom())
+            webdata <- butcher(fabric, webdata())
+            geojob <- geoknife(webgeom, webdata, knife, ...)
+            return(geojob)
+          }
+)
 
-		# *list of utilities available to this module
-		.Object@upload      = 'gov.usgs.cida.gdp.wps.algorithm.filemanagement.ReceiveFiles'
-		.Object@dataList    = 'gov.usgs.cida.gdp.wps.algorithm.discovery.ListOpendapGrids'
-		.Object@timeList    = 'gov.usgs.cida.gdp.wps.algorithm.discovery.GetGridTimeRange'
-		.Object@emailK      = 'gov.usgs.cida.gdp.wps.algorithm.communication.EmailWhenFinishedAlgorithm'
+setMethod("geoknife", signature = c("ANY", "ANY", "geojob"), 
+          definition = function(stencil, fabric, knife, ...) {
+            cat('basic, all items can be butchered into objects\n')
+            webgeom <- butcher(stencil, webgeom())
+            webdata <- butcher(fabric, webdata())
+            webprocess <- butcher(knife, webprocess())
+            geojob <- geoknife(webgeom, webdata, webprocess, ...)
+            return(geojob)
+          }
+)
 
-		# public variables (available via print method)	
-		.Object@WFS_URL	<-	default_WFS
-		.Object@WPS_URL <- default_WPS
-		.Object@algorithm	<-	default_alg
-		.Object@processInputs	<-	default_post
-		.Object@feature	<-	default_feat
-		.Object@processID	<-	'<no active job>'
-		
-		
-		return(.Object)
-	})
+setMethod("geoknife", signature = c("ANY", "ANY", "missing"), 
+          definition = function(stencil, fabric, knife, ...) {
+            webgeom <- butcher(stencil, webgeom())
+            webdata <- butcher(fabric, webdata())
+            geojob <- geoknife(webgeom, webdata, webprocess(), ...)
+            return(geojob)
+            cat('basic, all objects can be parsed. missing webprocess\n')
+          }
+)
 
+setMethod("geoknife", signature = c("geojob", "missing", "missing"), 
+          definition = function(stencil, fabric, knife, ...) {
+            cat('basic, all objects will come from geojob\n')
+            webgeom <- butcher(stencil, webgeom())
+            webdata <- butcher(stencil, webdata())
+            webprocess <- butcher(stencil, webprocess())
+            geojob <- geoknife(webgeom, webdata, webprocess, ...)
+            return(geojob)
+          }
+)
 
 setProcessID	<-	function(.Object,processID){
 	.Object@processID	<-	processID
