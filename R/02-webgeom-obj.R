@@ -1,3 +1,4 @@
+#'@importClassesFrom sp SpatialPointsDataFrame SpatialPolygonsDataFrame
 setUrl <- function(.Object, values){
   if (length(values) != 1){
     stop('url must be a single character string')
@@ -98,5 +99,33 @@ setMethod(f = "XML",signature = "webgeom", definition = function(.Object){
 </wps:Reference>'))
   }
 )
+
+#'@rdname webdata-methods
+#'@aliases url<-,webdata-method
+#'@export
+setGeneric(name="url<-",def=function(.Object, values){standardGeneric("url<-")})
+
+setMethod(f = "url<-",signature = "webdata", definition = function(.Object, values){
+  setURL(.Object, values)}
+)
+#'@rdname webgeom-methods
+#'@aliases url<-,webgeom-method
+setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, values){
+  setURL(.Object, values)}
+)
+
+#'@rdname webdata-methods
+#'@aliases url,webdata-method
+#'@export
+setGeneric(name="url",def=function(.Object){standardGeneric("url")})
+
+setMethod(f = "url",signature = "webdata",
+          definition = function(.Object){
+            return(.Object@url)
+          })
+setMethod(f = "url",signature = "webgeom",
+          definition = function(.Object){
+            return(.Object@url)
+          })
 
 

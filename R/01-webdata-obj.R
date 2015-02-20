@@ -77,33 +77,6 @@ setMethod(f = "times",signature = "webdata",
                  })
 
 
-#'@rdname webdata-methods
-#'@aliases url<-,webdata-method
-#'@export
-setGeneric(name="url<-",def=function(.Object, values){standardGeneric("url<-")})
-
-setMethod(f = "url<-",signature = "webdata", definition = function(.Object, values){
-  setURL(.Object, values)}
-)
-#'@rdname webgeom-methods
-#'@aliases url<-,webgeom-method
-setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, values){
-  setURL(.Object, values)}
-)
-
-#'@rdname webdata-methods
-#'@aliases url,webdata-method
-#'@export
-setGeneric(name="url",def=function(.Object){standardGeneric("url")})
-
-setMethod(f = "url",signature = "webdata",
-          definition = function(.Object){
-            return(.Object@url)
-          })
-setMethod(f = "url",signature = "webgeom",
-          definition = function(.Object){
-            return(.Object@url)
-          })
 
 #'@rdname webdata-methods
 #'@aliases variables,webdata-method

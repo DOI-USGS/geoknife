@@ -18,7 +18,8 @@ Imports:
     jsonlite,
     methods,
     lubridate,
-    httr
+    httr,
+    sp
 Suggests:
     testthat,
     xtable,
