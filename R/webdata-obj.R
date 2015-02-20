@@ -85,7 +85,11 @@ setGeneric(name="url<-",def=function(.Object, values){standardGeneric("url<-")})
 setMethod(f = "url<-",signature = "webdata", definition = function(.Object, values){
   setURL(.Object, values)}
 )
-
+#'@rdname webgeom-methods
+#'@aliases url<-,webgeom-method
+setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, values){
+  setURL(.Object, values)}
+)
 
 #'@rdname webdata-methods
 #'@aliases url,webdata-method
@@ -96,7 +100,10 @@ setMethod(f = "url",signature = "webdata",
           definition = function(.Object){
             return(.Object@url)
           })
-
+setMethod(f = "url",signature = "webgeom",
+          definition = function(.Object){
+            return(.Object@url)
+          })
 
 #'@rdname webdata-methods
 #'@aliases variables,webdata-method
@@ -119,21 +126,6 @@ setMethod(f = "variables<-",signature = "webdata",
             return(.Object)
           })
 
-
-
-
-
-setMethod("[<-", c("webdata", "character", "POSIXct"),
-          ## we won't support subsetting on j; dispatching on 'drop' doesn't
-          ## make sense (to me), so in rebellion we'll quietly ignore it.
-          function (x, i, j, ..., value) 
-          {
-            x@times[i] <- value
-            ## .Object
-            ## clever: by default initialize is a copy constructor, too
-            #initialize(.Object, times=.Object@times[i])
-            return(x)
-          })
 
 setMethod("[", c("webdata", "integer", "missing", "ANY"),
           ## we won't support subsetting on j; dispatching on 'drop' doesn't

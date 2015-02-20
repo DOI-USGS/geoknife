@@ -78,6 +78,8 @@ setMethod("webgeom", signature(), function(...) {
   return(webgeom)
 })
 
+
+
 #'@rdname webgeom-methods
 #'@aliases XML,webgeom-method
 #'@export

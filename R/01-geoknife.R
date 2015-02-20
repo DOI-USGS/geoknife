@@ -11,10 +11,27 @@ setMethod("butcher", signature = c("geojob", "webgeom"),
             return(webgeom())
           }
 )
-
+setMethod("butcher", signature = c("character", "webgeom"), 
+          definition = function(.Object, x,  ...)  {
+            cat('butcher XML into webgeom\n')
+            return(webgeom())
+          }
+)
 setMethod("butcher", signature = c("numeric", "webgeom"), 
           definition = function(.Object, x,  ...) {
             cat('butcher numeric into webgeom\n')
+            return(webgeom())
+          }
+)
+setMethod("butcher", signature = c("SpatialPointsDataFrame", "webgeom"), 
+          definition = function(.Object, x,  ...) {
+            cat('butcher SpatialPointsDataFrame into webgeom\n')
+            return(webgeom())
+          }
+)
+setMethod("butcher", signature = c("SpatialPolygonsDataFrame", "webgeom"), 
+          definition = function(.Object, x,  ...) {
+            cat('butcher SpatialPolygonsDataFrame into webgeom\n')
             return(webgeom())
           }
 )
@@ -30,7 +47,7 @@ setMethod("butcher", signature = c("geojob", "webdata"),
 )
 setMethod("butcher", signature = c("character", "webdata"), 
           definition = function(.Object, x,  ...) {
-            cat('butcher character into webdat\n')
+            cat('butcher dataset shortname into webdat\n')
             return(webdata())
           }
 )
@@ -48,21 +65,22 @@ setMethod("butcher", signature = c("webprocess", "webprocess"),
           definition = function(.Object, x,  ...) return(.Object) 
 )
 
+missing_msg <- function() stop('stencil and fabric, OR job must be supplied')
+
 #'@title geoknife-fcn
 #'@rdname geoknife-function
 #'@export
-setGeneric(name="geoknife",def=function(stencil, fabric, knife, ...){standardGeneric("geoknife")},
-           useAsDefault=)
+setGeneric(name="geoknife",def=function(stencil, fabric, knife, job, ...){standardGeneric("geoknife")})
 
-setMethod("geoknife", signature = c("webgeom", "webdata", "webprocess"), 
-          definition = function(stencil, fabric, knife,  ...) {
+setMethod("geoknife", signature = c("webgeom", "webdata", "webprocess","missing"), 
+          definition = function(stencil, fabric, knife, job, ...) {
             cat('all objects are good\n')
             return('!geojob!')
           }
 )
 
-setMethod("geoknife", signature = c("ANY", "ANY", "webprocess"), 
-          definition = function(stencil, fabric, knife, ...) {
+setMethod("geoknife", signature = c("ANY", "ANY", "webprocess","missing"), 
+          definition = function(stencil, fabric, knife, job, ...) {
             cat('basic, all items can be butchered into objects\n')
             webgeom <- butcher(stencil, webgeom())
             webdata <- butcher(fabric, webdata())
@@ -71,8 +89,8 @@ setMethod("geoknife", signature = c("ANY", "ANY", "webprocess"),
           }
 )
 
-setMethod("geoknife", signature = c("ANY", "ANY", "geojob"), 
-          definition = function(stencil, fabric, knife, ...) {
+setMethod("geoknife", signature = c("ANY", "ANY", "geojob","missing"), 
+          definition = function(stencil, fabric, knife, job, ...) {
             cat('basic, all items can be butchered into objects\n')
             webgeom <- butcher(stencil, webgeom())
             webdata <- butcher(fabric, webdata())
@@ -82,8 +100,8 @@ setMethod("geoknife", signature = c("ANY", "ANY", "geojob"),
           }
 )
 
-setMethod("geoknife", signature = c("ANY", "ANY", "missing"), 
-          definition = function(stencil, fabric, knife, ...) {
+setMethod("geoknife", signature = c("ANY", "ANY", "missing", "missing"), 
+          definition = function(stencil, fabric, knife, job, ...) {
             webgeom <- butcher(stencil, webgeom())
             webdata <- butcher(fabric, webdata())
             geojob <- geoknife(webgeom, webdata, webprocess(), ...)
@@ -92,17 +110,23 @@ setMethod("geoknife", signature = c("ANY", "ANY", "missing"),
           }
 )
 
-setMethod("geoknife", signature = c("geojob", "missing", "missing"), 
-          definition = function(stencil, fabric, knife, ...) {
+setMethod("geoknife", signature = c("missing", "missing", "missing", "geojob"), 
+          definition = function(stencil, fabric, knife, job, ...) {
             cat('basic, all objects will come from geojob\n')
-            webgeom <- butcher(stencil, webgeom())
-            webdata <- butcher(stencil, webdata())
-            webprocess <- butcher(stencil, webprocess())
+            webgeom <- butcher(job, webgeom())
+            webdata <- butcher(job, webdata())
+            webprocess <- butcher(job, webprocess())
             geojob <- geoknife(webgeom, webdata, webprocess, ...)
             return(geojob)
           }
 )
 
+setMethod("geoknife", signature = c("ANY", "missing", "missing", "missing"), 
+          definition = function(stencil, fabric, knife, job, ...) missing_msg()
+)
+setMethod("geoknife", signature = c("missing", "ANY", "missing", "missing"), 
+          definition = function(stencil, fabric, knife, job, ...) missing_msg()
+)
 setProcessID	<-	function(.Object,processID){
 	.Object@processID	<-	processID
 	return(.Object)
