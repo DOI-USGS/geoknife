@@ -1,39 +1,51 @@
+#'@importFrom XML newXMLNode
+#'@export
+#'
+setMethod(f = "XML",signature = "webprocess", definition = function(.Object){
+  # private function for geoknife that turns geoknife object into process input xml
+  
+  top    <-	newXMLNode(name='wps:Execute',attrs=c('service'="WPS",'version'=.Object@WPS_VERSION,
+                                                  'xsi:schemaLocation'=paste(c(.Object@WPS_NAMESPACE,.Object@WPS_SCHEMA_LOCATION),collapse=" ")),
+                       namespaceDefinitions=c('wps'=.Object@WPS_NAMESPACE,'ows'=.Object@OWS_NAMESPACE,
+                                              'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE))#, 'draw' = .Object@DRAW_NAMESPACE)) 
+  
+  
+  id	<-	newXMLNode("ows:Identifier",newXMLTextNode(.Object@algorithm),parent=top)
+  di	<-	newXMLNode("wps:DataInputs",parent=top)
+  addChildren(top,c(id,di))
+  
+  for (i in 1:length(.Object@processInputs)){
+    postNm	<-	names(.Object@processInputs[i])
+    postVl	<-	.Object@processInputs[postNm]
+    if (!is.na(postVl)){
+      
+      num.vl	<-	length(unlist(postVl))
+      for (j in 1:num.vl){
+        postVl <- unlist(.Object@processInputs[postNm])[[j]]
+        
+        if (is.null(postVl)) stop(postNm, ' cannot be NULL. it is required')
+        inEL	<-	newXMLNode("wps:Input",parent=di)
+        addChildren(di,inEL)
+        
+        inIdEL   <- newXMLNode("ows:Identifier",newXMLTextNode(postNm),parent=inEL)
+        addChildren(inEL,inIdEL)
+        
+        inDatEL  <- newXMLNode("wps:Data")
+        addChildren(inEL,inDatEL);
+        
+        litDatEL	<-	newXMLNode('wps:LiteralData',newXMLTextNode(postVl))
+        addChildren(inDatEL,litDatEL)
+      }
+    }
+  }
+  return(top)
+})
+#'@export
 processInputsToXML	<-	function(.Object){
 	
 	# private function for geoknife that turns geoknife object into process input xml
 	
-	top    <-	newXMLNode(name='wps:Execute',attrs=c('service'="WPS",'version'=.Object@WPS_DEFAULT_VERSION,
-		'xsi:schemaLocation'=paste(c(.Object@WPS_DEFAULT_NAMESPACE,.Object@WPS_SCHEMA_LOCATION),collapse=" ")),
-		namespaceDefinitions=c('wps'=.Object@WPS_DEFAULT_NAMESPACE,'ows'=.Object@OWS_DEFAULT_NAMESPACE,
-		'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE, 'draw' = .Object@DRAW_NAMESPACE)) 
-	
-	
-	id	<-	newXMLNode("ows:Identifier",newXMLTextNode(.Object@algorithm),parent=top)
-	di	<-	newXMLNode("wps:DataInputs",parent=top)
-	addChildren(top,c(id,di))
-	
-	for (i in 1:length(.Object@processInputs)){
-		postNm	<-	names(.Object@processInputs[i])
-		postVl	<-	.Object@processInputs[postNm]
-		if (!is.na(postVl)){
-			
-			num.vl	<-	length(unlist(postVl))
-			for (j in 1:num.vl){
-				postVl <- unlist(.Object@processInputs[postNm])[[j]]
-				inEL	<-	newXMLNode("wps:Input",parent=di)
-				addChildren(di,inEL)
-
-				inIdEL   <- newXMLNode("ows:Identifier",newXMLTextNode(postNm),parent=inEL)
-				addChildren(inEL,inIdEL)
-
-				inDatEL  <- newXMLNode("wps:Data")
-				addChildren(inEL,inDatEL);
-
-				litDatEL	<-	newXMLNode('wps:LiteralData',newXMLTextNode(postVl))
-				addChildren(inDatEL,litDatEL)
-			}
-		}
-	}
+	top <- XML(.Object) # webprocess to XML
 	# complex data
 	inEL	<-	newXMLNode("wps:Input")
 	addChildren(di,inEL)

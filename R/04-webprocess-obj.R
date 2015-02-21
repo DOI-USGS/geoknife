@@ -10,6 +10,7 @@ setClass(
     OWS_NAMESPACE="character",
     XSI_SCHEMA_LOCATION="character",
     XSI_NAMESPACE = "character",
+    XLINK_NAMESPACE = "character",
     UTILITY_URL = "character",
     OGC_NAMESPACE="character",
     emailK="character")
@@ -34,6 +35,7 @@ setMethod(f="initialize",signature="webprocess",
             .Object@XSI_NAMESPACE = 'http://www.w3.org/2001/XMLSchema-instance'
             
             .Object@OGC_NAMESPACE = 'http://www.opengis.net/ogc'
+            .Object@XLINK_NAMESPACE = 'http://www.w3.org/1999/xlink'
             
             .Object@OWS_NAMESPACE = 'http://www.opengis.net/ows/1.1'
             .Object@UTILITY_URL = 'http://cida.usgs.gov/gdp/utility/WebProcessingService'
