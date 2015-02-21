@@ -9,7 +9,13 @@ notifications:
   email:
     on_success: change
     on_failure: change
-
+    
+apt_packages:
+  - moreutils
+  - tmux
+brew_packages:
+  - tmux
+  
 r_binary_packages:
   - RUnit
   - survey
