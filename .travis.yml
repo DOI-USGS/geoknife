@@ -1,18 +1,32 @@
-# Sample .travis.yml for R projects.
-#
-# See README.md for instructions, or for more configuration options,
-# see the wiki:
-#   https://github.com/craigcitro/r-travis/wiki
+# .travis.yml for r-travis.
 
-language: objective-c
+language: r
 
+os:
+  - osx
+  
 before_install:
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
   - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
-install:
-  - ./travis-tool.sh install_deps
-  - ./travis-tool.sh github_package jimhester/covr
+  - cd geoknife
+  
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
+r_binary_packages:
+  - RUnit
+  - survey
+r_packages:
+  - XML
+  - lubridate
+  - jsonlite
+  - methods
+  - httr
+r_github_packages:
+  - jimhester/covr
+
 script: ./travis-tool.sh run_tests
 
 after_success:
