@@ -5,11 +5,6 @@ language: r
 os:
   - osx
   
-before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - cd geoknife
-  
 notifications:
   email:
     on_success: change
@@ -27,13 +22,13 @@ r_packages:
 r_github_packages:
   - jimhester/covr
 
-script: ./travis-tool.sh run_tests
+#script: ./travis-tool.sh run_tests
 
-after_success:
-  - Rscript -e 'covr::coveralls()'
+#after_success:
+#  - Rscript -e 'covr::coveralls()'
 
-after_failure:
-  - ./travis-tool.sh dump_logs
+#after_failure:
+#  - ./travis-tool.sh dump_logs
 
 notifications:
   email:
