@@ -17,6 +17,7 @@ setClass(
     IDs = "character",
     wfs_version = "character",
     WFS_NAMESPACE = "character",
+    GML_NAMESPACE = "character",
     GML_SCHEMA_LOCATION = "character")
 )
 
@@ -41,6 +42,7 @@ setMethod("initialize", signature = "webgeom",
             .Object@attribute = attribute
             .Object@IDs = IDs
             .Object@wfs_version = wfs_version
+            .Object@GML_NAMESPACE = 'http://www.opengis.net/gml'
             .Object@WFS_NAMESPACE   = 'http://www.opengis.net/wfs'
             .Object@GML_SCHEMA_LOCATION = 'http://schemas.opengis.net/gml/3.1.1/base/feature.xsd'
             return(.Object)

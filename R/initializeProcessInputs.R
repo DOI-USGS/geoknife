@@ -37,5 +37,8 @@ defaultProcessInputs <- function(algorithm, wps_url, wps_version){
   # add fields for optionLs and requirLs
   processInputs	<-	append(optionLs,requirLs)
   processInputs[names(defaultLs)] <- defaultLs
+  
+  # remove Feature, as it is handled elsewhere
+  processInputs$FEATURE_COLLECTION	<-	NULL 
   return(processInputs)
 }
