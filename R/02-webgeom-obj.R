@@ -8,6 +8,7 @@ setUrl <- function(.Object, values){
   return(.Object)
 }
 
+
 setClass(
   Class = "webgeom",
   representation = representation(
@@ -18,30 +19,26 @@ setClass(
     wfs_version = "character",
     WFS_NAMESPACE = "character",
     GML_NAMESPACE = "character",
-    GML_SCHEMA_LOCATION = "character")
+    GML_SCHEMA_LOCATION = "character"),
 )
+
 
 
 setMethod("initialize", signature = "webgeom", 
           function(
             .Object,
-            url, geom = as.character(NA), 
-            attribute = as.character(NA), IDs = as.character(NA),wfs_version)
+            url = "http://cida.usgs.gov/gdp/geoserver/wfs",
+            geom = as.character(NA), 
+            attribute = as.character(NA),
+            IDs = as.character(NA), 
+            wfs_version = '1.1.0')
             {
-              
-            if (missing(url)){
-              url = "http://cida.usgs.gov/gdp/geoserver/wfs"
-            }
-            
-            if (missing(wfs_version)){
-              wfs_version = '1.1.0'
-            }
-            
             .Object@url= url
             .Object@geom = geom
             .Object@attribute = attribute
             .Object@IDs = IDs
             .Object@wfs_version = wfs_version
+            
             .Object@GML_NAMESPACE = 'http://www.opengis.net/gml'
             .Object@WFS_NAMESPACE   = 'http://www.opengis.net/wfs'
             .Object@GML_SCHEMA_LOCATION = 'http://schemas.opengis.net/gml/3.1.1/base/feature.xsd'
@@ -58,10 +55,20 @@ setMethod("initialize", signature = "webgeom",
 #' @author Jordan S Read
 #' @rdname webgeom-methods
 #' @export
-
 setGeneric("webgeom", function(...) {
   standardGeneric("webgeom")
 })
+
+#' @rdname webgeom-methods
+#' @aliases webgeom,webgeom-method
+setMethod("webgeom", signature(), function(...) {
+  ## create new webgeom object
+  webgeom <- new("webgeom", ...)
+  return(webgeom)
+})
+
+
+
 
 #'@rdname webgeom-methods
 #'@aliases url<-,webgeom-method
@@ -72,14 +79,6 @@ setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, valu
   setURL(.Object, values)}
   )
 
-
-#' @rdname webgeom-methods
-#' @aliases webgeom,webgeom-method
-setMethod("webgeom", signature(), function(...) {
-  ## create new webgeom object
-  webgeom <- new("webgeom",...)
-  return(webgeom)
-})
 
 
 

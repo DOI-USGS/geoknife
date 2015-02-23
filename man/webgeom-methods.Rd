@@ -13,9 +13,9 @@
 \usage{
 webgeom(...)
 
-url(.Object, values) <- value
-
 \S4method{webgeom}{ANY}(...)
+
+url(.Object, values) <- value
 
 XML(.Object)
 
