@@ -1,11 +1,11 @@
 # show method calls print method
-setMethod(f = "show",signature = "geoknife",
+setMethod(f = "show",signature = "geojob",
 	definition = function(object){
 		print(object)
 	}
 )
 # print method is a pretty print of the geoknife object, excluding hidden elements
-setMethod(f = "print",signature = "geoknife",
+setMethod(f = "print",signature = "geojob",
 	function(x,...){
 		cat("*** Class geoknife, method Print *** \n")
 		cat("* WFS_URL:\t")

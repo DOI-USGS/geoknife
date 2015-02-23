@@ -19,7 +19,7 @@ setGeneric(name="getAttributes",def=function(.Object,shapefile){standardGeneric(
 
 # '@rdname getAttributes-methods
 # '@aliases getAttributes,geoknife-method	
-setMethod(f = "getAttributes",signature="geoknife",
+setMethod(f = "getAttributes",signature="webgeom",
 	definition = function(.Object,shapefile){
 		parentKey	<-	"element"
 		childKey	<-	"maxoccurs"

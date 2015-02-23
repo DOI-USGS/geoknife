@@ -28,7 +28,7 @@ setGeneric(name="setProcessInputs<-",def=function(.Object,value){standardGeneric
 
 # '@rdname setProcessInputs-methods
 # '@aliases setProcessInputs,geoknife-method  
-setReplaceMethod(f = "setProcessInputs",signature = "geoknife",
+setReplaceMethod(f = "setProcessInputs",signature = "webprocess",
                  definition = function(.Object,value){
                    
                    if (!is.list(value)){

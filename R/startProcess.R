@@ -40,7 +40,7 @@ setGeneric(name="startProcess",def=function(.Object){standardGeneric("startProce
 
 # '@rdname startProcess-methods
 # '@aliases startProcess,geoknife-method
-setMethod(f = "startProcess",signature = "geoknife",definition = function(.Object){
+setMethod(f = "startProcess",signature = "geojob",definition = function(.Object){
 	
 	requestXML	<-	toString.XMLNode(xmlDoc(suppressWarnings(processInputsToXML(.Object))))
 	data <- genericExecute(url = .Object@WPS_URL, requestXML)

@@ -28,7 +28,7 @@
 #'getAlgorithms(gk)
 #'
 #'#set processing algorithm to feature weighted grid statistics (unweighted will likely fail, because the ring won't intersect the centroids)
-#'setAlgorithm(gk) <- getAlgorithms(gk)[4] # feature weighted
+#'algorithm(gk) <- getAlgorithms(gk)[4] # feature weighted
 #'
 #'# set the post inputs for the processing dataset
 #'setProcessInputs(gk) <- list('DATASET_ID'='prcp',
@@ -52,7 +52,7 @@ setGeneric(name="isSuccessful",def=function(.Object){standardGeneric("isSuccessf
 
 # '@rdname isSuccessful-methods
 # '@aliases isSuccessful,geoknife-method
-setMethod(f = "isSuccessful",signature = "geoknife", definition = function(.Object){
+setMethod(f = "isSuccessful",signature = "geojob", definition = function(.Object){
 	
 	status = checkProcess(.Object)
 	

@@ -35,7 +35,7 @@
 setGeneric(name="loadOutput",def=function(.Object){standardGeneric("loadOutput")})
 
 #'@aliases loadOutput
-setMethod(f = "loadOutput",signature="geoknife",
+setMethod(f = "loadOutput",signature="geojob",
   definition = function(.Object){
             if (isSuccessful(.Object)){
               output <- outputParse(.Object)

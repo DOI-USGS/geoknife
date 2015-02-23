@@ -11,7 +11,7 @@
 #'
 #'algorithm <- list("Area Grid Statistics (weighted)"=
 #'"gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
-#'setAlgorithm(gk) <- algorithm
+#'algorithm(gk) <- algorithm
 #'setProcessInputs(gk) <- list("DATASET_URI" = "dods://hydro1.sci.gsfc.nasa.gov:80/dods/NLDAS_FORA0125_H.002")
 #'printProcessInputs(gk)
 printProcessInputs  <-	function(.Object){

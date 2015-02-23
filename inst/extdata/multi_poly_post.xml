@@ -72,7 +72,7 @@
 			<wps:Data>
 				<wps:ComplexData mimeType="text/xml" schema="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd">
 					<gml:featureMembers xmlns:gml="http://www.opengis.net/gml" xsi:schemaLocation="gov.usgs.cida.gdp.draw http://cida.usgs.gov/climate/derivative/xsd/draw.xsd">
-						<draw:junker_do_scooby_2 gml:id="junker_do_scooby_2.1">
+						<draw:poly gml:id="poly.1">
 							<draw:the_geom>
 								<gml:MultiSurface srsDimension="2" srsName="urn:x-ogc:def:crs:EPSG:4326">
 									<gml:surfaceMember>
@@ -87,8 +87,8 @@
 								</gml:MultiSurface>
 							</draw:the_geom>
 							<draw:ID>first_test</draw:ID>
-						</draw:junker_do_scooby_2>
-						<draw:junker_do_scooby_2 gml:id="junker_do_scooby_2.2">
+						</draw:poly>
+						<draw:poly gml:id="poly.2">
 							<draw:the_geom>
 								<gml:MultiSurface srsDimension="2" srsName="urn:x-ogc:def:crs:EPSG:4326">
 									<gml:surfaceMember>
@@ -103,7 +103,7 @@
 								</gml:MultiSurface>
 							</draw:the_geom>
 							<draw:ID>second_test</draw:ID>
-						</draw:junker_do_scooby_2>
+						</draw:poly>
 					</gml:featureMembers>
 				</wps:ComplexData>
 			</wps:Data>
