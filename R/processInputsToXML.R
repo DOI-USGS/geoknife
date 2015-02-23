@@ -87,16 +87,16 @@ addWebgeom <- function(.Object, xmlNodes){
                          namespaceDefinitions=c("wfs"=.Object@WFS_NAMESPACE,
                                                 "gml"=.Object@GML_NAMESPACE))
   addChildren(bodyEL,featEL)
-  queryEL  <-	newXMLNode('wfs:Query',attrs=c("typeName"=as.character(.Object@feature['FEATURE_COLLECTION'])))
+  queryEL  <-	newXMLNode('wfs:Query',attrs=c("typeName"=as.character(.Object@geom)))
   addChildren(featEL,queryEL)
   propNmEL <-	newXMLNode('wfs:PropertyName',newXMLTextNode('the_geom'))
   addChildren(queryEL,propNmEL)
-  propNmEL<-	newXMLNode('wfs:PropertyName',newXMLTextNode(.Object@feature['ATTRIBUTE']))
+  propNmEL<-	newXMLNode('wfs:PropertyName',newXMLTextNode(.Object@attribute))
   addChildren(queryEL,propNmEL)
-  if (any(names(.Object@feature)=='GML') & !is.na(.Object@feature['GML'])){
+  if (!is.na(.Object@IDs)){
     filterEL	<-	newXMLNode('ogc:Filter')
     addChildren(queryEL,filterEL)
-    gmlObEL	<-	newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=.Object@feature['GML']))
+    gmlObEL	<-	newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=.Object@IDs))
     addChildren(filterEL,gmlObEL)
   }
   retun(xmlNodes)
