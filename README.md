@@ -15,7 +15,7 @@ install this package using
 
 	install.packages("geoknife", 
         repos = c("http://owi.usgs.gov/R", "http://cran.us.r-project.org"),
-        dependencies = TRUE, type = "both")
+        dependencies = TRUE)
 
 ###`geoknife` overview
 The `geoknife` package was created to support web-based geoprocessing of large gridded datasets according to their overlap with landscape (or aquatic/ocean) features that are often irregularly shaped. `geoknife` creates data access and subsequent geoprocessing requests for the USGS's Geo Data Portal to carry out on a web server. The results of these requests are available for download after the processes have been completed. This type of workflow has three main advantages: 1) it allows the user to avoid downloading large datasets, 2) it avoids reinventing the wheel for the creation and optimization of complex geoprocessing algorithms, and 3) computing resources are dedicated elsewhere, so `geoknife` operations do not have much of an impact on a local computer. 
@@ -48,7 +48,7 @@ The main elements of setting up and carrying out a `geoknife` 'job' are include 
 | `startProcess` | Submit a GDP web processing request |
 
 ##What libraries does `geoknife` need?
-This version requires `RCurl`, and `XML`. Both of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
+This version requires `httr`, `jsonlite`, `lubridate` and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
 
 ##Disclaimer
 This software is in the public domain because it contains materials that originally came from the U.S. Geological Survey, an agency of the United States Department of Interior. For more information, see the [official USGS copyright policy](http://www.usgs.gov/visual-id/credit_usgs.html#copyright/ "official USGS copyright policy")
