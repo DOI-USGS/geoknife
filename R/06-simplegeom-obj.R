@@ -5,21 +5,9 @@ setClass(
   contains = "SpatialPolygonsDataFrame"
 )
 
-# setMethod("initialize", signature = "simplegeom", 
-#           definition = function(.Object, polys = as.numeric(NA), IDs = as.character(NA), proj = as.character(NA)){
-#             
-#             .Object@polys = polys
-#             .Object@IDs = IDs
-#             .Object@proj = proj
-#             return(.Object)
-#           })
-
 #' create simplegeom object
 #' @description A class representing a simple feature.
 #'
-#' @slot polys value of type 
-#' @slot IDs value of type (same length as polys)
-#' @slot proj value of type 
 #'
 #' @return the simplegeom object simple feature
 #' @author Jordan S Read
