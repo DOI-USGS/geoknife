@@ -1,21 +1,18 @@
-
+#'@importClassesFrom sp SpatialPolygonsDataFrame
+#'@exportClass simplegeom
 setClass(
   Class = "simplegeom",
-  representation = representation(
-    polys = "numeric",
-    IDs = "character",
-    proj = "character"
-    )
+  contains = "SpatialPolygonsDataFrame"
 )
 
-setMethod("initialize", signature = "simplegeom", 
-          definition = function(.Object, polys = as.numeric(NA), IDs = as.character(NA), proj = as.character(NA)){
-            
-            .Object@polys = polys
-            .Object@IDs = IDs
-            .Object@proj = proj
-            return(.Object)
-          })
+# setMethod("initialize", signature = "simplegeom", 
+#           definition = function(.Object, polys = as.numeric(NA), IDs = as.character(NA), proj = as.character(NA)){
+#             
+#             .Object@polys = polys
+#             .Object@IDs = IDs
+#             .Object@proj = proj
+#             return(.Object)
+#           })
 
 #' create simplegeom object
 #' @description A class representing a simple feature.
