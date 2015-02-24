@@ -112,3 +112,10 @@ setMethod("[", c("webdata", "integer", "missing", "ANY"),
             initialize(x, times=x@times[i])
           })
 
+#'@export
+quick_wd <- function(){
+  wd <- webdata(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
+                url = 'http://cida.usgs.gov/thredds/dodsC/prism',
+                variables = 'ppt')
+  return(wd)
+}

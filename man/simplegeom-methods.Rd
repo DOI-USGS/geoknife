@@ -17,15 +17,6 @@ the simplegeom object simple feature
 \description{
 A class representing a simple feature.
 }
-\section{Slots}{
-
-\describe{
-\item{\code{polys}}{value of type}
-
-\item{\code{IDs}}{value of type (same length as polys)}
-
-\item{\code{proj}}{value of type}
-}}
 \author{
 Jordan S Read
 }
