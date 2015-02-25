@@ -8,8 +8,6 @@
 \alias{times<-,webdata-method}
 \alias{url}
 \alias{url,webdata-method}
-\alias{url<-}
-\alias{url<-,webdata-method}
 \alias{variables}
 \alias{variables,webdata-method}
 \alias{variables<-}
@@ -31,8 +29,6 @@ times(.Object)
 variables(.Object)
 
 variables(.Object, values) <- value
-
-url(.Object, values) <- value
 
 url(.Object)
 }

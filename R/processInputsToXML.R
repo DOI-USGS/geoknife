@@ -1,29 +1,35 @@
+#'@rdname webgeom-methods
+#'@aliases XML,webgeom-method
+#'@export
+setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML")})
+
 #'@importFrom XML newXMLNode addChildren
 #'@export
-#'
-setMethod(f = "XML",signature = "webprocess", definition = function(.Object,...){
+setMethod(f = "XML",signature = c("ANY","webdata","webprocess"), 
+          definition = function(stencil, fabric, knife){
+            #stencil can be webgeom OR simplegeom (others?)
   # private function for geoknife that turns geoknife object into process input xml
   
   top    <-	newXMLNode(name='wps:Execute',
-                       attrs=c('service'="WPS",'version'=.Object@WPS_VERSION,
-                               'xsi:schemaLocation'=paste(c(.Object@WPS_NAMESPACE,.Object@WPS_SCHEMA_LOCATION),collapse=" ")),
-                       namespaceDefinitions=c('wps'=.Object@WPS_NAMESPACE,'ows'=.Object@OWS_NAMESPACE,
-                                              'ogc' = .Object@OGC_NAMESPACE,
-                                              'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE))#, 'draw' = .Object@DRAW_NAMESPACE)) 
+                       attrs=c('service'="WPS",'version'=knife@WPS_VERSION,
+                               'xsi:schemaLocation'=paste(c(knife@WPS_NAMESPACE,knife@WPS_SCHEMA_LOCATION),collapse=" ")),
+                       namespaceDefinitions=c('wps'=knife@WPS_NAMESPACE,'ows'=knife@OWS_NAMESPACE,
+                                              'ogc' = knife@OGC_NAMESPACE,
+                                              'xlink'=knife@XLINK_NAMESPACE,'xsi'=knife@XSI_NAMESPACE))
   
   
-  id	<-	newXMLNode("ows:Identifier",newXMLTextNode(.Object@algorithm),parent=top)
+  id	<-	newXMLNode("ows:Identifier",newXMLTextNode(knife@algorithm),parent=top)
   di	<-	newXMLNode("wps:DataInputs",parent=top)
   addChildren(top,c(id,di))
   
-  for (i in 1:length(.Object@processInputs)){
-    postNm	<-	names(.Object@processInputs[i])
-    postVl	<-	.Object@processInputs[postNm]
+  for (i in 1:length(knife@processInputs)){
+    postNm	<-	names(knife@processInputs[i])
+    postVl	<-	knife@processInputs[postNm]
     if (!is.na(postVl)){
       
       num.vl	<-	length(unlist(postVl))
       for (j in 1:num.vl){
-        postVl <- unlist(.Object@processInputs[postNm])[[j]]
+        postVl <- unlist(knife@processInputs[postNm])[[j]]
         
         if (is.null(postVl)) stop(postNm, ' cannot be NULL. it is required')
         inEL	<-	newXMLNode("wps:Input",parent=di)
@@ -47,8 +53,8 @@ setMethod(f = "XML",signature = "webprocess", definition = function(.Object,...)
   
   inIdEL   <- newXMLNode('ows:Identifier',newXMLTextNode('FEATURE_COLLECTION'))
   addChildren(inEL,inIdEL)
-  top <- addResponse(.Object, top)
-  top <- addGeom(..., xmlNodes = top)
+  top <- addResponse(knife, top)
+  top <- addGeom(stencil, xmlNodes = top)
   return(top)
 })
 
@@ -83,7 +89,7 @@ addGeom<- function(.Object, xmlNodes){
   inEL <- getNodeSet(xmlNodes,paste0(featureXpath,'/parent::node()[1]') )[[dataElementIndx]] 
   # reference is a sibling of the FEATURE_COLLECTION ID
   inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=url(.Object)))
-  addChildren(inEL,inDatEL)
+  addChildren(inEL,inDatEL) # see if we can do this as a method to webgeom
   
   bodyEL   <-	newXMLNode('wps:Body')
   addChildren(inDatEL,bodyEL)
@@ -106,6 +112,7 @@ addGeom<- function(.Object, xmlNodes){
     gmlObEL	<-	newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=.Object@IDs))
     addChildren(filterEL,gmlObEL)
   }
+  
   return(xmlNodes)
 }
 addRing <- function(.Object, xmlNodes){
