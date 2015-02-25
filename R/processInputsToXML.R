@@ -80,43 +80,55 @@ addResponse <- function(.Object, xmlNodes){
   requestXML <-	top
 }
 
-# -- make "addGeom" method for webgeom, xml and simplegeom, xml inputs
-
-
-addGeom<- function(.Object, xmlNodes){
+findGeomNode <- function(xmlNodes){
   featureXpath <- '//wps:DataInputs/wps:Input/ows:Identifier'
   dataElementIndx <- which(sapply(getNodeSet(xmlNodes,featureXpath),xmlValue) == "FEATURE_COLLECTION")
-  inEL <- getNodeSet(xmlNodes,paste0(featureXpath,'/parent::node()[1]') )[[dataElementIndx]] 
+  geomNode <- getNodeSet(xmlNodes,paste0(featureXpath,'/parent::node()[1]') )[[dataElementIndx]] 
+  return(geomNode)
+}
+setGeneric(name="addGeom",def=function(stencil, xmlNodes){standardGeneric("addGeom")})
+
+#'@importFrom XML newXMLNode addChildren
+setMethod(f = "addGeom",signature = c("webgeom","ANY"), 
+          definition = function(stencil, xmlNodes){
+            
+
+  inEL <- findGeomNode(xmlNodes)
   # reference is a sibling of the FEATURE_COLLECTION ID
-  inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=url(.Object)))
+  inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=url(stencil)))
   addChildren(inEL,inDatEL) # see if we can do this as a method to webgeom
   
   bodyEL   <-	newXMLNode('wps:Body')
   addChildren(inDatEL,bodyEL)
   
   featEL   <-	newXMLNode('wfs:GetFeature',attrs=c("service"="WFS",
-                                                  "version"=.Object@wfs_version,
+                                                  "version"=stencil@wfs_version,
                                                   "outputFormat"="text/xml; subtype=gml/3.1.1"),
-                         namespaceDefinitions=c("wfs"=.Object@WFS_NAMESPACE,
-                                                "gml"=.Object@GML_NAMESPACE))
+                         namespaceDefinitions=c("wfs"=stencil@WFS_NAMESPACE,
+                                                "gml"=stencil@GML_NAMESPACE))
   addChildren(bodyEL,featEL)
-  queryEL  <-	newXMLNode('wfs:Query',attrs=c("typeName"=as.character(.Object@geom)))
+  queryEL  <-	newXMLNode('wfs:Query',attrs=c("typeName"=as.character(stencil@geom)))
   addChildren(featEL,queryEL)
   propNmEL <-	newXMLNode('wfs:PropertyName',newXMLTextNode('the_geom'))
   addChildren(queryEL,propNmEL)
-  propNmEL<-	newXMLNode('wfs:PropertyName',newXMLTextNode(.Object@attribute))
+  propNmEL<-	newXMLNode('wfs:PropertyName',newXMLTextNode(stencil@attribute))
   addChildren(queryEL,propNmEL)
-  if (!is.na(.Object@IDs)){
+  if (!is.na(stencil@IDs)){
     filterEL	<-	newXMLNode('ogc:Filter')
     addChildren(queryEL,filterEL)
-    gmlObEL	<-	newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=.Object@IDs))
+    gmlObEL	<-	newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=stencil@IDs))
     addChildren(filterEL,gmlObEL)
   }
   
   return(xmlNodes)
-}
-addRing <- function(.Object, xmlNodes){
-  
+})
+
+#'@importFrom sp coordinates
+setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
+          definition = function(stencil, xmlNodes){
+            
+  # -- also, need to set the FEATURE_ATTRIBUTE_NAME
+  inEL <- findGeomNode(xmlNodes)
   inDatEL  <-	newXMLNode('wps:Data')
   addChildren(inEL,inDatEL)
   # parameterize this...
@@ -126,21 +138,18 @@ addRing <- function(.Object, xmlNodes){
   
   gmlFeatEL	<-	newXMLNode('gml:featureMembers',
                           namespaceDefinitions=c(
-                            'gml'="http://www.opengis.net/gml"),
+                            'gml'="http://www.opengis.net/gml",
+                            'draw'= stencil@DRAW_NAMESPACE),
                           attrs=c(
-                            "xsi:schemaLocation"=paste(c(.Object@DRAW_NAMESPACE,.Object@DRAW_SCHEMA_LOCATION),collapse=' '))
+                            "xsi:schemaLocation"=paste(c(stencil@DRAW_NAMESPACE,stencil@DRAW_SCHEMA),collapse=' '))
   )
   addChildren(compDatEL,gmlFeatEL)
   # loop this section for multiple polygons:
   
+  geom <- stencil@sp
   
-  if (is.list(.Object@feature[['LinearRing']])){
-    lng	<-	length(.Object@feature[['LinearRing']])
-    lst	<-	TRUE
-  } else {
-    lng	<-	1
-    lst	<-	FALSE
-  }
+  lng	<-	length(geom) # number of polygons
+  browser()
   for (j in 1:lng){
     
     gmlBoxEL  <-	newXMLNode('draw:poly',attrs=c("gml:id"=paste("poly.",j,sep='')))
@@ -150,13 +159,13 @@ addRing <- function(.Object, xmlNodes){
     
     gmlGeomEL  <-	newXMLNode('draw:the_geom')
     
-    if (lst){
-      ring.val	<-	paste(.Object@feature[['LinearRing']][[j]],collapse=" ")
-      drawID <- names(.Object@feature[['LinearRing']])[j]
-    } else {
-      ring.val	<-	paste(.Object@feature[['LinearRing']],collapse=" ")
-      drawID <- paste0('poly.',j)
-    }
+    ringCoords <- geom@polygons[[j]]@Polygons[[1]]@coords
+    
+    ring = vector(length = 2*nrow(ringCoords))
+    ring[seq(from = 1,by = 2,length.out = nrow(ringCoords))] <- ringCoords[,2]
+    ring[seq(from = 2,by = 2,length.out = nrow(ringCoords))] <- ringCoords[,1]
+    ring.val	<-	paste(ring,collapse = ' ')
+    drawID <- geom@polygons[[j]]@ID
     
     
     
@@ -165,7 +174,7 @@ addRing <- function(.Object, xmlNodes){
     
     gmlPolyEL	<-	newXMLNode('gml:MultiSurface',
                             attrs=c("srsDimension"="2",
-                                    "srsName"="EPSG:4326")
+                                    "srsName"="EPSG:4326") # FROM CRS in the future!!!
     )
     addChildren(gmlGeomEL,gmlPolyEL)
     
@@ -186,40 +195,5 @@ addRing <- function(.Object, xmlNodes){
     gmlPosEL	<-	newXMLNode('gml:posList',newXMLTextNode(ring.val))
     addChildren(gmlLrEL,gmlPosEL)
   }
-  
-}
-#'@export
-processInputsToXML	<-	function(.Object){
-	
-	# private function for geoknife that turns geoknife object into process input xml
-	
-  top <- XML(.Object) # webprocess to XML
-	# use WFS or LinearRing?
-	if (.Object@feature$LinearRing=='hidden' || is.na(.Object@feature$LinearRing)){
-	  addWebgeom(...)
-		
-	} else {
-	  addRing(...)
-		
-	}
-		
-	resForm	<-	newXMLNode('wps:ResponseForm')
-	addChildren(top,resForm)
-	
-	resDoc	<-	newXMLNode('wps:ResponseDocument',attrs=c('storeExecuteResponse'='true','status'='true'))
-	addChildren(resForm,resDoc)
-	
-  #if text/tab-separated-values"
-	if (!is.null(.Object@processInputs$DELIMITER) && .Object@processInputs$DELIMITER=="TAB"){
-	  resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='text/tab-separated-values'))
-	} else {
-	  resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true'))
-	}
-	
-	addChildren(resDoc,resOut)
-	
-	outID	<-	newXMLNode('ows:Identifier',newXMLTextNode('OUTPUT'))
-	addChildren(resOut,outID)
-	requestXML <-	top
-	return(requestXML)
-}
+  return(xmlNodes)
+})

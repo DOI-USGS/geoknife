@@ -1,14 +1,17 @@
-#'@importClassesFrom sp SpatialPolygonsDataFrame
-#'@exportClass SpatialPolygonsDataFrame
+#'@importClassesFrom sp SpatialPolygons
 #'@export
 setClass(
   Class = "simplegeom",
-  representation(sp="SpatialPolygons")
+  representation(sp="SpatialPolygons",
+                 DRAW_NAMESPACE = "character",
+                 DRAW_SCHEMA = "character")
 )
 
-
+#'@importFrom sp SpatialPolygons
 setMethod("initialize", signature = "simplegeom", 
           definition = function(.Object, ...) {
+            .Object@DRAW_NAMESPACE = 'gov.usgs.cida.gdp.draw'
+            .Object@DRAW_SCHEMA = 'http://cida.usgs.gov/climate/derivative/xsd/draw.xsd'
             .Object@sp <- SpatialPolygons(...)
             return(.Object)
 })
@@ -36,11 +39,18 @@ setMethod("simplegeom", signature(), function(...) {
   return(simplegeom)
 })
 
+#'@importFrom sp Polygons Polygon CRS
 #'@export
 quick_sp <- function(){
-  Sr1 = Polygon(cbind(c(-89,-88,-89,-90,-89),c(42,42,41,41,42)))
-  
-  Srs1 = Polygons(list(Sr1), "s1")
-  sp <- simplegeom(list(Srs1), proj4string = CRS("+proj=longlat +datum=WGS84"))
+  square= rbind(c(-89,42,-88,42,-89,41,-90,41,-89,42),
+                c(-79,42,-78,42,-79,41,-80,41,-79,42))
+  ID <- c("grid_1", "grid_2")
+  Srl = list(
+    Polygons(list(Polygon(matrix(square[1, ], ncol=2, byrow=TRUE))), ID[1]),
+    Polygons(list(Polygon(matrix(square[2, ], ncol=2, byrow=TRUE))), ID[2])
+  )
+
+
+  sp <- simplegeom(Srl, proj4string = CRS("+proj=longlat +datum=WGS84"))
   return(sp)
 }
