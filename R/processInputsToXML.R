@@ -174,7 +174,7 @@ setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
     
     gmlPolyEL	<-	newXMLNode('gml:MultiSurface',
                             attrs=c("srsDimension"="2",
-                                    "srsName"="EPSG:4326") # FROM CRS in the future!!!
+                                    "srsName"="urn:x-ogc:def:crs:EPSG:4326") # FROM CRS in the future!!!
     )
     addChildren(gmlGeomEL,gmlPolyEL)
     
