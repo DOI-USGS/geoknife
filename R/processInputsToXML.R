@@ -1,12 +1,14 @@
-#'@importFrom XML newXMLNode
+#'@importFrom XML newXMLNode addChildren
 #'@export
 #'
-setMethod(f = "XML",signature = "webprocess", definition = function(.Object){
+setMethod(f = "XML",signature = "webprocess", definition = function(.Object,...){
   # private function for geoknife that turns geoknife object into process input xml
   
-  top    <-	newXMLNode(name='wps:Execute',attrs=c('service'="WPS",'version'=.Object@WPS_VERSION,
-                                                  'xsi:schemaLocation'=paste(c(.Object@WPS_NAMESPACE,.Object@WPS_SCHEMA_LOCATION),collapse=" ")),
+  top    <-	newXMLNode(name='wps:Execute',
+                       attrs=c('service'="WPS",'version'=.Object@WPS_VERSION,
+                               'xsi:schemaLocation'=paste(c(.Object@WPS_NAMESPACE,.Object@WPS_SCHEMA_LOCATION),collapse=" ")),
                        namespaceDefinitions=c('wps'=.Object@WPS_NAMESPACE,'ows'=.Object@OWS_NAMESPACE,
+                                              'ogc' = .Object@OGC_NAMESPACE,
                                               'xlink'=.Object@XLINK_NAMESPACE,'xsi'=.Object@XSI_NAMESPACE))#, 'draw' = .Object@DRAW_NAMESPACE)) 
   
   
@@ -23,7 +25,7 @@ setMethod(f = "XML",signature = "webprocess", definition = function(.Object){
       for (j in 1:num.vl){
         postVl <- unlist(.Object@processInputs[postNm])[[j]]
         
-        if (is.null(postVl)) postVl = 'nine_nine_nine_nine_fail'#stop(postNm, ' cannot be NULL. it is required')
+        if (is.null(postVl)) stop(postNm, ' cannot be NULL. it is required')
         inEL	<-	newXMLNode("wps:Input",parent=di)
         addChildren(di,inEL)
         
@@ -46,6 +48,7 @@ setMethod(f = "XML",signature = "webprocess", definition = function(.Object){
   inIdEL   <- newXMLNode('ows:Identifier',newXMLTextNode('FEATURE_COLLECTION'))
   addChildren(inEL,inIdEL)
   top <- addResponse(.Object, top)
+  top <- addGeom(..., xmlNodes = top)
   return(top)
 })
 
@@ -71,10 +74,14 @@ addResponse <- function(.Object, xmlNodes){
   requestXML <-	top
 }
 
-addWebgeom <- function(.Object, xmlNodes){
+# -- make "addGeom" method for webgeom, xml and simplegeom, xml inputs
+
+
+addGeom<- function(.Object, xmlNodes){
   featureXpath <- '//wps:DataInputs/wps:Input/ows:Identifier'
   dataElementIndx <- which(sapply(getNodeSet(xmlNodes,featureXpath),xmlValue) == "FEATURE_COLLECTION")
-  inEL <- getNodeSet(xmlNodes,featureXpath )[[dataElementIndx]]
+  inEL <- getNodeSet(xmlNodes,paste0(featureXpath,'/parent::node()[1]') )[[dataElementIndx]] 
+  # reference is a sibling of the FEATURE_COLLECTION ID
   inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=url(.Object)))
   addChildren(inEL,inDatEL)
   
@@ -99,7 +106,7 @@ addWebgeom <- function(.Object, xmlNodes){
     gmlObEL	<-	newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=.Object@IDs))
     addChildren(filterEL,gmlObEL)
   }
-  retun(xmlNodes)
+  return(xmlNodes)
 }
 addRing <- function(.Object, xmlNodes){
   

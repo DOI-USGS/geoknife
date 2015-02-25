@@ -17,7 +17,7 @@ webgeom(...)
 
 url(.Object, values) <- value
 
-XML(.Object)
+XML(.Object, ...)
 
 \S4method{url}{webgeom}(.Object, values) <- value
 }

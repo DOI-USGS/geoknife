@@ -17,16 +17,13 @@ setClass(
 )
 
 setMethod(f="initialize",signature="webprocess",
-          definition=function(.Object, wps_url, algorithm){
-            # public variables (available via get and set methods)  
-            if (missing(wps_url)){
-              wps_url = 'http://cida.usgs.gov/gdp/process/WebProcessingService'
-            }
-            if (missing(algorithm)){
-              algorithm = list('Area Grid Statistics (weighted)'=
-                                 "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
-            }
-            
+          definition=function(
+            .Object, 
+            wps_url = 'http://cida.usgs.gov/gdp/process/WebProcessingService', 
+            algorithm = list('Area Grid Statistics (weighted)'=
+                               "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
+            )
+            {
             .Object@WPS_VERSION = '1.0.0'
             .Object@WPS_SCHEMA_LOCATION = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
             .Object@WPS_NAMESPACE ='http://www.opengis.net/wps/1.0.0'
@@ -94,4 +91,18 @@ setMethod(f = "algorithm<-",signature = "webprocess",
                    .Object <- initialize(.Object, algorithm = value)
                    return(.Object)
                  })
-
+#'@export
+quick_wp <- function(){
+  # with defaults
+  wp <- webprocess()
+  # need to code setters:
+  
+  wp@processInputs$DATASET_URI = 'dods://cida.usgs.gov/thredds/dodsC/prism'
+  wp@processInputs$DATASET_ID = 'ppt'
+  wp@processInputs$TIME_START = '1895-01-01T00:00:00.000Z'
+  wp@processInputs$TIME_END = '1899-01-01T00:00:00.000Z'
+  wp@processInputs$FEATURE_ATTRIBUTE_NAME = 'STATE'
+  wp@processInputs$GROUP_BY = 'STATISTIC'
+  wp@processInputs$STATISTICS = 'MEAN'
+  return(wp)
+}
