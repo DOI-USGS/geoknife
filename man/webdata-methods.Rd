@@ -32,7 +32,7 @@ variables(.Object)
 
 variables(.Object) <- value
 
-url(.Object, values) <- value
+url(.Object) <- value
 
 url(.Object)
 }

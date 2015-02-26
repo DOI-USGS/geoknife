@@ -20,6 +20,7 @@ TRUE/FALSE indicating if process is in the given state (error, processing, succe
 Simple wrapper to check process status
 }
 \examples{
+\dontrun{
 gk <- geoknife() # create geoknife object
 gk # print geoknife object
 
@@ -47,10 +48,11 @@ isRunning(gk)
 isError(gk)
 isSuccessful(gk)
 }
+}
 \author{
 Luke Winslow
 }
 \seealso{
-\code{checkProcess}
+\code{\link{check}}
 }
 

@@ -14,10 +14,10 @@
 #'@description Simple wrapper to check process status
 #'
 #'@author Luke Winslow
-#'@seealso \code{checkProcess}
+#'@seealso \code{\link{check}}
 #'
 #'@examples
-#'
+#'\dontrun{
 #'gk <- geoknife() # create geoknife object
 #'gk # print geoknife object
 #'
@@ -44,7 +44,7 @@
 #'isRunning(gk)
 #'isError(gk)
 #'isSuccessful(gk)
-#'
+#'}
 #'
 #'@export
 setGeneric(name="isSuccessful",def=function(.Object){standardGeneric("isSuccessful")})

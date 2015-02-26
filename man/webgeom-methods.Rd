@@ -13,9 +13,9 @@ webgeom(...)
 
 \S4method{webgeom}{ANY}(...)
 
-url(.Object, values) <- value
+url(.Object) <- value
 
-\S4method{url}{webgeom}(.Object, values) <- value
+\S4method{url}{webgeom}(.Object) <- value
 }
 \value{
 the webgeom object representing a dataset and parameters

@@ -5,11 +5,12 @@
 #'
 #'@docType methods
 #'@keywords startProcess
-#'@description Start process for \code{geoknife}
+#'@description Start process for \code{geojob}
 #'@title Submit a GDP web processing request
-#'@seealso \code{checkProcess}
+#'@seealso \code{check}
 #'@export
 #'@examples 
+#'\dontrun{
 #'gk <- geoknife() # create geoknife object
 #'gk # print geoknife object
 #'
@@ -22,7 +23,6 @@
 #' #set processing algorithm to feature weighted grid statistics (unweighted will likely fail, because the ring won't intersect the centroids)
 #'setAlgorithm(gk) <- algs[4] # feature weighted
 #'
-#'\dontrun{
 #'
 #' # set the post inputs for the processing dataset
 #'setProcessInputs(gk) <- list('DATASET_ID'='Prcp',

@@ -1,10 +1,10 @@
 
 
-setUrl <- function(.Object, values){
-  if (length(values) != 1){
+setUrl <- function(.Object, value){
+  if (length(value) != 1){
     stop('url must be a single character string')
   }
-  .Object@url <- values
+  .Object@url <- value
 
   return(.Object)
 }
@@ -74,24 +74,24 @@ setMethod("webgeom", signature(), function(...) {
 #'@rdname webgeom-methods
 #'@aliases url<-,webgeom-method
 #'@export
-setGeneric(name="url<-",def=function(.Object, values){standardGeneric("url<-")})
+setGeneric(name="url<-",def=function(.Object, value){standardGeneric("url<-")})
 
-setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, values){
-  setURL(.Object, values)}
+setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, value){
+  setURL(.Object, value)}
   )
 
 #'@rdname webdata-methods
 #'@aliases url<-,webdata-method
 #'@export
-setGeneric(name="url<-",def=function(.Object, values){standardGeneric("url<-")})
+setGeneric(name="url<-",def=function(.Object, value){standardGeneric("url<-")})
 
-setMethod(f = "url<-",signature = "webdata", definition = function(.Object, values){
-  setURL(.Object, values)}
+setMethod(f = "url<-",signature = "webdata", definition = function(.Object, value){
+  setURL(.Object, value)}
 )
 #'@rdname webgeom-methods
 #'@aliases url<-,webgeom-method
-setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, values){
-  setURL(.Object, values)}
+setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, value){
+  setURL(.Object, value)}
 )
 
 #'@rdname webdata-methods

@@ -55,7 +55,7 @@ setGeneric(name="times<-",def=function(.Object, value){standardGeneric("times<-"
 
 setReplaceMethod(f = "times",signature = "webdata",
                  definition = function(.Object, value){
-                   if (length(values) != 2){
+                   if (length(value) != 2){
                      stop('times input must be a POSIXct vector of length 2')
                    }
                    .Object@times <- value

@@ -14,12 +14,13 @@ startProcess(.Object)
 An \code{geoknife} object with an active GDP process request.
 }
 \description{
-Start process for \code{geoknife}
+Start process for \code{geojob}
 }
 \details{
 startProcess is a method for submitting a web processing request for the \code{geoknife} object.
 }
 \examples{
+\dontrun{
 gk <- geoknife() # create geoknife object
 gk # print geoknife object
 
@@ -32,7 +33,6 @@ algs <- getAlgorithms(gk)
 #set processing algorithm to feature weighted grid statistics (unweighted will likely fail, because the ring won't intersect the centroids)
 setAlgorithm(gk) <- algs[4] # feature weighted
 
-\dontrun{
 
 # set the post inputs for the processing dataset
 setProcessInputs(gk) <- list('DATASET_ID'='Prcp',
@@ -49,7 +49,7 @@ gk # display contents
 # -- is execute true (geoknife) or "start(geojob)"
 }
 \seealso{
-\code{checkProcess}
+\code{check}
 }
 \keyword{startProcess}
 
