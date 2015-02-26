@@ -1,5 +1,5 @@
 # used for generic post document creation
-#'@importFrom XML newXMLNode
+#'@importFrom XML newXMLNode newXMLTextNode addChildren toString.XMLNode
 generateRequest  <-	function(.Object, algorithm,cachedResponse='false'){
   
   top    <-	newXMLNode(name='wps:Execute',attrs=c('service'="WPS",'version'=.Object@WPS_DEFAULT_VERSION,

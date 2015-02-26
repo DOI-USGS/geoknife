@@ -1,4 +1,5 @@
-#'@importClassesFrom sp SpatialPointsDataFrame SpatialPolygonsDataFrame
+
+
 setUrl <- function(.Object, values){
   if (length(values) != 1){
     stop('url must be a single character string')
