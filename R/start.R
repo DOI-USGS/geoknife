@@ -10,47 +10,29 @@
 #'@seealso \code{check}
 #'@export
 #'@examples 
-#'\dontrun{
-#'gk <- geoknife() # create geoknife object
-#'gk # print geoknife object
-#'
-#'linearRing = bufferPoint(c(-111.48,36.95))
-#'setFeature(gk) <- list(LinearRing=linearRing)
-#'
-#' #get a list of available processing algorithms
-#'algs <- getAlgorithms(gk)
-#'
-#' #set processing algorithm to feature weighted grid statistics (unweighted will likely fail, because the ring won't intersect the centroids)
-#'setAlgorithm(gk) <- algs[4] # feature weighted
-#'
-#'
-#' # set the post inputs for the processing dataset
-#'setProcessInputs(gk) <- list('DATASET_ID'='Prcp',
-#'                                        'DATASET_URI'='dods://cida.usgs.gov/thredds/dodsC/gmo/GMO_w_meta.ncml',
-#'                                        'TIME_START'='1980-01-01T00:00:00Z',
-#'                                        'TIME_END'='1980-05-01T00:00:00Z',
-#'                                        'DELIMITER'='TAB')
-#'gk # print geoknife object contents
-#'
-#' # kick off your request
-#'gk <- startProcess(gk)
-#'gk # display contents
-#'}
+#'wp <- quick_wp()
+#'wd <- quick_wd()
+#'wg <- quick_wg()
+#'gj <- geojob()
+#'xml(gj) <- XML(wg, wd, wp)
+#'url(gj) <- wp@@wps_url
+#'gj <- start(gj)
+#'id(gj) # get the processing ID for the geojob
 #'# -- is execute true (geoknife) or "start(geojob)"
-setGeneric(name="startProcess",def=function(.Object){standardGeneric("startProcess")})
+setGeneric(name="start",def=function(.Object){standardGeneric("start")})
 
 # '@rdname startProcess-methods
 # '@aliases startProcess,geoknife-method
-setMethod(f = "startProcess",signature = "geojob",definition = function(.Object){
+setMethod(f = "start",signature = "geojob",definition = function(.Object){
 	
-	requestXML	<-	toString.XMLNode(xmlDoc(suppressWarnings(processInputsToXML(.Object))))
-	data <- genericExecute(url = .Object@WPS_URL, requestXML)
+	requestXML	<-	xml(.Object)
+	data <- genericExecute(url = url(.Object), requestXML)
   
 	xmltext 	<-	xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
 	response	<-	xmlRoot(xmltext)
 	responseNS	<-	xmlNamespaceDefinitions(response, simplify = TRUE)  
 	processID	<-	xmlGetAttr(response,"statusLocation")
 	
-	.Object	<-	setProcessID(.Object,processID)
+	id(.Object)	<-	processID
 	return(.Object)
 })

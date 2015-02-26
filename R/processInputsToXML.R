@@ -15,7 +15,7 @@ setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML"
 #'wg <- quick_wg()
 #'XML(wg, wd, wp)
 #'@rdname XML-method
-#'@importFrom XML newXMLNode addChildren
+#'@importFrom XML newXMLNode addChildren toString.XMLNode
 #'@export
 setMethod(f = "XML",signature = c("ANY","webdata","webprocess"), 
           definition = function(stencil, fabric, knife){
@@ -67,7 +67,7 @@ setMethod(f = "XML",signature = c("ANY","webdata","webprocess"),
   addChildren(inEL,inIdEL)
   top <- addResponse(knife, top)
   top <- addGeom(stencil, xmlNodes = top)
-  return(top)
+  return(toString.XMLNode(top))
 })
 
 addResponse <- function(.Object, xmlNodes){
