@@ -26,14 +26,14 @@ setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProce
 setMethod(f = "checkProcess",signature = "geojob", definition = function(.Object){
 	
 	process	<-	list(status=NULL,URL=NULL)
-	if (.Object@processID=="<no active job>"){
+	if (id(.Object)=="<no active job>"){
 		process$status	<-	'none'
 		process$statusType <- 'none'
     return(process)
 	}
 
 	checkForComplete = tryCatch({
-    GET(url = .Object@processID)
+    GET(url = id(.Object))
     },error = function(e) {
       return(NULL)
       }
