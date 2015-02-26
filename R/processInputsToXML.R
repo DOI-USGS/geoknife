@@ -1,8 +1,20 @@
-#'@rdname webgeom-methods
+#'@rdname XML-method
 #'@aliases XML,webgeom-method
 #'@export
 setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML")})
 
+#'@title XML from set of objects
+#'@param stencil
+#'@param fabric
+#'@param webprocess 
+#'@return XML as ?string?
+#'
+#'@examples
+#'wp <- quick_wp()
+#'wd <- quick_wd()
+#'wg <- quick_wg()
+#'XML(wg, wd, wp)
+#'@rdname XML-method
 #'@importFrom XML newXMLNode addChildren
 #'@export
 setMethod(f = "XML",signature = c("ANY","webdata","webprocess"), 

@@ -30,7 +30,7 @@ times(.Object)
 
 variables(.Object)
 
-variables(.Object, values) <- value
+variables(.Object) <- value
 
 url(.Object, values) <- value
 
