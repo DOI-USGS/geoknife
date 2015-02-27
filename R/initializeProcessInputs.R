@@ -1,10 +1,10 @@
 #'@importFrom XML htmlParse getNodeSet xmlValue
+#'@importFrom httr GET
 defaultProcessInputs <- function(algorithm, wps_url, wps_version){
-  processURL  <-	paste0(wps_url,'?service=WPS&version=',
-                        wps_version,'&request=DescribeProcess',
-                         '&identifier=',algorithm)
-  # test connection with processURL here, provide error if necessary
-  doc	<-	htmlParse(processURL,isURL=TRUE, useInternalNodes = TRUE)
+  getCaps <- GET(wps_url, query = list(
+    'service' = 'WPS', 'version' = wps_version,'request' = 'DescribeProcess', 'identifier'=algorithm))
+
+  doc	<-	htmlParse(getCaps,isURL=FALSE, useInternalNodes = TRUE)
   
   if(length(getNodeSet(doc,'//exception/exceptiontext'))>0){
     stop(xmlValue(getNodeSet(doc,'//exception/exceptiontext')[[1]]))
