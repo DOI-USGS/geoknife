@@ -12,11 +12,11 @@ XML(stencil, fabric, knife)
 \S4method{XML}{ANY,webdata,webprocess}(stencil, fabric, knife)
 }
 \arguments{
-\item{stencil}{}
+\item{stencil}{a \code{\link{webdata}} OR \code{\link{simplegeom}} object}
 
-\item{fabric}{}
+\item{fabric}{a \code{\link{webdata}} object}
 
-\item{webprocess}{}
+\item{knife}{a \code{\link{webprocess}} object}
 }
 \value{
 XML as ?string?

@@ -1,12 +1,12 @@
 
 #'@export
-setGeneric(name="isRunning",def=function(.Object){standardGeneric("isRunning")})
+setGeneric(name="running",def=function(.Object){standardGeneric("running")})
 
-# '@rdname isRunning-methods
-# '@aliases isRunning,geoknife-method
-setMethod(f = "isRunning",signature = "geojob", definition = function(.Object){
+# '@rdname running-methods
+# '@aliases running,geoknife-method
+setMethod(f = "running",signature = "geojob", definition = function(.Object){
 	
-	status = checkProcess(.Object)
+	status = check(.Object)
 	
 	return(status$statusType == "ProcessStarted")
 })

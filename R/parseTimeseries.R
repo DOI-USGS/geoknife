@@ -4,7 +4,7 @@
 #'@details a function for loading data into R from a file (or URL) from a completed processing request
 #'
 #'@param file a \code{\link{geoknife}} timeseries processing result file location
-#'(See \code{\link{checkProcess}}).
+#'(See \code{\link{check}}).
 #'@param delim the file delimiter
 #'@param keep.units boolean for including a units column in returned data.frame
 #'@return a data.frame of timeseries values.

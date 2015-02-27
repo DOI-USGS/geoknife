@@ -30,6 +30,7 @@ setGeneric("geojob", function(...) {
   standardGeneric("geojob")
 })
 
+#'@param ... additional arguments passed to initialize method
 #'@rdname geojob-methods
 #'@aliases geojob,geojob-method
 setMethod("geojob", signature(), function(...) {
@@ -40,6 +41,8 @@ setMethod("geojob", signature(), function(...) {
 
 #'@rdname geojob-methods
 #'@aliases xml<-,geojob-method
+#'@param .Object a \code{\link{geojob}} object
+#'@param value a character string of xml 
 #'@examples
 #'xml <- "<foo> <bar> text <baz/> </bar> </foo>"
 #'gj <- geojob()

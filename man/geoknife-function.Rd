@@ -6,6 +6,17 @@
 \usage{
 geoknife(stencil, fabric, knife, job, ...)
 }
+\arguments{
+\item{stencil}{a geometric feature (the "cookie-cutter"). Many input types are supported. [list them]}
+
+\item{fabric}{a dataset. Can be \code{\link{webdata}} or recognized shortname (e.g., 'prism')}
+
+\item{knife}{(optional) a \code{\link{webprocessing}} object}
+
+\item{job}{(optional) a \code{\link{geojob}} object}
+
+\item{...}{additional arguments passed on to process.}
+}
 \description{
 geoknife-fcn
 }

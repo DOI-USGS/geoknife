@@ -8,8 +8,6 @@
 \alias{times<-,webdata-method}
 \alias{url}
 \alias{url,webdata-method}
-\alias{url<-}
-\alias{url<-,webdata-method}
 \alias{variables}
 \alias{variables,webdata-method}
 \alias{variables<-}
@@ -23,6 +21,8 @@ webdata(...)
 
 \S4method{webdata}{ANY}(...)
 
+times(.Object) <- value
+
 times(webdata()) <- as.POXIXct(c("2012-11-04", "2012-11-12"))
 times(webdata())[1] <- as.POXIXct("2012-11-04")
 
@@ -30,11 +30,26 @@ times(.Object)
 
 variables(.Object)
 
+\S4method{variables}{webdata}(.Object)
+
 variables(.Object) <- value
 
-url(.Object) <- value
+\S4method{variables}{webdata}(.Object) <- value
 
 url(.Object)
+}
+\arguments{
+\item{...}{additional arguments passed initialize method (e.g., times vector)}
+
+\item{.Object}{a \code{\link{webdata}} object}
+
+\item{value}{a POXIXct vector}
+
+\item{.Object}{a \code{\link{webdata}} object}
+
+\item{.Object}{a \code{\link{webdata}} object}
+
+\item{value}{a character vector for variables}
 }
 \value{
 the webdata object representing a dataset and parameters

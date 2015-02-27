@@ -11,6 +11,9 @@ simplegeom(...)
 
 \S4method{simplegeom}{ANY}(...)
 }
+\arguments{
+\item{...}{additional arguments passed to SpatialPolygonsDataFrame}
+}
 \value{
 the simplegeom object simple feature
 }

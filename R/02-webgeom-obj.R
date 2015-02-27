@@ -1,14 +1,5 @@
 
 
-setUrl <- function(.Object, value){
-  if (length(value) != 1){
-    stop('url must be a single character string')
-  }
-  .Object@url <- value
-
-  return(.Object)
-}
-
 
 setClass(
   Class = "webgeom",
@@ -76,22 +67,21 @@ setMethod("webgeom", signature(), function(...) {
 #'@export
 setGeneric(name="url<-",def=function(.Object, value){standardGeneric("url<-")})
 
-setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, value){
-  setURL(.Object, value)}
-  )
-
-#'@rdname webdata-methods
-#'@aliases url<-,webdata-method
-#'@export
-setGeneric(name="url<-",def=function(.Object, value){standardGeneric("url<-")})
-
 setMethod(f = "url<-",signature = "webdata", definition = function(.Object, value){
-  setURL(.Object, value)}
+  if (length(value) != 1){
+    stop('url must be a single character string')
+  }
+  .Object@url <- value
+  return(.Object)}
 )
 #'@rdname webgeom-methods
 #'@aliases url<-,webgeom-method
 setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, value){
-  setURL(.Object, value)}
+  if (length(value) != 1){
+    stop('url must be a single character string')
+  }
+  .Object@url <- value
+  return(.Object)}
 )
 
 #'@rdname webdata-methods

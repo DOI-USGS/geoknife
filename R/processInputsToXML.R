@@ -4,9 +4,9 @@
 setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML")})
 
 #'@title XML from set of objects
-#'@param stencil
-#'@param fabric
-#'@param webprocess 
+#'@param stencil a \code{\link{webdata}} OR \code{\link{simplegeom}} object
+#'@param fabric a \code{\link{webdata}} object
+#'@param knife a \code{\link{webprocess}} object
 #'@return XML as ?string?
 #'
 #'@examples
@@ -22,12 +22,14 @@ setMethod(f = "XML",signature = c("ANY","webdata","webprocess"),
             #stencil can be webgeom OR simplegeom (others?)
   # private function for geoknife that turns geoknife object into process input xml
   
-  top    <-	newXMLNode(name='wps:Execute',
-                       attrs=c('service'="WPS",'version'=knife@WPS_VERSION,
-                               'xsi:schemaLocation'=paste(c(knife@WPS_NAMESPACE,knife@WPS_SCHEMA_LOCATION),collapse=" ")),
-                       namespaceDefinitions=c('wps'=knife@WPS_NAMESPACE,'ows'=knife@OWS_NAMESPACE,
-                                              'ogc' = knife@OGC_NAMESPACE,
-                                              'xlink'=knife@XLINK_NAMESPACE,'xsi'=knife@XSI_NAMESPACE))
+  top <- newXMLNode(name='wps:Execute',
+                    attrs=c('service'="WPS",'version'=knife@WPS_VERSION,
+                            'xsi:schemaLocation' = paste(c(knife@WPS_NAMESPACE,knife@WPS_SCHEMA_LOCATION),collapse=" ")),
+                    namespaceDefinitions=c('wps' = knife@WPS_NAMESPACE,
+                                           'ows' = knife@OWS_NAMESPACE,
+                                           'ogc' = knife@OGC_NAMESPACE,
+                                           'xlink' = knife@XLINK_NAMESPACE,
+                                           'xsi' = knife@XSI_NAMESPACE))
   
   
   id	<-	newXMLNode("ows:Identifier",newXMLTextNode(knife@algorithm),parent=top)
@@ -148,7 +150,7 @@ setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
                                                     "schema"="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd")) # schema needed?
   addChildren(inDatEL,compDatEL)
   
-  gmlFeatEL	<-	newXMLNode('gml:featureMembers',
+  gmlFeatEL <- newXMLNode('gml:featureMembers',
                           namespaceDefinitions=c(
                             'gml'="http://www.opengis.net/gml",
                             'draw'= stencil@DRAW_NAMESPACE),
@@ -167,8 +169,6 @@ setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
     gmlBoxEL  <-	newXMLNode('draw:poly',attrs=c("gml:id"=paste("poly.",j,sep='')))
     
     addChildren(gmlFeatEL,gmlBoxEL) 
-    
-    
     gmlGeomEL  <-	newXMLNode('draw:the_geom')
     
     ringCoords <- geom@polygons[[j]]@Polygons[[1]]@coords
@@ -178,9 +178,7 @@ setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
     ring[seq(from = 2,by = 2,length.out = nrow(ringCoords))] <- ringCoords[,1]
     ring.val	<-	paste(ring,collapse = ' ')
     drawID <- geom@polygons[[j]]@ID
-    
-    
-    
+
     drawName  <-	newXMLNode('draw:ID', newXMLTextNode(drawID))
     addChildren(gmlBoxEL,gmlGeomEL, drawName)
     

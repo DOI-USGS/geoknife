@@ -72,6 +72,11 @@ setMethod("butcher", signature = c("webprocess", "webprocess"),
 missing_msg <- function() stop('stencil and fabric, OR job must be supplied')
 
 #'@title geoknife-fcn
+#'@param stencil a geometric feature (the "cookie-cutter"). Many input types are supported. [list them]
+#'@param fabric a dataset. Can be \code{\link{webdata}} or recognized shortname (e.g., 'prism')
+#'@param knife (optional) a \code{\link{webprocessing}} object
+#'@param job (optional) a \code{\link{geojob}} object
+#'@param ... additional arguments passed on to process. 
 #'@rdname geoknife-function
 #'@export
 setGeneric(name="geoknife",def=function(stencil, fabric, knife, job, ...){standardGeneric("geoknife")})

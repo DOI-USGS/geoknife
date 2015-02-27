@@ -8,7 +8,7 @@ parseTimeseries(file, delim, keep.units = FALSE)
 }
 \arguments{
 \item{file}{a \code{\link{geoknife}} timeseries processing result file location
-(See \code{\link{checkProcess}}).}
+(See \code{\link{check}}).}
 
 \item{delim}{the file delimiter}
 
