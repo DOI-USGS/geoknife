@@ -49,14 +49,15 @@ setMethod("webdata", signature(), function(...) {
 setGeneric(name="times<-",def=function(.Object, value){standardGeneric("times<-")})
 
 #'@param .Object a \code{\link{webdata}} object
-#'@param value a POXIXct vector
-#'@usage
-#'times(webdata()) <- as.POXIXct(c("2012-11-04", "2012-11-12"))
-#'times(webdata())[1] <- as.POXIXct("2012-11-04")
+#'@param value a POSIXct vector
+#'@examples
+#'wd <- webdata()
+#'times(wd) <- as.POSIXct(c("2012-11-04", "2012-11-12"))
+#'times(wd)[1] <- as.POSIXct("2012-11-04")
 #'@export
 #'@rdname webdata-methods
 #'@aliases times<-,webdata-method
-setReplaceMethod(f = "times",signature = "webdata",
+setMethod(f = "times<-",signature = "webdata",
                  definition = function(.Object, value){
                    if (length(value) != 2){
                      stop('times input must be a POSIXct vector of length 2')
