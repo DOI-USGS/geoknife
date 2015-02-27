@@ -148,24 +148,7 @@ genericExecute	<-	function(url,requestXML){
 
 }
 
-setList	<-	function(ObjectField,varList){
-	if (!is.list(varList)){
-		stop("field data must be a list")
-	}
-	if (length(varList)>0){
-		# else, empty list passed to be set
-		vNames	<-	names(varList)
-		for (n in 1:length(vNames)){
-			if (!any(names(ObjectField)==vNames[n])){
-				stop(paste(vNames[n],"is an invalid field name",sep=' '))
-			}
-			ObjectField[vNames[n]]	<-	varList[n]
-		}
-	}
-	
-	return(ObjectField)
-}
-
+#'@importFrom XML htmlParse getNodeSet
 parseXMLnodes	<-	function(xml,parentKey,childKey,key="name"){
 	doc	<-	htmlParse(xml, useInternalNodes = TRUE)
   xpath <- sprintf('//%s/%s',parentKey,childKey)
@@ -176,7 +159,7 @@ parseXMLnodes	<-	function(xml,parentKey,childKey,key="name"){
 	values	<-	sapply(nodes,xmlValue)
 	return(values)
 }
-
+#'@importFrom XML htmlParse getNodeSet
 parseXMLattributes	<-	function(xmlURL,parentKey,childKey,key="name", rm.duplicates = FALSE){
 	doc	<-	htmlParse(xmlURL,useInternalNodes = TRUE)
 	nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"[@",childKey,"]"),collapse=""))
@@ -191,6 +174,7 @@ parseXMLattributes	<-	function(xmlURL,parentKey,childKey,key="name", rm.duplicat
   }
 	return(values)
 }
+#'@importFrom XML htmlParse getNodeSet
 parseXMLvalues	<-	function(xmlURL,key,  rm.duplicates = FALSE){
 	doc	<-	htmlParse(xmlURL,useInternalNodes = TRUE)
 	nodes	<-	getNodeSet(doc,paste(c("//",tolower(key)),collapse=""))

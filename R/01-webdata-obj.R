@@ -50,17 +50,17 @@ setMethod("webdata", signature(), function(...) {
 #'times(webdata())[1] <- as.POXIXct("2012-11-04")
 #'@aliases times<-,webdata-method
 #'@export
-setGeneric(name="times<-",def=function(.Object, values){standardGeneric("times<-")})
+setGeneric(name="times<-",def=function(.Object, value){standardGeneric("times<-")})
 
 
 setReplaceMethod(f = "times",signature = "webdata",
-                 definition = function(.Object, values){
-                   if (length(values) != 2){
+                 definition = function(.Object, value){
+                   if (length(value) != 2){
                      stop('times input must be a POSIXct vector of length 2')
                    }
-                   .Object@times <- values
+                   .Object@times <- value
                    
-                   if (!any(is.na(values)) && values[1] >= values[2]){
+                   if (!any(is.na(value)) && value[1] >= value[2]){
                      stop('time start must proceed time stop in "times" slot for webdata')
                    }
                    return(.Object)
@@ -91,24 +91,31 @@ setMethod(f = "variables",signature = "webdata",
 #'@rdname webdata-methods
 #'@aliases variables<-,webdata-method
 #'@export
-setGeneric(name="variables<-",def=function(.Object, values){standardGeneric("variables<-")})
+setGeneric(name="variables<-",def=function(.Object, value){standardGeneric("variables<-")})
 
 setMethod(f = "variables<-",signature = "webdata",
-          definition = function(.Object, values){
-            .Object@variables <- values
+          definition = function(.Object, value){
+            .Object@variables <- value
             return(.Object)
           })
+# 
+# 
+# setMethod("[", c("webdata", "integer", "missing", "ANY"),
+#           ## we won't support subsetting on j; dispatching on 'drop' doesn't
+#           ## make sense (to me), so in rebellion we'll quietly ignore it.
+#           function(x, i, j, ..., drop=TRUE)
+#           {
+#             ## .Object
+#             browser()
+#             ## clever: by default initialize is a copy constructor, too
+#             #initialize(.Object, times=.Object@times[i])
+#             initialize(x, times=x@times[i])
+#           })
 
-
-setMethod("[", c("webdata", "integer", "missing", "ANY"),
-          ## we won't support subsetting on j; dispatching on 'drop' doesn't
-          ## make sense (to me), so in rebellion we'll quietly ignore it.
-          function(x, i, j, ..., drop=TRUE)
-          {
-            ## .Object
-            browser()
-            ## clever: by default initialize is a copy constructor, too
-            #initialize(.Object, times=.Object@times[i])
-            initialize(x, times=x@times[i])
-          })
-
+#'@export
+quick_wd <- function(){
+  wd <- webdata(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
+                url = 'http://cida.usgs.gov/thredds/dodsC/prism',
+                variables = 'ppt')
+  return(wd)
+}

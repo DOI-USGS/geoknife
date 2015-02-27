@@ -1,4 +1,4 @@
-
+#'@importFrom XML htmlParse getNodeSet xmlValue
 defaultProcessInputs <- function(algorithm, wps_url, wps_version){
   processURL  <-	paste0(wps_url,'?service=WPS&version=',
                         wps_version,'&request=DescribeProcess',

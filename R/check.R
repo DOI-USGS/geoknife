@@ -13,11 +13,11 @@
 #'@title Check status of processing request
 #'@author Jordan S. Read
 #'@seealso \code{\link{startProcess}}
-#'@import XML
+#'@importFrom XML xmlTreeParse xmlNamespaceDefinitions xmlRoot
 #'@importFrom httr GET
 #'@examples 
-#'gk <- geoknife() # create geoknife object
-#'checkProcess(gk) # no process for empty geoknife object
+#'gj <- geojob() # create geojob object
+#'checkProcess(gj) # no process for empty geojob object
 #'@export            
 setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
 
@@ -26,14 +26,14 @@ setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProce
 setMethod(f = "checkProcess",signature = "geojob", definition = function(.Object){
 	
 	process	<-	list(status=NULL,URL=NULL)
-	if (.Object@processID=="<no active job>"){
+	if (id(.Object)=="<no active job>"){
 		process$status	<-	'none'
 		process$statusType <- 'none'
     return(process)
 	}
 
 	checkForComplete = tryCatch({
-    GET(url = .Object@processID)
+    GET(url = id(.Object))
     },error = function(e) {
       return(NULL)
       }

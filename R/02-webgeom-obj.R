@@ -1,9 +1,10 @@
-#'@importClassesFrom sp SpatialPointsDataFrame SpatialPolygonsDataFrame
-setUrl <- function(.Object, values){
-  if (length(values) != 1){
+
+
+setUrl <- function(.Object, value){
+  if (length(value) != 1){
     stop('url must be a single character string')
   }
-  .Object@url <- values
+  .Object@url <- value
 
   return(.Object)
 }
@@ -73,46 +74,24 @@ setMethod("webgeom", signature(), function(...) {
 #'@rdname webgeom-methods
 #'@aliases url<-,webgeom-method
 #'@export
-setGeneric(name="url<-",def=function(.Object, values){standardGeneric("url<-")})
+setGeneric(name="url<-",def=function(.Object, value){standardGeneric("url<-")})
 
-setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, values){
-  setURL(.Object, values)}
+setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, value){
+  setURL(.Object, value)}
   )
-
-
-
-
-#'@rdname webgeom-methods
-#'@aliases XML,webgeom-method
-#'@export
-setGeneric(name="XML",def=function(.Object){standardGeneric("XML")})
-
-setMethod(f = "XML",signature = "webgeom", definition = function(.Object){
-  return(xmlTreeParse('<wps:Reference xlink:href="http://cida.usgs.gov/gdp/geoserver/wfs">
-<wps:Body>
-<wfs:GetFeature service="WFS" version="1.1.0" outputFormat="text/xml; subtype=gml/3.1.1" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs ../wfs/1.1.0/WFS.xsd">
-<wfs:Query typeName="draw:junker_do_1">
-<wfs:PropertyName>the_geom</wfs:PropertyName>
-<wfs:PropertyName>ID</wfs:PropertyName>
-</wfs:Query>
-</wfs:GetFeature>
-</wps:Body>
-</wps:Reference>'))
-  }
-)
 
 #'@rdname webdata-methods
 #'@aliases url<-,webdata-method
 #'@export
-setGeneric(name="url<-",def=function(.Object, values){standardGeneric("url<-")})
+setGeneric(name="url<-",def=function(.Object, value){standardGeneric("url<-")})
 
-setMethod(f = "url<-",signature = "webdata", definition = function(.Object, values){
-  setURL(.Object, values)}
+setMethod(f = "url<-",signature = "webdata", definition = function(.Object, value){
+  setURL(.Object, value)}
 )
 #'@rdname webgeom-methods
 #'@aliases url<-,webgeom-method
-setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, values){
-  setURL(.Object, values)}
+setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, value){
+  setURL(.Object, value)}
 )
 
 #'@rdname webdata-methods
@@ -129,4 +108,10 @@ setMethod(f = "url",signature = "webgeom",
             return(.Object@url)
           })
 
-
+#'@export
+quick_wg <- function(){
+  wg <- webgeom(geom = "sample:CONUS_states", 
+                attribute = "STATE",
+                IDs = "CONUS_states.245")
+  return(wg)
+}

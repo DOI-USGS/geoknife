@@ -5,17 +5,34 @@
 \alias{geojob}
 \alias{geojob,ANY-method}
 \alias{geojob,geojob-method}
+\alias{xml}
+\alias{xml,geojob-method}
+\alias{xml<-}
+\alias{xml<-,geojob-method}
 \title{create geojob object}
 \usage{
 geojob(...)
 
 \S4method{geojob}{ANY}(...)
+
+xml(.Object) <- value
+
+xml(.Object)
 }
 \value{
 the geojob object
 }
 \description{
 A class representing a geoknife job (\code{geojob}).
+}
+\examples{
+xml <- "<foo> <bar> text <baz/> </bar> </foo>"
+gj <- geojob()
+xml(gj) <- xml
+xml(gj)
+xml <- "<foo> <bar> text <baz/> </bar> </foo>"
+gj <- geojob(xml = xml)
+xml(gj)
 }
 \author{
 Jordan S Read

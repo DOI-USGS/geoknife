@@ -7,7 +7,7 @@
 #'@return list of timeseries values. 
 #'@docType methods
 #'@keywords methods
-#'@import XML
+#'@importFrom XML xmlGetAttr getNodeSet xmlParse
 #'@author Jordan S. Read
 #'@export
 #'@examples
