@@ -4,9 +4,9 @@
 setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML")})
 
 #'@title XML from set of objects
-#'@param stencil
-#'@param fabric
-#'@param webprocess 
+#'@param stencil a \code{\link{webdata}} OR \code{\link{simplegeom}} object
+#'@param fabric a \code{\link{webdata}} object
+#'@param knife a \code{\link{webprocess}} object
 #'@return XML as ?string?
 #'
 #'@examples
@@ -14,20 +14,26 @@ setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML"
 #'wd <- quick_wd()
 #'wg <- quick_wg()
 #'XML(wg, wd, wp)
+#'wp <- quick_wp()
+#'wd <- quick_wd()
+#'sg <- quick_sp()
+#'XML(sg, wd, wp)
 #'@rdname XML-method
-#'@importFrom XML newXMLNode addChildren toString.XMLNode
+#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
 #'@export
 setMethod(f = "XML",signature = c("ANY","webdata","webprocess"), 
           definition = function(stencil, fabric, knife){
             #stencil can be webgeom OR simplegeom (others?)
   # private function for geoknife that turns geoknife object into process input xml
   
-  top    <-	newXMLNode(name='wps:Execute',
-                       attrs=c('service'="WPS",'version'=knife@WPS_VERSION,
-                               'xsi:schemaLocation'=paste(c(knife@WPS_NAMESPACE,knife@WPS_SCHEMA_LOCATION),collapse=" ")),
-                       namespaceDefinitions=c('wps'=knife@WPS_NAMESPACE,'ows'=knife@OWS_NAMESPACE,
-                                              'ogc' = knife@OGC_NAMESPACE,
-                                              'xlink'=knife@XLINK_NAMESPACE,'xsi'=knife@XSI_NAMESPACE))
+  top <- newXMLNode(name='wps:Execute',
+                    attrs=c('service'="WPS",'version'=knife@WPS_VERSION,
+                            'xsi:schemaLocation' = paste(c(knife@WPS_NAMESPACE,knife@WPS_SCHEMA_LOCATION),collapse=" ")),
+                    namespaceDefinitions=c('wps' = knife@WPS_NAMESPACE,
+                                           'ows' = knife@OWS_NAMESPACE,
+                                           'ogc' = knife@OGC_NAMESPACE,
+                                           'xlink' = knife@XLINK_NAMESPACE,
+                                           'xsi' = knife@XSI_NAMESPACE))
   
   
   id	<-	newXMLNode("ows:Identifier",newXMLTextNode(knife@algorithm),parent=top)
@@ -92,12 +98,13 @@ addResponse <- function(.Object, xmlNodes){
   requestXML <-	top
 }
 
-findGeomNode <- function(xmlNodes){
+findIdentifierNode <- function(xmlNodes, name){
   featureXpath <- '//wps:DataInputs/wps:Input/ows:Identifier'
-  dataElementIndx <- which(sapply(getNodeSet(xmlNodes,featureXpath),xmlValue) == "FEATURE_COLLECTION")
+  dataElementIndx <- which(sapply(getNodeSet(xmlNodes,featureXpath),xmlValue) == name)
   geomNode <- getNodeSet(xmlNodes,paste0(featureXpath,'/parent::node()[1]') )[[dataElementIndx]] 
   return(geomNode)
 }
+
 setGeneric(name="addGeom",def=function(stencil, xmlNodes){standardGeneric("addGeom")})
 
 #'@importFrom XML newXMLNode addChildren
@@ -105,7 +112,7 @@ setMethod(f = "addGeom",signature = c("webgeom","ANY"),
           definition = function(stencil, xmlNodes){
             
 
-  inEL <- findGeomNode(xmlNodes)
+  inEL <- findIdentifierNode(xmlNodes, 'FEATURE_COLLECTION')
   # reference is a sibling of the FEATURE_COLLECTION ID
   inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=url(stencil)))
   addChildren(inEL,inDatEL) # see if we can do this as a method to webgeom
@@ -139,16 +146,21 @@ setMethod(f = "addGeom",signature = c("webgeom","ANY"),
 setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
           definition = function(stencil, xmlNodes){
             
+  filterID <- 'ID'
   # -- also, need to set the FEATURE_ATTRIBUTE_NAME
-  inEL <- findGeomNode(xmlNodes)
+  featAttr <- findIdentifierNode(xmlNodes, 'FEATURE_ATTRIBUTE_NAME')
+  # modify name of filtering used by GDP
+  xmlValue(xmlChildren(xmlChildren(featAttr)$Data)[[1]]) <- filterID 
+  inEL <- findIdentifierNode(xmlNodes, 'FEATURE_COLLECTION')
   inDatEL  <-	newXMLNode('wps:Data')
   addChildren(inEL,inDatEL)
   # parameterize this...
-  compDatEL	<-	newXMLNode('wps:ComplexData',attrs=c("mimeType"="text/xml",#,"encoding"="UTF-8",
-                                                    "schema"="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd")) # schema needed?
+  compDatEL	<-	newXMLNode('wps:ComplexData',
+                          attrs=c("mimeType"="text/xml",#,"encoding"="UTF-8",
+                                  "schema"="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd")) # schema needed?
   addChildren(inDatEL,compDatEL)
   
-  gmlFeatEL	<-	newXMLNode('gml:featureMembers',
+  gmlFeatEL <- newXMLNode('gml:featureMembers',
                           namespaceDefinitions=c(
                             'gml'="http://www.opengis.net/gml",
                             'draw'= stencil@DRAW_NAMESPACE),
@@ -161,14 +173,11 @@ setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
   geom <- stencil@sp
   
   lng	<-	length(geom) # number of polygons
-  browser()
   for (j in 1:lng){
     
     gmlBoxEL  <-	newXMLNode('draw:poly',attrs=c("gml:id"=paste("poly.",j,sep='')))
     
     addChildren(gmlFeatEL,gmlBoxEL) 
-    
-    
     gmlGeomEL  <-	newXMLNode('draw:the_geom')
     
     ringCoords <- geom@polygons[[j]]@Polygons[[1]]@coords
@@ -178,10 +187,8 @@ setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
     ring[seq(from = 2,by = 2,length.out = nrow(ringCoords))] <- ringCoords[,1]
     ring.val	<-	paste(ring,collapse = ' ')
     drawID <- geom@polygons[[j]]@ID
-    
-    
-    
-    drawName  <-	newXMLNode('draw:ID', newXMLTextNode(drawID))
+
+    drawName  <-	newXMLNode(paste0('draw:',filterID), newXMLTextNode(drawID))
     addChildren(gmlBoxEL,gmlGeomEL, drawName)
     
     gmlPolyEL	<-	newXMLNode('gml:MultiSurface',

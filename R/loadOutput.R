@@ -2,12 +2,12 @@
 #'
 #'@details a \code{geoknife} method for loading data into R from a completed processing request
 #'
-#'@param .Object a \code{\link{geoknife}} object with a successful processID. 
-#'(See \code{\link{checkProcess}}).
+#'@param .Object a \code{\link{geojob}} object with a successful processID. 
+#'(See \code{\link{check}}).
 #'@return list of timeseries values. 
 #'@docType methods
 #'@keywords methods
-#'@importFrom XML xmlGetAttr getNodeSet xmlParse
+#'@importFrom XML xmlGetAttr getNodeSet xmlParse xmlChildren xmlName xpathApply
 #'@author Jordan S. Read
 #'@export
 #'@examples
@@ -37,20 +37,20 @@ setGeneric(name="loadOutput",def=function(.Object){standardGeneric("loadOutput")
 #'@aliases loadOutput
 setMethod(f = "loadOutput",signature="geojob",
   definition = function(.Object){
-            if (isSuccessful(.Object)){
+            if (successful(.Object)){
               output <- outputParse(.Object)
               return(output)
             } else {
               stop('processing is incomplete or has failed. See checkProcess(). Processing status: ',
-                   checkProcess(.Object)$statusType)
+                   check(.Object)$statusType)
             }
             
           }
   )
 
 outputParse = function(.Object){
-  funcInfo <- getParseFunction(.Object@processID)
-  fileLocation <- checkProcess(.Object)$URL
+  funcInfo <- getParseFunction(id(.Object))
+  fileLocation <- check(.Object)$URL
   output <- do.call(funcInfo$function_name, args = list(file = fileLocation, 'delim' = funcInfo$delim))
   return(output)
 }
@@ -60,7 +60,7 @@ getParseFunction <- function(processID){
                             "text/csv" = list(function_name = 'parseTimeseries', delim=','),
                             'text/plain' = list(function_name = 'parseTimeseries', delim=' '))
   # find output type
-  doc    <-  htmlParse(processID, isURL=TRUE, useInternalNodes = TRUE)
+  doc <-  htmlParse(processID, isURL=TRUE, useInternalNodes = TRUE)
   type <- xmlGetAttr(getNodeSet(doc,"//reference[@mimetype]")[[1]],'mimetype')
   if (!type %in% names(function_handlers)){
     stop('output ',type, ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new')

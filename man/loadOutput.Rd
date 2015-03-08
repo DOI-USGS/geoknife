@@ -8,8 +8,8 @@
 loadOutput(.Object)
 }
 \arguments{
-\item{.Object}{a \code{\link{geoknife}} object with a successful processID.
-(See \code{\link{checkProcess}}).}
+\item{.Object}{a \code{\link{geojob}} object with a successful processID.
+(See \code{\link{check}}).}
 }
 \value{
 list of timeseries values.

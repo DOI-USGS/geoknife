@@ -1,7 +1,7 @@
 setClass(
   Class = "webprocess",
   representation = representation(
-    wps_url="character",
+    url="character",
     algorithm="list",
     processInputs="list",
     WPS_VERSION="character",
@@ -19,7 +19,7 @@ setClass(
 setMethod(f="initialize",signature="webprocess",
           definition=function(
             .Object, 
-            wps_url = 'http://cida.usgs.gov/gdp/process/WebProcessingService', 
+            url = 'http://cida.usgs.gov/gdp/process/WebProcessingService', 
             algorithm = list('Area Grid Statistics (weighted)'=
                                "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
             )
@@ -39,9 +39,9 @@ setMethod(f="initialize",signature="webprocess",
             
             .Object@emailK      = 'gov.usgs.cida.gdp.wps.algorithm.communication.EmailWhenFinishedAlgorithm'
             
-            .Object@wps_url = wps_url
+            .Object@url = url
             .Object@algorithm  <- algorithm
-            processInputs <- defaultProcessInputs(algorithm = .Object@algorithm[[1]], .Object@wps_url, .Object@WPS_VERSION)
+            processInputs <- defaultProcessInputs(algorithm = .Object@algorithm[[1]], .Object@url, .Object@WPS_VERSION)
             .Object@processInputs  <-	processInputs
             
             return(.Object)
@@ -91,10 +91,25 @@ setMethod(f = "algorithm<-",signature = "webprocess",
                    .Object <- initialize(.Object, algorithm = value)
                    return(.Object)
                  })
+
 #'@export
-quick_wp <- function(){
+setMethod("url<-","webprocess", function(.Object, value){
+  .Object@url <- value
+  return(.Object)
+}
+)
+
+#'@export
+setMethod("url","webprocess", function(.Object){
+  value <- .Object@url
+  return(value)
+}
+)
+
+#'@export
+quick_wp <- function(...){
   # with defaults
-  wp <- webprocess()
+  wp <- webprocess(...)
   # need to code setters:
   
   wp@processInputs$DATASET_URI = 'dods://cida.usgs.gov/thredds/dodsC/prism'

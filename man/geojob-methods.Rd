@@ -19,6 +19,13 @@ xml(.Object) <- value
 
 xml(.Object)
 }
+\arguments{
+\item{...}{additional arguments passed to initialize method}
+
+\item{.Object}{a \code{\link{geojob}} object}
+
+\item{value}{a character string of xml}
+}
 \value{
 the geojob object
 }

@@ -1,7 +1,7 @@
 #'@details checkProcess is a method for checking the process status of an active (executed)
 #' \code{geoknife} object. The method returns \code{process}, which is a list containing
 #' two fields: \code{status} and \code{URL}. If the \code{geoknife} object has not been executed
-#' (see \code{\link{startProcess}}), this method returns \code{status}='none' and \code{URL}=NULL.
+#' (see \code{\link{start}}), this method returns \code{status}='none' and \code{URL}=NULL.
 #'
 #'@param .Object a \code{geoknife} object with an active GDP process request.
 #'@return \code{process}, a list containing
@@ -12,18 +12,18 @@
 #'@description Check status of processing request
 #'@title Check status of processing request
 #'@author Jordan S. Read
-#'@seealso \code{\link{startProcess}}
+#'@seealso \code{\link{start}}
 #'@importFrom XML xmlTreeParse xmlNamespaceDefinitions xmlRoot
 #'@importFrom httr GET
 #'@examples 
 #'gj <- geojob() # create geojob object
-#'checkProcess(gj) # no process for empty geojob object
+#'check(gj) # no process for empty geojob object
 #'@export            
-setGeneric(name="checkProcess",def=function(.Object){standardGeneric("checkProcess")})
+setGeneric(name="check",def=function(.Object){standardGeneric("check")})
 
 
 # '@rdname checkProcess
-setMethod(f = "checkProcess",signature = "geojob", definition = function(.Object){
+setMethod(f = "check",signature = "geojob", definition = function(.Object){
 	
 	process	<-	list(status=NULL,URL=NULL)
 	if (id(.Object)=="<no active job>"){

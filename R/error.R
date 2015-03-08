@@ -1,12 +1,12 @@
 
 #'@export
-setGeneric(name="isError",def=function(.Object){standardGeneric("isError")})
+setGeneric(name="error",def=function(.Object){standardGeneric("error")})
 
-# '@rdname isError-methods
-# '@aliases isError,geoknife-method
-setMethod(f = "isError",signature = "geojob", definition = function(.Object){
+# '@rdname error-methods
+# '@aliases error,geojob-method
+setMethod(f = "error",signature = "geojob", definition = function(.Object){
 	
-	status = checkProcess(.Object)
+	status = check(.Object)
 	
 	return(status$statusType == "ProcessFailed")
 })

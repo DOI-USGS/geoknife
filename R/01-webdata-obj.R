@@ -1,4 +1,4 @@
-
+library(methods)
 setClass(
   Class = "webdata",
   representation = representation(
@@ -30,14 +30,13 @@ setMethod("initialize", signature = "webdata",
 #' @author Jordan S Read
 #' @rdname webdata-methods
 #' @export
-
 setGeneric("webdata", function(...) {
   standardGeneric("webdata")
 })
 
-
-#' @rdname webdata-methods
-#' @aliases webdata,webdata-method
+#'@param ... additional arguments passed initialize method (e.g., times vector)
+#'@rdname webdata-methods
+#'@aliases webdata,webdata-method
 setMethod("webdata", signature(), function(...) {
   ## create new webdata object
   webdata <- new("webdata",...)
@@ -45,15 +44,20 @@ setMethod("webdata", signature(), function(...) {
 })
 
 #'@rdname webdata-methods
-#'@usage
-#'times(webdata()) <- as.POXIXct(c("2012-11-04", "2012-11-12"))
-#'times(webdata())[1] <- as.POXIXct("2012-11-04")
 #'@aliases times<-,webdata-method
 #'@export
 setGeneric(name="times<-",def=function(.Object, value){standardGeneric("times<-")})
 
-
-setReplaceMethod(f = "times",signature = "webdata",
+#'@param .Object a \code{\link{webdata}} object
+#'@param value a POSIXct vector
+#'@examples
+#'wd <- webdata()
+#'times(wd) <- as.POSIXct(c("2012-11-04", "2012-11-12"))
+#'times(wd)[1] <- as.POSIXct("2012-11-04")
+#'@export
+#'@rdname webdata-methods
+#'@aliases times<-,webdata-method
+setMethod(f = "times<-",signature = "webdata",
                  definition = function(.Object, value){
                    if (length(value) != 2){
                      stop('times input must be a POSIXct vector of length 2')
@@ -83,6 +87,10 @@ setMethod(f = "times",signature = "webdata",
 #'@export
 setGeneric(name="variables",def=function(.Object){standardGeneric("variables")})
 
+#'@param .Object a \code{\link{webdata}} object
+#'@rdname webdata-methods
+#'@aliases variables,webdata-method
+#'@export
 setMethod(f = "variables",signature = "webdata",
           definition = function(.Object){
             return(.Object@variables)
@@ -93,24 +101,17 @@ setMethod(f = "variables",signature = "webdata",
 #'@export
 setGeneric(name="variables<-",def=function(.Object, value){standardGeneric("variables<-")})
 
+#'@param .Object a \code{\link{webdata}} object
+#'@param value a character vector for variables
+#'@rdname webdata-methods
+#'@aliases variables,webdata-method
+#'@export
 setMethod(f = "variables<-",signature = "webdata",
           definition = function(.Object, value){
             .Object@variables <- value
             return(.Object)
           })
-# 
-# 
-# setMethod("[", c("webdata", "integer", "missing", "ANY"),
-#           ## we won't support subsetting on j; dispatching on 'drop' doesn't
-#           ## make sense (to me), so in rebellion we'll quietly ignore it.
-#           function(x, i, j, ..., drop=TRUE)
-#           {
-#             ## .Object
-#             browser()
-#             ## clever: by default initialize is a copy constructor, too
-#             #initialize(.Object, times=.Object@times[i])
-#             initialize(x, times=x@times[i])
-#           })
+
 
 #'@export
 quick_wd <- function(){

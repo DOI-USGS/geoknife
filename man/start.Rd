@@ -8,30 +8,28 @@
 start(.Object)
 }
 \arguments{
-\item{.Object}{a \code{geoknife} object ot be used to formulate GDP process request.}
+\item{.Object}{a \code{\link{geojob}} object}
 }
 \value{
-An \code{geoknife} object with an active GDP process request.
+A \code{\link{geojob}} object with an active GDP process request.
 }
 \description{
 Start process for \code{geojob}
 }
 \details{
-startProcess is a method for submitting a web processing request for the \code{geoknife} object.
+start is a method for submitting a geo-web processing request.
 }
 \examples{
-wp <- quick_wp()
+wp <- quick_wp(url = 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
 wd <- quick_wd()
 wg <- quick_wg()
 gj <- geojob()
 xml(gj) <- XML(wg, wd, wp)
-url(gj) <- wp@wps_url
+url(gj) <- url(wp)
 gj <- start(gj)
-id(gj) # get the processing ID for the geojob
-# -- is execute true (geoknife) or "start(geojob)"
 }
 \seealso{
 \code{check}
 }
-\keyword{startProcess}
+\keyword{methods}
 

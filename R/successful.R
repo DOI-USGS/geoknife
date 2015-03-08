@@ -1,15 +1,15 @@
 #'@title Convenience function for GDP process state
 #'@aliases
-#'isSuccessful
-#'isRunning
-#'isError
+#'successful
+#'running
+#'error
 #'
 #'@usage
-#'isSuccessful(.Object)
-#'isError(.Object)
-#'isRunning(.Object)
+#'successful(.Object)
+#'error(.Object)
+#'running(.Object)
 #'
-#'@param .Object a \code{geoknife} object with an active GDP process request.
+#'@param .Object a \code{\link{geojob}} object
 #'@return TRUE/FALSE indicating if process is in the given state (error, processing, successful)
 #'@description Simple wrapper to check process status
 #'
@@ -18,43 +18,28 @@
 #'
 #'@examples
 #'\dontrun{
-#'gk <- geoknife() # create geoknife object
-#'gk # print geoknife object
+#'wp <- quick_wp(url = 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
+#'wd <- quick_wd()
+#'wg <- quick_wg()
+#'gj <- geojob()
+#'xml(gj) <- XML(wg, wd, wp)
+#'url(gj) <- url(wp)
+#'gj <- start(gj)
 #'
-#'linearRing = bufferPoint(c(-111.48,36.95))
-#'setFeature(gk) <-list(LinearRing=linearRing)
-#'
-#'#get a list of available processing algorithms
-#'getAlgorithms(gk)
-#'
-#'#set processing algorithm to feature weighted grid statistics (unweighted will likely fail, because the ring won't intersect the centroids)
-#'algorithm(gk) <- getAlgorithms(gk)[4] # feature weighted
-#'
-#'# set the post inputs for the processing dataset
-#'setProcessInputs(gk) <- list('DATASET_ID'='prcp',
-#'														 'DATASET_URI'='http://thredds.daac.ornl.gov/thredds/dodsC/daymet-agg/daymet-agg.ncml',
-#'														 'TIME_START'='2010-01-01T00:00:00Z',
-#'														 'TIME_END'='2010-01-03T00:00:00Z',
-#'														 'DELIMITER'='TAB')
-#'gk # print geoknife object contents
-#'
-#'# kick off your request
-#'gk <- startProcess(gk)
-#'
-#'isRunning(gk)
-#'isError(gk)
-#'isSuccessful(gk)
+#'running(gk)
+#'error(gk)
+#'successful(gk)
 #'}
 #'
 #'@export
-setGeneric(name="isSuccessful",def=function(.Object){standardGeneric("isSuccessful")})
+setGeneric(name="successful",def=function(.Object){standardGeneric("successful")})
 
 
-# '@rdname isSuccessful-methods
-# '@aliases isSuccessful,geoknife-method
-setMethod(f = "isSuccessful",signature = "geojob", definition = function(.Object){
+# '@rdname successful-methods
+# '@aliases successful,geoknife-method
+setMethod(f = "successful",signature = "geojob", definition = function(.Object){
 	
-	status = checkProcess(.Object)
+	status = check(.Object)
 	
 	return(status$statusType == "ProcessSucceeded")
 	

@@ -17,21 +17,21 @@ setMethod("initialize", signature = "simplegeom",
 })
 
 
-#' create simplegeom object
-#' @description A class representing a simple feature.
+#'create simplegeom object
+#'@description A class representing a simple feature.
 #'
 #'
-#' @return the simplegeom object simple feature
-#' @author Jordan S Read
-#' @rdname simplegeom-methods
-#' @export
+#'@return the simplegeom object simple feature
+#'@author Jordan S Read
+#'@rdname simplegeom-methods
+#'@export
 setGeneric("simplegeom", function(...) {
   standardGeneric("simplegeom")
 })
 
-
-#' @rdname simplegeom-methods
-#' @aliases simplegeom,simplegeom-method
+#'@param ... additional arguments passed to SpatialPolygonsDataFrame
+#'@rdname simplegeom-methods
+#'@aliases simplegeom,simplegeom-method
 setMethod("simplegeom", signature(), function(...) {
   ## create new simplegeom object
   # ... are additional arguments passed to SpatialPolygonsDataFrame
