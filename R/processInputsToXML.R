@@ -19,7 +19,7 @@ setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML"
 #'sg <- quick_sp()
 #'XML(sg, wd, wp)
 #'@rdname XML-method
-#'@importFrom XML newXMLNode addChildren toString.XMLNode
+#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
 #'@export
 setMethod(f = "XML",signature = c("ANY","webdata","webprocess"), 
           definition = function(stencil, fabric, knife){
