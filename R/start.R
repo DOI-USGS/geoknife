@@ -23,13 +23,13 @@ setGeneric(name="start",def=function(.Object){standardGeneric("start")})
 # '@aliases start,geoknife-method
 setMethod(f = "start",signature = "geojob",definition = function(.Object){
 	
-	requestXML	<-	xml(.Object)
+	requestXML <- xml(.Object)
 	data <- genericExecute(url = url(.Object), requestXML)
   
-	xmltext 	<-	xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
-	response	<-	xmlRoot(xmltext)
-	responseNS	<-	xmlNamespaceDefinitions(response, simplify = TRUE)  
-	processID	<-	xmlGetAttr(response,"statusLocation")
+	xmltext <- xmlTreeParse(data, asText = TRUE,useInternalNodes=TRUE)
+	response <- xmlRoot(xmltext)
+	responseNS <- xmlNamespaceDefinitions(response, simplify = TRUE)  
+	processID <- xmlGetAttr(response,"statusLocation")
 	
 	id(.Object)	<-	processID
 	return(.Object)

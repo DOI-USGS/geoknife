@@ -29,5 +29,9 @@ wp <- quick_wp()
 wd <- quick_wd()
 wg <- quick_wg()
 XML(wg, wd, wp)
+wp <- quick_wp()
+wd <- quick_wd()
+sg <- quick_sp()
+XML(sg, wd, wp)
 }
 
