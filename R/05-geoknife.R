@@ -2,10 +2,12 @@
   packageStartupMessage("Although this software program has been used by the U.S. Geological Survey (USGS), no warranty, expressed or implied, is made by the USGS or the U.S. Government as to the accuracy and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and no responsibility is assumed by the USGS in connection therewith.")
 }
 
+missing_msg <- function() stop('stencil and fabric, OR job must be supplied')
+
 #'@title geoknife-fcn
 #'@param stencil a geometric feature (the "cookie-cutter"). Many input types are supported. [list them]
 #'@param fabric a dataset. Can be \code{\link{webdata}} or recognized shortname (e.g., 'prism')
-#'@param knife (optional) a \code{\link{webprocessing}} object
+#'@param knife (optional) a \code{\link{webprocess}} object
 #'@param job (optional) a \code{\link{geojob}} object
 #'@param ... additional arguments passed on to process. 
 #'@rdname geoknife-function
@@ -20,65 +22,40 @@
 #'@export
 setGeneric(name="geoknife",def=function(stencil, fabric, knife, job, ...){standardGeneric("geoknife")})
 
-simpleStart <- function(stencil, fabric, knife){
-  geojob <- geojob()
-  xml(geojob) <- XML(stencil, fabric, knife)
-  url(geojob) <- url(knife)
-  geojob <- start(geojob)
-  return(geojob)
-}
 
-setMethod("geoknife", signature = c("webgeom", "webdata", "webprocess","missing"), 
+setMethod("geoknife", signature = c("ANY", "webdata", "webprocess","missing"), 
           definition = function(stencil, fabric, knife, job, ...) {
-            simpleStart(stencil, fabric, knife)
-          }
-)
-
-setMethod("geoknife", signature = c("simplegeom", "webdata", "webprocess","missing"), 
-          definition = function(stencil, fabric, knife, job, ...) {
-            simpleStart(stencil, fabric, knife)
-          }
-)
-
-
-setMethod("geoknife", signature = c("ANY", "ANY", "webprocess","missing"), 
-          definition = function(stencil, fabric, knife, job, ...) {
-            cat('basic, all items can be butchered into objects\n')
-            webgeom <- butcher(stencil, webgeom())
-            webdata <- butcher(fabric, webdata())
-            geojob <- geoknife(webgeom, webdata, knife, ...)
+            geojob <- geojob()
+            xml(geojob) <- XML(stencil, fabric, knife)
+            url(geojob) <- url(knife)
+            geojob <- start(geojob)
             return(geojob)
           }
 )
 
-setMethod("geoknife", signature = c("ANY", "ANY", "geojob","missing"), 
+
+
+setMethod("geoknife", signature = c("ANY", "ANY", "ANY","missing"), 
           definition = function(stencil, fabric, knife, job, ...) {
             cat('basic, all items can be butchered into objects\n')
-            webgeom <- butcher(stencil, webgeom())
-            webdata <- butcher(fabric, webdata())
-            webprocess <- butcher(knife, webprocess())
-            geojob <- geoknife(webgeom, webdata, webprocess, ...)
+            webdata <- webdata(fabric)
+            webprocess <- webprocess(knife)
+            geojob <- geoknife(stencil, webdata, webprocess, ...)
             return(geojob)
           }
 )
+
 
 setMethod("geoknife", signature = c("ANY", "ANY", "missing", "missing"), 
           definition = function(stencil, fabric, knife, job, ...) {
-            webgeom <- butcher(stencil, webgeom())
-            webdata <- butcher(fabric, webdata())
-            geojob <- geoknife(webgeom, webdata, webprocess(), ...)
+            geojob <- geoknife(stencil, fabric, webprocess(), ...)
             return(geojob)
-            cat('basic, all objects can be parsed. missing webprocess\n')
           }
 )
 
 setMethod("geoknife", signature = c("missing", "missing", "missing", "geojob"), 
           definition = function(stencil, fabric, knife, job, ...) {
-            cat('basic, all objects will come from geojob\n')
-            webgeom <- butcher(job, webgeom())
-            webdata <- butcher(job, webdata())
-            webprocess <- butcher(job, webprocess())
-            geojob <- geoknife(webgeom, webdata, webprocess, ...)
+            geojob <- start(job)
             return(geojob)
           }
 )
@@ -87,6 +64,9 @@ setMethod("geoknife", signature = c("ANY", "missing", "missing", "missing"),
           definition = function(stencil, fabric, knife, job, ...) missing_msg()
 )
 setMethod("geoknife", signature = c("missing", "ANY", "missing", "missing"), 
+          definition = function(stencil, fabric, knife, job, ...) missing_msg()
+)
+setMethod("geoknife", signature = c("missing", "missing", "ANY", "missing"), 
           definition = function(stencil, fabric, knife, job, ...) missing_msg()
 )
 setProcessID	<-	function(.Object,processID){
