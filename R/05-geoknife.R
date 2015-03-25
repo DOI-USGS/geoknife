@@ -9,15 +9,37 @@
 #'@param job (optional) a \code{\link{geojob}} object
 #'@param ... additional arguments passed on to process. 
 #'@rdname geoknife-function
+#'@examples
+#'wp <- quick_wp(url = 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
+#'wd <- quick_wd()
+#'wg <- quick_wg()
+#'geoknife(stencil = wg, fabric = wd, knife = wp)
+#'sp <- quick_sp()
+#'job <- geoknife(stencil = sp, fabric = wd, knife = wp)
+#'check(job)
 #'@export
 setGeneric(name="geoknife",def=function(stencil, fabric, knife, job, ...){standardGeneric("geoknife")})
 
+simpleStart <- function(stencil, fabric, knife){
+  geojob <- geojob()
+  xml(geojob) <- XML(stencil, fabric, knife)
+  url(geojob) <- url(knife)
+  geojob <- start(geojob)
+  return(geojob)
+}
+
 setMethod("geoknife", signature = c("webgeom", "webdata", "webprocess","missing"), 
           definition = function(stencil, fabric, knife, job, ...) {
-            cat('all objects are good\n')
-            return('!geojob!')
+            simpleStart(stencil, fabric, knife)
           }
 )
+
+setMethod("geoknife", signature = c("simplegeom", "webdata", "webprocess","missing"), 
+          definition = function(stencil, fabric, knife, job, ...) {
+            simpleStart(stencil, fabric, knife)
+          }
+)
+
 
 setMethod("geoknife", signature = c("ANY", "ANY", "webprocess","missing"), 
           definition = function(stencil, fabric, knife, job, ...) {

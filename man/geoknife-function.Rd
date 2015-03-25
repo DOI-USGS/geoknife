@@ -20,4 +20,13 @@ geoknife(stencil, fabric, knife, job, ...)
 \description{
 geoknife-fcn
 }
+\examples{
+wp <- quick_wp(url = 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
+wd <- quick_wd()
+wg <- quick_wg()
+geoknife(stencil = wg, fabric = wd, knife = wp)
+sp <- quick_sp()
+job <- geoknife(stencil = sp, fabric = wd, knife = wp)
+check(job)
+}
 
