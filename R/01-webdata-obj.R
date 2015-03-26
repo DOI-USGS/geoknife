@@ -24,7 +24,7 @@ setMethod("initialize", signature = "webdata",
             return(.Object)
           })
 
-#' create webdata object
+#' @title create webdata object
 #' @description A class representing a web dataset.
 #'
 #' @slot times value of type \code{"POSIXct"}, start and stop dates for data
@@ -34,6 +34,10 @@ setMethod("initialize", signature = "webdata",
 #' @return the webdata object representing a dataset and parameters
 #' @author Jordan S Read
 #' @rdname webdata-methods
+#' @docType methods
+#' @aliases 
+#' webdata
+#' character
 #' @export
 setGeneric("webdata", function(value, ...) {
   standardGeneric("webdata")
@@ -42,15 +46,16 @@ setGeneric("webdata", function(value, ...) {
 #'@param value character name of dataset or [others supported in the future]
 #'@param ... additional arguments passed initialize method (e.g., times vector)
 #'@rdname webdata-methods
-#'@aliases webdata,webdata-method
-setMethod("webdata", signature("missing"), function(value, ...) {
+#'@aliases webdata
+setMethod("webdata", signature(value = "missing"), function(value, ...) {
   ## create new webdata object
   webdata <- new("webdata",...)
   return(webdata)
 })
 
-
-setMethod("webdata", signature("character"), function(value, ...) {
+#'@rdname webdata-methods
+#'@aliases character
+setMethod("webdata", signature(value = "character"), function(value, ...) {
   ## create new webdata object with a character input (for dataset matching)
   if (value != 'prism') stop("character input for webdata not supported for '", value,"'")
   

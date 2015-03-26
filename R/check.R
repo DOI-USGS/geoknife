@@ -7,23 +7,25 @@
 #'@return \code{process}, a list containing
 #' \code{status} and \code{URL}. 
 #'
-#' @docType methods
+#'@docType methods
 #'@keywords checkProcess
 #'@description Check status of processing request
 #'@title Check status of processing request
+#'@aliases check
 #'@author Jordan S. Read
 #'@seealso \code{\link{start}}
 #'@importFrom XML xmlTreeParse xmlNamespaceDefinitions xmlRoot
 #'@importFrom httr GET
+#'@rdname check-geojob
 #'@examples 
 #'gj <- geojob() # create geojob object
 #'check(gj) # no process for empty geojob object
 #'@export            
 setGeneric(name="check",def=function(.Object){standardGeneric("check")})
 
-
-# '@rdname checkProcess
-setMethod(f = "check",signature = "geojob", definition = function(.Object){
+#'@rdname check-geojob
+#'@aliases check,geojob
+setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Object){
 	
 	process	<-	list(status=NULL,URL=NULL)
 	if (id(.Object)=="<no active job>"){

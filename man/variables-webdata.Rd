@@ -3,15 +3,15 @@
 \docType{methods}
 \name{variables}
 \alias{variables}
-\alias{variables,webdata}
 \alias{variables,webdata-method}
-\alias{variables<-,webdata,character}
+\alias{variables<-}
 \alias{variables<-,webdata,character-method}
-\alias{webdata}
 \title{the variables of a webdata object}
 \usage{
 variables(.Object)
 variables(.Object) <- 'ppt'
+
+variables(.Object) <- value
 
 \S4method{variables}{webdata}(.Object)
 

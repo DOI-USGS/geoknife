@@ -11,7 +11,7 @@ setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML"
 #'
 #'@examples
 #'wp <- quick_wp()
-#'wd <- quick_wd()
+#'wd <- webdata('prism')
 #'wg <- quick_wg()
 #'XML(wg, wd, wp)
 #'wp <- quick_wp()

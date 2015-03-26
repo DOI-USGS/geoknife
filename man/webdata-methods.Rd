@@ -2,14 +2,17 @@
 % Please edit documentation in R/01-webdata-obj.R
 \docType{methods}
 \name{webdata}
+\alias{character}
 \alias{webdata}
+\alias{webdata,character-method}
 \alias{webdata,missing-method}
-\alias{webdata,webdata-method}
 \title{create webdata object}
 \usage{
 webdata(value, ...)
 
 \S4method{webdata}{missing}(value, ...)
+
+\S4method{webdata}{character}(value, ...)
 }
 \arguments{
 \item{value}{character name of dataset or [others supported in the future]}

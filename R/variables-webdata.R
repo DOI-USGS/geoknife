@@ -7,26 +7,27 @@
 #'variables(.Object) <- 'ppt'
 #'@rdname variables-webdata
 #'@aliases 
-#'variables<-,webdata,character
-#'variables,webdata
-#'webdata
+#'variables<-
+#'variables
 #'@export
 setGeneric(name="variables",def=function(.Object){standardGeneric("variables")})
 
 #'@rdname variables-webdata
-#'@aliases variables,webdata-method
 #'@docType methods
+#'@export
+setGeneric(name="variables<-",def=function(.Object, value){standardGeneric("variables<-")})
+
+
+
+#'@rdname variables-webdata
 #'@export
 setMethod(f = "variables",signature(.Object = "webdata"),
           definition = function(.Object){
             return(.Object@variables)
           })
 
-#'@export
-setGeneric(name="variables<-",def=function(.Object, value){standardGeneric("variables<-")})
 
 #'@rdname variables-webdata
-#'@docType methods
 #'@export
 setMethod(f = "variables<-",signature(.Object= "webdata", value = "character"),
           definition = function(.Object, value){

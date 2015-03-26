@@ -3,9 +3,13 @@
 \docType{methods}
 \name{loadOutput}
 \alias{loadOutput}
+\alias{loadOutput,geojob}
+\alias{loadOutput,geojob-method}
 \title{parse process output into R environment}
 \usage{
 loadOutput(.Object)
+
+\S4method{loadOutput}{geojob}(.Object)
 }
 \arguments{
 \item{.Object}{a \code{\link{geojob}} object with a successful processID.

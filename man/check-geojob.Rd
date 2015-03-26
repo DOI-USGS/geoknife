@@ -3,9 +3,13 @@
 \docType{methods}
 \name{check}
 \alias{check}
+\alias{check,geojob}
+\alias{check,geojob-method}
 \title{Check status of processing request}
 \usage{
 check(.Object)
+
+\S4method{check}{geojob}(.Object)
 }
 \arguments{
 \item{.Object}{a \code{geoknife} object with an active GDP process request.}

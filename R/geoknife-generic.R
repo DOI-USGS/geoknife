@@ -4,13 +4,16 @@
 
 missing_msg <- function() stop('stencil and fabric, OR job must be supplied')
 
-#'@title geoknife-fcn
+#'@title geoknife 
 #'@param stencil a geometric feature (the "cookie-cutter"). Many input types are supported. [list them]
 #'@param fabric a dataset. Can be \code{\link{webdata}} or recognized shortname (e.g., 'prism')
 #'@param knife (optional) a \code{\link{webprocess}} object
 #'@param job (optional) a \code{\link{geojob}} object
 #'@param ... additional arguments passed on to process. 
-#'@rdname geoknife-function
+#'@rdname geoknife-methods
+#'@docType methods
+#'@aliases
+#'geoknife
 #'@examples
 #'wp <- webprocess(url = 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
 #'wd <- webdata('prism')
@@ -22,7 +25,8 @@ missing_msg <- function() stop('stencil and fabric, OR job must be supplied')
 #'@export
 setGeneric(name="geoknife",def=function(stencil, fabric, knife, job, ...){standardGeneric("geoknife")})
 
-
+#'@aliases geoknife,ANY,webdata,webprocess,missing
+#'@rdname geoknife-methods
 setMethod("geoknife", signature = c("ANY", "webdata", "webprocess","missing"), 
           definition = function(stencil, fabric, knife, job, ...) {
             geojob <- geojob()
@@ -34,7 +38,8 @@ setMethod("geoknife", signature = c("ANY", "webdata", "webprocess","missing"),
 )
 
 
-
+#'@aliases geoknife,ANY,ANY,ANY,missing
+#'@rdname geoknife-methods
 setMethod("geoknife", signature = c("ANY", "ANY", "ANY","missing"), 
           definition = function(stencil, fabric, knife, job, ...) {
             cat('basic, all items can be butchered into objects\n')
@@ -45,7 +50,8 @@ setMethod("geoknife", signature = c("ANY", "ANY", "ANY","missing"),
           }
 )
 
-
+#'@aliases geoknife,ANY,ANY,missing,missing
+#'@rdname geoknife-methods
 setMethod("geoknife", signature = c("ANY", "ANY", "missing", "missing"), 
           definition = function(stencil, fabric, knife, job, ...) {
             geojob <- geoknife(stencil, fabric, webprocess(), ...)
@@ -53,6 +59,8 @@ setMethod("geoknife", signature = c("ANY", "ANY", "missing", "missing"),
           }
 )
 
+#'@aliases geoknife,missing,missing,missing,geojob
+#'@rdname geoknife-methods
 setMethod("geoknife", signature = c("missing", "missing", "missing", "geojob"), 
           definition = function(stencil, fabric, knife, job, ...) {
             geojob <- start(job)
@@ -60,12 +68,18 @@ setMethod("geoknife", signature = c("missing", "missing", "missing", "geojob"),
           }
 )
 
+#'@aliases geoknife,ANY,missing,missing,missing
+#'@rdname geoknife-methods
 setMethod("geoknife", signature = c("ANY", "missing", "missing", "missing"), 
           definition = function(stencil, fabric, knife, job, ...) missing_msg()
 )
+#'@aliases geoknife,missing,ANY,missing,missing
+#'@rdname geoknife-methods
 setMethod("geoknife", signature = c("missing", "ANY", "missing", "missing"), 
           definition = function(stencil, fabric, knife, job, ...) missing_msg()
 )
+#'@aliases geoknife,missing,missing,ANY,missing
+#'@rdname geoknife-methods
 setMethod("geoknife", signature = c("missing", "missing", "ANY", "missing"), 
           definition = function(stencil, fabric, knife, job, ...) missing_msg()
 )
