@@ -48,11 +48,11 @@ setMethod("simplegeom", signature('missing'), function(value,...) {
 setMethod("simplegeom", signature("numeric"), function(value,...) {
   ## create new simplegeom object based on a lon lat pair
   if (length(value) == 2){
-    ringVal <- bufferPoint(value)
+    ring <- data.frame('bufferedPoint' = value)
   } else {
     stop('numeric input to simplegeom needs to be a single lon,lat pair')
   }
-  ring <- data.frame('bufferedPoint' = ringVal)
+  
   # pass to data.frame method
   return(simplegeom(ring))
 })
@@ -61,7 +61,7 @@ setMethod("simplegeom", signature("numeric"), function(value,...) {
 setMethod("simplegeom", signature("data.frame"), function(value,...) {
   ## create new simplegeom object based on a lon lat pair
   if (nrow(value) == 2){
-    ring <- sapply(df, FUN = bufferPoint)
+    ring <- sapply(value, FUN = bufferPoint)
   } else {
     stop('data.frame input to simplegeom needs to be have 2 rows: longitude & latitude')
   }
