@@ -1,5 +1,10 @@
 setClass(
   Class = "webprocess",
+  prototype = prototype(
+    url = 'http://cida.usgs.gov/gdp/process/WebProcessingService', 
+    algorithm = list('Area Grid Statistics (weighted)'=
+                       "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
+    ),
   representation = representation(
     url="character",
     algorithm="list",
@@ -19,10 +24,8 @@ setClass(
 setMethod(f="initialize",signature="webprocess",
           definition=function(
             .Object, 
-            url = 'http://cida.usgs.gov/gdp/process/WebProcessingService', 
-            algorithm = list('Area Grid Statistics (weighted)'=
-                               "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
-            )
+            url = .Object@url, 
+            algorithm = .Object@algorithm)
             {
             .Object@WPS_VERSION = '1.0.0'
             .Object@WPS_SCHEMA_LOCATION = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
