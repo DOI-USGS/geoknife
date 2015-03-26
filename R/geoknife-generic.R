@@ -15,12 +15,10 @@ missing_msg <- function() stop('stencil and fabric, OR job must be supplied')
 #'@aliases
 #'geoknife
 #'@examples
-#'wp <- webprocess(url = 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
+#'wp <- quick_wp()
 #'wd <- webdata('prism')
-#'wg <- simplegeom(c(-89,42))
-#'geoknife(stencil = c(-89,42), fabric = 'prism')
-#'sp <- quick_sp()
-#'job <- geoknife(stencil = sp, fabric = wd, knife = wp)
+#'geoknife(stencil = c(-89,42), fabric = 'prism', wp)
+#'job <- geoknife(stencil = c(-89,42), fabric = wd, knife = wp)
 #'check(job)
 #'@export
 setGeneric(name="geoknife",def=function(stencil, fabric, knife, job, ...){standardGeneric("geoknife")})
