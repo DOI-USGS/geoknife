@@ -2,8 +2,6 @@
 % Please edit documentation in R/02-webgeom-obj.R
 \docType{methods}
 \name{webgeom}
-\alias{url<-}
-\alias{url<-,webgeom-method}
 \alias{webgeom}
 \alias{webgeom,ANY-method}
 \alias{webgeom,webgeom-method}
@@ -12,10 +10,6 @@
 webgeom(...)
 
 \S4method{webgeom}{ANY}(...)
-
-url(.Object) <- value
-
-\S4method{url}{webgeom}(.Object) <- value
 }
 \value{
 the webgeom object representing a dataset and parameters
