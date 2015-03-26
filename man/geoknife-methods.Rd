@@ -7,6 +7,8 @@
 \alias{geoknife,ANY,ANY,ANY,missing-method}
 \alias{geoknife,ANY,ANY,missing,missing}
 \alias{geoknife,ANY,ANY,missing,missing-method}
+\alias{geoknife,ANY,ANY,webprocess,missing}
+\alias{geoknife,ANY,ANY,webprocess,missing-method}
 \alias{geoknife,ANY,missing,missing,missing}
 \alias{geoknife,ANY,missing,missing,missing-method}
 \alias{geoknife,ANY,webdata,webprocess,missing}
@@ -22,6 +24,9 @@
 geoknife(stencil, fabric, knife, job, ...)
 
 \S4method{geoknife}{ANY,webdata,webprocess,missing}(stencil, fabric, knife, job,
+  ...)
+
+\S4method{geoknife}{ANY,ANY,webprocess,missing}(stencil, fabric, knife, job,
   ...)
 
 \S4method{geoknife}{ANY,ANY,ANY,missing}(stencil, fabric, knife, job, ...)

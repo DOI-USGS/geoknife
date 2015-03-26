@@ -37,6 +37,16 @@ setMethod("geoknife", signature = c("ANY", "webdata", "webprocess","missing"),
           }
 )
 
+#'@aliases geoknife,ANY,ANY,webprocess,missing
+#'@rdname geoknife-methods
+setMethod("geoknife", signature = c("ANY", "ANY", "webprocess","missing"), 
+          definition = function(stencil, fabric, knife, job, ...) {
+            cat('basic, all items can be butchered into objects\n')
+            webdata <- webdata(fabric)
+            geojob <- geoknife(stencil, webdata, knife, ...)
+            return(geojob)
+          }
+)
 
 #'@aliases geoknife,ANY,ANY,ANY,missing
 #'@rdname geoknife-methods
