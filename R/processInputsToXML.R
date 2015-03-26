@@ -142,6 +142,12 @@ setMethod(f = "addGeom",signature = c("webgeom","ANY"),
   return(xmlNodes)
 })
 
+setMethod(f = "addGeom",signature = c("ANY","ANY"),
+          definition = function(stencil, xmlNodes){
+            stencil <- simplegeom(stencil)
+            return(addGeom(stencil, xmlNodes))
+})
+
 #'@importFrom sp coordinates
 setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
           definition = function(stencil, xmlNodes){

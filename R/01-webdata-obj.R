@@ -1,6 +1,10 @@
 library(methods)
 setClass(
   Class = "webdata",
+  prototype = prototype(
+    times = as.POSIXct(c(NA,NA)),
+    url = as.character(NA),
+    variables = as.character(NA)),
   representation = representation(
     times = 'POSIXct',
     url = "character",
@@ -8,9 +12,10 @@ setClass(
     dataList = "character",
     timeList = "character")
 )
+
+
 setMethod("initialize", signature = "webdata", 
-          definition = function(.Object, times = as.POSIXct(c(NA,NA)), url = as.character(NA), variables = as.character(NA)){
-            
+          definition = function(.Object, times = .Object@times, url = .Object@url, variables = .Object@variables){
             .Object@times = times
             .Object@url = url
             .Object@variables = variables
@@ -30,93 +35,29 @@ setMethod("initialize", signature = "webdata",
 #' @author Jordan S Read
 #' @rdname webdata-methods
 #' @export
-setGeneric("webdata", function(...) {
+setGeneric("webdata", function(value, ...) {
   standardGeneric("webdata")
 })
 
+#'@param value character name of dataset or [others supported in the future]
 #'@param ... additional arguments passed initialize method (e.g., times vector)
 #'@rdname webdata-methods
 #'@aliases webdata,webdata-method
-setMethod("webdata", signature(), function(...) {
+setMethod("webdata", signature("missing"), function(value, ...) {
   ## create new webdata object
   webdata <- new("webdata",...)
   return(webdata)
 })
 
-#'@rdname webdata-methods
-#'@aliases times<-,webdata-method
-#'@export
-setGeneric(name="times<-",def=function(.Object, value){standardGeneric("times<-")})
 
-#'@param .Object a \code{\link{webdata}} object
-#'@param value a POSIXct vector
-#'@examples
-#'wd <- webdata()
-#'times(wd) <- as.POSIXct(c("2012-11-04", "2012-11-12"))
-#'times(wd)[1] <- as.POSIXct("2012-11-04")
-#'@export
-#'@rdname webdata-methods
-#'@aliases times<-,webdata-method
-setMethod(f = "times<-",signature = "webdata",
-                 definition = function(.Object, value){
-                   if (length(value) != 2){
-                     stop('times input must be a POSIXct vector of length 2')
-                   }
-                   .Object@times <- value
-                   
-                   if (!any(is.na(value)) && value[1] >= value[2]){
-                     stop('time start must proceed time stop in "times" slot for webdata')
-                   }
-                   return(.Object)
-})
-
-#'@rdname webdata-methods
-#'@aliases times,webdata-method
-#'@export
-setGeneric(name="times",def=function(.Object){standardGeneric("times")})
-
-setMethod(f = "times",signature = "webdata",
-                 definition = function(.Object){
-                   return(.Object@times)
-                 })
-
-
-
-#'@rdname webdata-methods
-#'@aliases variables,webdata-method
-#'@export
-setGeneric(name="variables",def=function(.Object){standardGeneric("variables")})
-
-#'@param .Object a \code{\link{webdata}} object
-#'@rdname webdata-methods
-#'@aliases variables,webdata-method
-#'@export
-setMethod(f = "variables",signature = "webdata",
-          definition = function(.Object){
-            return(.Object@variables)
-          })
-
-#'@rdname webdata-methods
-#'@aliases variables<-,webdata-method
-#'@export
-setGeneric(name="variables<-",def=function(.Object, value){standardGeneric("variables<-")})
-
-#'@param .Object a \code{\link{webdata}} object
-#'@param value a character vector for variables
-#'@rdname webdata-methods
-#'@aliases variables,webdata-method
-#'@export
-setMethod(f = "variables<-",signature = "webdata",
-          definition = function(.Object, value){
-            .Object@variables <- value
-            return(.Object)
-          })
-
-
-#'@export
-quick_wd <- function(){
-  wd <- webdata(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
+setMethod("webdata", signature("character"), function(value, ...) {
+  ## create new webdata object with a character input (for dataset matching)
+  if (value != 'prism') stop("character input for webdata not supported for '", value,"'")
+  
+  webdata <- webdata(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
                 url = 'http://cida.usgs.gov/thredds/dodsC/prism',
                 variables = 'ppt')
-  return(wd)
-}
+  webdata <- initialize(webdata, ...) # to pass along additional args
+  return(webdata)
+})
+

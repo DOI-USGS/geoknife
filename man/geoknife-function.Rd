@@ -11,7 +11,7 @@ geoknife(stencil, fabric, knife, job, ...)
 
 \item{fabric}{a dataset. Can be \code{\link{webdata}} or recognized shortname (e.g., 'prism')}
 
-\item{knife}{(optional) a \code{\link{webprocessing}} object}
+\item{knife}{(optional) a \code{\link{webprocess}} object}
 
 \item{job}{(optional) a \code{\link{geojob}} object}
 
@@ -21,10 +21,10 @@ geoknife(stencil, fabric, knife, job, ...)
 geoknife-fcn
 }
 \examples{
-wp <- quick_wp(url = 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
-wd <- quick_wd()
-wg <- quick_wg()
-geoknife(stencil = wg, fabric = wd, knife = wp)
+wp <- webprocess(url = 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
+wd <- webdata('prism')
+wg <- simplegeom(c(-89,42))
+geoknife(stencil = c(-89,42), fabric = 'prism')
 sp <- quick_sp()
 job <- geoknife(stencil = sp, fabric = wd, knife = wp)
 check(job)

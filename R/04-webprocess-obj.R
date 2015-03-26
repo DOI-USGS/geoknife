@@ -93,20 +93,6 @@ setMethod(f = "algorithm<-",signature = "webprocess",
                  })
 
 #'@export
-setMethod("url<-","webprocess", function(.Object, value){
-  .Object@url <- value
-  return(.Object)
-}
-)
-
-#'@export
-setMethod("url","webprocess", function(.Object){
-  value <- .Object@url
-  return(value)
-}
-)
-
-#'@export
 quick_wp <- function(...){
   # with defaults
   wp <- webprocess(...)

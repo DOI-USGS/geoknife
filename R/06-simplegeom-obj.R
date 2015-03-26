@@ -1,5 +1,4 @@
 #'@importClassesFrom sp SpatialPolygons
-#'@export
 setClass(
   Class = "simplegeom",
   representation(sp="SpatialPolygons",
@@ -20,19 +19,25 @@ setMethod("initialize", signature = "simplegeom",
 #'create simplegeom object
 #'@description A class representing a simple feature.
 #'
-#'
-#'@return the simplegeom object simple feature
+#'@slot DRAW_NAMESPACE location of polygrom draw namespace
+#'@slot DRAW_SCHEMA url for draw schema
+#'@slot sp object of class \code{\link[sp]{SpatialPolygons}}
+#'@return the simplegeom object
 #'@author Jordan S Read
 #'@rdname simplegeom-methods
 #'@export
-setGeneric("simplegeom", function(...) {
+setGeneric("simplegeom", function(value,...) {
   standardGeneric("simplegeom")
 })
 
+#'@param value a numeric vector (for long,lat point) or data.framed with long, lat pairs, [future support for more]
 #'@param ... additional arguments passed to SpatialPolygonsDataFrame
 #'@rdname simplegeom-methods
 #'@aliases simplegeom,simplegeom-method
-setMethod("simplegeom", signature(), function(...) {
+#'@examples 
+#'simplegeom(c(-89, 46))
+#'simplegeom(data.frame('point1'=c(-89, 46), 'point2'=c(-88.6, 45.2)))
+setMethod("simplegeom", signature('missing'), function(value,...) {
   ## create new simplegeom object
   # ... are additional arguments passed to SpatialPolygonsDataFrame
   simplegeom <- new("simplegeom",...)
@@ -40,17 +45,32 @@ setMethod("simplegeom", signature(), function(...) {
 })
 
 #'@importFrom sp Polygons Polygon CRS
-#'@export
-quick_sp <- function(){
-  square= rbind(c(-89,42,-88,42,-89,41,-90,41,-89,42),
-                c(-79,42,-78,42,-79,41,-80,41,-79,42))
-  ID <- c("grid_1", "grid_2")
-  Srl = list(
-    Polygons(list(Polygon(matrix(square[1, ], ncol=2, byrow=TRUE))), ID[1]),
-    Polygons(list(Polygon(matrix(square[2, ], ncol=2, byrow=TRUE))), ID[2])
-  )
+setMethod("simplegeom", signature("numeric"), function(value,...) {
+  ## create new simplegeom object based on a lon lat pair
+  if (length(value) == 2){
+    ringVal <- bufferPoint(value)
+  } else {
+    stop('numeric input to simplegeom needs to be a single lon,lat pair')
+  }
+  ring <- data.frame('bufferedPoint' = ringVal)
+  # pass to data.frame method
+  return(simplegeom(ring))
+})
 
-
-  sp <- simplegeom(Srl, proj4string = CRS("+proj=longlat +datum=WGS84"))
-  return(sp)
-}
+#'@importFrom sp Polygons Polygon CRS
+setMethod("simplegeom", signature("data.frame"), function(value,...) {
+  ## create new simplegeom object based on a lon lat pair
+  if (nrow(value) == 2){
+    ring <- sapply(df, FUN = bufferPoint)
+  } else {
+    stop('data.frame input to simplegeom needs to be have 2 rows: longitude & latitude')
+  }
+  Srl = list()
+  for (i in 1:ncol(value)){
+    # growing this w/o preallocating ... get sp error w/ rbind
+    Srl[[i]] <- Polygons(list(Polygon(matrix(ring[i, ], ncol=2, byrow=TRUE))), names(value)[i])
+  }
+  
+  simplegeom <- new("simplegeom", Srl, proj4string = CRS("+proj=longlat +datum=WGS84"))
+  return(simplegeom)
+})
