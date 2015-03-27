@@ -22,7 +22,7 @@ The `geoknife` package was created to support web-based geoprocessing of large g
 
 `geoknife` interacts with a remote server to figure out what types of processing capabilities are available, in addition to seeing what types of geospatial features are already available to be used as an area of interest (commonly, these are user-uploaded shapefiles). Because communication with web resources are central to `geoknife` operations, users must have an active internet connection. 
 
-The main elements of setting up and carrying out a `geoknife` 'job' are include defining the processing algorithm that will be used, choosing an area of interest, filling out the details for the job details (including the dataset to be used; these details are called 'process inputs'), and sending off the job request (see documentation for `setFeature<-`, `setProcessInputs<-`, and `startProcess` for more information).
+The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) are include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm paramters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `loadOutput`. 
 
 ###`geoknife` Functions (as of v0.6.1)
 | Function       | Title           |
@@ -46,7 +46,7 @@ The main elements of setting up and carrying out a `geoknife` 'job' are include 
 | `webgeom` | a web feature service geometry |
 | `webprocess` | a web processing service |
 | `webdata` | web data |
-
+| `geojob` | a geo data portal processing job |
 
 
 ##What libraries does `geoknife` need?
