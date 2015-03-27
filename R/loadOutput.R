@@ -5,6 +5,8 @@
 #'@param .Object a \code{\link{geojob}} object with a successful processID. 
 #'(See \code{\link{check}}).
 #'@return list of timeseries values. 
+#'@rdname loadOutput-methods
+#'@aliases loadOutput
 #'@docType methods
 #'@keywords methods
 #'@importFrom XML xmlGetAttr getNodeSet xmlParse xmlChildren xmlName xpathApply
@@ -34,7 +36,8 @@
 #'
 setGeneric(name="loadOutput",def=function(.Object){standardGeneric("loadOutput")})
 
-#'@aliases loadOutput
+#'@rdname loadOutput-methods
+#'@aliases loadOutput,geojob
 setMethod(f = "loadOutput",signature="geojob",
   definition = function(.Object){
             if (successful(.Object)){

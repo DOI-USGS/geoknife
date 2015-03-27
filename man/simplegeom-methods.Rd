@@ -3,22 +3,37 @@
 \docType{methods}
 \name{simplegeom}
 \alias{simplegeom}
-\alias{simplegeom,ANY-method}
+\alias{simplegeom,missing-method}
 \alias{simplegeom,simplegeom-method}
 \title{create simplegeom object}
 \usage{
-simplegeom(...)
+simplegeom(value, ...)
 
-\S4method{simplegeom}{ANY}(...)
+\S4method{simplegeom}{missing}(value, ...)
 }
 \arguments{
+\item{value}{a numeric vector (for long,lat point) or data.framed with long, lat pairs, [future support for more]}
+
 \item{...}{additional arguments passed to SpatialPolygonsDataFrame}
 }
 \value{
-the simplegeom object simple feature
+the simplegeom object
 }
 \description{
 A class representing a simple feature.
+}
+\section{Slots}{
+
+\describe{
+\item{\code{DRAW_NAMESPACE}}{location of polygrom draw namespace}
+
+\item{\code{DRAW_SCHEMA}}{url for draw schema}
+
+\item{\code{sp}}{object of class \code{\link[sp]{SpatialPolygons}}}
+}}
+\examples{
+simplegeom(c(-89, 46))
+simplegeom(data.frame('point1'=c(-89, 46), 'point2'=c(-88.6, 45.2)))
 }
 \author{
 Jordan S Read

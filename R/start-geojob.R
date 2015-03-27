@@ -1,3 +1,4 @@
+#'@title start a geo-web processing request
 #'@details start is a method for submitting a geo-web processing request.
 #'
 #'@param .Object a \code{\link{geojob}} object
@@ -8,10 +9,13 @@
 #'@description Start process for \code{geojob}
 #'@title Submit a GDP web processing request
 #'@seealso \code{check}
+#'@aliases start
+#'@docType methods
 #'@export
+#'@rdname start-methods
 #'@examples 
 #'wp <- quick_wp(url = 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
-#'wd <- quick_wd()
+#'wd <- webdata('prism')
 #'wg <- quick_wg()
 #'gj <- geojob()
 #'xml(gj) <- XML(wg, wd, wp)
@@ -19,9 +23,9 @@
 #'gj <- start(gj)
 setGeneric(name="start",def=function(.Object){standardGeneric("start")})
 
-# '@rdname start-methods
-# '@aliases start,geoknife-method
-setMethod(f = "start",signature = "geojob",definition = function(.Object){
+#'@rdname start-methods
+#'@export
+setMethod(f = "start",signature(.Object = "geojob"),definition = function(.Object){
 	
 	requestXML <- xml(.Object)
 	data <- genericExecute(url = url(.Object), requestXML)

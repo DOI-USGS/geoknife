@@ -72,19 +72,6 @@ setMethod(f = "xml",signature = "geojob", definition = function(.Object){
 }
 )
 
-
-setMethod(f = "url<-",signature = "geojob", definition = function(.Object, value){
-  .Object@url <- value
-  return(.Object)
-}
-)
-
-setMethod(f = "url",signature = "geojob", definition = function(.Object){
-  value <- .Object@url
-  return(value)
-}
-)
-
 #'@export
 setGeneric(name="id<-",def=function(.Object, value){standardGeneric("id<-")})
 

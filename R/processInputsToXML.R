@@ -11,12 +11,10 @@ setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML"
 #'
 #'@examples
 #'wp <- quick_wp()
-#'wd <- quick_wd()
+#'wd <- webdata('prism')
 #'wg <- quick_wg()
 #'XML(wg, wd, wp)
-#'wp <- quick_wp()
-#'wd <- quick_wd()
-#'sg <- quick_sp()
+#'sg <- simplegeom(c(-89,45))
 #'XML(sg, wd, wp)
 #'@rdname XML-method
 #'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
@@ -140,6 +138,12 @@ setMethod(f = "addGeom",signature = c("webgeom","ANY"),
   }
   
   return(xmlNodes)
+})
+
+setMethod(f = "addGeom",signature = c("ANY","ANY"),
+          definition = function(stencil, xmlNodes){
+            stencil <- simplegeom(stencil)
+            return(addGeom(stencil, xmlNodes))
 })
 
 #'@importFrom sp coordinates

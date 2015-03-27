@@ -22,30 +22,32 @@ The `geoknife` package was created to support web-based geoprocessing of large g
 
 `geoknife` interacts with a remote server to figure out what types of processing capabilities are available, in addition to seeing what types of geospatial features are already available to be used as an area of interest (commonly, these are user-uploaded shapefiles). Because communication with web resources are central to `geoknife` operations, users must have an active internet connection. 
 
-The main elements of setting up and carrying out a `geoknife` 'job' are include defining the processing algorithm that will be used, choosing an area of interest, filling out the details for the job details (including the dataset to be used; these details are called 'process inputs'), and sending off the job request (see documentation for `setFeature<-`, `setProcessInputs<-`, and `startProcess` for more information).
+The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) are include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm paramters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `loadOutput`. 
 
-###`geoknife` Functions (as of v0.4.1)
+###`geoknife` Functions (as of v0.6.1)
 | Function       | Title           |
 | ------------- |:-------------|
-| `bufferPoint` | Create linear ring from point |
-| `checkProcess`  | Check status of processing request |
-| `geoknife` | Create geoknife object |
-| `getAlgorithms` | Get processing algorithms |
-| `getAttributes` | Get attributes from a shapefile at a web location |
-| `getDataIDs` | Find variables from dataset |
-| `getValues` | get values from a shapefile at a web location |
-| `isError` | Convenience function for GDP process state |
-| `isRunning` | Convenience function for GDP process state |
-| `isSuccessful` | Convenience function for GDP process state |
-| `loadOutput` | parse process output into R environment |
-| `parseTimeseries` | parse timeseries file into R environment |
-| `printProcessInputs` | Print out the process request xml for diagnostic purposes |
-| `setAlgorithm<-` | Set processing algorithm |
-| `setFeature<-` | Set feature geometry for processing |
-| `setProcessInputs<-` | Set inputs for web processing |
-| `setWFS<-` | Set web feature service location |
-| `setWPS<-` | Set web processing service location |
-| `startProcess` | Submit a GDP web processing request |
+| `algorithm` | The algorithm of a `webprocess` |
+| `bufferPoint`  | Create linear ring from point |
+| `check` | Check status of `geojob` |
+| `error` | Convenience  function for state of `geojob` |
+| `running` | Convenience  function for state of `geojob` |
+| `successful` | Convenience  function for state of `geojob` |
+| `geoknife` | slice up gridded data according to overlap with feature(s) |
+| `start` | Start a `geojob` |
+| `loadOutput` | load the output of a completed `geojob` into data.frame |
+| `variables` | the variables for a `webdata` object |
+| `times` | the times of a `webdata` object |
+
+###`geoknife` classes (as of v0.6.1)
+| Class       | Title           |
+| ------------- |:-------------|
+| `simplegeom` | a simple geometric class. Extends `sp::SpatialPolygons` |
+| `webgeom` | a web feature service geometry |
+| `webprocess` | a web processing service |
+| `webdata` | web data |
+| `geojob` | a geo data portal processing job |
+
 
 ##What libraries does `geoknife` need?
 This version requires `httr`, `jsonlite`, `lubridate` and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.

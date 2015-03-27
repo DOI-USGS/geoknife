@@ -1,4 +1,5 @@
 #'@title Convenience function for GDP process state
+#'@rdname successful-methods
 #'@aliases
 #'successful
 #'running
@@ -35,13 +36,38 @@
 setGeneric(name="successful",def=function(.Object){standardGeneric("successful")})
 
 
-# '@rdname successful-methods
-# '@aliases successful,geoknife-method
-setMethod(f = "successful",signature = "geojob", definition = function(.Object){
+#'@rdname successful-methods
+#'@aliases successful
+setMethod(f = "successful",signature(.Object = "geojob"), definition = function(.Object){
 	
 	status = check(.Object)
 	
 	return(status$statusType == "ProcessSucceeded")
 	
 })
-	
+
+
+#'@export
+setGeneric(name="running",def=function(.Object){standardGeneric("running")})
+
+#'@rdname successful-methods
+#'@aliases running
+setMethod(f = "running",signature(.Object = "geojob"), definition = function(.Object){
+  
+  status = check(.Object)
+  
+  return(status$statusType == "ProcessStarted")
+})
+
+
+#'@export
+setGeneric(name="error",def=function(.Object){standardGeneric("error")})
+
+#'@rdname successful-methods
+#'@aliases error
+setMethod(f = "error",signature = "geojob", definition = function(.Object){
+  
+  status = check(.Object)
+  
+  return(status$statusType == "ProcessFailed")
+})
