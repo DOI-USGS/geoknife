@@ -43,7 +43,6 @@ setMethod("initialize", signature = "webdata",
 #' @docType methods
 #' @aliases 
 #' webdata
-#' character
 #' @export
 setGeneric("webdata", function(.Object,...) {
   standardGeneric("webdata")

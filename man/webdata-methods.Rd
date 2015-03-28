@@ -2,7 +2,6 @@
 % Please edit documentation in R/01-webdata-obj.R
 \docType{methods}
 \name{webdata}
-\alias{character}
 \alias{webdata}
 \alias{webdata,ANY-method}
 \alias{webdata,missing-method}
