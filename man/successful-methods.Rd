@@ -21,7 +21,7 @@ running(.Object)
 \S4method{error}{geojob}(.Object)
 }
 \arguments{
-\item{.Object}{a \code{\link{geojob}} object}
+\item{.Object}{a \linkS4class{geojob} object}
 }
 \value{
 TRUE/FALSE indicating if process is in the given state (error, processing, successful)
@@ -31,17 +31,13 @@ Simple wrapper to check process status
 }
 \examples{
 \dontrun{
-wp <- quick_wp(url = 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
-wd <- quick_wd()
-wg <- quick_wg()
-gj <- geojob()
-xml(gj) <- XML(wg, wd, wp)
-url(gj) <- url(wp)
-gj <- start(gj)
+wp <- quick_wp()
+job <- geoknife(stencil = c(-89,42), fabric = 'prism', knife = wp)
+check(job)
 
-running(gk)
-error(gk)
-successful(gk)
+running(job)
+error(job)
+successful(job)
 }
 }
 \author{

@@ -1,6 +1,11 @@
-
-
-
+#' @title webgeom class
+#' @slot url URL of web feature service endpoint
+#' @slot geom character for geometric feature name
+#' @slot attribute character for feature attribute (used for filtering and naming in output)
+#' @slot IDs attribute IDs to be used in processing (a subset, or all if NA)
+#' @slot wfs_version the web feature service version to use.
+#' @slot id job identifier
+#' @rdname webgeom-class
 setClass(
   Class = "webgeom",
   representation = representation(
@@ -51,8 +56,9 @@ setGeneric("webgeom", function(...) {
   standardGeneric("webgeom")
 })
 
+#' @param ... additional arguments passed initialize method (e.g., \code{url})
 #' @rdname webgeom-methods
-#' @aliases webgeom,webgeom-method
+#' @aliases webgeom
 setMethod("webgeom", signature(), function(...) {
   ## create new webgeom object
   webgeom <- new("webgeom", ...)

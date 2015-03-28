@@ -3,15 +3,9 @@
 \docType{methods}
 \name{url<-}
 \alias{url}
-\alias{url,geojob-method}
-\alias{url,webdata-method}
-\alias{url,webgeom-method}
-\alias{url,webprocess-method}
+\alias{url,ANY-method}
 \alias{url<-}
-\alias{url<-,geojob-method}
-\alias{url<-,webdata-method}
-\alias{url<-,webgeom-method}
-\alias{url<-,webprocess-method}
+\alias{url<-,ANY-method}
 \title{the url of an object}
 \usage{
 url(.Object)
@@ -19,24 +13,13 @@ url(.Object)<- value
 
 url(.Object)
 
-\S4method{url}{webdata}(.Object) <- value
+\S4method{url}{ANY}(.Object) <- value
 
-\S4method{url}{webgeom}(.Object) <- value
-
-\S4method{url}{webdata}(.Object)
-
-\S4method{url}{webgeom}(.Object)
-
-\S4method{url}{geojob}(.Object) <- value
-
-\S4method{url}{geojob}(.Object)
-
-\S4method{url}{webprocess}(.Object) <- value
-
-\S4method{url}{webprocess}(.Object)
+\S4method{url}{ANY}(.Object)
 }
 \arguments{
-\item{.Object}{a webgeom, webdata, geojob, or webprocess object}
+\item{.Object}{a \linkS4class{webgeom}, \linkS4class{webdata},
+\linkS4class{geojob}, or \linkS4class{webprocess} object}
 
 \item{value}{a url}
 }

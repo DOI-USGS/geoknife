@@ -4,17 +4,19 @@
 \name{simplegeom}
 \alias{simplegeom}
 \alias{simplegeom,ANY-method}
-\alias{simplegeom,simplegeom-method}
+\alias{simplegeom,missing-method}
 \title{create simplegeom object}
 \usage{
-simplegeom(...)
+simplegeom(.Object, ...)
 
-\S4method{simplegeom}{ANY}(...)
+\S4method{simplegeom}{missing}(.Object, ...)
+
+\S4method{simplegeom}{ANY}(.Object, ...)
 }
 \arguments{
-\item{...}{additional arguments passed to SpatialPolygonsDataFrame}
+\item{.Object}{any object that can be coerced into \linkS4class{simplegeom}}
 
-\item{value}{a numeric vector (for long,lat point) or data.framed with long, lat pairs, [future support for more]}
+\item{...}{additional arguments passed to SpatialPolygonsDataFrame}
 }
 \value{
 the simplegeom object
@@ -32,7 +34,7 @@ A class representing a simple feature.
 \item{\code{sp}}{object of class \code{\link[sp]{SpatialPolygons}}}
 }}
 \examples{
-as(c(-88.6, 45.2), "simplegeom")
+simplegeom(c(-88.6, 45.2))
 \dontrun{
 simplegeom(Srl, proj4string = CRS("+proj=longlat +datum=WGS84"))
 }

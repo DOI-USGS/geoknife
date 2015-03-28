@@ -1,4 +1,10 @@
 library(methods)
+#' @title webdata class
+#' @slot times vector of POSIXct dates (specifying start and end time of processing)
+#' @slot url URL of web data
+#' @slot variables variable(s) used for processin from dataset
+#' @rdname webdata-class
+#' @import methods
 setClass(
   Class = "webdata",
   prototype = prototype(

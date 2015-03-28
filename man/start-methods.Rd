@@ -11,10 +11,10 @@ start(.Object)
 \S4method{start}{geojob}(.Object)
 }
 \arguments{
-\item{.Object}{a \code{\link{geojob}} object}
+\item{.Object}{a \linkS4class{geojob} object}
 }
 \value{
-A \code{\link{geojob}} object with an active GDP process request.
+A \linkS4class{geojob} object with an active GDP process request.
 }
 \description{
 Start process for \code{geojob}
@@ -24,7 +24,7 @@ start is a method for submitting a geo-web processing request.
 }
 \examples{
 wp <- quick_wp()
-wd <- as('prism','webdata')
+wd <- webdata('prism')
 wg <- quick_wg()
 gj <- geojob()
 xml(gj) <- XML(wg, wd, wp)

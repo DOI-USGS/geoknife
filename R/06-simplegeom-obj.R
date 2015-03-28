@@ -1,3 +1,8 @@
+#' @title simplegeom class
+#' @slot DRAW_NAMESPACE 
+#' @slot DRAW_SCHEMA
+#' @slot sp a list for algorithm used
+#' @rdname simplegeom-class
 #'@importClassesFrom sp SpatialPolygons
 setClass(
   Class = "simplegeom",
@@ -26,24 +31,36 @@ setMethod("initialize", signature = "simplegeom",
 #'@author Jordan S Read
 #'@rdname simplegeom-methods
 #'@export
-setGeneric("simplegeom", function(...) {
+setGeneric("simplegeom", function(.Object, ...) {
   standardGeneric("simplegeom")
 })
 
-#'@param value a numeric vector (for long,lat point) or data.framed with long, lat pairs, [future support for more]
+#'@param .Object any object that can be coerced into \linkS4class{simplegeom}
 #'@param ... additional arguments passed to SpatialPolygonsDataFrame
 #'@rdname simplegeom-methods
-#'@aliases simplegeom,simplegeom-method
+#'@aliases simplegeom
 #'@examples 
-#'as(c(-88.6, 45.2), "simplegeom")
+#'simplegeom(c(-88.6, 45.2))
 #'\dontrun{
 #'simplegeom(Srl, proj4string = CRS("+proj=longlat +datum=WGS84"))
 #'}
 #'as(data.frame('point1'=c(-89, 46), 'point2'=c(-88.6, 45.2)), "simplegeom")
-setMethod("simplegeom", signature(), function(...) {
+setMethod("simplegeom", signature("missing"), function(.Object, ...) {
   ## create new simplegeom object
   # ... are additional arguments passed to SpatialPolygonsDataFrame
   simplegeom <- new("simplegeom",...)
+  return(simplegeom)
+})
+
+#'@rdname simplegeom-methods
+#'@aliases simplegeom
+setMethod("simplegeom", signature("ANY"), function(.Object, ...) {
+  ## create new simplegeom object
+  # ... are additional arguments passed to SpatialPolygonsDataFrame
+  simplegeom <- as(.Object, "simplegeom")
+  if (!missing(...)){
+    simplegeom <- initialize(simplegeom, ...)
+  }
   return(simplegeom)
 })
 

@@ -4,7 +4,7 @@
 #'@docType methods
 #'@usage
 #'variables(.Object)
-#'variables(.Object) <- 'ppt'
+#'variables(.Object) <- value
 #'@rdname variables-webdata
 #'@aliases 
 #'variables<-

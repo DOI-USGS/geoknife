@@ -1,3 +1,7 @@
+#' @title webprocess class
+#' @slot url URL for webprocessing service
+#' @slot algorithm a list for algorithm used
+#' @rdname webprocess-class
 setClass(
   Class = "webprocess",
   prototype = prototype(
@@ -61,39 +65,16 @@ setGeneric("webprocess", function(...) {
   standardGeneric("webprocess")
 })
 
+#'@param ... additional arguments passed initialize method (e.g., \code{url})
 #'@rdname webprocess-methods
-#'@aliases webprocess,webprocess-method
+#'@aliases webprocess
+#'@rdname webprocess-methods
 setMethod("webprocess", signature(), function(...) {
   ## create new webprocess object
   webprocess <- new("webprocess",...)
   return(webprocess)
 })
 
-#'@export
-setGeneric(name="algorithm",def=function(.Object){
-  standardGeneric("algorithm")
-})
-
-#'@rdname webprocess-methods
-#'@aliases algorithm,webprocess-method
-setMethod(f = "algorithm",signature="webprocess",
-          definition = function(.Object){
-            return(.Object@algorithm)
-          }
-)
-
-#'@export
-setGeneric(name="algorithm<-",def=function(.Object, value){
-  standardGeneric("algorithm<-")
-})
-
-#'@rdname webprocess-methods
-#'@aliases algorithm<-,webprocess-method
-setMethod(f = "algorithm<-",signature = "webprocess",
-                 definition = function(.Object,value){
-                   .Object <- initialize(.Object, algorithm = value)
-                   return(.Object)
-                 })
 
 #'@export
 quick_wp <- function(...){
@@ -105,8 +86,8 @@ quick_wp <- function(...){
   wp@processInputs$DATASET_ID = 'ppt'
   wp@processInputs$TIME_START = '1895-01-01T00:00:00.000Z'
   wp@processInputs$TIME_END = '1899-01-01T00:00:00.000Z'
-  wp@processInputs$FEATURE_ATTRIBUTE_NAME = 'STATE'
-  wp@processInputs$GROUP_BY = 'STATISTIC'
-  wp@processInputs$STATISTICS = 'MEAN'
+  #wp@processInputs$FEATURE_ATTRIBUTE_NAME = 'STATE'
+  #wp@processInputs$GROUP_BY = 'STATISTIC'
+  #wp@processInputs$STATISTICS = 'MEAN'
   return(wp)
 }

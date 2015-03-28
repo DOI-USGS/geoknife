@@ -9,11 +9,12 @@ missing_msg <- function() stop('stencil and fabric, OR job must be supplied')
 #'that can be coerced into \linkS4class{simplegeom}.
 #'@param fabric a dataset. A \linkS4class{webdata} or any type that 
 #'can be coerced into \linkS4class{webdata}
-#'@param ... additional arguments passed to \code{new} \linkS4class{webdata}. 
-#'Can also be used to modify the \code{knife} argument, if that is supplied.
-#'@param knife (optional) a \code{\link{webprocess}} object
+#'@param ... additional arguments passed to \code{new} \linkS4class{webprocess}. 
+#'Can also be used to modify the \code{knife} argument, if it is supplied.
+#'@param knife (optional) a \linkS4class{webprocess} object
 #'@param emailComplete FALSE by default. \code{character} of valid email to 
 #'send email for failed or completed process. NOT IMPLEMENTED
+#'@return and object of class \linkS4class{geojob}
 #'@rdname geoknife-methods
 #'@docType methods
 #'@aliases
@@ -98,13 +99,3 @@ parseXMLvalues	<-	function(xmlURL,key,  rm.duplicates = FALSE){
   }
 	return(values)
 }
-
-
-
-
-
-
-
-
-
-

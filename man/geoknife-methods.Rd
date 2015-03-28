@@ -15,13 +15,16 @@ that can be coerced into \linkS4class{simplegeom}.}
 \item{fabric}{a dataset. A \linkS4class{webdata} or any type that
 can be coerced into \linkS4class{webdata}}
 
-\item{...}{additional arguments passed to \code{new} \linkS4class{webdata}.
-Can also be used to modify the \code{knife} argument, if that is supplied.}
+\item{...}{additional arguments passed to \code{new} \linkS4class{webprocess}.
+Can also be used to modify the \code{knife} argument, if it is supplied.}
 
-\item{knife}{(optional) a \code{\link{webprocess}} object}
+\item{knife}{(optional) a \linkS4class{webprocess} object}
 
 \item{emailComplete}{FALSE by default. \code{character} of valid email to
 send email for failed or completed process. NOT IMPLEMENTED}
+}
+\value{
+and object of class \linkS4class{geojob}
 }
 \description{
 geoknife

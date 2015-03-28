@@ -13,7 +13,7 @@ dodsReplace  <-	function(.Object){
       uri	<-	gsub('http', 'opendap', uri)
     }
     
-    .Object@processInputs	<-	setList(.Object@processInputs,list('DATASET_URI'=uri))
+    .Object@processInputs$DATASET_URI	<-	uri
   }
   return(.Object)
 }

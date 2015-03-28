@@ -4,12 +4,14 @@
 \name{webgeom}
 \alias{webgeom}
 \alias{webgeom,ANY-method}
-\alias{webgeom,webgeom-method}
 \title{create webgeom object}
 \usage{
 webgeom(...)
 
 \S4method{webgeom}{ANY}(...)
+}
+\arguments{
+\item{...}{additional arguments passed initialize method (e.g., \code{url})}
 }
 \value{
 the webgeom object representing a dataset and parameters
