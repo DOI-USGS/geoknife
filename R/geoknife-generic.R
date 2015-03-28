@@ -5,92 +5,45 @@
 missing_msg <- function() stop('stencil and fabric, OR job must be supplied')
 
 #'@title geoknife 
-#'@param stencil a geometric feature (the "cookie-cutter"). Many input types are supported. [list them]
-#'@param fabric a dataset. Can be \code{\link{webdata}} or recognized shortname (e.g., 'prism')
+#'@param stencil a \linkS4class{webgeom}, \linkS4class{simplegeom}, or any type 
+#'that can be coerced into \linkS4class{simplegeom}.
+#'@param fabric a dataset. A \linkS4class{webdata} or any type that 
+#'can be coerced into \linkS4class{webdata}
+#'@param ... additional arguments passed to \code{new} \linkS4class{webdata}. 
+#'Can also be used to modify the \code{knife} argument, if that is supplied.
 #'@param knife (optional) a \code{\link{webprocess}} object
-#'@param job (optional) a \code{\link{geojob}} object
-#'@param ... additional arguments passed on to process. 
+#'@param emailComplete FALSE by default. \code{character} of valid email to 
+#'send email for failed or completed process. NOT IMPLEMENTED
 #'@rdname geoknife-methods
 #'@docType methods
 #'@aliases
 #'geoknife
 #'@examples
 #'wp <- quick_wp()
-#'wd <- webdata('prism')
-#'geoknife(stencil = c(-89,42), fabric = 'prism', wp)
-#'job <- geoknife(stencil = c(-89,42), fabric = wd, knife = wp)
+#'job <- geoknife(stencil = c(-89,42), fabric = 'prism', knife = wp)
 #'check(job)
 #'@export
-setGeneric(name="geoknife",def=function(stencil, fabric, knife, job, ...){standardGeneric("geoknife")})
+geoknife <- function(stencil, fabric, ..., knife = webprocess(...), emailComplete = FALSE){
+  
+  if (!missing(knife) & !missing(...)){
+    # if a knife is specified, pass in additional args through ... to modify. 
+    knife <- initialize(knife, ...)
+  }
 
-#'@aliases geoknife,ANY,webdata,webprocess,missing
-#'@rdname geoknife-methods
-setMethod("geoknife", signature = c("ANY", "webdata", "webprocess","missing"), 
-          definition = function(stencil, fabric, knife, job, ...) {
-            geojob <- geojob()
-            xml(geojob) <- XML(stencil, fabric, knife)
-            url(geojob) <- url(knife)
-            geojob <- start(geojob)
-            return(geojob)
-          }
-)
+  if (!is(stencil, "webgeom")){
+    stencil <- as(stencil, Class = "simplegeom")
+  }
+  fabric <- as(fabric, Class = "webdata")
+  geojob <- geojob()
+  xml(geojob) <- XML(stencil, fabric, knife)
+  url(geojob) <- url(knife)
+  
+  geojob <- start(geojob)
+  return(geojob)
+}
 
-#'@aliases geoknife,ANY,ANY,webprocess,missing
-#'@rdname geoknife-methods
-setMethod("geoknife", signature = c("ANY", "ANY", "webprocess","missing"), 
-          definition = function(stencil, fabric, knife, job, ...) {
-            cat('basic, all items can be butchered into objects\n')
-            webdata <- webdata(fabric)
-            geojob <- geoknife(stencil, webdata, knife, ...)
-            return(geojob)
-          }
-)
 
-#'@aliases geoknife,ANY,ANY,ANY,missing
-#'@rdname geoknife-methods
-setMethod("geoknife", signature = c("ANY", "ANY", "ANY","missing"), 
-          definition = function(stencil, fabric, knife, job, ...) {
-            cat('basic, all items can be butchered into objects\n')
-            webdata <- webdata(fabric)
-            webprocess <- webprocess(knife)
-            geojob <- geoknife(stencil, webdata, webprocess, ...)
-            return(geojob)
-          }
-)
 
-#'@aliases geoknife,ANY,ANY,missing,missing
-#'@rdname geoknife-methods
-setMethod("geoknife", signature = c("ANY", "ANY", "missing", "missing"), 
-          definition = function(stencil, fabric, knife, job, ...) {
-            geojob <- geoknife(stencil, fabric, webprocess(), ...)
-            return(geojob)
-          }
-)
-
-#'@aliases geoknife,missing,missing,missing,geojob
-#'@rdname geoknife-methods
-setMethod("geoknife", signature = c("missing", "missing", "missing", "geojob"), 
-          definition = function(stencil, fabric, knife, job, ...) {
-            geojob <- start(job)
-            return(geojob)
-          }
-)
-
-#'@aliases geoknife,ANY,missing,missing,missing
-#'@rdname geoknife-methods
-setMethod("geoknife", signature = c("ANY", "missing", "missing", "missing"), 
-          definition = function(stencil, fabric, knife, job, ...) missing_msg()
-)
-#'@aliases geoknife,missing,ANY,missing,missing
-#'@rdname geoknife-methods
-setMethod("geoknife", signature = c("missing", "ANY", "missing", "missing"), 
-          definition = function(stencil, fabric, knife, job, ...) missing_msg()
-)
-#'@aliases geoknife,missing,missing,ANY,missing
-#'@rdname geoknife-methods
-setMethod("geoknife", signature = c("missing", "missing", "ANY", "missing"), 
-          definition = function(stencil, fabric, knife, job, ...) missing_msg()
-)
 setProcessID	<-	function(.Object,processID){
 	.Object@processID	<-	processID
 	return(.Object)

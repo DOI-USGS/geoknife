@@ -3,18 +3,18 @@
 \docType{methods}
 \name{simplegeom}
 \alias{simplegeom}
-\alias{simplegeom,missing-method}
+\alias{simplegeom,ANY-method}
 \alias{simplegeom,simplegeom-method}
 \title{create simplegeom object}
 \usage{
-simplegeom(value, ...)
+simplegeom(...)
 
-\S4method{simplegeom}{missing}(value, ...)
+\S4method{simplegeom}{ANY}(...)
 }
 \arguments{
-\item{value}{a numeric vector (for long,lat point) or data.framed with long, lat pairs, [future support for more]}
-
 \item{...}{additional arguments passed to SpatialPolygonsDataFrame}
+
+\item{value}{a numeric vector (for long,lat point) or data.framed with long, lat pairs, [future support for more]}
 }
 \value{
 the simplegeom object
@@ -32,8 +32,11 @@ A class representing a simple feature.
 \item{\code{sp}}{object of class \code{\link[sp]{SpatialPolygons}}}
 }}
 \examples{
-simplegeom(c(-89, 46))
-simplegeom(data.frame('point1'=c(-89, 46), 'point2'=c(-88.6, 45.2)))
+as(c(-88.6, 45.2), "simplegeom")
+\dontrun{
+simplegeom(Srl, proj4string = CRS("+proj=longlat +datum=WGS84"))
+}
+as(data.frame('point1'=c(-89, 46), 'point2'=c(-88.6, 45.2)), "simplegeom")
 }
 \author{
 Jordan S Read

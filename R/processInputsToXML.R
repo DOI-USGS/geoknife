@@ -11,10 +11,10 @@ setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML"
 #'
 #'@examples
 #'wp <- quick_wp()
-#'wd <- webdata('prism')
+#'wd <- as('prism','webdata')
 #'wg <- quick_wg()
 #'XML(wg, wd, wp)
-#'sg <- simplegeom(c(-89,45))
+#'sg <- as(c(-89,45), "simplegeom")
 #'XML(sg, wd, wp)
 #'@rdname XML-method
 #'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<-

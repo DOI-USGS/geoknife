@@ -3,67 +3,32 @@
 \docType{methods}
 \name{geoknife}
 \alias{geoknife}
-\alias{geoknife,ANY,ANY,ANY,missing}
-\alias{geoknife,ANY,ANY,ANY,missing-method}
-\alias{geoknife,ANY,ANY,missing,missing}
-\alias{geoknife,ANY,ANY,missing,missing-method}
-\alias{geoknife,ANY,ANY,webprocess,missing}
-\alias{geoknife,ANY,ANY,webprocess,missing-method}
-\alias{geoknife,ANY,missing,missing,missing}
-\alias{geoknife,ANY,missing,missing,missing-method}
-\alias{geoknife,ANY,webdata,webprocess,missing}
-\alias{geoknife,ANY,webdata,webprocess,missing-method}
-\alias{geoknife,missing,ANY,missing,missing}
-\alias{geoknife,missing,ANY,missing,missing-method}
-\alias{geoknife,missing,missing,ANY,missing}
-\alias{geoknife,missing,missing,ANY,missing-method}
-\alias{geoknife,missing,missing,missing,geojob}
-\alias{geoknife,missing,missing,missing,geojob-method}
 \title{geoknife}
 \usage{
-geoknife(stencil, fabric, knife, job, ...)
-
-\S4method{geoknife}{ANY,webdata,webprocess,missing}(stencil, fabric, knife, job,
-  ...)
-
-\S4method{geoknife}{ANY,ANY,webprocess,missing}(stencil, fabric, knife, job,
-  ...)
-
-\S4method{geoknife}{ANY,ANY,ANY,missing}(stencil, fabric, knife, job, ...)
-
-\S4method{geoknife}{ANY,ANY,missing,missing}(stencil, fabric, knife, job, ...)
-
-\S4method{geoknife}{missing,missing,missing,geojob}(stencil, fabric, knife, job,
-  ...)
-
-\S4method{geoknife}{ANY,missing,missing,missing}(stencil, fabric, knife, job,
-  ...)
-
-\S4method{geoknife}{missing,ANY,missing,missing}(stencil, fabric, knife, job,
-  ...)
-
-\S4method{geoknife}{missing,missing,ANY,missing}(stencil, fabric, knife, job,
-  ...)
+geoknife(stencil, fabric, ..., knife = webprocess(...),
+  emailComplete = FALSE)
 }
 \arguments{
-\item{stencil}{a geometric feature (the "cookie-cutter"). Many input types are supported. [list them]}
+\item{stencil}{a \linkS4class{webgeom}, \linkS4class{simplegeom}, or any type
+that can be coerced into \linkS4class{simplegeom}.}
 
-\item{fabric}{a dataset. Can be \code{\link{webdata}} or recognized shortname (e.g., 'prism')}
+\item{fabric}{a dataset. A \linkS4class{webdata} or any type that
+can be coerced into \linkS4class{webdata}}
+
+\item{...}{additional arguments passed to \code{new} \linkS4class{webdata}.
+Can also be used to modify the \code{knife} argument, if that is supplied.}
 
 \item{knife}{(optional) a \code{\link{webprocess}} object}
 
-\item{job}{(optional) a \code{\link{geojob}} object}
-
-\item{...}{additional arguments passed on to process.}
+\item{emailComplete}{FALSE by default. \code{character} of valid email to
+send email for failed or completed process. NOT IMPLEMENTED}
 }
 \description{
 geoknife
 }
 \examples{
 wp <- quick_wp()
-wd <- webdata('prism')
-geoknife(stencil = c(-89,42), fabric = 'prism', wp)
-job <- geoknife(stencil = c(-89,42), fabric = wd, knife = wp)
+job <- geoknife(stencil = c(-89,42), fabric = 'prism', knife = wp)
 check(job)
 }
 

@@ -26,10 +26,10 @@ XML from set of objects
 }
 \examples{
 wp <- quick_wp()
-wd <- webdata('prism')
+wd <- as('prism','webdata')
 wg <- quick_wg()
 XML(wg, wd, wp)
-sg <- simplegeom(c(-89,45))
+sg <- as(c(-89,45), "simplegeom")
 XML(sg, wd, wp)
 }
 
