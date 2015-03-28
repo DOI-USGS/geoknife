@@ -1,7 +1,12 @@
 #' @title webprocess class
+#' @description A class representing geoknife web processing specifications
 #' @slot url URL for webprocessing service
 #' @slot algorithm a list for algorithm used
 #' @rdname webprocess-class
+#' @aliases
+#' algorithm
+#' algorithm<-
+#' @exportClass webprocess
 setClass(
   Class = "webprocess",
   prototype = prototype(
@@ -55,7 +60,6 @@ setMethod(f="initialize",signature="webprocess",
           })
 
 #' create webprocess object
-#' @description A class representing geoknife web processing specifications
 #'
 #' @return the webprocess object
 #' @author Jordan S Read
@@ -75,8 +79,10 @@ setMethod("webprocess", signature(), function(...) {
   return(webprocess)
 })
 
-
+#'@title quick webprocess object
+#'@param ... additional arguments passed to \code{webprocess}
 #'@export
+#'@keywords internal
 quick_wp <- function(...){
   # with defaults
   wp <- webprocess(...)
@@ -86,7 +92,6 @@ quick_wp <- function(...){
   wp@processInputs$DATASET_ID = 'ppt'
   wp@processInputs$TIME_START = '1895-01-01T00:00:00.000Z'
   wp@processInputs$TIME_END = '1899-01-01T00:00:00.000Z'
-  #wp@processInputs$FEATURE_ATTRIBUTE_NAME = 'STATE'
   #wp@processInputs$GROUP_BY = 'STATISTIC'
   #wp@processInputs$STATISTICS = 'MEAN'
   return(wp)

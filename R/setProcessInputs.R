@@ -5,8 +5,10 @@
     fun <- processNames[i]
     if (exists(fun)){
       webprocess@processInputs[[fun]] <- do.call(fun, list(...))
+    } else if (is.null(webprocess@processInputs[[fun]])){
+      webprocess@processInputs[[fun]] <- .defaultWhenNull(fun)
     } else {
-      # / skip
+      # / skip. will skip and allow NA, which is an optional input.
     }
     
   }
@@ -14,6 +16,12 @@
   return(webprocess)
 }
 
+.defaultWhenNull <- function(varName){
+  defaults <- list(GROUP_BY = 'STATISTIC',
+                   STATISTICS = 'MEAN')
+  return(defaults[[varName]])
+  
+}
 
 
 FEATURE_ATTRIBUTE_NAME <- function(stencil,...){
@@ -28,20 +36,17 @@ FEATURE_ATTRIBUTE_NAME <- function(stencil,...){
 }
 
 TIME_END <- function(fabric, ...){
-  warning("not yet setting to null if not used")
   strftime(times(fabric)[2] ,format = "%Y-%m-%dT%H:%M:%S.000Z")
 }
 TIME_START <- function(fabric, ...){
-  warning("not yet setting to null if not used")
   strftime(times(fabric)[1] ,format = "%Y-%m-%dT%H:%M:%S.000Z")
 }
 
 DATASET_ID <- function(fabric, ...){
-  warning("not yet setting to null if not used")
   variables(fabric)
 }
 
 DATASET_URI <- function(fabric, ...){
-  url(fabric)
+  dodsReplace(url(fabric))
 }
 

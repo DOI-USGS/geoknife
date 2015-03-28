@@ -8,7 +8,6 @@
 \alias{algorithm<-,webprocess-method}
 \title{the algorithm of a webprocess object}
 \usage{
-algorithm(.Object) <- value
 algorithm(.Object)
 
 algorithm(.Object) <- value
@@ -29,4 +28,5 @@ Functions to get or set the algorithm of a \linkS4class{webprocess} object
 wp <- webprocess()
 algorithm(wp)
 }
+\keyword{internal}
 

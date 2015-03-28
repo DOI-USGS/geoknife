@@ -17,7 +17,7 @@ webprocess(...)
 the webprocess object
 }
 \description{
-A class representing geoknife web processing specifications
+create webprocess object
 }
 \author{
 Jordan S Read

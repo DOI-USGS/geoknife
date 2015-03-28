@@ -5,13 +5,11 @@
 #'@examples
 #'wp <- webprocess()
 #'algorithm(wp)
-#'@usage
-#'algorithm(.Object) <- value
-#'algorithm(.Object)
-#'@rdname algorithm-webprocess
 #'@aliases 
 #'algorithm
 #'algorithm<-
+#'@rdname algorithm-webprocess
+#'@keywords internal
 #'@export
 setGeneric(name="algorithm",def=function(.Object){
   standardGeneric("algorithm")

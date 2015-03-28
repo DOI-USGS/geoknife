@@ -20,8 +20,7 @@ missing_msg <- function() stop('stencil and fabric, OR job must be supplied')
 #'@aliases
 #'geoknife
 #'@examples
-#'wp <- quick_wp()
-#'job <- geoknife(stencil = c(-89,42), fabric = 'prism', knife = wp)
+#'job <- geoknife(stencil = c(-89,42), fabric = 'prism')
 #'check(job)
 #'@export
 geoknife <- function(stencil, fabric, ..., knife = webprocess(...), emailComplete = FALSE){

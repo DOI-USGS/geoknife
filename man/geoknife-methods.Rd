@@ -30,8 +30,7 @@ and object of class \linkS4class{geojob}
 geoknife
 }
 \examples{
-wp <- quick_wp()
-job <- geoknife(stencil = c(-89,42), fabric = 'prism', knife = wp)
+job <- geoknife(stencil = c(-89,42), fabric = 'prism')
 check(job)
 }
 

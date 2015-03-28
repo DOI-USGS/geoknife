@@ -2,10 +2,12 @@
 % Please edit documentation in R/04-webprocess-obj.R
 \docType{class}
 \name{webprocess-class}
+\alias{algorithm}
+\alias{algorithm<-}
 \alias{webprocess-class}
 \title{webprocess class}
 \description{
-webprocess class
+A class representing geoknife web processing specifications
 }
 \section{Slots}{
 
