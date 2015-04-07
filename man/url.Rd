@@ -6,6 +6,7 @@
 \alias{url,ANY-method}
 \alias{url<-}
 \alias{url<-,ANY-method}
+\alias{url<-,webprocess-method}
 \title{the url of an object}
 \usage{
 url(.Object)
@@ -14,6 +15,8 @@ url(.Object)<- value
 url(.Object)
 
 \S4method{url}{ANY}(.Object) <- value
+
+\S4method{url}{webprocess}(.Object) <- value
 
 \S4method{url}{ANY}(.Object)
 }

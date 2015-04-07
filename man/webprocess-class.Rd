@@ -2,8 +2,6 @@
 % Please edit documentation in R/04-webprocess-obj.R
 \docType{class}
 \name{webprocess-class}
-\alias{algorithm}
-\alias{algorithm<-}
 \alias{webprocess-class}
 \title{webprocess class}
 \description{
@@ -12,8 +10,34 @@ A class representing geoknife web processing specifications
 \section{Slots}{
 
 \describe{
-\item{\code{url}}{URL for webprocessing service}
+\item{\code{url}}{URL for webprocessing service.
+Can be set or accessed using \code{\link[geoknife]{url}}}
 
-\item{\code{algorithm}}{a list for algorithm used}
+\item{\code{algorithm}}{a list for algorithm used.
+Can be set or accessed using \code{\link[geoknife]{algorithm}}}
+
+\item{\code{processInputs}}{(_private) a list of required and options process inputs, and their
+default values (if specified). This is populated (or repopulated) whenever \code{algorithm} is set.}
+
+\item{\code{WPS_VERSION}}{(_private) a character specifying the wep processing service version to use.}
+
+\item{\code{WPS_SCHEMA_LOCATION}}{(_private) location for web processing service schema}
+
+\item{\code{WPS_NAMESPACE}}{(_private) location for web processing service namespace}
+
+\item{\code{OWS_NAMESPACE}}{(_private) namespace web location}
+
+\item{\code{XSI_SCHEMA_LOCATION}}{(_private) schema web location}
+
+\item{\code{XSI_NAMESPACE}}{(_private) namespace web location}
+
+\item{\code{XLINK_NAMESPACE}}{(_private) namespace web location}
+
+\item{\code{UTILITY_URL}}{(_private) web processing service utility url. Uses same base url as
+public slot \code{url}}
+
+\item{\code{OGC_NAMESPACE}}{(_private) namespace web location}
+
+\item{\code{emailK}}{(_private) relative url for email when complete utility.}
 }}
 

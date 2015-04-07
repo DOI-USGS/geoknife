@@ -5,21 +5,35 @@
 \alias{webgeom-class}
 \title{webgeom class}
 \description{
-webgeom class
+The \code{webgeom} class represents a web feature service (WFS) dataset.
+WFS is an open geospatial consortium standard for spatial data on the web. WFS supports
+filtering of spatial elements and this object can support many of those filters.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{url}}{URL of web feature service endpoint}
+\item{\code{url}}{URL of web feature service endpoint.
+Can be set or accessed using \code{\link[geoknife]{url}}}
 
-\item{\code{geom}}{character for geometric feature name}
+\item{\code{geom}}{character for geometric feature name.
+Can be set or accessed using \code{\link[geoknife]{geom}}}
 
-\item{\code{attribute}}{character for feature attribute (used for filtering and naming in output)}
+\item{\code{attribute}}{character for feature attribute (used for filtering and naming in output)
+Can be set or accessed using \code{\link[geoknife]{attribute}}}
 
-\item{\code{IDs}}{attribute IDs to be used in processing (a subset, or all if NA)}
+\item{\code{IDs}}{character vector of attribute IDs to be used in processing (a subset, or all if NA)
+Can be set or accessed using \code{\link[geoknife]{IDs}}}
 
-\item{\code{wfs_version}}{the web feature service version to use.}
+\item{\code{version}}{a character that specifies the web feature service (WFS) version to use.
+Can be set or accessed using \code{\link[geoknife]{version}}}
 
-\item{\code{id}}{job identifier}
+\item{\code{WFS_NAMESPACE}}{(_private) web location of web feature service namespace}
+
+\item{\code{GML_NAMESPACE}}{(_private) web location of GML namespace}
+
+\item{\code{GML_SCHEMA_LOCATION}}{(_private) web location of GML schema location}
 }}
+\seealso{
+\code{\link{webgeom}}, \code{\link[geoknife]{url}}
+}
 

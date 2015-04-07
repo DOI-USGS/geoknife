@@ -11,7 +11,7 @@ setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML"
 #'
 #'@examples
 #'wd <- webdata('prism',times = as.POSIXct(c('2001-01-01','2002-02-05')))
-#'wg <- quick_wg()
+#'wg <- webgeom('state:NH')
 #'XML(wg, wd, webprocess())
 #'sg <- simplegeom(c(-89,45))
 #'XML(sg, wd, webprocess())
@@ -118,7 +118,7 @@ setMethod(f = "addGeom",signature = c("webgeom","ANY"),
   addChildren(inDatEL,bodyEL)
   
   featEL   <-	newXMLNode('wfs:GetFeature',attrs=c("service"="WFS",
-                                                  "version"=stencil@wfs_version,
+                                                  "version"=version(stencil),
                                                   "outputFormat"="text/xml; subtype=gml/3.1.1"),
                          namespaceDefinitions=c("wfs"=stencil@WFS_NAMESPACE,
                                                 "gml"=stencil@GML_NAMESPACE))

@@ -28,6 +28,15 @@ setMethod(f = "url<-",signature(.Object = "ANY"), definition = function(.Object,
   .Object@url <- value
   return(.Object)})
 
+# special method because other slots depend on value of \code{url} for webprocess object
+#'@aliases url
+#'@rdname url
+setMethod(f = "url<-",signature(.Object = "webprocess"), definition = function(.Object, value){
+  if (length(value) != 1){
+    stop('url must be a single character string')
+  }
+  .Object <- new(Class = "webprocess", url = value)
+  return(.Object)})
 
 #'@aliases url
 #'@rdname url

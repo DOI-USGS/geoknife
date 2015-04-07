@@ -14,11 +14,10 @@
 #'@export
 #'@rdname start-methods
 #'@examples 
-#'wp <- quick_wp()
 #'wd <- webdata('prism')
 #'wg <- quick_wg()
 #'gj <- geojob()
-#'xml(gj) <- XML(wg, wd, wp)
+#'xml(gj) <- XML(wg, wd, webprocess())
 #'url(gj) <- url(wp)
 #'gj <- start(gj)
 setGeneric(name="start",def=function(.Object){standardGeneric("start")})

@@ -2,8 +2,6 @@
   packageStartupMessage("This information is preliminary or provisional and is subject to revision. It is being provided to meet the need for timely best science. The information has not received final approval by the U.S. Geological Survey (USGS) and is provided on the condition that neither the USGS nor the U.S. Government shall be held liable for any damages resulting from the authorized or unauthorized use of the information. Although this software program has been used by the USGS, no warranty, expressed or implied, is made by the USGS or the U.S. Government as to the accuracy and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and no responsibility is assumed by the USGS in connection therewith.")
 }
 
-missing_msg <- function() stop('stencil and fabric, OR job must be supplied')
-
 #'@title geoknife 
 #'@param stencil a \linkS4class{webgeom}, \linkS4class{simplegeom}, or any type 
 #'that can be coerced into \linkS4class{simplegeom}.
@@ -12,10 +10,29 @@ missing_msg <- function() stop('stencil and fabric, OR job must be supplied')
 #'@param ... additional arguments passed to \code{new} \linkS4class{webprocess}. 
 #'Can also be used to modify the \code{knife} argument, if it is supplied.
 #'@param knife (optional) a \linkS4class{webprocess} object
-#'@param emailComplete FALSE by default. \code{character} of valid email to 
-#'send email for failed or completed process. NOT IMPLEMENTED
+#'@param emailComplete FALSE by default. \code{character} of valid email address to 
+#'notify for failed or completed process. NOT IMPLEMENTED
 #'@return and object of class \linkS4class{geojob}
 #'@rdname geoknife-methods
+#'@details
+#'The \code{stencil} argument is akin to cookie cutter(s), which specify how the dataset is 
+#'to be subsampled spatially. Supported types are all geometric in nature, be they collections 
+#'of points or polygons. Because geoporcessing operations require a non-zero area for \code{stencil}, 
+#'if points are used (i.e., the different point collections that can be used in \linkS4class{simplegeom}), 
+#'there is a negligle automatic point buffer applied to each point to result in a non-zero area. 
+#'
+#'Naming of the components of the \code{stencil} will impact the formatting of the result returned by 
+#'the geoknife processing job (the \linkS4class{geojob})
+#'
+#'geoknife will check the class of the stencil argument, and if stencil's class is not
+#'\linkS4class{webgeom}, it will attempt to coerce the object into a \linkS4class{simplegeom}. 
+#'If no coercion method exists, geoknife will fail. 
+#'
+#'The \code{fabric} argument is akin to the dough or fabric that will be subset with the \code{stencil} 
+#'argument. At present, this is a web-available gridded dataset that meets a variety of formatting restrictions. 
+#'Several quick start methods for creating a \linkS4class{webdata} object (only \linkS4class{webdata} or 
+#'an type that can be coerced into \linkS4class{webdata} are valid arguments for \code{fabric}).
+#'
 #'@docType methods
 #'@aliases
 #'geoknife

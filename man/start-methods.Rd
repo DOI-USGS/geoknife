@@ -23,11 +23,10 @@ Start process for \code{geojob}
 start is a method for submitting a geo-web processing request.
 }
 \examples{
-wp <- quick_wp()
 wd <- webdata('prism')
 wg <- quick_wg()
 gj <- geojob()
-xml(gj) <- XML(wg, wd, wp)
+xml(gj) <- XML(wg, wd, webprocess())
 url(gj) <- url(wp)
 gj <- start(gj)
 }
