@@ -79,20 +79,4 @@ setMethod("webprocess", signature(), function(...) {
   return(webprocess)
 })
 
-#'@title quick webprocess object
-#'@param ... additional arguments passed to \code{webprocess}
-#'@export
-#'@keywords internal
-quick_wp <- function(...){
-  # with defaults
-  wp <- webprocess(...)
-  # need to code setters:
-  
-  wp@processInputs$DATASET_URI = 'dods://cida.usgs.gov/thredds/dodsC/prism'
-  wp@processInputs$DATASET_ID = 'ppt'
-  wp@processInputs$TIME_START = '1895-01-01T00:00:00.000Z'
-  wp@processInputs$TIME_END = '1899-01-01T00:00:00.000Z'
-  #wp@processInputs$GROUP_BY = 'STATISTIC'
-  #wp@processInputs$STATISTICS = 'MEAN'
-  return(wp)
-}
+
