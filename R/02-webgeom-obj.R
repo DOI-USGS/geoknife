@@ -15,7 +15,8 @@
 #' @slot WFS_NAMESPACE (_private) web location of web feature service namespace
 #' @slot GML_NAMESPACE (_private) web location of GML namespace
 #' @slot GML_SCHEMA_LOCATION (_private) web location of GML schema location
-#' @seealso \code{\link{webgeom}}, \code{\link[geoknife]{url}}
+#' @seealso \code{\link{webgeom}}, \code{\link[geoknife]{url}}, \code{\link[geoknife]{geom}}, 
+#' \code{\link[geoknife]{attribute}}, \code{\link[geoknife]{IDs}}, \code{\link[geoknife]{version}}
 #' @rdname webgeom-class
 #' @exportClass webgeom
 setClass(
@@ -51,7 +52,7 @@ setMethod("initialize", signature = "webgeom",
             .Object@geom = geom
             .Object@attribute = attribute
             .Object@IDs = IDs
-            .Object@wfs_version = wfs_version
+            .Object@version = version
             
             .Object@GML_NAMESPACE = 'http://www.opengis.net/gml'
             .Object@WFS_NAMESPACE   = 'http://www.opengis.net/wfs'

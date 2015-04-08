@@ -20,3 +20,12 @@ setGeneric(name="geom",def=function(.Object){standardGeneric("geom")})
 setMethod(f = "geom<-",signature(.Object = "webgeom"), definition = function(.Object, value){
   .Object <- initialize(.Object, geom = value)
   return(.Object)})
+
+#'@rdname geom
+#'@aliases geom
+setMethod(f = "geom",signature="webgeom",
+          definition = function(.Object){
+            return(.Object@geom)
+          }
+)
+

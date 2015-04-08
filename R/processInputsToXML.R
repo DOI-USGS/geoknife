@@ -24,7 +24,7 @@ setMethod(f = "XML",signature = c("ANY","webdata","webprocess"),
   
   knife <- .setProcessInputs(webprocess = knife, stencil = stencil, fabric = fabric)
   top <- newXMLNode(name='wps:Execute',
-                    attrs=c('service'="WPS",'version'=knife@WPS_VERSION,
+                    attrs=c('service'="WPS",'version'= version(knife),
                             'xsi:schemaLocation' = paste(c(knife@WPS_NAMESPACE,knife@WPS_SCHEMA_LOCATION),collapse=" ")),
                     namespaceDefinitions=c('wps' = knife@WPS_NAMESPACE,
                                            'ows' = knife@OWS_NAMESPACE,

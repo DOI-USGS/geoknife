@@ -3,6 +3,7 @@
 \docType{methods}
 \name{geom<-}
 \alias{geom}
+\alias{geom,webgeom-method}
 \alias{geom<-}
 \alias{geom<-,webgeom-method}
 \title{the geom of an object}
@@ -12,6 +13,8 @@ geom(.Object) <- value
 geom(.Object)
 
 \S4method{geom}{webgeom}(.Object) <- value
+
+\S4method{geom}{webgeom}(.Object)
 }
 \arguments{
 \item{.Object}{a \linkS4class{webgeom} object}

@@ -16,10 +16,11 @@ Can be set or accessed using \code{\link[geoknife]{url}}}
 \item{\code{algorithm}}{a list for algorithm used.
 Can be set or accessed using \code{\link[geoknife]{algorithm}}}
 
+\item{\code{version}}{a character specifying the wep processing service version to use.
+Can be set or accessed using \code{\link[geoknife]{version}}}
+
 \item{\code{processInputs}}{(_private) a list of required and options process inputs, and their
 default values (if specified). This is populated (or repopulated) whenever \code{algorithm} is set.}
-
-\item{\code{WPS_VERSION}}{(_private) a character specifying the wep processing service version to use.}
 
 \item{\code{WPS_SCHEMA_LOCATION}}{(_private) location for web processing service schema}
 
@@ -40,4 +41,8 @@ public slot \code{url}}
 
 \item{\code{emailK}}{(_private) relative url for email when complete utility.}
 }}
+\seealso{
+\code{\link{webprocess}}, \code{\link[geoknife]{url}},
+\code{\link[geoknife]{algorithm}}, \code{\link[geoknife]{version}}
+}
 

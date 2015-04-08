@@ -11,7 +11,7 @@ webprocess(...)
 \S4method{webprocess}{ANY}(...)
 }
 \arguments{
-\item{...}{additional arguments passed initialize method (e.g., \code{url})}
+\item{...}{additional arguments passed initialize method (e.g., \code{url}, \code{version})}
 }
 \value{
 the webprocess object

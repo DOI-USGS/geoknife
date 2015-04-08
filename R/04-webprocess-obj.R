@@ -4,9 +4,10 @@
 #' Can be set or accessed using \code{\link[geoknife]{url}}
 #' @slot algorithm a list for algorithm used. 
 #' Can be set or accessed using \code{\link[geoknife]{algorithm}}
+#' @slot version a character specifying the wep processing service version to use. 
+#' Can be set or accessed using \code{\link[geoknife]{version}}
 #' @slot processInputs (_private) a list of required and options process inputs, and their 
 #' default values (if specified). This is populated (or repopulated) whenever \code{algorithm} is set.
-#' @slot WPS_VERSION (_private) a character specifying the wep processing service version to use. 
 #' @slot WPS_SCHEMA_LOCATION (_private) location for web processing service schema
 #' @slot WPS_NAMESPACE (_private) location for web processing service namespace
 #' @slot OWS_NAMESPACE (_private) namespace web location 
@@ -18,6 +19,8 @@
 #' @slot OGC_NAMESPACE (_private) namespace web location
 #' @slot emailK (_private) relative url for email when complete utility. 
 #' @rdname webprocess-class
+#' @seealso \code{\link{webprocess}}, \code{\link[geoknife]{url}}, 
+#' \code{\link[geoknife]{algorithm}}, \code{\link[geoknife]{version}}
 #' @aliases
 #' webprocess-class
 #' @exportClass webprocess
@@ -26,13 +29,14 @@ setClass(
   prototype = prototype(
     url = 'http://cida.usgs.gov/gdp/process/WebProcessingService', 
     algorithm = list('Area Grid Statistics (weighted)'=
-                       "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
+                       "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
+    version = '1.0.0'
     ),
   representation = representation(
     url="character",
     algorithm="list",
+    version="character",
     processInputs="list",
-    WPS_VERSION="character",
     WPS_SCHEMA_LOCATION="character",
     WPS_NAMESPACE="character",
     OWS_NAMESPACE="character",
@@ -48,9 +52,10 @@ setMethod(f="initialize",signature="webprocess",
           definition=function(
             .Object, 
             url = .Object@url, 
-            algorithm = .Object@algorithm)
+            algorithm = .Object@algorithm,
+            version = .Object@version)
             {
-            .Object@WPS_VERSION = '1.0.0'
+
             .Object@WPS_SCHEMA_LOCATION = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
             .Object@WPS_NAMESPACE ='http://www.opengis.net/wps/1.0.0'
             
@@ -66,9 +71,10 @@ setMethod(f="initialize",signature="webprocess",
             
             .Object@emailK      = 'gov.usgs.cida.gdp.wps.algorithm.communication.EmailWhenFinishedAlgorithm'
             
+            .Object@version = version
             .Object@url = url
             .Object@algorithm  <- algorithm
-            processInputs <- defaultProcessInputs(algorithm = .Object@algorithm[[1]], .Object@url, .Object@WPS_VERSION)
+            processInputs <- defaultProcessInputs(algorithm = .Object@algorithm[[1]], .Object@url, .Object@version)
             .Object@processInputs  <-	processInputs
             
             return(.Object)
@@ -84,7 +90,7 @@ setGeneric("webprocess", function(...) {
   standardGeneric("webprocess")
 })
 
-#'@param ... additional arguments passed initialize method (e.g., \code{url})
+#'@param ... additional arguments passed initialize method (e.g., \code{url}, \code{version})
 #'@rdname webprocess-methods
 #'@aliases webprocess
 #'@rdname webprocess-methods
