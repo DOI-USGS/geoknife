@@ -22,23 +22,14 @@ simplegeom(.Object, ...)
 the simplegeom object
 }
 \description{
-A class representing a simple feature.
+create simplegeom object
 }
-\section{Slots}{
-
-\describe{
-\item{\code{DRAW_NAMESPACE}}{location of polygrom draw namespace}
-
-\item{\code{DRAW_SCHEMA}}{url for draw schema}
-
-\item{\code{sp}}{object of class \code{\link[sp]{SpatialPolygons}}}
-}}
 \examples{
 simplegeom(c(-88.6, 45.2))
 \dontrun{
 simplegeom(Srl, proj4string = CRS("+proj=longlat +datum=WGS84"))
 }
-as(data.frame('point1'=c(-89, 46), 'point2'=c(-88.6, 45.2)), "simplegeom")
+simplegeom(data.frame('point1'=c(-89, 46), 'point2'=c(-88.6, 45.2)))
 }
 \author{
 Jordan S Read
