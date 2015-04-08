@@ -24,22 +24,77 @@ The `geoknife` package was created to support web-based geoprocessing of large g
 
 The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) are include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm paramters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `loadOutput`. 
 
-###`geoknife` Functions (as of v0.6.1)
+###What can `geoknife` do?
+#####define a stencil that represents the geographic region to slice out of the data
+```R
+library(geoknife)
+# from a single point
+stencil <- simplegeom(c(-89, 46.23))
+   # -- or --
+# from a collection of named points
+stencil <- simplegeom(data.frame(
+              'point1' = c(-89, 46), 
+              'point2' = c(-88.6, 45.2)))
+   # -- or --
+#for a state from a web available dataset
+stencil <- webgeom('state:NH')
+```
+#####define a fabric that represents the underlying data
+```R
+# from the prism dataset:
+fabric <- webdata('prism')
+   # -- or --
+# explicitly define webdata from a list:
+fabric <- webdata(list(
+            times = as.POSIXct(c('1895-01-01','1899-01-01')),
+            url = 'http://cida.usgs.gov/thredds/dodsC/prism',
+            variables = 'ppt'))
+# modify the times field:
+times(fabric) <- as.POSIXct(c('1990-01-01','2005-01-01'))
+```
+#####create the processing job that will carry out the subsetting/summarization task
+```R
+job <- geoknife(stencil, fabric)
+
+# use existing convienence functions to check on the job:
+check(job)
+running(job)
+error(job)
+successful(job)
+
+# wait a little for the process to complete
+Sys.sleep(5)
+if (successful(job)){
+   # -- load up the output and plot it --
+   data <- loadOutput(job)
+   plot(data[,1:2], ylab = variables(fabric))
+}
+```
+
+###`geoknife` Functions (as of v0.6.2)
 | Function       | Title           |
 | ------------- |:-------------|
-| `algorithm` | The algorithm of a `webprocess` |
-| `bufferPoint`  | Create linear ring from point |
-| `check` | Check status of `geojob` |
-| `error` | Convenience  function for state of `geojob` |
-| `running` | Convenience  function for state of `geojob` |
-| `successful` | Convenience  function for state of `geojob` |
 | `geoknife` | slice up gridded data according to overlap with feature(s) |
-| `start` | Start a `geojob` |
+| `algorithm` | the algorithm of a `webprocess` |
+| `attribute` | the attribute of an `webgeom` |
+| `bufferPoint` | create linear ring from a point |
+| `check` | check status of `geojob` |
+| `error` | convenience  function for state of `geojob` |
+| `running` | convenience  function for state of `geojob` |
+| `successful` | convenience  function for state of `geojob` |
+| `start` | start a `geojob` |
+| `geom` | the geom of a `webgeom` | 
+| `id` | the process id of a `geojob` |
+| `IDs` | the IDs of a `webgeom` | 
 | `loadOutput` | load the output of a completed `geojob` into data.frame |
 | `variables` | the variables for a `webdata` object |
 | `times` | the times of a `webdata` object |
+| `url` | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess` |
+| `variables` | the variables of a `webdata` |
+| `version` | the version of a `webgeom` or `webdata` |
+| `xml` | the xml of a `geojob` |
 
-###`geoknife` classes (as of v0.6.1)
+###`geoknife` classes (as of v0.6.2)
 | Class       | Title           |
 | ------------- |:-------------|
 | `simplegeom` | a simple geometric class. Extends `sp::SpatialPolygons` |
@@ -47,27 +102,6 @@ The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) a
 | `webprocess` | a web processing service |
 | `webdata` | web data |
 | `geojob` | a geo data portal processing job |
-
-###What can `geoknife` do?
-```R
-library(geoknife)
-# get prism data for a long/lat point in space
-stencil <- simplegeom(c(-89, 46.23))
-fabric <- webdata('prism')
-times(fabric) <- as.POSIXct(c('1990-01-01','2005-01-01'))
-
-job <- geoknife(stencil, fabric)
-check(job)
-running(job)
-error(job)
-successful(job)
-
-Sys.sleep(5) # wait a little for the process to complete
-if (successful(job)){
-   data <- loadOutput(job)
-   plot(data[,1:2], ylab = variables(fabric))
-}
-```
 
 ##What libraries does `geoknife` need?
 This version requires `httr`, `jsonlite`, `lubridate` and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
