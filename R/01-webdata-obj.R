@@ -50,6 +50,11 @@ setGeneric("webdata", function(.Object,...) {
 
 #'@param .Object any object that can be coerced into \linkS4class{webdata}
 #'@param ... additional arguments passed initialize method (e.g., times vector)
+#'@examples
+#'webdata('prism')
+#'webdata(list(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
+#'  url = 'http://cida.usgs.gov/thredds/dodsC/prism',
+#'  variables = 'ppt'))
 #'@rdname webdata-methods
 #'@aliases webdata
 setMethod("webdata", signature("missing"), function(.Object,...) {
@@ -72,8 +77,14 @@ setAs("character", "webdata", function(from){
   ## create new webdata object with a character input (for dataset matching)
   if (from != 'prism') stop("character input for webdata not supported for '", from,"'")
   
-  webdata <- webdata(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
+  .Object<- webdata(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
                      url = 'http://cida.usgs.gov/thredds/dodsC/prism',
                      variables = 'ppt')
-  return(webdata)
+  return(.Object)
+})
+
+setAs('list', 'webdata', function(from){
+  
+  .Object <- do.call(what = "webdata", args = from)
+  return(.Object)
 })
