@@ -5,7 +5,7 @@
 \alias{attribute}
 \alias{attribute<-}
 \alias{attribute<-,webgeom-method}
-\title{the attribute of an object}
+\title{the attribute of an webgeom object}
 \usage{
 attribute(.Object) <- value
 
@@ -19,6 +19,6 @@ attribute(.Object)
 \item{value}{a attribute}
 }
 \description{
-the attribute of an object
+the attribute of an webgeom object
 }
 

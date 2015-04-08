@@ -14,6 +14,10 @@
 bufferPoint	<-	function(point){
 	offset	<-	0.0001
 	
+  if (length(point) != 2){
+    stop('only a single pair point is currently supported. This function is not yet vectorized.')
+  }
+  
 	if (length(point) %% 2 != 0){
 		stop('point must be latitude and longitude pairs')
 	}
