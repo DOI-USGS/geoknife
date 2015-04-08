@@ -33,6 +33,12 @@ A class representing a web dataset.
 
 \item{\code{variable}}{value of type \code{"character"}, the variable(s) for data}
 }}
+\examples{
+webdata('prism')
+webdata(list(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
+ url = 'http://cida.usgs.gov/thredds/dodsC/prism',
+ variables = 'ppt'))
+}
 \author{
 Jordan S Read
 }
