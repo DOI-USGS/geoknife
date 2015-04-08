@@ -15,9 +15,10 @@
 #'@rdname start-methods
 #'@examples 
 #'wd <- webdata('prism')
-#'wg <- quick_wg()
+#'wg <- webgeom('state:NH')
+#'wp <- webprocess()
 #'gj <- geojob()
-#'xml(gj) <- XML(wg, wd, webprocess())
+#'xml(gj) <- XML(wg, wd, wp)
 #'url(gj) <- url(wp)
 #'gj <- start(gj)
 setGeneric(name="start",def=function(.Object){standardGeneric("start")})
