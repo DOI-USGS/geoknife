@@ -5,6 +5,10 @@
 \alias{geojob}
 \alias{geojob,ANY-method}
 \alias{geojob,geojob-method}
+\alias{id}
+\alias{id,geojob-method}
+\alias{id<-}
+\alias{id<-,geojob-method}
 \alias{xml}
 \alias{xml,geojob-method}
 \alias{xml<-}
@@ -18,6 +22,15 @@ geojob(...)
 xml(.Object) <- value
 
 xml(.Object)
+
+id(.Object)
+id(.Object) <- value
+
+id(.Object)
+
+\S4method{id}{geojob}(.Object) <- value
+
+\S4method{id}{geojob}(.Object)
 }
 \arguments{
 \item{...}{additional arguments passed to initialize method}
@@ -31,6 +44,8 @@ the geojob object
 }
 \description{
 A class representing a geoknife job (\code{geojob}).
+
+process id of geojob
 }
 \examples{
 xml <- "<foo> <bar> text <baz/> </bar> </foo>"
@@ -40,6 +55,7 @@ xml(gj)
 xml <- "<foo> <bar> text <baz/> </bar> </foo>"
 gj <- geojob(xml = xml)
 xml(gj)
+id(gj)
 }
 \author{
 Jordan S Read

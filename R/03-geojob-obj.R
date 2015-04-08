@@ -1,3 +1,8 @@
+#' @title geojob class
+#' @slot url URL of web processing endpoint
+#' @slot xml XML character for post
+#' @slot id job identifier
+#' @rdname geojob-class
 setClass(
   Class = "geojob",
   representation = representation(
@@ -72,19 +77,31 @@ setMethod(f = "xml",signature = "geojob", definition = function(.Object){
 }
 )
 
+#'@title process id of geojob
+#'@rdname geojob-methods
+#'@aliases id,geojob-method
+#'@usage
+#'id(.Object)
+#'id(.Object) <- value
+#'@examples
+#'id(gj)
 #'@export
 setGeneric(name="id<-",def=function(.Object, value){standardGeneric("id<-")})
 
-setMethod(f = "id<-",signature = "geojob", definition = function(.Object, value){
-  .Object@id <- value
-  return(.Object)
-}
-)
-
+#'@rdname geojob-methods
+#'@aliases id,geojob-method
 #'@export
 setGeneric(name="id",def=function(.Object){standardGeneric("id")})
 
-#'@export
+#'@rdname geojob-methods
+#'@aliases id,geojob-method
+setMethod(f = "id<-",signature = "geojob", definition = function(.Object, value){
+  .Object@id <- value
+  return(.Object)
+})
+
+#'@rdname geojob-methods
+#'@aliases id,geojob-method
 setMethod(f = "id",signature = "geojob", definition = function(.Object){
   value <- .Object@id
   return(value)

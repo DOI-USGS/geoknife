@@ -7,9 +7,6 @@
 #'times(wd) <- as.POSIXct(c("2012-11-04", "2012-11-12"))
 #'times(wd)[1] <- as.POSIXct("2012-11-04")
 #'times(wd)
-#'@usage
-#'times(.Object) <- value
-#'times(.Object)
 #'@rdname times-webdata
 #'@aliases 
 #'times
@@ -17,13 +14,14 @@
 #'@export
 setGeneric(name="times",def=function(.Object){standardGeneric("times")})
 
+#'@rdname times-webdata
 #'@aliases times
 #'@export
 setGeneric(name="times<-",def=function(.Object, value){standardGeneric("times<-")})
 
+#'@rdname times-webdata
 #'@aliases times
-#'@export
-setMethod(f = "times<-",signature = "webdata",
+setMethod(f = "times<-",signature(.Object = "webdata"),
           definition = function(.Object, value){
             if (length(value) != 2){
               stop('times input must be a POSIXct vector of length 2')
@@ -36,10 +34,9 @@ setMethod(f = "times<-",signature = "webdata",
             return(.Object)
           })
 
-
+#'@rdname times-webdata
 #'@aliases times
-#'@export
-setMethod(f = "times",signature = "webdata",
+setMethod(f = "times",signature(.Object = "webdata"),
           definition = function(.Object){
             return(.Object@times)
           })

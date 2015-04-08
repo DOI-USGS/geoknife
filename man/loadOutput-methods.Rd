@@ -3,7 +3,6 @@
 \docType{methods}
 \name{loadOutput}
 \alias{loadOutput}
-\alias{loadOutput,geojob}
 \alias{loadOutput,geojob-method}
 \title{parse process output into R environment}
 \usage{
@@ -16,34 +15,22 @@ loadOutput(.Object)
 (See \code{\link{check}}).}
 }
 \value{
-list of timeseries values.
+data.frame of timeseries values.
 }
 \description{
 parse process output into R environment
 }
 \details{
-a \code{geoknife} method for loading data into R from a completed processing request
+a \code{geojob} method for loading data into R from a completed processing request
 }
 \examples{
 \dontrun{
-gk <- geoknife() # create geoknife object
-gk # print geoknife object
+wp <- quick_wp()
+job <- geoknife(stencil = c(-89,42), fabric = 'prism', knife = wp)
+check(job)
 
-linearRing = bufferPoint(c(-111.48,36.95))
-setFeature(gk) <-list(LinearRing=linearRing)
-
-setAlgorithm(gk) <- getAlgorithms(gk)[4] # feature weighted
-
-# set the post inputs for the processing dataset
-setProcessInputs(gk) <- list('DATASET_ID'='prcp',
-                            'DATASET_URI'='http://thredds.daac.ornl.gov/thredds/dodsC/daymet-agg/daymet-agg.ncml',
-                            'TIME_START'='2010-01-01T00:00:00Z',
-                            'TIME_END'='2010-01-03T00:00:00Z',
-                            'DELIMITER'='TAB')
-
-gk <- startProcess(gk)
 Sys.sleep(10) # give it some time to process
-loadOutput(gk) # load and print output
+loadOutput(job) # load and print output
 }
 }
 \author{

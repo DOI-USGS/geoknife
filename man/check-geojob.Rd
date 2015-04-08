@@ -3,7 +3,6 @@
 \docType{methods}
 \name{check}
 \alias{check}
-\alias{check,geojob}
 \alias{check,geojob-method}
 \title{Check status of processing request}
 \usage{
@@ -12,7 +11,7 @@ check(.Object)
 \S4method{check}{geojob}(.Object)
 }
 \arguments{
-\item{.Object}{a \code{geoknife} object with an active GDP process request.}
+\item{.Object}{a \linkS4class{geojob} object with an active GDP process request.}
 }
 \value{
 \code{process}, a list containing
@@ -22,9 +21,9 @@ check(.Object)
 Check status of processing request
 }
 \details{
-checkProcess is a method for checking the process status of an active (executed)
-\code{geoknife} object. The method returns \code{process}, which is a list containing
-two fields: \code{status} and \code{URL}. If the \code{geoknife} object has not been executed
+check is a method for checking the process status of an active (executed)
+\linkS4class{geojob} object. The method returns \code{process}, which is a list containing
+two fields: \code{status} and \code{URL}. If the \linkS4class{geojob} object has not been executed
 (see \code{\link{start}}), this method returns \code{status}='none' and \code{URL}=NULL.
 }
 \examples{
@@ -37,5 +36,4 @@ Jordan S. Read
 \seealso{
 \code{\link{start}}
 }
-\keyword{checkProcess}
 

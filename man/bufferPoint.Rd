@@ -26,7 +26,7 @@ linearRing = bufferPoint(c(-111.48, 36.95))
 Jordan S. Read
 }
 \seealso{
-\code{setFeature}
+\linkS4class{simplegeom}
 }
 \keyword{methods}
 

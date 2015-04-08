@@ -1,14 +1,12 @@
-#'@details checkProcess is a method for checking the process status of an active (executed)
-#' \code{geoknife} object. The method returns \code{process}, which is a list containing
-#' two fields: \code{status} and \code{URL}. If the \code{geoknife} object has not been executed
+#'@details check is a method for checking the process status of an active (executed)
+#' \linkS4class{geojob} object. The method returns \code{process}, which is a list containing
+#' two fields: \code{status} and \code{URL}. If the \linkS4class{geojob} object has not been executed
 #' (see \code{\link{start}}), this method returns \code{status}='none' and \code{URL}=NULL.
 #'
-#'@param .Object a \code{geoknife} object with an active GDP process request.
+#'@param .Object a \linkS4class{geojob} object with an active GDP process request.
 #'@return \code{process}, a list containing
 #' \code{status} and \code{URL}. 
 #'
-#'@docType methods
-#'@keywords checkProcess
 #'@description Check status of processing request
 #'@title Check status of processing request
 #'@aliases check
@@ -24,7 +22,7 @@
 setGeneric(name="check",def=function(.Object){standardGeneric("check")})
 
 #'@rdname check-geojob
-#'@aliases check,geojob
+#'@aliases check
 setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Object){
 	
 	process	<-	list(status=NULL,URL=NULL)

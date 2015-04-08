@@ -2,20 +2,19 @@
 % Please edit documentation in R/01-webdata-obj.R
 \docType{methods}
 \name{webdata}
-\alias{character}
 \alias{webdata}
-\alias{webdata,character-method}
+\alias{webdata,ANY-method}
 \alias{webdata,missing-method}
 \title{create webdata object}
 \usage{
-webdata(value, ...)
+webdata(.Object, ...)
 
-\S4method{webdata}{missing}(value, ...)
+\S4method{webdata}{missing}(.Object, ...)
 
-\S4method{webdata}{character}(value, ...)
+\S4method{webdata}{ANY}(.Object, ...)
 }
 \arguments{
-\item{value}{character name of dataset or [others supported in the future]}
+\item{.Object}{any object that can be coerced into \linkS4class{webdata}}
 
 \item{...}{additional arguments passed initialize method (e.g., times vector)}
 }

@@ -48,6 +48,26 @@ The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) a
 | `webdata` | web data |
 | `geojob` | a geo data portal processing job |
 
+###What can `geoknife` do?
+```R
+library(geoknife)
+# get prism data for a long/lat point in space
+stencil <- simplegeom(c(-89, 46.23))
+fabric <- webdata('prism')
+times(fabric) <- as.POSIXct(c('1990-01-01','2005-01-01'))
+
+job <- geoknife(stencil, fabric)
+check(job)
+running(job)
+error(job)
+successful(job)
+
+Sys.sleep(5) # wait a little for the process to complete
+if (successful(job)){
+   data <- loadOutput(job)
+   plot(data[,1:2], ylab = variables(fabric))
+}
+```
 
 ##What libraries does `geoknife` need?
 This version requires `httr`, `jsonlite`, `lubridate` and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.

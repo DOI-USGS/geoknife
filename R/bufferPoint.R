@@ -8,7 +8,7 @@
 #'@description Buffer ring creation from point
 #'@title Create linear ring from point
 #'@author Jordan S. Read
-#'@seealso \code{setFeature}
+#'@seealso \linkS4class{simplegeom}
 #'@examples linearRing = bufferPoint(c(-111.48, 36.95))
 #'@export
 bufferPoint	<-	function(point){

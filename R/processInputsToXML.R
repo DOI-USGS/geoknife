@@ -10,22 +10,21 @@ setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML"
 #'@return XML as ?string?
 #'
 #'@examples
-#'wp <- quick_wp()
-#'wd <- webdata('prism')
-#'wg <- quick_wg()
-#'XML(wg, wd, wp)
+#'wd <- webdata('prism',times = as.POSIXct(c('2001-01-01','2002-02-05')))
+#'wg <- webgeom('state:NH')
+#'XML(wg, wd, webprocess())
 #'sg <- simplegeom(c(-89,45))
-#'XML(sg, wd, wp)
+#'XML(sg, wd, webprocess())
 #'@rdname XML-method
 #'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
 #'@export
 setMethod(f = "XML",signature = c("ANY","webdata","webprocess"), 
           definition = function(stencil, fabric, knife){
-            #stencil can be webgeom OR simplegeom (others?)
-  # private function for geoknife that turns geoknife object into process input xml
+            #stencil can be webgeom OR simplegeom 
   
+  knife <- .setProcessInputs(webprocess = knife, stencil = stencil, fabric = fabric)
   top <- newXMLNode(name='wps:Execute',
-                    attrs=c('service'="WPS",'version'=knife@WPS_VERSION,
+                    attrs=c('service'="WPS",'version'= version(knife),
                             'xsi:schemaLocation' = paste(c(knife@WPS_NAMESPACE,knife@WPS_SCHEMA_LOCATION),collapse=" ")),
                     namespaceDefinitions=c('wps' = knife@WPS_NAMESPACE,
                                            'ows' = knife@OWS_NAMESPACE,
@@ -119,7 +118,7 @@ setMethod(f = "addGeom",signature = c("webgeom","ANY"),
   addChildren(inDatEL,bodyEL)
   
   featEL   <-	newXMLNode('wfs:GetFeature',attrs=c("service"="WFS",
-                                                  "version"=stencil@wfs_version,
+                                                  "version"=version(stencil),
                                                   "outputFormat"="text/xml; subtype=gml/3.1.1"),
                          namespaceDefinitions=c("wfs"=stencil@WFS_NAMESPACE,
                                                 "gml"=stencil@GML_NAMESPACE))
@@ -150,11 +149,7 @@ setMethod(f = "addGeom",signature = c("ANY","ANY"),
 setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
           definition = function(stencil, xmlNodes){
             
-  filterID <- 'ID'
-  # -- also, need to set the FEATURE_ATTRIBUTE_NAME
-  featAttr <- findIdentifierNode(xmlNodes, 'FEATURE_ATTRIBUTE_NAME')
-  # modify name of filtering used by GDP
-  xmlValue(xmlChildren(xmlChildren(featAttr)$Data)[[1]]) <- filterID 
+  filterID <- FEATURE_ATTRIBUTE_NAME(stencil)
   inEL <- findIdentifierNode(xmlNodes, 'FEATURE_COLLECTION')
   inDatEL  <-	newXMLNode('wps:Data')
   addChildren(inEL,inDatEL)

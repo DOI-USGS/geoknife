@@ -1,8 +1,8 @@
 #'@title start a geo-web processing request
 #'@details start is a method for submitting a geo-web processing request.
 #'
-#'@param .Object a \code{\link{geojob}} object
-#'@return A \code{\link{geojob}} object with an active GDP process request.
+#'@param .Object a \linkS4class{geojob} object
+#'@return A \linkS4class{geojob} object with an active GDP process request.
 #'
 #'@docType methods
 #'@keywords methods
@@ -14,9 +14,9 @@
 #'@export
 #'@rdname start-methods
 #'@examples 
-#'wp <- quick_wp(url = 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
 #'wd <- webdata('prism')
-#'wg <- quick_wg()
+#'wg <- webgeom('state:NH')
+#'wp <- webprocess()
 #'gj <- geojob()
 #'xml(gj) <- XML(wg, wd, wp)
 #'url(gj) <- url(wp)

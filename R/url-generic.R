@@ -3,7 +3,8 @@
 #'@usage
 #'url(.Object)
 #'url(.Object)<- value
-#'@param .Object a webgeom, webdata, geojob, or webprocess object
+#'@param .Object a \linkS4class{webgeom}, \linkS4class{webdata}, 
+#'\linkS4class{geojob}, or \linkS4class{webprocess} object
 #'@param value a url
 #'@rdname url
 #'@aliases
@@ -20,63 +21,26 @@ setGeneric(name="url",def=function(.Object){standardGeneric("url")})
 
 #'@aliases url
 #'@rdname url
-setMethod(f = "url<-",signature = "webdata", definition = function(.Object, value){
+setMethod(f = "url<-",signature(.Object = "ANY"), definition = function(.Object, value){
   if (length(value) != 1){
     stop('url must be a single character string')
   }
   .Object@url <- value
-  return(.Object)}
-)
+  return(.Object)})
 
+# special method because other slots depend on value of \code{url} for webprocess object
 #'@aliases url
 #'@rdname url
-setMethod(f = "url<-",signature = "webgeom", definition = function(.Object, value){
+setMethod(f = "url<-",signature(.Object = "webprocess"), definition = function(.Object, value){
   if (length(value) != 1){
     stop('url must be a single character string')
   }
-  .Object@url <- value
-  return(.Object)}
-)
+  .Object <- new(Class = "webprocess", url = value)
+  return(.Object)})
 
 #'@aliases url
 #'@rdname url
-setMethod(f = "url",signature = "webdata",
+setMethod(f = "url",signature(.Object = "ANY"),
           definition = function(.Object){
             return(.Object@url)
           })
-#'@aliases url
-#'@rdname url
-setMethod(f = "url",signature = "webgeom",
-          definition = function(.Object){
-            return(.Object@url)
-          })
-#'@aliases url
-#'@rdname url
-setMethod(f = "url<-",signature = "geojob", definition = function(.Object, value){
-  .Object@url <- value
-  return(.Object)
-}
-)
-#'@aliases url
-#'@rdname url
-setMethod(f = "url",signature = "geojob", definition = function(.Object){
-  value <- .Object@url
-  return(value)
-}
-)
-
-#'@aliases url
-#'@rdname url
-setMethod("url<-","webprocess", function(.Object, value){
-  .Object@url <- value
-  return(.Object)
-}
-)
-
-#'@aliases url
-#'@rdname url
-setMethod("url","webprocess", function(.Object){
-  value <- .Object@url
-  return(value)
-}
-)

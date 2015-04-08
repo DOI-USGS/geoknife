@@ -9,7 +9,7 @@
 \title{the variables of a webdata object}
 \usage{
 variables(.Object)
-variables(.Object) <- 'ppt'
+variables(.Object) <- value
 
 variables(.Object) <- value
 

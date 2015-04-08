@@ -4,12 +4,19 @@
 \name{webgeom}
 \alias{webgeom}
 \alias{webgeom,ANY-method}
-\alias{webgeom,webgeom-method}
+\alias{webgeom,missing-method}
 \title{create webgeom object}
 \usage{
-webgeom(...)
+webgeom(.Object, ...)
 
-\S4method{webgeom}{ANY}(...)
+\S4method{webgeom}{missing}(.Object, ...)
+
+\S4method{webgeom}{ANY}(.Object, ...)
+}
+\arguments{
+\item{.Object}{any object that can be coerced into \linkS4class{webgeom}}
+
+\item{...}{additional arguments passed initialize method (e.g., \code{url})}
 }
 \value{
 the webgeom object representing a dataset and parameters
@@ -24,6 +31,12 @@ A class representing a web dataset.
 
 \item{\code{variable}}{value of type \code{"character"}, the variable(s) for data}
 }}
+\examples{
+wg <- webgeom(geom = "sample:CONUS_states",
+ attribute = "STATE",
+ IDs = "CONUS_states.245")
+wg <- webgeom('state:NH')
+}
 \author{
 Jordan S Read
 }

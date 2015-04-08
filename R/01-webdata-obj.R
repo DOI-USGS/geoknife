@@ -1,4 +1,10 @@
 library(methods)
+#' @title webdata class
+#' @slot times vector of POSIXct dates (specifying start and end time of processing)
+#' @slot url URL of web data
+#' @slot variables variable(s) used for processin from dataset
+#' @rdname webdata-class
+#' @import methods
 setClass(
   Class = "webdata",
   prototype = prototype(
@@ -37,32 +43,37 @@ setMethod("initialize", signature = "webdata",
 #' @docType methods
 #' @aliases 
 #' webdata
-#' character
 #' @export
-setGeneric("webdata", function(value, ...) {
+setGeneric("webdata", function(.Object,...) {
   standardGeneric("webdata")
 })
 
-#'@param value character name of dataset or [others supported in the future]
+#'@param .Object any object that can be coerced into \linkS4class{webdata}
 #'@param ... additional arguments passed initialize method (e.g., times vector)
 #'@rdname webdata-methods
 #'@aliases webdata
-setMethod("webdata", signature(value = "missing"), function(value, ...) {
+setMethod("webdata", signature("missing"), function(.Object,...) {
   ## create new webdata object
   webdata <- new("webdata",...)
   return(webdata)
 })
-
 #'@rdname webdata-methods
-#'@aliases character
-setMethod("webdata", signature(value = "character"), function(value, ...) {
-  ## create new webdata object with a character input (for dataset matching)
-  if (value != 'prism') stop("character input for webdata not supported for '", value,"'")
-  
-  webdata <- webdata(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
-                url = 'http://cida.usgs.gov/thredds/dodsC/prism',
-                variables = 'ppt')
-  webdata <- initialize(webdata, ...) # to pass along additional args
+#'@aliases webdata
+setMethod("webdata", signature("ANY"), function(.Object,...) {
+  ## create new webdata object
+  webdata <- as(.Object, "webdata")
+  if (!missing(...)){
+    webdata <- initialize(webdata, ...)
+  }
   return(webdata)
 })
 
+setAs("character", "webdata", function(from){
+  ## create new webdata object with a character input (for dataset matching)
+  if (from != 'prism') stop("character input for webdata not supported for '", from,"'")
+  
+  webdata <- webdata(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
+                     url = 'http://cida.usgs.gov/thredds/dodsC/prism',
+                     variables = 'ppt')
+  return(webdata)
+})

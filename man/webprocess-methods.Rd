@@ -2,26 +2,22 @@
 % Please edit documentation in R/04-webprocess-obj.R
 \docType{methods}
 \name{webprocess}
-\alias{algorithm,webprocess-method}
-\alias{algorithm<-,webprocess-method}
 \alias{webprocess}
 \alias{webprocess,ANY-method}
-\alias{webprocess,webprocess-method}
 \title{create webprocess object}
 \usage{
 webprocess(...)
 
 \S4method{webprocess}{ANY}(...)
-
-\S4method{algorithm}{webprocess}(.Object)
-
-\S4method{algorithm}{webprocess}(.Object) <- value
+}
+\arguments{
+\item{...}{additional arguments passed initialize method (e.g., \code{url}, \code{version})}
 }
 \value{
 the webprocess object
 }
 \description{
-A class representing geoknife web processing specifications
+create webprocess object
 }
 \author{
 Jordan S Read
