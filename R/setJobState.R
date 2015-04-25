@@ -7,7 +7,7 @@
 #' @param state the state (as a character) to set \code{jobState} to. 
 #' @return invisible return of \code{jobState} package variable
 setJobState <- function(state=NULL){
-  state <- match.arg(state, c('none','running','complete','error','unknown'))
+  state <- match.arg(state, c('none','running','Process successful','error','unknown'))
   pkg.env$jobState <- state
   invisible(pkg.env$jobState)
 }
@@ -28,7 +28,7 @@ getJobState <- function(){
 canStart <- function(){
   state <- getJobState()
 
-  if (state %in% c('none','error','complete','unknown')){
+  if (state %in% c('none','error','Process successful','unknown')){
     return(TRUE)
   } else {  
     return(FALSE)

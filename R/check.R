@@ -49,11 +49,14 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
 		process$status	<-	status[[1]]
 		process$statusType <- sapply(xmlChildren(root[["Status"]]),xmlName)[[1]]
 		
-		if ("Process successful" == process$status){
+		if (process$status == "Process successful"){
 			root <- xmlRoot(checkForCompleteResponse)
 		    process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
+		} else if (process$status == ""){
+		  process$status <- 'running'
 		}
 	}
+  
   setJobState(process$status)
 	return(process)
 })
