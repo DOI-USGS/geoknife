@@ -28,8 +28,9 @@ setGeneric(name="start",def=function(.Object){standardGeneric("start")})
 setMethod(f = "start",signature(.Object = "geojob"),definition = function(.Object){
 	
   if (!canStart()){
-    stop('Cannot start a new geojob until a previous one is completed or is error.',
+    warning('Cannot start a new geojob until a previous one is completed or is error.',
          'See "check(geojob)"')
+    return(.Object)
   }
 	requestXML <- xml(.Object)
 	data <- genericExecute(url = url(.Object), requestXML)
