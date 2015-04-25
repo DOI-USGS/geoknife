@@ -41,6 +41,6 @@ setMethod(f = "start",signature(.Object = "geojob"),definition = function(.Objec
 	processID <- xmlGetAttr(response,"statusLocation")
 	
 	id(.Object)	<-	processID
-  setJobState('running')
+  setJobState("ProcessStarted")
 	return(.Object)
 })

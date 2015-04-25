@@ -53,7 +53,7 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
 			root <- xmlRoot(checkForCompleteResponse)
 		    process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
 		} else if (process$status == ""){
-		  process$status <- 'running'
+		  process$status <- "ProcessStarted"
 		}
 	}
   

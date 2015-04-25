@@ -10,7 +10,7 @@ test_that("creating simple job", {
 
 test_that("can start first job",{
   job <- geoknife(stencil, fabric)
-  expect_equal(geoknife:::getJobState(), 'running')
+  expect_equal(geoknife:::getJobState(), "ProcessStarted")
   
 })
 

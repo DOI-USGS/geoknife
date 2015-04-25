@@ -7,7 +7,7 @@
 #' @param state the state (as a character) to set \code{jobState} to. 
 #' @return invisible return of \code{jobState} package variable
 setJobState <- function(state=NULL){
-  state <- match.arg(state, c('none','running','Process successful','error','unknown'))
+  state <- match.arg(state, c('none',"ProcessStarted",'Process successful','error','unknown'))
   pkg.env$jobState <- state
   invisible(pkg.env$jobState)
 }

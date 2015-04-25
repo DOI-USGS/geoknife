@@ -7,6 +7,8 @@
 #'@param ... additional arguments passed to \code{new} \linkS4class{webprocess}. 
 #'Can also be used to modify the \code{knife} argument, if it is supplied.
 #'@param knife (optional) a \linkS4class{webprocess} object
+#'@param waitUntilFinished FALSE by default. Should \code{geoknife} check job
+#'(and keep R occupied) until it is complete? 
 #'@param emailComplete FALSE by default. \code{character} of valid email address to 
 #'notify for failed or completed process. NOT IMPLEMENTED
 #'@return and object of class \linkS4class{geojob}
@@ -37,7 +39,7 @@
 #'job <- geoknife(stencil = c(-89,42), fabric = 'prism')
 #'check(job)
 #'@export
-geoknife <- function(stencil, fabric, ..., knife = webprocess(...), emailComplete = FALSE){
+geoknife <- function(stencil, fabric, ..., knife = webprocess(...), waitUntilFinished = FALSE, emailComplete = FALSE){
   
   if (!missing(knife) & !missing(...)){
     # if a knife is specified, pass in additional args through ... to modify. 
@@ -53,6 +55,9 @@ geoknife <- function(stencil, fabric, ..., knife = webprocess(...), emailComplet
   url(geojob) <- url(knife)
   
   geojob <- start(geojob)
+  if (waitUntilFinished){
+    waitUntilFinished(geojob)
+  }
   return(geojob)
 }
 
