@@ -6,7 +6,7 @@
 \title{geoknife}
 \usage{
 geoknife(stencil, fabric, ..., knife = webprocess(...),
-  emailComplete = FALSE)
+  waitUntilFinished = FALSE, emailComplete = FALSE)
 }
 \arguments{
 \item{stencil}{a \linkS4class{webgeom}, \linkS4class{simplegeom}, or any type
@@ -19,6 +19,9 @@ can be coerced into \linkS4class{webdata}}
 Can also be used to modify the \code{knife} argument, if it is supplied.}
 
 \item{knife}{(optional) a \linkS4class{webprocess} object}
+
+\item{waitUntilFinished}{FALSE by default. Should \code{geoknife} check job
+(and keep R occupied) until it is complete?}
 
 \item{emailComplete}{FALSE by default. \code{character} of valid email address to
 notify for failed or completed process. NOT IMPLEMENTED}
