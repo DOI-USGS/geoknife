@@ -23,8 +23,10 @@ query webgeom for various fields
 a \code{webgeom} method for finding shapefile names at a valid WFS endpoint.
 }
 \examples{
+\dontrun{
 wg <- webgeom()
 query(wg, 'geoms')
+}
 }
 \author{
 Jordan S. Read

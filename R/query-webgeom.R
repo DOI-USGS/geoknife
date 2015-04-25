@@ -9,8 +9,10 @@
 #'@keywords methods
 # '@import XML
 #'@examples
+#'\dontrun{
 #'wg <- webgeom()
 #'query(wg, 'geoms')
+#'}
 #'@importFrom httr GET verbose
 #'@author Jordan S. Read
 #'@export
@@ -20,6 +22,7 @@ setGeneric(name="query",def=function(.Object, field, ...){standardGeneric("query
 # '@aliases getShapefiles,geoknife-method  
 setMethod(f = "query",signature("webgeom",'character'),
           definition = function(.Object, field, ...){
+            warning('function in development')
             if (field == 'geoms'){
               parentKey <- "featuretypelist"
               childKey <- "featuretype"
