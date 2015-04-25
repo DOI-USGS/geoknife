@@ -54,6 +54,6 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
 		    process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
 		}
 	}
-
+  setJobState(process$status)
 	return(process)
 })
