@@ -21,11 +21,13 @@ Can be set or accessed using \code{\link[geoknife]{geom}}}
 \item{\code{attribute}}{character for feature attribute (used for filtering and naming in output)
 Can be set or accessed using \code{\link[geoknife]{attribute}}}
 
-\item{\code{IDs}}{character vector of attribute IDs to be used in processing (a subset, or all if NA)
-Can be set or accessed using \code{\link[geoknife]{IDs}}}
+\item{\code{values}}{character vector of attribute values to be used in processing (a subset, or all if NA)
+Can be set or accessed using \code{\link[geoknife]{values}}}
 
 \item{\code{version}}{a character that specifies the web feature service (WFS) version to use.
 Can be set or accessed using \code{\link[geoknife]{version}}}
+
+\item{\code{GML_IDs}}{(_private) IDs that correspond to \code{values}. Used internally for processing.}
 
 \item{\code{WFS_NAMESPACE}}{(_private) web location of web feature service namespace}
 
@@ -35,6 +37,6 @@ Can be set or accessed using \code{\link[geoknife]{version}}}
 }}
 \seealso{
 \code{\link{webgeom}}, \code{\link[geoknife]{url}}, \code{\link[geoknife]{geom}},
-\code{\link[geoknife]{attribute}}, \code{\link[geoknife]{IDs}}, \code{\link[geoknife]{version}}
+\code{\link[geoknife]{attribute}}, \code{\link[geoknife]{values}}, \code{\link[geoknife]{version}}
 }
 

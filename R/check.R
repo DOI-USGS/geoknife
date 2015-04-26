@@ -54,6 +54,8 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
 		    process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
 		} else if (process$status == ""){
 		  process$status <- "ProcessStarted"
+		} else if (substr(process$status, 1, 34) == "org.n52.wps.server.ExceptionReport"){
+		  process$status <- "ProcessFailed"
 		}
 	}
   

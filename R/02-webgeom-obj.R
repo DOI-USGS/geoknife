@@ -8,15 +8,16 @@
 #' Can be set or accessed using \code{\link[geoknife]{geom}}
 #' @slot attribute character for feature attribute (used for filtering and naming in output)
 #' Can be set or accessed using \code{\link[geoknife]{attribute}}
-#' @slot IDs character vector of attribute IDs to be used in processing (a subset, or all if NA)
-#' Can be set or accessed using \code{\link[geoknife]{IDs}}
+#' @slot values character vector of attribute values to be used in processing (a subset, or all if NA)
+#' Can be set or accessed using \code{\link[geoknife]{values}}
 #' @slot version a character that specifies the web feature service (WFS) version to use.
 #' Can be set or accessed using \code{\link[geoknife]{version}}
+#' @slot GML_IDs (_private) IDs that correspond to \code{values}. Used internally for processing. 
 #' @slot WFS_NAMESPACE (_private) web location of web feature service namespace
 #' @slot GML_NAMESPACE (_private) web location of GML namespace
 #' @slot GML_SCHEMA_LOCATION (_private) web location of GML schema location
 #' @seealso \code{\link{webgeom}}, \code{\link[geoknife]{url}}, \code{\link[geoknife]{geom}}, 
-#' \code{\link[geoknife]{attribute}}, \code{\link[geoknife]{IDs}}, \code{\link[geoknife]{version}}
+#' \code{\link[geoknife]{attribute}}, \code{\link[geoknife]{values}}, \code{\link[geoknife]{version}}
 #' @rdname webgeom-class
 #' @exportClass webgeom
 setClass(
@@ -25,15 +26,16 @@ setClass(
     url = "http://cida.usgs.gov/gdp/geoserver/wfs",
     geom = as.character(NA), 
     attribute = as.character(NA),
-    IDs = as.character(NA), 
+    values = as.character(NA), 
     version = '1.1.0'
     ),
   representation = representation(
     url = "character",
     geom = "character",
     attribute = "character",
-    IDs = "character",
+    values = "character",
     version = "character",
+    GML_IDs = "character",
     WFS_NAMESPACE = "character",
     GML_NAMESPACE = "character",
     GML_SCHEMA_LOCATION = "character"),
@@ -45,18 +47,20 @@ setMethod("initialize", signature = "webgeom",
           definition = function(
             .Object, url = .Object@url, geom = .Object@geom, 
             attribute = .Object@attribute,
-            IDs = .Object@IDs, 
+            values = .Object@values, 
             version = .Object@version
             ){
             .Object@url= url
             .Object@geom = geom
             .Object@attribute = attribute
-            .Object@IDs = IDs
             .Object@version = version
-            
             .Object@GML_NAMESPACE = 'http://www.opengis.net/gml'
             .Object@WFS_NAMESPACE   = 'http://www.opengis.net/wfs'
             .Object@GML_SCHEMA_LOCATION = 'http://schemas.opengis.net/gml/3.1.1/base/feature.xsd'
+            
+            values(.Object) = values
+            
+            
             return(.Object)
           })
 
@@ -74,7 +78,7 @@ setMethod("initialize", signature = "webgeom",
 #' @examples
 #' wg <- webgeom(geom = "sample:CONUS_states", 
 #'  attribute = "STATE",
-#'  IDs = "CONUS_states.245")
+#'  values = "New Hampshire")
 #' wg <- webgeom('state:NH')
 #' @export
 setGeneric("webgeom", function(.Object, ...) {
@@ -104,9 +108,9 @@ setAs("character", "webgeom", function(from){
   ## create new webdata object with a character input (for dataset matching)
   if (from != 'state:NH') stop("character input for webgeom not supported for '", from,"'")
   
-  webgeom <- webgeom(geom = "sample:CONUS_states",
+  webgeom <- webgeom(geom = "derivative:CONUS_States",
                      attribute = "STATE",
-                     IDs = "CONUS_states.245")
+                     values = "New Hampshire") #gml:id="CONUS_States.28"
   return(webgeom)
 })
 

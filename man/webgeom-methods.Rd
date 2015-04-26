@@ -34,7 +34,7 @@ A class representing a web dataset.
 \examples{
 wg <- webgeom(geom = "sample:CONUS_states",
  attribute = "STATE",
- IDs = "CONUS_states.245")
+ values = "New Hampshire")
 wg <- webgeom('state:NH')
 }
 \author{
