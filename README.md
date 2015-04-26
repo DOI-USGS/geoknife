@@ -22,7 +22,7 @@ The `geoknife` package was created to support web-based geoprocessing of large g
 
 `geoknife` interacts with a remote server to figure out what types of processing capabilities are available, in addition to seeing what types of geospatial features are already available to be used as an area of interest (commonly, these are user-uploaded shapefiles). Because communication with web resources are central to `geoknife` operations, users must have an active internet connection. 
 
-The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) are include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm paramters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `loadOutput`. 
+The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm parameters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `loadOutput`. 
 
 ###What can `geoknife` do?
 #####define a stencil that represents the geographic region to slice out of the data
@@ -85,7 +85,7 @@ if (successful(job)){
 | `start` | start a `geojob` |
 | `geom` | the geom of a `webgeom` | 
 | `id` | the process id of a `geojob` |
-| `IDs` | the IDs of a `webgeom` | 
+| `values` | the values of a `webgeom` | 
 | `loadOutput` | load the output of a completed `geojob` into data.frame |
 | `variables` | the variables for a `webdata` object |
 | `times` | the times of a `webdata` object |
