@@ -8,12 +8,16 @@
 #'@description Buffer ring creation from point
 #'@title Create linear ring from point
 #'@author Jordan S. Read
-#'@seealso \code{setFeature}
+#'@seealso \linkS4class{simplegeom}
 #'@examples linearRing = bufferPoint(c(-111.48, 36.95))
 #'@export
 bufferPoint	<-	function(point){
 	offset	<-	0.0001
 	
+  if (length(point) != 2){
+    stop('only a single pair point is currently supported. This function is not yet vectorized.')
+  }
+  
 	if (length(point) %% 2 != 0){
 		stop('point must be latitude and longitude pairs')
 	}

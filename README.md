@@ -22,30 +22,86 @@ The `geoknife` package was created to support web-based geoprocessing of large g
 
 `geoknife` interacts with a remote server to figure out what types of processing capabilities are available, in addition to seeing what types of geospatial features are already available to be used as an area of interest (commonly, these are user-uploaded shapefiles). Because communication with web resources are central to `geoknife` operations, users must have an active internet connection. 
 
-The main elements of setting up and carrying out a `geoknife` 'job' are include defining the processing algorithm that will be used, choosing an area of interest, filling out the details for the job details (including the dataset to be used; these details are called 'process inputs'), and sending off the job request (see documentation for `setFeature<-`, `setProcessInputs<-`, and `startProcess` for more information).
+The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm parameters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `loadOutput`. 
 
-###`geoknife` Functions (as of v0.4.1)
+###What can `geoknife` do?
+#####define a stencil that represents the geographic region to slice out of the data
+```R
+library(geoknife)
+# from a single point
+stencil <- simplegeom(c(-89, 46.23))
+   # -- or --
+# from a collection of named points
+stencil <- simplegeom(data.frame(
+              'point1' = c(-89, 46), 
+              'point2' = c(-88.6, 45.2)))
+   # -- or --
+#for a state from a web available dataset
+stencil <- webgeom('state:NH')
+```
+#####define a fabric that represents the underlying data
+```R
+# from the prism dataset:
+fabric <- webdata('prism')
+   # -- or --
+# explicitly define webdata from a list:
+fabric <- webdata(list(
+            times = as.POSIXct(c('1895-01-01','1899-01-01')),
+            url = 'http://cida.usgs.gov/thredds/dodsC/prism',
+            variables = 'ppt'))
+# modify the times field:
+times(fabric) <- as.POSIXct(c('1990-01-01','2005-01-01'))
+```
+#####create the processing job that will carry out the subsetting/summarization task
+```R
+job <- geoknife(stencil, fabric)
+
+# use existing convienence functions to check on the job:
+check(job)
+running(job)
+error(job)
+successful(job)
+
+# wait a little for the process to complete
+Sys.sleep(5)
+if (successful(job)){
+   # -- load up the output and plot it --
+   data <- loadOutput(job)
+   plot(data[,1:2], ylab = variables(fabric))
+}
+```
+
+###`geoknife` Functions (as of v0.6.2)
 | Function       | Title           |
 | ------------- |:-------------|
-| `bufferPoint` | Create linear ring from point |
-| `checkProcess`  | Check status of processing request |
-| `geoknife` | Create geoknife object |
-| `getAlgorithms` | Get processing algorithms |
-| `getAttributes` | Get attributes from a shapefile at a web location |
-| `getDataIDs` | Find variables from dataset |
-| `getValues` | get values from a shapefile at a web location |
-| `isError` | Convenience function for GDP process state |
-| `isRunning` | Convenience function for GDP process state |
-| `isSuccessful` | Convenience function for GDP process state |
-| `loadOutput` | parse process output into R environment |
-| `parseTimeseries` | parse timeseries file into R environment |
-| `printProcessInputs` | Print out the process request xml for diagnostic purposes |
-| `setAlgorithm<-` | Set processing algorithm |
-| `setFeature<-` | Set feature geometry for processing |
-| `setProcessInputs<-` | Set inputs for web processing |
-| `setWFS<-` | Set web feature service location |
-| `setWPS<-` | Set web processing service location |
-| `startProcess` | Submit a GDP web processing request |
+| `geoknife` | slice up gridded data according to overlap with feature(s) |
+| `algorithm` | the algorithm of a `webprocess` |
+| `attribute` | the attribute of an `webgeom` |
+| `bufferPoint` | create linear ring from a point |
+| `check` | check status of `geojob` |
+| `error` | convenience  function for state of `geojob` |
+| `running` | convenience  function for state of `geojob` |
+| `successful` | convenience  function for state of `geojob` |
+| `start` | start a `geojob` |
+| `geom` | the geom of a `webgeom` | 
+| `id` | the process id of a `geojob` |
+| `values` | the values of a `webgeom` | 
+| `loadOutput` | load the output of a completed `geojob` into data.frame |
+| `variables` | the variables for a `webdata` object |
+| `times` | the times of a `webdata` object |
+| `url` | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess` |
+| `variables` | the variables of a `webdata` |
+| `version` | the version of a `webgeom` or `webdata` |
+| `xml` | the xml of a `geojob` |
+
+###`geoknife` classes (as of v0.6.2)
+| Class       | Title           |
+| ------------- |:-------------|
+| `simplegeom` | a simple geometric class. Extends `sp::SpatialPolygons` |
+| `webgeom` | a web feature service geometry |
+| `webprocess` | a web processing service |
+| `webdata` | web data |
+| `geojob` | a geo data portal processing job |
 
 ##What libraries does `geoknife` need?
 This version requires `httr`, `jsonlite`, `lubridate` and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.

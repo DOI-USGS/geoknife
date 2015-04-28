@@ -1,8 +1,8 @@
 Package: geoknife
 Type: Package
 Title: Geo-web processing of gridded data
-Version: 0.5.1
-Date: 2015-02-20
+Version: 0.6.2
+Date: 2013-05-23
 Author: Jordan S Read
 Maintainer: Jordan S Read <jread@usgs.gov>
 Description: Methods for geo-web processing of gridded data via the Geo Data
@@ -15,10 +15,10 @@ Copyright: This software is in the public domain because it contains materials
     http://www.usgs.gov/visual-id/credit_usgs.html#copyright
 Imports:
     XML,
-    jsonlite,
     methods,
     lubridate,
-    httr
+    httr,
+    sp
 Suggests:
     testthat,
     xtable,

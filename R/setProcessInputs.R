@@ -1,67 +1,52 @@
-#'@title set inputs for web processing
-#'
-#'@details method for setting the (non-feature related) post inputs of the \code{geoknife} object. 
-#'
-#'@param .Object a \code{geoknife} object.
-#'@param value a list of valid processInputs.
-#'@return An \code{geoknife} object with updated postInputs.
-#'@docType methods
-#'@keywords methods
-#'@examples 
-#'\dontrun{
-#'gk <- geoknife() # create geoknife object
-#'algorithm <- list("Area Grid Statistics (weighted)"=
-#'                    "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
-#'setAlgorithm(gk) <- algorithm
-#' # set the post inputs for the processing dataset
-#' setProcessInputs(gk) <- list('DATASET_ID'='Downward_longwave_radiation_flux_surface',
-#'                                        'DATASET_URI'='dods://hydro1.sci.gsfc.nasa.gov:80/dods/NLDAS_FORA0125_H.002',
-#'                                        'TIME_START'='2010-01-01T00:00:00Z',
-#'                                        'TIME_END'='2010-01-01T23:00:00Z',
-#'                                        'DELIMITER'='TAB')
-#'gk # print geoknife object contents
-#'}
-#'@author Jordan S. Read
-#'@export
-setGeneric(name="setProcessInputs<-",def=function(.Object,value){standardGeneric("setProcessInputs<-")})
 
-
-# '@rdname setProcessInputs-methods
-# '@aliases setProcessInputs,geoknife-method  
-setReplaceMethod(f = "setProcessInputs",signature = "geoknife",
-                 definition = function(.Object,value){
-                   
-                   if (!is.list(value)){
-                     stop(value,' needs to be a valid list')
-                   }
-                   if ("empty" %in% names(.Object@algorithm)){
-                     stop('an algorithm must be chosen before setting processInputs')
-                   }
-                   for (i in seq_len(length(names(value)))){
-                     .Object@processInputs[names(value[i])]	<-	value[[i]]
-                   }
-                   
-                   .Object	<-	dodsReplace(.Object)
-                   
-                   return(.Object)
-                 })
-
-dodsReplace	<-	function(.Object){
-  # checks for dods or opendap, and replaces
-  
-  
-  if ("DATASET_URI" %in% names(.Object@processInputs) & 
-        !is.null(.Object@processInputs$DATASET_URI)) {
-    
-    uri	<-	.Object@processInputs$DATASET_URI
-    if (grepl('dodsC',uri)){
-      uri	<-	gsub('http', 'dods', uri)
-    }
-    if (grepl('opendap',uri)){
-      uri	<-	gsub('http', 'opendap', uri)
+.setProcessInputs <- function(webprocess, ...){
+  processNames <- names(webprocess@processInputs)
+  for (i in 1:length(processNames)){
+    fun <- processNames[i]
+    if (exists(fun)){
+      webprocess@processInputs[[fun]] <- do.call(fun, list(...))
+    } else if (is.null(webprocess@processInputs[[fun]])){
+      webprocess@processInputs[[fun]] <- .defaultWhenNull(fun)
+    } else {
+      # / skip. will skip and allow NA, which is an optional input.
     }
     
-    .Object@processInputs	<-	setList(.Object@processInputs,list('DATASET_URI'=uri))
   }
-  return(.Object)
+  
+  return(webprocess)
 }
+
+.defaultWhenNull <- function(varName){
+  defaults <- list(GROUP_BY = 'STATISTIC',
+                   STATISTICS = 'MEAN')
+  return(defaults[[varName]])
+  
+}
+
+
+FEATURE_ATTRIBUTE_NAME <- function(stencil,...){
+  if (is(stencil,'webgeom')){
+    filterBy <- stencil@attribute
+  } else if (is(stencil,'simplegeom')){
+    filterBy <- 'ID'
+  } else {
+    stop('FEATURE_ATTRIBUTE_NAME not supported for class ',class(stencil))
+  }
+  return(filterBy)
+}
+
+TIME_END <- function(fabric, ...){
+  strftime(times(fabric)[2] ,format = "%Y-%m-%dT%H:%M:%S.000Z")
+}
+TIME_START <- function(fabric, ...){
+  strftime(times(fabric)[1] ,format = "%Y-%m-%dT%H:%M:%S.000Z")
+}
+
+DATASET_ID <- function(fabric, ...){
+  variables(fabric)
+}
+
+DATASET_URI <- function(fabric, ...){
+  dodsReplace(url(fabric))
+}
+
