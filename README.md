@@ -77,7 +77,6 @@ if (successful(job)){
 | `geoknife` | slice up gridded data according to overlap with feature(s) |
 | `algorithm` | the algorithm of a `webprocess` |
 | `attribute` | the attribute of an `webgeom` |
-| `bufferPoint` | create linear ring from a point |
 | `check` | check status of `geojob` |
 | `error` | convenience  function for state of `geojob` |
 | `running` | convenience  function for state of `geojob` |
