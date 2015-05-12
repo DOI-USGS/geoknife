@@ -106,7 +106,7 @@ setMethod("webgeom", signature('ANY'), function(.Object, ...) {
 
 setAs("character", "webgeom", function(from){
   ## create new webdata object with a character input (for dataset matching)
-  if (from != 'state:NH') stop("character input for webgeom not supported for '", from,"'")
+  if (from != 'state::NH') stop("character input for webgeom not supported for '", from,"'")
   
   webgeom <- webgeom(geom = "derivative:CONUS_States",
                      attribute = "STATE",

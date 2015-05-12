@@ -37,7 +37,7 @@ stencil <- simplegeom(data.frame(
               'point2' = c(-88.6, 45.2)))
    # -- or --
 #for a state from a web available dataset
-stencil <- webgeom('state:NH')
+stencil <- webgeom('state::NH')
 ```
 #####define a fabric that represents the underlying data
 ```R

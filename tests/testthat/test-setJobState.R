@@ -1,6 +1,6 @@
 context("Test set job state")
 
-stencil <- webgeom('state:NH')
+stencil <- webgeom('state::NH')
 fabric <- webdata('prism')
 
 test_that("creating simple job", {
