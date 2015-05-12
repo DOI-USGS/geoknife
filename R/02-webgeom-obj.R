@@ -79,7 +79,7 @@ setMethod("initialize", signature = "webgeom",
 #' wg <- webgeom(geom = "sample:CONUS_states", 
 #'  attribute = "STATE",
 #'  values = "New Hampshire")
-#' wg <- webgeom('state:NH')
+#' wg <- webgeom('state::NH')
 #' @export
 setGeneric("webgeom", function(.Object, ...) {
   standardGeneric("webgeom")

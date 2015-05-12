@@ -15,7 +15,7 @@
 #'@rdname start-methods
 #'@examples 
 #'wd <- webdata('prism')
-#'wg <- webgeom('state:NH')
+#'wg <- webgeom('state::NH')
 #'wp <- webprocess()
 #'gj <- geojob()
 #'xml(gj) <- XML(wg, wd, wp)
