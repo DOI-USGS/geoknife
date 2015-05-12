@@ -37,7 +37,7 @@ setMethod(f = "successful",signature(.Object = "geojob"), definition = function(
 	
 	status = check(.Object)
 	
-	return(status$statusType == "Process successful")
+	return(status$statusType == "ProcessSucceeded")
 	
 })
 
