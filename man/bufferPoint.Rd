@@ -28,5 +28,6 @@ Jordan S. Read
 \seealso{
 \linkS4class{simplegeom}
 }
-\keyword{methods}
+\keyword{internal}
+\keyword{methods,}
 

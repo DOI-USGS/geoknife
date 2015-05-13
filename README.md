@@ -37,7 +37,7 @@ stencil <- simplegeom(data.frame(
               'point2' = c(-88.6, 45.2)))
    # -- or --
 #for a state from a web available dataset
-stencil <- webgeom('state:NH')
+stencil <- webgeom('state::NH')
 ```
 #####define a fabric that represents the underlying data
 ```R
@@ -77,7 +77,6 @@ if (successful(job)){
 | `geoknife` | slice up gridded data according to overlap with feature(s) |
 | `algorithm` | the algorithm of a `webprocess` |
 | `attribute` | the attribute of an `webgeom` |
-| `bufferPoint` | create linear ring from a point |
 | `check` | check status of `geojob` |
 | `error` | convenience  function for state of `geojob` |
 | `running` | convenience  function for state of `geojob` |
