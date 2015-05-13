@@ -80,6 +80,7 @@ setMethod("initialize", signature = "webgeom",
 #'  attribute = "STATE",
 #'  values = "New Hampshire")
 #' wg <- webgeom('state::NH')
+#' wg <- webgeom()
 #' @export
 setGeneric("webgeom", function(.Object, ...) {
   standardGeneric("webgeom")

@@ -36,6 +36,7 @@ wg <- webgeom(geom = "sample:CONUS_states",
  attribute = "STATE",
  values = "New Hampshire")
 wg <- webgeom('state::NH')
+wg <- webgeom()
 }
 \author{
 Jordan S Read
