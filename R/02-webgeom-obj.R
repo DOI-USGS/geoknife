@@ -79,7 +79,13 @@ setMethod("initialize", signature = "webgeom",
 #' wg <- webgeom(geom = "sample:CONUS_states", 
 #'  attribute = "STATE",
 #'  values = "New Hampshire")
+#'#-- use available state datasets:
 #' wg <- webgeom('state::NH')
+#' wg <- webgeom('state::NH,WI,AL')
+#'#-- use available Level III Ecoregion datasets:
+#' wg <- webgeom('ecoregion::Colorado Plateaus,Driftless Area')
+#'#-- use available simplified HUC8s:
+#' wg <- webgeom('HUC8::09020306,14060009')
 #' wg <- webgeom()
 #' @export
 setGeneric("webgeom", function(.Object, ...) {
@@ -107,11 +113,40 @@ setMethod("webgeom", signature('ANY'), function(.Object, ...) {
 
 setAs("character", "webgeom", function(from){
   ## create new webdata object with a character input (for dataset matching)
-  if (from != 'state::NH') stop("character input for webgeom not supported for '", from,"'")
+  # supported: two uppercase letters signifying a state abreviation; full state name (first letters capitalized)
+  # future support for ecoregions and counties
   
-  webgeom <- webgeom(geom = "derivative:CONUS_States",
-                     attribute = "STATE",
-                     values = "New Hampshire") #gml:id="CONUS_States.28"
+  pieces <- strsplit(from, split = '::')[[1]]
+  webgeom <- do.call(paste0('.',pieces[1],'Webgeom'), list(value=pieces[2]))
+  
+  
   return(webgeom)
 })
+
+.stateWebgeom <- function(value){
+  multipart <- strsplit(value, split = ',')[[1]]
+  values <- unlist(lapply(multipart, function(x) states[[x]]))
+  webgeom <- webgeom(geom = "derivative:CONUS_States",
+                     attribute = "STATE",
+                     values = values)
+  return(webgeom)
+}
+
+.ecoregionWebgeom <- function(value){
+  multipart <- strsplit(value, split = ',')[[1]]
+  values <- multipart
+  webgeom <- webgeom(geom = "derivative:Level_III_Ecoregions",
+                     attribute = "LEVEL3_NAM",
+                     values = values)
+  return(webgeom)
+}
+
+.HUC8Webgeom <- function(value){
+  multipart <- strsplit(value, split = ',')[[1]]
+  values <- multipart
+  webgeom <- webgeom(geom = "derivative:wbdhu8_alb_simp",
+                     attribute = "HUC_8",
+                     values = values)
+  return(webgeom)
+}
 

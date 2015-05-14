@@ -89,7 +89,6 @@ if (successful(job)){
 | `variables` | the variables for a `webdata` object |
 | `times` | the times of a `webdata` object |
 | `url` | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess` |
-| `variables` | the variables of a `webdata` |
 | `version` | the version of a `webgeom` or `webdata` |
 | `xml` | the xml of a `geojob` |
 

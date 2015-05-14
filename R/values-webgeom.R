@@ -18,7 +18,7 @@ setGeneric(name="values",def=function(.Object){standardGeneric("values")})
 #'@rdname values
 setMethod(f = "values<-",signature(.Object = "webgeom"), definition = function(.Object, value){
   .Object@values <- value
-  if(is.na(value)){
+  if(is.na(value[1])){
     .Object@GML_IDs <- as.character(NA)
   } else {
     .Object@GML_IDs <- fetchGML_IDs(.Object)
@@ -40,7 +40,7 @@ setMethod(f = "values",signature="webgeom",
 #' @importFrom httr GET content
 #' @keywords internal 
 fetchGML_IDs <- function(.Object){
-  url <- sprintf('%s?service=WFS&version=%s&request=GetFeature&typename=%s&propertyname=%s',
+  url <- sprintf('%s?service=WFS&version=%s&request=GetFeature&typename=%s&MAXFEATURES=5000&propertyname=%s',
                  url(.Object), version(.Object), geom(.Object), .Object@attribute)
   ns_geom <- strsplit(geom(.Object), ":")[[1]][1]
   response <- GET(url)
@@ -48,7 +48,7 @@ fetchGML_IDs <- function(.Object){
   value_path <- sprintf('//gml:featureMembers/%s/%s:%s', geom(.Object), ns_geom, .Object@attribute)
   value_names <- sapply(getNodeSet(xml,paste0(value_path, '/node()[1]')), 
                         FUN = function(x) xmlValue(x)[1])
-  match_id <- which(value_names == values(.Object)) # CHECK ORDER!!!
-  gml_id = getNodeSet(xml,paste0(value_path,'/parent::node()[1]/@gml:id'))[[match_id]][['id']]
+  match_id <- which(value_names %in% values(.Object)) # CHECK ORDER!!!
+  gml_id = unlist(lapply(match_id, function(x) getNodeSet(xml,paste0(value_path,'/parent::node()[1]/@gml:id'))[[x]][['id']]))
   return(gml_id)  
 }
