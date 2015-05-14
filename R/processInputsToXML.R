@@ -129,11 +129,12 @@ setMethod(f = "addGeom",signature = c("webgeom","ANY"),
   addChildren(queryEL,propNmEL)
   propNmEL<-	newXMLNode('wfs:PropertyName',newXMLTextNode(stencil@attribute))
   addChildren(queryEL,propNmEL)
-  if (!is.na(stencil@GML_IDs)){
+  if (!is.na(stencil@GML_IDs[1])){
     filterEL	<-	newXMLNode('ogc:Filter')
     addChildren(queryEL,filterEL)
-    gmlObEL	<-	newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=stencil@GML_IDs))
-    addChildren(filterEL,gmlObEL)
+    for (i in 1:length(stencil@GML_IDs)){
+      newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=stencil@GML_IDs[i]), parent = filterEL)  
+    }
   }
   
   return(xmlNodes)

@@ -35,7 +35,13 @@ A class representing a web dataset.
 wg <- webgeom(geom = "sample:CONUS_states",
  attribute = "STATE",
  values = "New Hampshire")
+#-- use available state datasets:
 wg <- webgeom('state::NH')
+wg <- webgeom('state::NH,WI,AL')
+#-- use available Level III Ecoregion datasets:
+wg <- webgeom('ecoregion::Colorado Plateaus,Driftless Area')
+#-- use available simplified HUC8s:
+wg <- webgeom('HUC8::09020306,14060009')
 wg <- webgeom()
 }
 \author{
