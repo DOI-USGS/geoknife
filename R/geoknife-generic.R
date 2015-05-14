@@ -9,7 +9,7 @@
 #'@param knife (optional) a \linkS4class{webprocess} object
 #'@param waitUntilFinished FALSE by default. Should \code{geoknife} check job
 #'(and keep R occupied) until it is complete? 
-#'@param emailComplete FALSE by default. \code{character} of valid email address to 
+#'@param emailComplete NULL by default. \code{character} of valid email address to 
 #'notify for failed or completed process. NOT IMPLEMENTED
 #'@return and object of class \linkS4class{geojob}
 #'@rdname geoknife-methods
@@ -38,8 +38,15 @@
 #'@examples
 #'job <- geoknife(stencil = c(-89,42), fabric = 'prism')
 #'check(job)
+#'
+#'#-- set up geoknife to email user when the process is complete
+#'\dontrun{
+#'
+#' job <- geoknife(webgeom("state::NH"), fabric = 'prism', emailComplete = 'fake.email@@gmail.com')
+#' 
+#'}
 #'@export
-geoknife <- function(stencil, fabric, ..., knife = webprocess(...), waitUntilFinished = FALSE, emailComplete = FALSE){
+geoknife <- function(stencil, fabric, ..., knife = webprocess(...), waitUntilFinished = FALSE, emailComplete = NULL){
   
   if (!missing(knife) & !missing(...)){
     # if a knife is specified, pass in additional args through ... to modify. 
@@ -55,6 +62,11 @@ geoknife <- function(stencil, fabric, ..., knife = webprocess(...), waitUntilFin
   url(geojob) <- url(knife)
   
   geojob <- start(geojob)
+  
+  if (!is.null(emailComplete)) {
+    email(geojob, emailComplete, knife)
+  }
+  
   if (waitUntilFinished){
     waitUntilFinished(geojob)
   }
@@ -63,6 +75,7 @@ geoknife <- function(stencil, fabric, ..., knife = webprocess(...), waitUntilFin
 
 
 
+# is this used anymore??? seems id(geojob) does this.
 setProcessID	<-	function(.Object,processID){
 	.Object@processID	<-	processID
 	return(.Object)

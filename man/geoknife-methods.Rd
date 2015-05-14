@@ -6,7 +6,7 @@
 \title{geoknife}
 \usage{
 geoknife(stencil, fabric, ..., knife = webprocess(...),
-  waitUntilFinished = FALSE, emailComplete = FALSE)
+  waitUntilFinished = FALSE, emailComplete = NULL)
 }
 \arguments{
 \item{stencil}{a \linkS4class{webgeom}, \linkS4class{simplegeom}, or any type
@@ -23,7 +23,7 @@ Can also be used to modify the \code{knife} argument, if it is supplied.}
 \item{waitUntilFinished}{FALSE by default. Should \code{geoknife} check job
 (and keep R occupied) until it is complete?}
 
-\item{emailComplete}{FALSE by default. \code{character} of valid email address to
+\item{emailComplete}{NULL by default. \code{character} of valid email address to
 notify for failed or completed process. NOT IMPLEMENTED}
 }
 \value{
@@ -54,5 +54,12 @@ an type that can be coerced into \linkS4class{webdata} are valid arguments for \
 \examples{
 job <- geoknife(stencil = c(-89,42), fabric = 'prism')
 check(job)
+
+#-- set up geoknife to email user when the process is complete
+\dontrun{
+
+job <- geoknife(webgeom("state::NH"), fabric = 'prism', emailComplete = 'fake.email@gmail.com')
+
+}
 }
 
