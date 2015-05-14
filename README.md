@@ -38,6 +38,10 @@ stencil <- simplegeom(data.frame(
    # -- or --
 #for a state from a web available dataset
 stencil <- webgeom('state::NH')
+stencil <- webgeom('state::NH,WI,AL')
+   # -- or --
+#for HUC8s from a web available dataset
+stencil <- webgeom('HUC8::09020306,14060009')
 ```
 #####define a fabric that represents the underlying data
 ```R
@@ -69,6 +73,9 @@ if (successful(job)){
    data <- loadOutput(job)
    plot(data[,1:2], ylab = variables(fabric))
 }
+
+# use an email to listen for process completion
+job <- geoknife(webgeom('state::NH'), fabric = 'prism', emailComplete = 'fake.email@gmail.com')
 ```
 
 ###`geoknife` Functions (as of v0.6.2)
