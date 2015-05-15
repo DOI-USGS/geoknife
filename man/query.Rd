@@ -9,9 +9,9 @@ query(.Object, field, ...)
 \arguments{
 \item{.Object}{a \code{webgeom} object.}
 
-\item{field}{a plural parameter name in webgeom (e.g., 'geoms')}
+\item{field}{a plural parameter name for fields in webgeom (e.g., 'geoms', 'attributes','values')}
 
-\item{...}{additional arguments passed to GET}
+\item{...}{additional arguments passed to methods (e.g., rm.duplicates = TRUE)}
 }
 \value{
 a character vector of values corresponding to the query field specified
@@ -23,10 +23,12 @@ query webgeom for various fields
 a \code{webgeom} method for finding shapefile names at a valid WFS endpoint.
 }
 \examples{
-\dontrun{
 wg <- webgeom()
 query(wg, 'geoms')
-}
+geom(wg) <- "derivative:CONUS_States"
+query(wg, 'attributes')
+attribute(wg) <- 'STATE'
+query(wg, 'values', rm.duplicates = TRUE)
 }
 \author{
 Jordan S. Read
