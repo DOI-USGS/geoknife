@@ -94,20 +94,24 @@ genericExecute	<-	function(url,requestXML){
 }
 
 #'@importFrom XML htmlParse getNodeSet
-parseXMLnodes	<-	function(xml,parentKey,childKey,key="name"){
-	doc	<-	htmlParse(xml, useInternalNodes = TRUE)
-  xpath <- sprintf('//%s/%s',parentKey,childKey)
-  if (!is.na(key)){
-    xpath = paste0(xpath,'/',key)
-  }
-  nodes <- getNodeSet(doc, xpath)
+parseXMLgeoms	<-	function(xml){
+  
+  parentKey <- "FeatureTypeList"
+  childKey <- "FeatureType"
+  key="Name"
+  # ignore namespaces
+  xpath <- sprintf("//*[local-name()='%s']/*[local-name()='%s']/*[local-name()='%s']",parentKey,childKey,key)
+  nodes <- getNodeSet(xml, xpath)
 	values	<-	sapply(nodes,xmlValue)
 	return(values)
 }
 #'@importFrom XML htmlParse getNodeSet
-parseXMLattributes	<-	function(xmlURL,parentKey,childKey,key="name", rm.duplicates = FALSE){
-	doc	<-	htmlParse(xmlURL,useInternalNodes = TRUE)
-	nodes	<-	getNodeSet(doc,paste(c("//",parentKey,"[@",childKey,"]"),collapse=""))
+parseXMLattributes	<-	function(xml,rm.duplicates = FALSE){
+  parentKey  <-  "xsd:element"
+  childKey	<-	"maxOccurs"
+  key="name"
+  
+	nodes	<-	getNodeSet(xml,paste(c("//",parentKey,"[@",childKey,"]"),collapse=""))
 	# will error if none found
 	values	<-	list()
 	for (i in 1:length(nodes)){
@@ -120,9 +124,8 @@ parseXMLattributes	<-	function(xmlURL,parentKey,childKey,key="name", rm.duplicat
 	return(values)
 }
 #'@importFrom XML htmlParse getNodeSet
-parseXMLvalues	<-	function(xmlURL,key,  rm.duplicates = FALSE){
-	doc	<-	htmlParse(xmlURL,useInternalNodes = TRUE)
-	nodes	<-	getNodeSet(doc,paste(c("//",tolower(key)),collapse=""))
+parseXMLvalues	<-	function(xml, key, rm.duplicates = FALSE){
+	nodes	<-	getNodeSet(xml,paste0("//",key))
 	# will error if none found
 	values	<-	sapply(nodes,xmlValue)
   if (rm.duplicates){
