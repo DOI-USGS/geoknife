@@ -43,7 +43,11 @@ TIME_START <- function(fabric, ...){
 }
 
 DATASET_ID <- function(fabric, ...){
-  variables(fabric)
+  if(!is.na(variables(fabric)[1])) {
+    return(variables(fabric))
+  } else {
+    stop('variables cannot be NA')
+  }
 }
 
 DATASET_URI <- function(fabric, ...){
