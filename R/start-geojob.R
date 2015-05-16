@@ -20,7 +20,9 @@
 #'gj <- geojob()
 #'xml(gj) <- XML(wg, wd, wp)
 #'url(gj) <- url(wp)
+#'\dontrun{
 #'gj <- start(gj)
+#'}
 setGeneric(name="start",def=function(.Object){standardGeneric("start")})
 
 #'@rdname start-methods
