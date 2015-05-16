@@ -1,5 +1,6 @@
 context("Test set job state")
 
+cancel()
 stencil <- webgeom('state::NH')
 fabric <- webdata('prism')
 
@@ -16,7 +17,7 @@ test_that("can start first job",{
 
 test_that("fail for second job",{
   expect_error(geoknife(stencil, fabric)) #because is running.
-  geoknife:::setJobState('none') # set it back to open
+  cancel()
   geoknife(stencil, fabric) #expect no error
   
 })

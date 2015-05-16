@@ -69,8 +69,8 @@ setMethod(f = "XML",signature = c("ANY","webdata","webprocess"),
   inIdEL   <- newXMLNode('ows:Identifier',newXMLTextNode('FEATURE_COLLECTION'))
   addChildren(inEL,inIdEL)
   top <- addResponse(knife, top)
-  top <- addGeom(stencil, xmlNodes = top)
-  return(toString.XMLNode(top))
+  top <- suppressWarnings(addGeom(stencil, xmlNodes = top))
+  return(suppressWarnings(toString.XMLNode(top)))
 })
 
 addResponse <- function(.Object, xmlNodes){

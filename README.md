@@ -78,7 +78,7 @@ if (successful(job)){
 job <- geoknife(webgeom('state::NH'), fabric = 'prism', emailComplete = 'fake.email@gmail.com')
 ```
 
-###`geoknife` Functions (as of v0.6.2)
+###`geoknife` Functions (as of v0.7.4)
 | Function       | Title           |
 | ------------- |:-------------|
 | `geoknife` | slice up gridded data according to overlap with feature(s) |
@@ -89,6 +89,7 @@ job <- geoknife(webgeom('state::NH'), fabric = 'prism', emailComplete = 'fake.em
 | `running` | convenience  function for state of `geojob` |
 | `successful` | convenience  function for state of `geojob` |
 | `start` | start a `geojob` |
+| `cancel` | cancel a `geojob` |
 | `geom` | the geom of a `webgeom` | 
 | `id` | the process id of a `geojob` |
 | `values` | the values of a `webgeom` | 
