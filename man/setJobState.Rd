@@ -4,7 +4,7 @@
 \alias{setJobState}
 \title{set job state at package level for outgoing requests}
 \usage{
-setJobState(state = NULL)
+setJobState(state = "none")
 }
 \arguments{
 \item{state}{the state (as a character) to set \code{jobState} to.}
