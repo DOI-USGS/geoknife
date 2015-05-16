@@ -16,7 +16,8 @@ webdata(.Object, ...)
 \arguments{
 \item{.Object}{any object that can be coerced into \linkS4class{webdata}}
 
-\item{...}{additional arguments passed initialize method (e.g., times vector)}
+\item{...}{additional arguments passed initialize method (e.g., times, or any other
+in the \linkS4class{webdata} object.}
 }
 \value{
 the webdata object representing a dataset and parameters
@@ -35,6 +36,7 @@ A class representing a web dataset.
 }}
 \examples{
 webdata('prism')
+webdata('prism', times=as.POSIXct(c('1990-01-01', '1995-01-01')))
 webdata(list(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
  url = 'http://cida.usgs.gov/thredds/dodsC/prism',
  variables = 'ppt'))
