@@ -15,7 +15,7 @@ test_that("can start first job",{
 })
 
 test_that("fail for second job",{
-  expect_warning(geoknife(stencil, fabric)) #because is running.
+  expect_error(geoknife(stencil, fabric)) #because is running.
   geoknife:::setJobState('none') # set it back to open
   geoknife(stencil, fabric) #expect no error
   

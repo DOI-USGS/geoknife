@@ -9,16 +9,16 @@ geoknife(stencil, fabric, ..., knife = webprocess(...),
   waitUntilFinished = FALSE, emailComplete = NULL)
 }
 \arguments{
-\item{stencil}{a \linkS4class{webgeom}, \linkS4class{simplegeom}, or any type
-that can be coerced into \linkS4class{simplegeom}.}
+\item{stencil}{a \code{\link{webgeom}}, \code{\link{simplegeom}}, or any type
+that can be coerced into \code{\link{simplegeom}}.}
 
-\item{fabric}{a dataset. A \linkS4class{webdata} or any type that
-can be coerced into \linkS4class{webdata}}
+\item{fabric}{a dataset. A \code{\link{webdata}} or any type that
+can be coerced into \code{\link{webdata}}}
 
-\item{...}{additional arguments passed to \code{new} \linkS4class{webprocess}.
+\item{...}{additional arguments passed to \code{new} \code{\link{webprocess}}.
 Can also be used to modify the \code{knife} argument, if it is supplied.}
 
-\item{knife}{(optional) a \linkS4class{webprocess} object}
+\item{knife}{(optional) a \code{\link{webprocess}} object}
 
 \item{waitUntilFinished}{FALSE by default. Should \code{geoknife} check job
 (and keep R occupied) until it is complete?}
@@ -36,20 +36,20 @@ geoknife
 The \code{stencil} argument is akin to cookie cutter(s), which specify how the dataset is
 to be subsampled spatially. Supported types are all geometric in nature, be they collections
 of points or polygons. Because geoporcessing operations require a non-zero area for \code{stencil},
-if points are used (i.e., the different point collections that can be used in \linkS4class{simplegeom}),
+if points are used (i.e., the different point collections that can be used in \code{\link{simplegeom}}),
 there is a negligle automatic point buffer applied to each point to result in a non-zero area.
 
 Naming of the components of the \code{stencil} will impact the formatting of the result returned by
-the geoknife processing job (the \linkS4class{geojob})
+the geoknife processing job (the \code{\link{geojob}})
 
 geoknife will check the class of the stencil argument, and if stencil's class is not
-\linkS4class{webgeom}, it will attempt to coerce the object into a \linkS4class{simplegeom}.
+\code{\link{webgeom}}, it will attempt to coerce the object into a \code{\link{simplegeom}}.
 If no coercion method exists, geoknife will fail.
 
 The \code{fabric} argument is akin to the dough or fabric that will be subset with the \code{stencil}
 argument. At present, this is a web-available gridded dataset that meets a variety of formatting restrictions.
-Several quick start methods for creating a \linkS4class{webdata} object (only \linkS4class{webdata} or
-an type that can be coerced into \linkS4class{webdata} are valid arguments for \code{fabric}).
+Several quick start methods for creating a \code{\link{webdata}} object (only \code{\link{webdata}} or
+an type that can be coerced into \code{\link{webdata}} are valid arguments for \code{fabric}).
 }
 \examples{
 job <- geoknife(stencil = c(-89,42), fabric = 'prism')
