@@ -24,35 +24,147 @@ library(geoknife)
 
 #Introduction
 
-The **geoknife** package ... 
+The **geoknife** package was created to support web-based geoprocessing of large gridded datasets according to their overlap with landscape (or aquatic/ocean) features that are often irregularly shaped. geoknife creates data access and subsequent geoprocessing requests for the USGS's Geo Data Portal to carry out on a web server. The results of these requests are available for download after the processes have been completed. This type of workflow has three main advantages: 1) it allows the user to avoid downloading large datasets, 2) it avoids reinventing the wheel for the creation and optimization of complex geoprocessing algorithms, and 3) computing resources are dedicated elsewhere, so geoknife operations do not have much of an impact on a local computer.
+
+geoknife interacts with a remote server to figure out what types of processing capabilities are available, in addition to seeing what types of geospatial features are already available to be used as an area of interest (commonly, these are user-uploaded shapefiles). Because communication with web resources are central to geoknife operations, users must have an active internet connection.
+
+The main elements of setting up and carrying out a geoknife 'job' (geojob) include defining the feature of interest (the stencil argument in the geoknife function), the gridded web dataset to be processed (the fabric argument in the geoknife function), and the the processing algorithm parameters (the knife argument in the geoknife function). The status of the geojob can be checked with check, and output can be loaded into a data.frame with loadOutput. See below for more details.
 
 #Installation
-To install **geoknife**
-
-Install package with dependencies:
+To install the stable version of **geoknife** package with dependencies:
 ```{r, eval=FALSE}
 install.packages("geoknife", 
     repos = c("http://owi.usgs.gov/R"),
     dependencies = TRUE)
 ```
+Or to install the current development version of the package:
+```{r, eval=FALSE}
+install.packages("devtools")
+devtools::install_github('USGS-R/geoknife')
+```
 
-# geoknife web resources
-## Geo Data Portal
-## CSW (catalog service for the web)
-## WFS (web feature service)
-## WPS (web processing service)
 # getting started
+The geoknife package is ...
+
 ## geoknife concepts
+geoknife has abstractions for web gridded data, geospatial features, and geoprocessing details. These abstractions are the basic geoknife arguments of `fabric`, `stencil` and `knife`. `fabric` defines the web data that will be accessed, subset, and processed (see [the fabric section](#gridded-data-fabric) for more details). These data are limited to gridded datasets that are web-accessible through the definitions presented in [the OPeNDAP section](#opendap). Metadata contained within `fabric` include time, the URL for the data, and variables. `stencil` is the geospatial feature (or features) that will be used to delineate specific regions of interest on fabric (see [the stencil section](#spatial-features-stencil) for more details). `stencil` can include point or polygon groupings of various forms (including classes from the sp R package). `knife` defines the way the analysis will be performed, including the algorithm and version used, the URL that receives the processing request, the statistics returned, and the format of the results (see [the knife section](#web-processing-details-knife) for more details).
+The `geoknife()` function takes the `fabric`, `stencil`, and `knife`, and returns a `geojob`, which is a live geoprocessing request that will be carried out on a remote web server (see [the geojob section](#geojob-details) for more details). The `geojob` can be checked by users, and results can be parsed and loaded into the R environment for analyses. 
+
 ## remote processing basics
+Because `geoknife` is outsourcing geospatial computations to a remote webserver, the workflow for package operations may feel a bit foreign to users comfortable performing their entire analyses on their desktop. Additionally, because all data processed by `geoknife` must be web-available (and open access), many of the convenience functions of `geoknife` involve querying webservers and asking for available data. These operations are covered in detail below, but this section is designed to provide a quick overview. 
+
+Interactions with web resources may take on the following forms, and each involve separate requests to various webservers:
+
+(@) Using the `query` function to figure out what data exist for `fabric`. This function will request data from a CSW (catalog service for the web) resource and return results, or, if a dataset is already specified, it can be used to query for the variables or time dimension.
+(@) Using the `query` function to use a web resource for the geometry of `stencil`, including a US State, Level III Ecoregion, and many others. 
+(@) Submitting a `geojob` to be processed externally
+(@) Checking the status of a `geojob`
+(@) Loading the results from a successful `geojob`
+
 ## quick start guide
-# gridded data (`fabric` argument for geoknife)
+There are various ways to get up and running quickly with `geoknife`. See sections below for additional details on any of the following operations. As mentioned above, `geoknife` has the basic arguments of `fabric`, `stencil` and `knife`. `knife` is an optional argument, and if not used, a default `knife` will be used to specify the processing details. 
+
+### define a stencil that represents the geographic region to slice out of the data
+There are many different ways to specify geometry (`stencil`) for `geoknife`. The two basic functions that support building `stencil` objects are `simplegeom` and `webdata`:
+
+```{r}
+library(geoknife)
+```
+Use a single longitude latitude pair as the geometry with the `simplegeom` function:
+```{r}
+stencil <- simplegeom(c(-89, 46.23))
+```
+Or specify a collection of named points in a `data.frame` (note that naming is important for multi-features because it specifies how the results are filtered):
+```{r}
+stencil <- simplegeom(data.frame(
+              'point1' = c(-89, 46), 
+              'point2' = c(-88.6, 45.2)))
+```
+
+Use a web-available geometry dataset with the `webgeom` function to specify state boundaries:
+```{r}
+stencil <- webgeom('state::NH')
+stencil <- webgeom('state::NH,WI,AL')
+```
+or HUC8s (hydrologic unit code):
+```{r}
+stencil <- webgeom('HUC8::09020306,14060009')
+# display stencil:
+stencil
+```
+see what other HUCs could be used via the `query` function:
+```{r}
+HUCs <- query(stencil, 'values')
+# there are thousands of results, but head() will only display a few of them
+head(HUCs) 
+```
+
+### define a fabric that represents the underlying data
+The `fabric` is specified using the `webdata` function, and can be done explicity or with a quick-start dataset name (such as 'prism')
+```{r}
+fabric <- webdata('prism')
+# display fabric:
+fabric
+```
+The same can be done explicitly by passing a list to webdata:
+```{r}
+fabric <- webdata(list(
+            times = as.POSIXct(c('1895-01-01','1899-01-01')),
+            url = 'http://cida.usgs.gov/thredds/dodsC/prism',
+            variables = 'ppt'))
+```
+To modify the times in `fabric`, use `times()`:
+```{r}
+times(fabric) <- as.POSIXct(c('1990-01-01','2005-01-01'))
+```
+Similar to `webgeom`, the query method can be used on `webdata` objects:
+```{r, eval=FALSE}
+query(fabric, 'times')
+query(fabric, 'variables')
+```
+### create the processing job that will carry out the subsetting/summarization task
+
+```{r}
+job <- geoknife(stencil, fabric)
+```
+
+use existing convienence functions to check on the job:
+```{r}
+check(job)
+running(job)
+error(job)
+successful(job)
+```
+
+Cancel a running job:
+```{r}
+job <- cancel(job)
+```
+
+Run the job again, but have R wait until the process is finished:
+```{r}
+job <- geoknife(stencil, fabric, waitUntilFinished = TRUE)
+```
+
+Load up the output and plot it
+```{r, fig.height=3.5, fig.width=7}
+data <- loadOutput(job)
+plot(data[,1:2], ylab = variables(fabric))
+```
+
+For long running processes, it often makes sense to use an email listener:
+```{r, eval=FALSE}
+job <- geoknife(webgeom('state::NH'), fabric = 'prism', emailComplete = 'fake.email@gmail.com')
+```
+
+# gridded data (`fabric`)
 ## `webgeom` class and details
 ## query for web available data
-# spatial features (`stencil` argument for geoknife)
+# spatial features (`stencil`)
 ## `simplegeom` class and details
 ## `webgeom` class and details
 ## query for web available data
-# web processing details (optional `knife` argument for geoknife)
+# web processing details (`knife`)
 ## algorithm
 ## inputs
 ## url
@@ -62,3 +174,13 @@ install.packages("geoknife",
 ## `geojob` class and details
 ## `check` and related functions
 ## `cancel` geojob
+# geoknife web resources
+geoknife outsources all major geospatial processing tasks to a remote server. Because of this, users must have an active internet connection. Problems with connections to datasets or the processing resources are rare, but they do happen. When experiencing a connectivity problem, the best approach is often to try again later or email gdp@usgs.gov with any questions. The various web dependencies are described below. 
+
+
+
+## Geo Data Portal
+## CSW (catalog service for the web)
+## OPeNDAP
+## WFS (web feature service)
+## WPS (web processing service)
