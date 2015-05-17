@@ -1,0 +1,64 @@
+---
+title: "geoknife package"
+author: "Jordan Read"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{geoknife package}
+  \usepackage[utf8]{inputenc}
+---
+
+
+```{r setup, include=FALSE}
+library(rmarkdown)
+options(continue=" ")
+options(width=60)
+library(knitr)
+library(geoknife)
+
+```
+
+
+#Introduction
+
+The **geoknife** package ... 
+
+#Installation
+To install **geoknife**
+
+Install package with dependencies:
+```{r, eval=FALSE}
+install.packages("geoknife", 
+    repos = c("http://owi.usgs.gov/R"),
+    dependencies = TRUE)
+```
+
+# geoknife web resources
+## Geo Data Portal
+## CSW (catalog service for the web)
+## WFS (web feature service)
+## WPS (web processing service)
+# getting started
+## geoknife concepts
+## remote processing basics
+## quick start guide
+# gridded data (`fabric` argument for geoknife)
+## `webgeom` class and details
+## query for web available data
+# spatial features (`stencil` argument for geoknife)
+## `simplegeom` class and details
+## `webgeom` class and details
+## query for web available data
+# web processing details (optional `knife` argument for geoknife)
+## algorithm
+## inputs
+## url
+## `wait`
+## `email`
+# geojob details
+## `geojob` class and details
+## `check` and related functions
+## `cancel` geojob

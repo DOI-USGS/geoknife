@@ -22,5 +22,6 @@ Imports:
 Suggests:
     testthat,
     xtable,
-    knitr
+    knitr,
+    rmarkdown
 VignetteBuilder: knitr
