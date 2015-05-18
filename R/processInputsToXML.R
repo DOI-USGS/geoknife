@@ -35,7 +35,6 @@ setMethod(f = "XML",signature = c("ANY","webdata","webprocess"),
   
   id	<-	newXMLNode("ows:Identifier",newXMLTextNode(knife@algorithm),parent=top)
   di	<-	newXMLNode("wps:DataInputs",parent=top)
-  addChildren(top,c(id,di))
   
   for (i in 1:length(knife@processInputs)){
     postNm	<-	names(knife@processInputs[i])
