@@ -1,7 +1,7 @@
 context("test failing request")
 
 cancel()
-stencil <- webgeom('state::NH')
+stencil <- webgeom('state::Wisconsin')
 fabric <- webdata('prism', variables = 'wrong')
 
 

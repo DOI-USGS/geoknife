@@ -15,12 +15,12 @@
 #'@rdname start-methods
 #'@examples 
 #'wd <- webdata('prism')
-#'wg <- webgeom('state::NH')
+#'wg <- webgeom('state::New Hampshire')
 #'wp <- webprocess()
 #'gj <- geojob()
+#'\dontrun{
 #'xml(gj) <- XML(wg, wd, wp)
 #'url(gj) <- url(wp)
-#'\dontrun{
 #'gj <- start(gj)
 #'}
 setGeneric(name="start",def=function(.Object){standardGeneric("start")})

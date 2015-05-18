@@ -16,9 +16,7 @@ test_that("webprocess can set algorithms", {
 
 context("Test setting of webgeom simple sets")
 test_that("webgeom can set states", {
-  states <- c("CO","OR","CN")
-  expect_error(webgeom(paste0('state::',paste(states,collapse = ','))))
-  states <- c("CO","OR","CT")
+  states <- c("Colorado","Oregon","Wisconsin")
   wg <- webgeom(paste0('state::',paste(states,collapse = ',')))
   expect_equal(length(values(wg)), length(states))
 })

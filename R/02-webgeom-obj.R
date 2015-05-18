@@ -80,8 +80,8 @@ setMethod("initialize", signature = "webgeom",
 #'  attribute = "STATE",
 #'  values = "New Hampshire")
 #'#-- use available state datasets:
-#' wg <- webgeom('state::NH')
-#' wg <- webgeom('state::NH,WI,AL')
+#' wg <- webgeom('state::New Hampshire')
+#' wg <- webgeom('state::New Hampshire,Wisconsin,Alabama')
 #'#-- use available Level III Ecoregion datasets:
 #' wg <- webgeom('ecoregion::Colorado Plateaus,Driftless Area')
 #'#-- use available simplified HUC8s:
@@ -112,44 +112,26 @@ setMethod("webgeom", signature('ANY'), function(.Object, ...) {
 })
 
 setAs("character", "webgeom", function(from){
-  ## create new webdata object with a character input (for dataset matching)
-  # supported: two uppercase letters signifying a state abreviation; full state name (first letters capitalized)
-  # future support for ecoregions and counties
   
+  datasets <- list('state' = 
+                     list(geom = "derivative:CONUS_States",
+                          attribute = "STATE"),
+                   'ecoregion' = 
+                     list(geom = "derivative:Level_III_Ecoregions",
+                          attribute = "LEVEL3_NAM"),
+                   'HUC8' = 
+                     list(geom = "derivative:wbdhu8_alb_simp",
+                          attribute = "HUC_8"))
+                   
   pieces <- strsplit(from, split = '::')[[1]]
-  webgeom <- do.call(paste0('.',pieces[1],'Webgeom'), list(value=pieces[2]))
   
+  quickgeom <- match.arg(pieces[1], names(datasets))
   
-  return(webgeom)
+  values <- strsplit(pieces[2], split = ',')[[1]]
+
+  args <- datasets[[quickgeom]]
+  args$values <- values
+
+  return(do.call(webgeom, args))
 })
-
-.stateWebgeom <- function(value){
-  multipart <- strsplit(value, split = ',')[[1]]
-  values <- unlist(lapply(multipart, function(x) states[[x]]))
-  if (length(values) != length(multipart)){
-    stop('state matches failed. Check values:',multipart)
-  }
-  webgeom <- webgeom(geom = "derivative:CONUS_States",
-                     attribute = "STATE",
-                     values = values)
-  return(webgeom)
-}
-
-.ecoregionWebgeom <- function(value){
-  multipart <- strsplit(value, split = ',')[[1]]
-  values <- multipart
-  webgeom <- webgeom(geom = "derivative:Level_III_Ecoregions",
-                     attribute = "LEVEL3_NAM",
-                     values = values)
-  return(webgeom)
-}
-
-.HUC8Webgeom <- function(value){
-  multipart <- strsplit(value, split = ',')[[1]]
-  values <- multipart
-  webgeom <- webgeom(geom = "derivative:wbdhu8_alb_simp",
-                     attribute = "HUC_8",
-                     values = values)
-  return(webgeom)
-}
 

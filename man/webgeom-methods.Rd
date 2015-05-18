@@ -36,8 +36,8 @@ wg <- webgeom(geom = "sample:CONUS_states",
  attribute = "STATE",
  values = "New Hampshire")
 #-- use available state datasets:
-wg <- webgeom('state::NH')
-wg <- webgeom('state::NH,WI,AL')
+wg <- webgeom('state::New Hampshire')
+wg <- webgeom('state::New Hampshire,Wisconsin,Alabama')
 #-- use available Level III Ecoregion datasets:
 wg <- webgeom('ecoregion::Colorado Plateaus,Driftless Area')
 #-- use available simplified HUC8s:

@@ -83,8 +83,8 @@ stencil <- simplegeom(data.frame(
 
 Use a web-available geometry dataset with the `webgeom` function to specify state boundaries:
 ```{r}
-stencil <- webgeom('state::NH')
-stencil <- webgeom('state::NH,WI,AL')
+stencil <- webgeom('state::New Hampshire')
+stencil <- webgeom('state::New Hampshire,Wisconnsin,Alabama')
 ```
 or HUC8s (hydrologic unit code):
 ```{r}
@@ -128,7 +128,7 @@ query(fabric, 'variables')
 job <- geoknife(stencil, fabric)
 ```
 
-use existing convienence functions to check on the job:
+use convienence functions to check on the job:
 ```{r}
 check(job)
 running(job)
@@ -154,7 +154,7 @@ plot(data[,1:2], ylab = variables(fabric))
 
 For long running processes, it often makes sense to use an email listener:
 ```{r, eval=FALSE}
-job <- geoknife(webgeom('state::NH'), fabric = 'prism', emailComplete = 'fake.email@gmail.com')
+job <- geoknife(webgeom('state::Wisconsin'), fabric = 'prism', emailComplete = 'fake.email@gmail.com')
 ```
 
 # gridded data (`fabric`)

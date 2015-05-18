@@ -24,12 +24,12 @@ start is a method for submitting a geo-web processing request.
 }
 \examples{
 wd <- webdata('prism')
-wg <- webgeom('state::NH')
+wg <- webgeom('state::New Hampshire')
 wp <- webprocess()
 gj <- geojob()
+\dontrun{
 xml(gj) <- XML(wg, wd, wp)
 url(gj) <- url(wp)
-\dontrun{
 gj <- start(gj)
 }
 }
