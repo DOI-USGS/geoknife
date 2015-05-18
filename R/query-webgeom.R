@@ -17,11 +17,6 @@
 #'query(wg, 'attributes')
 #'attribute(wg) <- 'STATE'
 #'query(wg, 'values', rm.duplicates = TRUE)
-#'@importFrom httr GET verbose
-#'@author Jordan S. Read
-#'@export
-setGeneric(name="query",def=function(.Object, field, ...){standardGeneric("query")})
-
 #'@rdname query
 #'@aliases query,webgeom-method  
 setMethod(f = "query",signature("webgeom",'character'),
