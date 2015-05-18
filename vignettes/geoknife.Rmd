@@ -128,7 +128,7 @@ query(fabric, 'variables')
 job <- geoknife(stencil, fabric)
 ```
 
-use existing convienence functions to check on the job:
+use convienence functions to check on the job:
 ```{r}
 check(job)
 running(job)
