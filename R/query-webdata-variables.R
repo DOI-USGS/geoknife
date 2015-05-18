@@ -50,7 +50,7 @@ setMethod(f = "variables_query",signature = c("webdata","webprocess"),
             rd <- newXMLNode("wps:RawDataOutput", parent = rf)
             newXMLNode("ows:Identifier", newXMLTextNode('result_as_xml'), parent = rd)
             response <- genericExecute(knife@UTILITY_URL,toString.XMLNode(root))
-            
+        
             # will error if none found
             values	<-	sapply(getNodeSet(content(response),'//gdp:shortname'),xmlValue)
             return(values)
