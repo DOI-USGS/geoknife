@@ -6,6 +6,8 @@
 #'@param field a plural parameter name for fields in webgeom (e.g., 'geoms', 'attributes','values')
 #'@param ... additional arguments passed to methods (e.g., rm.duplicates = TRUE)
 #'@return a character vector of values corresponding to the query field specified
+#'@rdname query
+#'@aliases query,webgeom-method  
 #'@keywords methods
 # '@import XML
 #'@examples
@@ -20,8 +22,8 @@
 #'@export
 setGeneric(name="query",def=function(.Object, field, ...){standardGeneric("query")})
 
-# '@rdname getShapefiles-methods
-# '@aliases getShapefiles,geoknife-method  
+#'@rdname query
+#'@aliases query,webgeom-method  
 setMethod(f = "query",signature("webgeom",'character'),
           definition = function(.Object, field, ...){
             input_list <- list(...)

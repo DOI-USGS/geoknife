@@ -54,7 +54,12 @@ geoknife <- function(stencil, fabric, ..., knife = webprocess(...), waitUntilFin
   }
 
   if (!is(stencil, "webgeom")){
-    stencil <- as(stencil, Class = "simplegeom")
+    stencil <- tryCatch({
+      as(stencil, Class = "simplegeom")
+    }, error = function(err) {
+      wg <- as(stencil, Class = "webgeom")
+      return(wg)
+    })
   }
   fabric <- as(fabric, Class = "webdata")
   geojob <- geojob()
@@ -94,6 +99,22 @@ genericExecute	<-	function(url,requestXML){
 }
 
 #'@importFrom XML htmlParse getNodeSet
+parseXMLalgorithms  <-  function(xml){
+  
+  parentKey <- "wps:Process"
+  childKey <- "ows:Identifier"
+  titleKey <- "ows:Title"
+  
+  nodes <- getNodeSet(xml, sprintf("//%s/%s",parentKey,childKey))
+  values  <-  lapply(nodes,xmlValue)
+  
+  nodes <- getNodeSet(xml, sprintf("//%s/%s",parentKey,titleKey))
+  names(values) <- sapply(nodes,xmlValue)
+  
+  return(values)
+}
+
+#'@importFrom XML htmlParse getNodeSet
 parseXMLgeoms	<-	function(xml){
   
   parentKey <- "FeatureTypeList"
@@ -105,6 +126,8 @@ parseXMLgeoms	<-	function(xml){
 	values	<-	sapply(nodes,xmlValue)
 	return(values)
 }
+
+
 #'@importFrom XML htmlParse getNodeSet
 parseXMLattributes	<-	function(xml,rm.duplicates = FALSE){
   parentKey  <-  "xsd:element"
