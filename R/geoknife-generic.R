@@ -94,6 +94,22 @@ genericExecute	<-	function(url,requestXML){
 }
 
 #'@importFrom XML htmlParse getNodeSet
+parseXMLalgorithms  <-  function(xml){
+  
+  parentKey <- "wps:Process"
+  childKey <- "ows:Identifier"
+  titleKey <- "ows:Title"
+  
+  nodes <- getNodeSet(xml, sprintf("//%s/%s",parentKey,childKey))
+  values  <-  lapply(nodes,xmlValue)
+  
+  nodes <- getNodeSet(xml, sprintf("//%s/%s",parentKey,titleKey))
+  names(values) <- sapply(nodes,xmlValue)
+  
+  return(values)
+}
+
+#'@importFrom XML htmlParse getNodeSet
 parseXMLgeoms	<-	function(xml){
   
   parentKey <- "FeatureTypeList"
@@ -105,6 +121,8 @@ parseXMLgeoms	<-	function(xml){
 	values	<-	sapply(nodes,xmlValue)
 	return(values)
 }
+
+
 #'@importFrom XML htmlParse getNodeSet
 parseXMLattributes	<-	function(xml,rm.duplicates = FALSE){
   parentKey  <-  "xsd:element"
