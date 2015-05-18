@@ -84,7 +84,7 @@ stencil <- simplegeom(data.frame(
 Use a web-available geometry dataset with the `webgeom` function to specify state boundaries:
 ```{r}
 stencil <- webgeom('state::New Hampshire')
-stencil <- webgeom('state::New Hampshire,Wisconnsin,Alabama')
+stencil <- webgeom('state::New Hampshire,Wisconsin,Alabama')
 ```
 or HUC8s (hydrologic unit code):
 ```{r}
