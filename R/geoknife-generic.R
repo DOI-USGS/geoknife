@@ -54,7 +54,12 @@ geoknife <- function(stencil, fabric, ..., knife = webprocess(...), waitUntilFin
   }
 
   if (!is(stencil, "webgeom")){
-    stencil <- as(stencil, Class = "simplegeom")
+    stencil <- tryCatch({
+      as(stencil, Class = "simplegeom")
+    }, error = function(err) {
+      wg <- as(stencil, Class = "webgeom")
+      return(wg)
+    })
   }
   fabric <- as(fabric, Class = "webdata")
   geojob <- geojob()

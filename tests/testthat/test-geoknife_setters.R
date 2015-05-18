@@ -22,3 +22,13 @@ test_that("webgeom can set states", {
   wg <- webgeom(paste0('state::',paste(states,collapse = ',')))
   expect_equal(length(values(wg)), length(states))
 })
+
+context("geoknife sets stencil correctly")
+test_that("geoknife sets stencil correctly", {
+  job <- geoknife('HUC8::09020306', 'prism')
+  expect_is(job, 'geojob')
+  cancel(job)
+  job <- geoknife(data.frame('point1'=c(-89, 46), 'point2'=c(-88.6, 45.2)), 'prism')
+  expect_is(job, 'geojob')
+  cancel(job)
+})
