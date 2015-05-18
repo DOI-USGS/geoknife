@@ -126,6 +126,9 @@ setAs("character", "webgeom", function(from){
 .stateWebgeom <- function(value){
   multipart <- strsplit(value, split = ',')[[1]]
   values <- unlist(lapply(multipart, function(x) states[[x]]))
+  if (length(values) != length(multipart)){
+    stop('state matches failed. Check values:',multipart)
+  }
   webgeom <- webgeom(geom = "derivative:CONUS_States",
                      attribute = "STATE",
                      values = values)
