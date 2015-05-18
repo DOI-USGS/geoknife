@@ -1,6 +1,6 @@
 context("Test wait until finished")
 
-stencil <- webgeom('state::NH')
+stencil <- webgeom('state::Wisconsin')
 fabric <- webdata('prism')
 
 test_that("creating simple job", {

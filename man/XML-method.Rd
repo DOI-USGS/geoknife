@@ -26,7 +26,7 @@ XML from set of objects
 }
 \examples{
 wd <- webdata('prism',times = as.POSIXct(c('2001-01-01','2002-02-05')))
-wg <- webgeom('state::NH')
+wg <- webgeom('state::Wisconsin')
 XML(wg, wd, webprocess())
 sg <- simplegeom(c(-89,45))
 XML(sg, wd, webprocess())

@@ -27,7 +27,7 @@ cancel is a method for cancelling a geo-web processing request.
 }
 \examples{
 wd <- webdata('prism')
-wg <- webgeom('state::NH')
+wg <- webgeom('state::New Hampshire')
 wp <- webprocess()
 gj <- geojob()
 xml(gj) <- XML(wg, wd, wp)

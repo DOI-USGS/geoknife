@@ -15,7 +15,7 @@
 #'@rdname start-methods
 #'@examples 
 #'wd <- webdata('prism')
-#'wg <- webgeom('state::NH')
+#'wg <- webgeom('state::New Hampshire')
 #'wp <- webprocess()
 #'gj <- geojob()
 #'\dontrun{
