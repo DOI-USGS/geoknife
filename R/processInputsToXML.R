@@ -16,7 +16,7 @@ setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML"
 #'sg <- simplegeom(c(-89,45))
 #'XML(sg, wd, webprocess())
 #'@rdname XML-method
-#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
+#'@importFrom XML newXMLNode newXMLTextNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
 #'@export
 setMethod(f = "XML",signature = c("ANY","webdata","webprocess"), 
           definition = function(stencil, fabric, knife){
