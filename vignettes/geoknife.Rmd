@@ -143,7 +143,7 @@ job <- cancel(job)
 
 Run the job again, but have R wait until the process is finished:
 ```{r}
-job <- geoknife(stencil, fabric, waitUntilFinished = TRUE)
+job <- geoknife(stencil, fabric, wait = TRUE)
 ```
 
 Load up the output and plot it

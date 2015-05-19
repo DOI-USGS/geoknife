@@ -1,22 +1,4 @@
-#'@title query webgeom for various fields
-#'
-#'@details a \code{webgeom} method for finding shapefile names at a valid WFS endpoint.
-#'
-#'@param .Object a \code{webgeom} object.
-#'@param field a plural parameter name for fields in webgeom (e.g., 'geoms', 'attributes','values')
-#'@param ... additional arguments passed to methods (e.g., rm.duplicates = TRUE)
-#'@return a character vector of values corresponding to the query field specified
-#'@rdname query
-#'@aliases query,webgeom-method  
-#'@keywords methods
-# '@import XML
-#'@examples
-#'wg <- webgeom()
-#'query(wg, 'geoms')
-#'geom(wg) <- "derivative:CONUS_States"
-#'query(wg, 'attributes')
-#'attribute(wg) <- 'STATE'
-#'query(wg, 'values', rm.duplicates = TRUE)
+
 #'@rdname query
 #'@aliases query,webgeom-method  
 setMethod(f = "query",signature("webgeom",'character'),

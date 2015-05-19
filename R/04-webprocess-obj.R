@@ -6,6 +6,8 @@
 #' Can be set or accessed using \code{\link[geoknife]{algorithm}}
 #' @slot version a character specifying the wep processing service version to use. 
 #' Can be set or accessed using \code{\link[geoknife]{version}}
+#' @slot email an email to send finished process alert to
+#' @slot wait boolean for wait until complete (hold up R until processing is complete)
 #' @slot processInputs (_private) a list of required and options process inputs, and their 
 #' default values (if specified). This is populated (or repopulated) whenever \code{algorithm} is set.
 #' @slot WPS_SCHEMA_LOCATION (_private) location for web processing service schema
@@ -30,12 +32,16 @@ setClass(
     url = 'http://cida.usgs.gov/gdp/process/WebProcessingService', 
     algorithm = list('Area Grid Statistics (weighted)'=
                        "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
-    version = '1.0.0'
+    version = '1.0.0',
+    email = as.character(NA),
+    wait = FALSE
     ),
   representation = representation(
     url="character",
     algorithm="list",
     version="character",
+    email = "character",
+    wait = 'logical',
     processInputs="list",
     WPS_SCHEMA_LOCATION="character",
     WPS_NAMESPACE="character",
@@ -53,7 +59,9 @@ setMethod(f="initialize",signature="webprocess",
             .Object, 
             url = .Object@url, 
             algorithm = .Object@algorithm,
-            version = .Object@version)
+            version = .Object@version,
+            email = .Object@email,
+            wait = .Object@wait)
             {
 
             .Object@WPS_SCHEMA_LOCATION = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
@@ -74,6 +82,8 @@ setMethod(f="initialize",signature="webprocess",
             .Object@version = version
             .Object@url = url
             .Object@algorithm  <- algorithm
+            .Object@email = email
+            .Object@wait = wait
             processInputs <- defaultProcessInputs(algorithm = .Object@algorithm[[1]], .Object@url, .Object@version)
             .Object@processInputs  <-	processInputs
             

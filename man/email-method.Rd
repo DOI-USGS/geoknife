@@ -3,14 +3,13 @@
 \docType{methods}
 \name{email}
 \alias{email}
-\alias{email,geojob,character,webprocess-method}
+\alias{email,geojob,webprocess-method}
 \alias{email,geojob-method}
 \title{email user when processing job is complete}
 \usage{
-email(geojob, email, knife)
+email(geojob, knife)
 
-\S4method{email}{geojob,character,webprocess}(geojob, email,
-  knife = webprocess())
+\S4method{email}{geojob,webprocess}(geojob, knife)
 }
 \arguments{
 \item{email}{a character for email address to use}

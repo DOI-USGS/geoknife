@@ -5,9 +5,9 @@ fabric <- webdata('prism')
 
 test_that("creating simple job", {
   geoknife:::setJobState('none')
-  geoknife(stencil, fabric, waitUntilFinished = TRUE)
+  geoknife(stencil, fabric, wait = TRUE)
   expect_equal(geoknife:::getJobState(), "Process successful")
   expect_true(geoknife:::canStart())
-  geoknife(stencil, fabric, waitUntilFinished = FALSE)
+  geoknife(stencil, fabric, wait = FALSE)
   expect_false(geoknife:::getJobState() == "Process successful")
 })

@@ -1,7 +1,7 @@
 #'@rdname email-method
 #'@aliases email,geojob-method
 #'@export
-setGeneric(name="email",def=function(geojob, email, knife){standardGeneric("email")})
+setGeneric(name="email",def=function(geojob, knife){standardGeneric("email")})
 
 #'@title email user when processing job is complete
 #'@param email a character for email address to use
@@ -11,8 +11,8 @@ setGeneric(name="email",def=function(geojob, email, knife){standardGeneric("emai
 #'@keywords internal
 #'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- xmlParseString removeNodes
 #'@export
-setMethod(f = "email",signature = c("geojob","character", 'webprocess'), 
-          definition = function(geojob, email, knife=webprocess()){
+setMethod(f = "email",signature = c("geojob",'webprocess'), 
+          definition = function(geojob, knife){
             
             doc <- xmlTreeParse(xml(geojob), useInternalNodes = TRUE)
             root <- xmlRoot(doc)
@@ -30,7 +30,7 @@ setMethod(f = "email",signature = c("geojob","character", 'webprocess'),
             wps_in <- newXMLNode("wps:Input",parent=di)
             newXMLNode("ows:Identifier", newXMLTextNode('email'), parent = wps_in)
             wps_data <- newXMLNode("wps:Data",parent=wps_in)
-            newXMLNode("wps:LiteralData", newXMLTextNode(email), parent = wps_data)
+            newXMLNode("wps:LiteralData", newXMLTextNode(knife@email), parent = wps_data)
             
             wps_in <- newXMLNode("wps:Input",parent=di)
             newXMLNode("ows:Identifier", newXMLTextNode('filename'), parent = wps_in)
@@ -41,7 +41,6 @@ setMethod(f = "email",signature = c("geojob","character", 'webprocess'),
             rd <- newXMLNode("wps:ResponseDocument", parent = rf)
             out <- newXMLNode("wps:Output", parent = rd)
             newXMLNode("ows:Identifier", newXMLTextNode('result'), parent = out)
-            
             response <- genericExecute(knife@UTILITY_URL,toString.XMLNode(root))
             #return boolean?
           })
