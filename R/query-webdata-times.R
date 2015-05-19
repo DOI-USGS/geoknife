@@ -58,7 +58,12 @@ setMethod(f = "times_query",signature = c("webdata","webprocess"),
             rd <- newXMLNode("wps:RawDataOutput", parent = rf)
             newXMLNode("ows:Identifier", newXMLTextNode('result_as_xml'), parent = rd)
             response <- genericExecute(knife@UTILITY_URL,toString.XMLNode(root))
-            # will error if none found
-            values  <-	as.POSIXct(sapply(getNodeSet(content(response),'//gdp:availabletimes/gdp:time'),xmlValue), tz = 'UTC')
+            values <- tryCatch({
+              nodes <- getNodeSet(content(response),'//gdp:availabletimes/gdp:time')
+              as.POSIXct(sapply(nodes,xmlValue), tz = 'UTC')
+            }, error = function(err) {
+              return(as.POSIXct(c(NA,NA)))
+            })
+            
             return(values)
           })
