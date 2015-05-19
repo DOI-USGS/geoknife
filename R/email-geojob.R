@@ -9,7 +9,7 @@ setGeneric(name="email",def=function(geojob, email, knife){standardGeneric("emai
 #'@rdname email-method
 #'@aliases email,geojob-method
 #'@keywords internal
-#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- xmlParseString
+#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- xmlParseString removeNodes
 #'@export
 setMethod(f = "email",signature = c("geojob","character", 'webprocess'), 
           definition = function(geojob, email, knife=webprocess()){

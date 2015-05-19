@@ -1,13 +1,13 @@
-#'@rdname variables-query-method
-#'@aliases variables-query,webdata-method
+#'@rdname variables_query-method
+#'@aliases variables_query,webdata-method
 #'@export
 setGeneric(name="variables_query",def=function(fabric, knife){standardGeneric("variables_query")})
 
 #'@title variables query
 #'@param variables
 #'
-#'@rdname variables-query-method
-#'@aliases variables-query,webdata-method
+#'@rdname variables_query-method
+#'@aliases variables_query,webdata-method
 #'@keywords internal
 #'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- xmlParseString
 #'@export
@@ -17,8 +17,8 @@ setMethod(f = "variables_query",signature = c("webdata","missing"),
             variables_query(fabric, knife)
           })
 
-#'@rdname variables-query-method
-#'@aliases variables-query,webdata-method
+#'@rdname variables_query-method
+#'@aliases variables_query,webdata-method
 #'@keywords internal
 #'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- xmlParseString
 #'@export

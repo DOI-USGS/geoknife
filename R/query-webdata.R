@@ -28,3 +28,9 @@ setMethod(f = "query",signature("webdata",'character'),
             return(values)
           }
 )
+#'@rdname query 
+setMethod(f = "query",signature("webdata",'missing'),
+          definition = function(.Object, field, ...){
+            stop('specify a field to query against for webdata object')
+          }
+)
