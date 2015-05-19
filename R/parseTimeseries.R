@@ -14,7 +14,6 @@
 #'@examples
 #'local_file <- system.file('extdata','tsv_linear_ring.tsv', package = 'geoknife')
 #'output <- parseTimeseries(local_file, delim = '\t')
-#'@importFrom lubridate parse_date_time2
 parseTimeseries <- function(file, delim, keep.units = FALSE){
   
   config = parseConfig(file, delim)
@@ -29,7 +28,7 @@ parseTimeseries <- function(file, delim, keep.units = FALSE){
                   skip = config[['skip']][blk], 
                   as.is=TRUE, check.names = FALSE)
     #parse the date into POSIXct format
-    blockData$TIMESTEP = parse_date_time2(blockData$TIMESTEP, 'YmdHMS')
+    blockData$TIMESTEP = as.POSIXct(blockData$TIMESTEP, "%Y-%m-%dT%H:%M:%S", tz="UTC")
     statNames <- unique(names(blockData)[-1])
     for (st in 1:length(statNames)){
       # select data columns based on stat code

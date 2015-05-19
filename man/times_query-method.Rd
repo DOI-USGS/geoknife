@@ -2,10 +2,10 @@
 % Please edit documentation in R/query-webdata-times.R
 \docType{methods}
 \name{times_query}
-\alias{times-query,webdata-method}
 \alias{times_query}
 \alias{times_query,webdata,missing-method}
 \alias{times_query,webdata,webprocess-method}
+\alias{times_query,webdata-method}
 \title{times query}
 \usage{
 times_query(fabric, knife)
@@ -13,9 +13,6 @@ times_query(fabric, knife)
 \S4method{times_query}{webdata,missing}(fabric, knife)
 
 \S4method{times_query}{webdata,webprocess}(fabric, knife)
-}
-\arguments{
-\item{times}{}
 }
 \description{
 times query

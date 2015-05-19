@@ -1,13 +1,12 @@
-#'@rdname times-query-method
-#'@aliases times-query,webdata-method
+#'@rdname times_query-method
+#'@aliases times_query,webdata-method
 #'@export
 setGeneric(name="times_query",def=function(fabric, knife){standardGeneric("times_query")})
 
 #'@title times query
-#'@param times
-#'
-#'@rdname times-query-method
-#'@aliases times-query,webdata-method
+
+#'@rdname times_query-method
+#'@aliases times_query,webdata-method
 #'@keywords internal
 #'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- xmlParseString
 #'@export
@@ -17,8 +16,8 @@ setMethod(f = "times_query",signature = c("webdata","missing"),
             times_query(fabric, knife)
           })
 
-#'@rdname times-query-method
-#'@aliases times-query,webdata-method
+#'@rdname times_query-method
+#'@aliases times_query,webdata-method
 #'@keywords internal
 #'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- xmlParseString
 #'@export
