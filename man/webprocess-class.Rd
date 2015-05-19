@@ -19,6 +19,10 @@ Can be set or accessed using \code{\link[geoknife]{algorithm}}}
 \item{\code{version}}{a character specifying the wep processing service version to use.
 Can be set or accessed using \code{\link[geoknife]{version}}}
 
+\item{\code{email}}{an email to send finished process alert to}
+
+\item{\code{wait}}{boolean for wait until complete (hold up R until processing is complete)}
+
 \item{\code{processInputs}}{(_private) a list of required and options process inputs, and their
 default values (if specified). This is populated (or repopulated) whenever \code{algorithm} is set.}
 

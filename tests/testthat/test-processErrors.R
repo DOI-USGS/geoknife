@@ -7,7 +7,7 @@ fabric <- webdata('prism', variables = 'wrong')
 
 test_that("java stack failure", {
   
-  job <- geoknife(stencil, fabric, waitUntilFinished = TRUE)
+  job <- geoknife(stencil, fabric, wait = TRUE)
   expect_equal(geoknife:::getJobState(), "ProcessFailed")
 })
 

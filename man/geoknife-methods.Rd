@@ -5,8 +5,7 @@
 \alias{geoknife}
 \title{geoknife}
 \usage{
-geoknife(stencil, fabric, ..., knife = webprocess(...),
-  waitUntilFinished = FALSE, emailComplete = NULL)
+geoknife(stencil, fabric, knife = webprocess(...), ...)
 }
 \arguments{
 \item{stencil}{a \code{\link{webgeom}}, \code{\link{simplegeom}}, or any type
@@ -15,16 +14,10 @@ that can be coerced into \code{\link{simplegeom}}.}
 \item{fabric}{a dataset. A \code{\link{webdata}} or any type that
 can be coerced into \code{\link{webdata}}}
 
-\item{...}{additional arguments passed to \code{new} \code{\link{webprocess}}.
-Can also be used to modify the \code{knife} argument, if it is supplied.}
-
 \item{knife}{(optional) a \code{\link{webprocess}} object}
 
-\item{waitUntilFinished}{FALSE by default. Should \code{geoknife} check job
-(and keep R occupied) until it is complete?}
-
-\item{emailComplete}{NULL by default. \code{character} of valid email address to
-notify for failed or completed process. NOT IMPLEMENTED}
+\item{...}{additional arguments passed to \code{new} \code{\link{webprocess}}.
+Can also be used to modify the \code{knife} argument, if it is supplied.}
 }
 \value{
 and object of class \linkS4class{geojob}
@@ -58,7 +51,7 @@ check(job)
 #-- set up geoknife to email user when the process is complete
 \dontrun{
 
-job <- geoknife(webgeom("state::NH"), fabric = 'prism', emailComplete = 'fake.email@gmail.com')
+job <- geoknife(webgeom("state::Wisconsin"), fabric = 'prism', email = 'fake.email@gmail.com')
 
 }
 }
