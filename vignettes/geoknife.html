@@ -53,7 +53,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <div id="header">
 <h1 class="title">geoknife package</h1>
 <h4 class="author"><em>Jordan Read</em></h4>
-<h4 class="date"><em>18 May, 2015</em></h4>
+<h4 class="date"><em>19 May, 2015</em></h4>
 </div>
 
 <div id="TOC">
@@ -69,14 +69,16 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <li><a href="#create-the-processing-job-that-will-carry-out-the-subsettingsummarization-task">create the processing job that will carry out the subsetting/summarization task</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#gridded-data-fabric">gridded data (<code>fabric</code>)</a><ul>
-<li><a href="#webgeom-class-and-details"><code>webgeom</code> class and details</a></li>
-<li><a href="#query-for-web-available-data">query for web available data</a></li>
-</ul></li>
 <li><a href="#spatial-features-stencil">spatial features (<code>stencil</code>)</a><ul>
-<li><a href="#simplegeom-class-and-details"><code>simplegeom</code> class and details</a></li>
-<li><a href="#webgeom-class-and-details-1"><code>webgeom</code> class and details</a></li>
-<li><a href="#query-for-web-available-data-1">query for web available data</a></li>
+<li><a href="#simplegeom-object"><code>simplegeom</code> object</a></li>
+<li><a href="#webgeom-object"><code>webgeom</code> object</a></li>
+<li><a href="#quick-access-to-web-available-data-for-webgeoms">quick access to web available data for webgeoms</a></li>
+<li><a href="#query-function-for-webgeom">query function for <code>webgeom</code></a></li>
+</ul></li>
+<li><a href="#gridded-data-fabric">gridded data (<code>fabric</code>)</a><ul>
+<li><a href="#webdata-object"><code>webdata</code> object</a></li>
+<li><a href="#quick-access-to-web-available-data">quick access to web available data</a></li>
+<li><a href="#query-function-for-webdata">query function for <code>webdata</code></a></li>
 </ul></li>
 <li><a href="#web-processing-details-knife">web processing details (<code>knife</code>)</a><ul>
 <li><a href="#algorithm">algorithm</a></li>
@@ -211,7 +213,7 @@ fabric</code></pre>
 <p>Cancel a running job:</p>
 <pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">cancel</span>(job)</code></pre>
 <p>Run the job again, but have R wait until the process is finished:</p>
-<pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">geoknife</span>(stencil, fabric, <span class="dt">waitUntilFinished =</span> <span class="ot">TRUE</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">geoknife</span>(stencil, fabric, <span class="dt">wait =</span> <span class="ot">TRUE</span>)</code></pre>
 <p>Load up the output and plot it</p>
 <pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">loadOutput</span>(job)
 <span class="kw">plot</span>(data[,<span class="dv">1</span>:<span class="dv">2</span>], <span class="dt">ylab =</span> <span class="kw">variables</span>(fabric))</code></pre>
@@ -221,25 +223,242 @@ fabric</code></pre>
 </div>
 </div>
 </div>
-<div id="gridded-data-fabric" class="section level1">
-<h1>gridded data (<code>fabric</code>)</h1>
-<div id="webgeom-class-and-details" class="section level2">
-<h2><code>webgeom</code> class and details</h2>
-</div>
-<div id="query-for-web-available-data" class="section level2">
-<h2>query for web available data</h2>
-</div>
-</div>
 <div id="spatial-features-stencil" class="section level1">
 <h1>spatial features (<code>stencil</code>)</h1>
-<div id="simplegeom-class-and-details" class="section level2">
-<h2><code>simplegeom</code> class and details</h2>
+<p>The <code>stencil</code> concept in <code>geoknife</code> represents the area(s) of interest for geoprocessing. <code>stencil</code> can be represented by two classes in <code>geoknife</code>: <code>simplegeom</code> and <code>webdata</code>. Any other classes can also be used that can be coerced into either of these two classes (such as <code>data.frame</code>).</p>
+<div id="simplegeom-object" class="section level2">
+<h2><code>simplegeom</code> object</h2>
+<p>The <code>simplegeom</code> class is designed to hold spatial information from the R environment and make it available to the processing engine. <code>simplegeom</code> is effectively a wrapper for the <code>sp</code> package’s <code>SpatialPolygons</code> class, but also coerces a number of different other types into this class. For example:</p>
+<p>Points can be specified as longitude latitude pairs:</p>
+<pre class="sourceCode r"><code class="sourceCode r">stencil &lt;-<span class="st"> </span><span class="kw">simplegeom</span>(<span class="kw">c</span>(-<span class="dv">89</span>, <span class="fl">45.43</span>))</code></pre>
+<p>or as a data.frame:</p>
+<pre class="sourceCode r"><code class="sourceCode r">stencil &lt;-<span class="st"> </span><span class="kw">simplegeom</span>(<span class="kw">data.frame</span>(
+              <span class="st">'point1'</span> =<span class="st"> </span><span class="kw">c</span>(-<span class="dv">89</span>, <span class="dv">46</span>), 
+              <span class="st">'point2'</span> =<span class="st"> </span><span class="kw">c</span>(-<span class="fl">88.6</span>, <span class="fl">45.2</span>)))</code></pre>
+<p>Also, a <code>SpatialPolygons</code> object can be used as well (example from <code>sp</code> package):</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sp)
+Sr1 =<span class="st"> </span><span class="kw">Polygon</span>(<span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">2</span>)))
+Sr2 =<span class="st"> </span><span class="kw">Polygon</span>(<span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">5</span>),<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">2</span>)))
+Sr3 =<span class="st"> </span><span class="kw">Polygon</span>(<span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">4</span>),<span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">5</span>)))
+Sr4 =<span class="st"> </span><span class="kw">Polygon</span>(<span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">5</span>),<span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>)), <span class="dt">hole =</span> <span class="ot">TRUE</span>)
+
+Srs1 =<span class="st"> </span><span class="kw">Polygons</span>(<span class="kw">list</span>(Sr1), <span class="st">&quot;s1&quot;</span>)
+Srs2 =<span class="st"> </span><span class="kw">Polygons</span>(<span class="kw">list</span>(Sr2), <span class="st">&quot;s2&quot;</span>)
+Srs3 =<span class="st"> </span><span class="kw">Polygons</span>(<span class="kw">list</span>(Sr3, Sr4), <span class="st">&quot;s3/4&quot;</span>)
+stencil &lt;-<span class="st"> </span><span class="kw">simplegeom</span>(<span class="dt">Srl =</span> <span class="kw">list</span>(Srs1,Srs2,Srs3), <span class="dt">proj4string =</span> <span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>))</code></pre>
 </div>
-<div id="webgeom-class-and-details-1" class="section level2">
-<h2><code>webgeom</code> class and details</h2>
+<div id="webgeom-object" class="section level2">
+<h2><code>webgeom</code> object</h2>
+<p>The <code>webgeom</code> class is designed to hold references to web feature service (WFS) details and make it available to the processing engine.</p>
+<p>Similar to <code>webdata</code> (see below), the <code>webgeom</code> class has public fields that can be set and accessed using simple methods. Public fields in <code>webgeom</code>:</p>
+<ul>
+<li><code>url</code>: the WFS endpoint to use for the data</li>
+<li><code>geom</code>: the feature collection name (can be namespaced shapefile names)</li>
+<li><code>attribute</code>: the attribute of the feature collection to be use</li>
+<li><code>values</code>: the values of the chosen attribute to use (or <code>NA</code> for all)</li>
+<li><code>version</code>: the WFS version to use.</li>
+</ul>
+<p>To create a default <code>webgeom</code> object:</p>
+<pre class="sourceCode r"><code class="sourceCode r">stencil &lt;-<span class="st"> </span><span class="kw">webgeom</span>()</code></pre>
+<p>The user-level information in webgeom is all available with the webgeom “show” method (or print).</p>
+<pre class="sourceCode r"><code class="sourceCode r">stencil</code></pre>
+<pre><code>## An object of class &quot;webgeom&quot;:
+## url: http://cida.usgs.gov/gdp/geoserver/wfs 
+## geom: NA 
+## attribute: NA 
+## values: NA 
+## version: 1.1.0</code></pre>
+<p>The public fields can be accessed in by using the field name:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">geom</span>(stencil) &lt;-<span class="st"> &quot;derivative:CONUS_States&quot;</span>
+<span class="kw">version</span>(stencil)</code></pre>
+<pre><code>## [1] &quot;1.1.0&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">attribute</span>(stencil) &lt;-<span class="st"> &quot;STATE&quot;</span>
+<span class="kw">values</span>(stencil) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Wisconsin&quot;</span>,<span class="st">&quot;Maine&quot;</span>)</code></pre>
 </div>
-<div id="query-for-web-available-data-1" class="section level2">
-<h2>query for web available data</h2>
+<div id="quick-access-to-web-available-data-for-webgeoms" class="section level2">
+<h2>quick access to web available data for webgeoms</h2>
+<p>There are some built in <code>webgeom</code> templates that can be used to figure out the pattern, or to use these datasets for analysis. Currently, the package only supports US States, Level III Ecoregions, or HUC8s:</p>
+<pre class="sourceCode r"><code class="sourceCode r">stencil &lt;-<span class="st"> </span><span class="kw">webgeom</span>(<span class="st">'state::Wisconsin'</span>)
+stencil</code></pre>
+<pre><code>## An object of class &quot;webgeom&quot;:
+## url: http://cida.usgs.gov/gdp/geoserver/wfs 
+## geom: derivative:CONUS_States 
+## attribute: STATE 
+## values: Wisconsin 
+## version: 1.1.0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'values'</span>)</code></pre>
+<pre><code>##  [1] &quot;Alabama&quot;              &quot;Arizona&quot;             
+##  [3] &quot;Arkansas&quot;             &quot;California&quot;          
+##  [5] &quot;Colorado&quot;             &quot;Connecticut&quot;         
+##  [7] &quot;Delaware&quot;             &quot;District of Columbia&quot;
+##  [9] &quot;Florida&quot;              &quot;Georgia&quot;             
+## [11] &quot;Idaho&quot;                &quot;Illinois&quot;            
+## [13] &quot;Indiana&quot;              &quot;Iowa&quot;                
+## [15] &quot;Kansas&quot;               &quot;Kentucky&quot;            
+## [17] &quot;Louisiana&quot;            &quot;Maine&quot;               
+## [19] &quot;Maryland&quot;             &quot;Massachusetts&quot;       
+## [21] &quot;Michigan&quot;             &quot;Minnesota&quot;           
+## [23] &quot;Mississippi&quot;          &quot;Missouri&quot;            
+## [25] &quot;Montana&quot;              &quot;Nebraska&quot;            
+## [27] &quot;Nevada&quot;               &quot;New Hampshire&quot;       
+## [29] &quot;New Jersey&quot;           &quot;New Mexico&quot;          
+## [31] &quot;New York&quot;             &quot;North Carolina&quot;      
+## [33] &quot;North Dakota&quot;         &quot;Ohio&quot;                
+## [35] &quot;Oklahoma&quot;             &quot;Oregon&quot;              
+## [37] &quot;Pennsylvania&quot;         &quot;Rhode Island&quot;        
+## [39] &quot;South Carolina&quot;       &quot;South Dakota&quot;        
+## [41] &quot;Tennessee&quot;            &quot;Texas&quot;               
+## [43] &quot;Utah&quot;                 &quot;Vermont&quot;             
+## [45] &quot;Virginia&quot;             &quot;Washington&quot;          
+## [47] &quot;West Virginia&quot;        &quot;Wisconsin&quot;           
+## [49] &quot;Wyoming&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">webgeom</span>(<span class="st">'state::Wisconsin,Maine'</span>)</code></pre>
+<pre><code>## An object of class &quot;webgeom&quot;:
+## url: http://cida.usgs.gov/gdp/geoserver/wfs 
+## geom: derivative:CONUS_States 
+## attribute: STATE 
+## values: Wisconsin Maine 
+## version: 1.1.0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">webgeom</span>(<span class="st">'HUC8::09020306,14060009'</span>)</code></pre>
+<pre><code>## An object of class &quot;webgeom&quot;:
+## url: http://cida.usgs.gov/gdp/geoserver/wfs 
+## geom: derivative:wbdhu8_alb_simp 
+## attribute: HUC_8 
+## values: 09020306 14060009 
+## version: 1.1.0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">webgeom</span>(<span class="st">'ecoregion::Colorado Plateaus,Driftless Area'</span>)</code></pre>
+<pre><code>## An object of class &quot;webgeom&quot;:
+## url: http://cida.usgs.gov/gdp/geoserver/wfs 
+## geom: derivative:Level_III_Ecoregions 
+## attribute: LEVEL3_NAM 
+## values: Colorado Plateaus Driftless Area 
+## version: 1.1.0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">query</span>(<span class="kw">webgeom</span>(<span class="st">'ecoregion::Colorado Plateaus,Driftless Area'</span>), <span class="st">'values'</span>), <span class="dv">10</span>)</code></pre>
+<pre><code>##  [1] &quot;Ahklun And Kilbuck Mountains&quot; 
+##  [2] &quot;Alaska Peninsula Mountains&quot;   
+##  [3] &quot;Alaska Range&quot;                 
+##  [4] &quot;Aleutian Islands&quot;             
+##  [5] &quot;Arctic Coastal Plain&quot;         
+##  [6] &quot;Arctic Foothills&quot;             
+##  [7] &quot;Arizona/New Mexico Mountains&quot; 
+##  [8] &quot;Arizona/New Mexico Plateau&quot;   
+##  [9] &quot;Arkansas Valley&quot;              
+## [10] &quot;Atlantic Coastal Pine Barrens&quot;</code></pre>
+</div>
+<div id="query-function-for-webgeom" class="section level2">
+<h2>query function for <code>webgeom</code></h2>
+<p>The <code>query</code> function on <code>webgeom</code> can be used to find possible inputs for each public field (other than <code>version</code> and <code>url</code> currently):</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'geoms'</span>)</code></pre>
+<pre><code>##  [1] &quot;sample:Alaska&quot;                  
+##  [2] &quot;derivative:CONUS_States&quot;        
+##  [3] &quot;sample:CONUS_states&quot;            
+##  [4] &quot;sample:CSC_Boundaries&quot;          
+##  [5] &quot;upload:Columbia_ALL_HRU&quot;        
+##  [6] &quot;derivative:FWS_LCC&quot;             
+##  [7] &quot;sample:FWS_LCC&quot;                 
+##  [8] &quot;upload:HBNisotopes&quot;             
+##  [9] &quot;derivative:wbdhu8_alb_simp&quot;     
+## [10] &quot;derivative:Level_III_Ecoregions&quot;
+## [11] &quot;derivative:NCA_Regions&quot;         
+## [12] &quot;draw:Test&quot;                      
+## [13] &quot;derivative:US_Counties&quot;         
+## [14] &quot;upload:US_counties_LRRsubset&quot;   
+## [15] &quot;draw:Washington&quot;                
+## [16] &quot;upload:navarroHRU&quot;              
+## [17] &quot;sample:nps_boundary_2013&quot;       
+## [18] &quot;sample:simplified_HUC8s&quot;        
+## [19] &quot;draw:sylvan&quot;                    
+## [20] &quot;draw:test&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'attributes'</span>)</code></pre>
+<pre><code>## [1] &quot;STATE&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'values'</span>)</code></pre>
+<pre><code>##  [1] &quot;Alabama&quot;              &quot;Arizona&quot;             
+##  [3] &quot;Arkansas&quot;             &quot;California&quot;          
+##  [5] &quot;Colorado&quot;             &quot;Connecticut&quot;         
+##  [7] &quot;Delaware&quot;             &quot;District of Columbia&quot;
+##  [9] &quot;Florida&quot;              &quot;Georgia&quot;             
+## [11] &quot;Idaho&quot;                &quot;Illinois&quot;            
+## [13] &quot;Indiana&quot;              &quot;Iowa&quot;                
+## [15] &quot;Kansas&quot;               &quot;Kentucky&quot;            
+## [17] &quot;Louisiana&quot;            &quot;Maine&quot;               
+## [19] &quot;Maryland&quot;             &quot;Massachusetts&quot;       
+## [21] &quot;Michigan&quot;             &quot;Minnesota&quot;           
+## [23] &quot;Mississippi&quot;          &quot;Missouri&quot;            
+## [25] &quot;Montana&quot;              &quot;Nebraska&quot;            
+## [27] &quot;Nevada&quot;               &quot;New Hampshire&quot;       
+## [29] &quot;New Jersey&quot;           &quot;New Mexico&quot;          
+## [31] &quot;New York&quot;             &quot;North Carolina&quot;      
+## [33] &quot;North Dakota&quot;         &quot;Ohio&quot;                
+## [35] &quot;Oklahoma&quot;             &quot;Oregon&quot;              
+## [37] &quot;Pennsylvania&quot;         &quot;Rhode Island&quot;        
+## [39] &quot;South Carolina&quot;       &quot;South Dakota&quot;        
+## [41] &quot;Tennessee&quot;            &quot;Texas&quot;               
+## [43] &quot;Utah&quot;                 &quot;Vermont&quot;             
+## [45] &quot;Virginia&quot;             &quot;Washington&quot;          
+## [47] &quot;West Virginia&quot;        &quot;Wisconsin&quot;           
+## [49] &quot;Wyoming&quot;</code></pre>
+</div>
+</div>
+<div id="gridded-data-fabric" class="section level1">
+<h1>gridded data (<code>fabric</code>)</h1>
+<p>The <code>fabric</code> concept in <code>geoknife</code> represents the gridded dataset that will be operated on by the tool. <code>fabric</code> can be a time-varying dataset (such as PRISM) or a spatial snapshot coverage dataset (such as the NLCD). At present, <code>fabric</code> is limited to datasets that can be accessed using the OPeNDAP protocol or WMS (web map service). Most helper functions in geoknife, including <code>query(fabric,'variables')</code> tend to work better for OPeNDAP datasets.</p>
+<div id="webdata-object" class="section level2">
+<h2><code>webdata</code> object</h2>
+<p>The <code>webdata</code> class holds all the important information for webdatasets in order to make them available for processing by geoknife’s outsourced geoprocessing engine, the Geo Data Portal. Public fields in <code>webdata</code>:</p>
+<ul>
+<li><code>times</code>: a POSIXct vector of length 2. This specifies the start and end time of the process request. If <code>times()[1]</code> is <code>NA</code>, the start time will be the begining of the dataset. If <code>times()[2]</code> is <code>NA</code> the end time will be the end of the dataset. <code>times</code> must be <code>as.POSIXct(c(NA,NC))</code> for datasets without a time dimension.</li>
+<li><code>url</code>: a character for the location of a web available dataset. This URL will be queried for data access and used for the processing task.</li>
+<li><code>variables</code>: a character vector for the variables of the dataset to use. Must be valid variables that exist within the dataset specified with <code>url</code>.</li>
+</ul>
+<p>To create a default <code>webdata</code> object:</p>
+<pre class="sourceCode r"><code class="sourceCode r">fabric &lt;-<span class="st"> </span><span class="kw">webdata</span>()</code></pre>
+<p>The user-level information in webdata is all available with the webdata “show” method (or print).</p>
+<pre class="sourceCode r"><code class="sourceCode r">fabric</code></pre>
+<pre><code>## An object of class &quot;webdata&quot;:
+## times: NA NA 
+## url: NA 
+## variables: NA</code></pre>
+<p>The public fields can be accessed in by using the field name:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">times</span>(fabric)</code></pre>
+<pre><code>## [1] NA NA</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">url</span>(fabric) &lt;-<span class="st"> 'http://cida.usgs.gov/thredds/dodsC/prism'</span>
+<span class="kw">variables</span>(fabric) &lt;-<span class="st"> 'ppt'</span>
+
+<span class="kw">times</span>(fabric)[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">as.POSIXct</span>(<span class="st">'1990-01-01'</span>)</code></pre>
+</div>
+<div id="quick-access-to-web-available-data" class="section level2">
+<h2>quick access to web available data</h2>
+<p>The Geo Data Portal’s web data catalog is quite extensive, and inludes many datasets that can all be processed with <code>geoknife</code>. Check it out at cida.usgs.gov/gdp. This is not a complete list of all relevant datasets that can be accessed and processed. The <code>geoknife</code> package has a number of quick access datasets build in (similar to quick start <code>webgeom</code> objects).</p>
+<p>An example of a quick start dataset:</p>
+<pre class="sourceCode r"><code class="sourceCode r">fabric &lt;-<span class="st"> </span><span class="kw">webdata</span>(<span class="st">'prism'</span>)
+fabric</code></pre>
+<pre><code>## An object of class &quot;webdata&quot;:
+## times: 1895-01-01 1899-01-01 
+## url: http://cida.usgs.gov/thredds/dodsC/prism 
+## variables: ppt</code></pre>
+<p>which can be a starting point for the PRISM dataset, as the fields can be modified:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">times</span>(fabric) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'1990-01-01'</span>,<span class="st">'2010-01-01'</span>)
+<span class="kw">variables</span>(fabric) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'ppt'</span>,<span class="st">'tmx'</span>, <span class="st">'tmn'</span>)
+fabric</code></pre>
+<pre><code>## An object of class &quot;webdata&quot;:
+## times: 1990-01-01 2010-01-01 
+## url: http://cida.usgs.gov/thredds/dodsC/prism 
+## variables: ppt tmx tmn</code></pre>
+</div>
+<div id="query-function-for-webdata" class="section level2">
+<h2>query function for <code>webdata</code></h2>
+<p>The <code>query</code> function works on <code>webdata</code>, similar to how it works for <code>webgeom</code> objects. For the PRISM dataset specified above, the time range of the dataset can come from <code>query</code> with <code>times</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">variables</span>(fabric) &lt;-<span class="st"> 'ppt'</span>
+<span class="kw">query</span>(fabric, <span class="st">'times'</span>)</code></pre>
+<pre><code>## [1] &quot;1895-01-01 UTC&quot; &quot;2013-02-01 UTC&quot;</code></pre>
+<p>likewise, variables with <code>variables</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(fabric, <span class="st">'variables'</span>)</code></pre>
+<pre><code>## [1] &quot;ppt&quot; &quot;tmx&quot; &quot;tmn&quot;</code></pre>
+<p>Note that a variable has to be specified to use the <code>times</code> query:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">variables</span>(fabric) &lt;-<span class="st"> </span><span class="ot">NA</span></code></pre>
+<p>This will fail:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(fabric, <span class="st">'times'</span>)</code></pre>
+<p>At present, the <code>geoknife</code> package does not have a query method for dataset urls.</p>
 </div>
 </div>
 <div id="web-processing-details-knife" class="section level1">
