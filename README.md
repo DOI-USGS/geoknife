@@ -37,8 +37,8 @@ stencil <- simplegeom(data.frame(
               'point2' = c(-88.6, 45.2)))
    # -- or --
 #for a state from a web available dataset
-stencil <- webgeom('state::NH')
-stencil <- webgeom('state::NH,WI,AL')
+stencil <- webgeom('state::New Hampshire')
+stencil <- webgeom('state::New Hampshire,Wisconsin,Alabama')
    # -- or --
 #for HUC8s from a web available dataset
 stencil <- webgeom('HUC8::09020306,14060009')

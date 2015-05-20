@@ -29,9 +29,9 @@ setMethod(f = "variables",signature(.Object = "webdata"),
 
 #'@rdname variables-webdata
 #'@export
-setMethod(f = "variables<-",signature(.Object= "webdata", value = "character"),
+setMethod(f = "variables<-",signature(.Object= "webdata", value = "ANY"),
           definition = function(.Object, value){
-            return(initialize(.Object, variables = value))
+            return(initialize(.Object, variables = as.character(value)))
           })
 
 
