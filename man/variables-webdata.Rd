@@ -5,7 +5,7 @@
 \alias{variables}
 \alias{variables,webdata-method}
 \alias{variables<-}
-\alias{variables<-,webdata,character-method}
+\alias{variables<-,webdata-method}
 \title{the variables of a webdata object}
 \usage{
 variables(.Object)
@@ -15,7 +15,7 @@ variables(.Object) <- value
 
 \S4method{variables}{webdata}(.Object)
 
-\S4method{variables}{webdata,character}(.Object) <- value
+\S4method{variables}{webdata}(.Object) <- value
 }
 \arguments{
 \item{.Object}{a \code{\link{webdata}} object}
