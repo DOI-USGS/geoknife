@@ -53,7 +53,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <div id="header">
 <h1 class="title">geoknife package</h1>
 <h4 class="author"><em>Jordan Read</em></h4>
-<h4 class="date"><em>19 May, 2015</em></h4>
+<h4 class="date"><em>20 May, 2015</em></h4>
 </div>
 
 <div id="TOC">
@@ -105,7 +105,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>The <strong>geoknife</strong> package was created to support web-based geoprocessing of large gridded datasets according to their overlap with landscape (or aquatic/ocean) features that are often irregularly shaped. geoknife creates data access and subsequent geoprocessing requests for the USGS’s Geo Data Portal to carry out on a web server. The results of these requests are available for download after the processes have been completed. This type of workflow has three main advantages: 1) it allows the user to avoid downloading large datasets, 2) it avoids reinventing the wheel for the creation and optimization of complex geoprocessing algorithms, and 3) computing resources are dedicated elsewhere, so geoknife operations do not have much of an impact on a local computer.</p>
-<p>geoknife interacts with a remote server to figure out what types of processing capabilities are available, in addition to seeing what types of geospatial features are already available to be used as an area of interest (commonly, these are user-uploaded shapefiles). Because communication with web resources are central to geoknife operations, users must have an active internet connection.</p>
+<p>Because communication with web resources are central to geoknife operations, users must have an active internet connection. geoknife interacts with a remote server to discover processing capabilities, find already available geospatial areas of interest (these are normally user-uploaded shapefiles), get gridded dataset characteristics, execute geoprocessing requests, and get geoprocessing results.</p>
 <p>The main elements of setting up and carrying out a geoknife ‘job’ (geojob) include defining the feature of interest (the stencil argument in the geoknife function), the gridded web dataset to be processed (the fabric argument in the geoknife function), and the the processing algorithm parameters (the knife argument in the geoknife function). The status of the geojob can be checked with check, and output can be loaded into a data.frame with loadOutput. See below for more details.</p>
 </div>
 <div id="installation" class="section level1">
@@ -123,11 +123,11 @@ devtools::<span class="kw">install_github</span>(<span class="st">'USGS-R/geokni
 <p>The geoknife package is …</p>
 <div id="geoknife-concepts" class="section level2">
 <h2>geoknife concepts</h2>
-<p>geoknife has abstractions for web gridded data, geospatial features, and geoprocessing details. These abstractions are the basic geoknife arguments of <code>fabric</code>, <code>stencil</code> and <code>knife</code>. <code>fabric</code> defines the web data that will be accessed, subset, and processed (see <a href="#gridded-data-fabric">the fabric section</a> for more details). These data are limited to gridded datasets that are web-accessible through the definitions presented in <a href="#opendap">the OPeNDAP section</a>. Metadata contained within <code>fabric</code> include time, the URL for the data, and variables. <code>stencil</code> is the geospatial feature (or features) that will be used to delineate specific regions of interest on fabric (see <a href="#spatial-features-stencil">the stencil section</a> for more details). <code>stencil</code> can include point or polygon groupings of various forms (including classes from the sp R package). <code>knife</code> defines the way the analysis will be performed, including the algorithm and version used, the URL that receives the processing request, the statistics returned, and the format of the results (see <a href="#web-processing-details-knife">the knife section</a> for more details). The <code>geoknife()</code> function takes the <code>fabric</code>, <code>stencil</code>, and <code>knife</code>, and returns a <code>geojob</code>, which is a live geoprocessing request that will be carried out on a remote web server (see <a href="#geojob-details">the geojob section</a> for more details). The <code>geojob</code> can be checked by users, and results can be parsed and loaded into the R environment for analyses.</p>
+<p>geoknife has abstractions for web-available gridded data, geospatial features, and geoprocessing details. These abstractions are the basic geoknife arguments of <code>fabric</code>, <code>stencil</code> and <code>knife</code>.<br />* <code>fabric</code> defines the web data that will be accessed, subset, and processed (see <a href="#gridded-data-fabric">the fabric section</a> for more details). These data are limited to gridded datasets that are web-accessible through the definitions presented in <a href="#opendap">the OPeNDAP section</a>. Metadata for <code>fabric</code> include time, the URL for the data, and variables.<br />* <code>stencil</code> is the geospatial feature (or set of features) that will be used to delineate specific regions of interest on the fabric (see <a href="#spatial-features-stencil">the stencil section</a> for more details). <code>stencil</code> can include point or polygon groupings of various forms (including classes from the sp R package).<br />* <code>knife</code> defines the way the analysis will be performed, including the algorithm and version used, the URL that receives the processing request, the statistics returned, and the format of the results (see <a href="#web-processing-details-knife">the knife section</a> for more details).<br />* The <code>geoknife()</code> function takes the <code>fabric</code>, <code>stencil</code>, and <code>knife</code>, and returns a <code>geojob</code>, which is a live geoprocessing request that will be carried out on a remote web server (see <a href="#geojob-details">the geojob section</a> for more details). The <code>geojob</code> can be checked by users, and results can be parsed and loaded into the R environment for analyses.</p>
 </div>
 <div id="remote-processing-basics" class="section level2">
 <h2>remote processing basics</h2>
-<p>Because <code>geoknife</code> is outsourcing geospatial computations to a remote webserver, the workflow for package operations may feel a bit foreign to users comfortable performing their entire analyses on their desktop. Additionally, because all data processed by <code>geoknife</code> must be web-available (and open access), many of the convenience functions of <code>geoknife</code> involve querying webservers and asking for available data. These operations are covered in detail below, but this section is designed to provide a quick overview.</p>
+<p>Because <code>geoknife</code> executes geospatial computations on a remote webserver, the workflow for to execute geoprocessing operations may feel a bit foreign to users who usually performing their analyses on a local computer. To find available datasets and their details (variables, time range, etc.), <code>geoknife</code> must query remote servers because data for use with <code>geoknife</code> is typically hosted on open access servers near the processing service. These operations are covered in detail below, but this section is designed to provide a quick overview.</p>
 <p>Interactions with web resources may take on the following forms, and each involve separate requests to various webservers:</p>
 <ol style="list-style-type: example">
 <li>Using the <code>query</code> function to figure out what data exist for <code>fabric</code>. This function will request data from a CSW (catalog service for the web) resource and return results, or, if a dataset is already specified, it can be used to query for the variables or time dimension.</li>
@@ -354,21 +354,23 @@ stencil</code></pre>
 ##  [3] &quot;sample:CONUS_states&quot;            
 ##  [4] &quot;sample:CSC_Boundaries&quot;          
 ##  [5] &quot;upload:Columbia_ALL_HRU&quot;        
-##  [6] &quot;derivative:FWS_LCC&quot;             
-##  [7] &quot;sample:FWS_LCC&quot;                 
-##  [8] &quot;upload:HBNisotopes&quot;             
-##  [9] &quot;derivative:wbdhu8_alb_simp&quot;     
-## [10] &quot;derivative:Level_III_Ecoregions&quot;
-## [11] &quot;derivative:NCA_Regions&quot;         
-## [12] &quot;draw:Test&quot;                      
-## [13] &quot;derivative:US_Counties&quot;         
-## [14] &quot;upload:US_counties_LRRsubset&quot;   
-## [15] &quot;draw:Washington&quot;                
-## [16] &quot;upload:navarroHRU&quot;              
-## [17] &quot;sample:nps_boundary_2013&quot;       
-## [18] &quot;sample:simplified_HUC8s&quot;        
-## [19] &quot;draw:sylvan&quot;                    
-## [20] &quot;draw:test&quot;</code></pre>
+##  [6] &quot;draw:Eric&quot;                      
+##  [7] &quot;derivative:FWS_LCC&quot;             
+##  [8] &quot;sample:FWS_LCC&quot;                 
+##  [9] &quot;upload:HBN_WS&quot;                  
+## [10] &quot;upload:HBNisotopes&quot;             
+## [11] &quot;upload:HBNisotopes2&quot;            
+## [12] &quot;derivative:wbdhu8_alb_simp&quot;     
+## [13] &quot;derivative:Level_III_Ecoregions&quot;
+## [14] &quot;derivative:NCA_Regions&quot;         
+## [15] &quot;draw:Oconto&quot;                    
+## [16] &quot;draw:Test&quot;                      
+## [17] &quot;derivative:US_Counties&quot;         
+## [18] &quot;upload:US_counties_LRRsubset&quot;   
+## [19] &quot;upload:navarroHRU&quot;              
+## [20] &quot;sample:nps_boundary_2013&quot;       
+## [21] &quot;sample:simplified_HUC8s&quot;        
+## [22] &quot;draw:test&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'attributes'</span>)</code></pre>
 <pre><code>## [1] &quot;STATE&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'values'</span>)</code></pre>
