@@ -30,7 +30,7 @@ setMethod(f = "times<-",signature(.Object = "webdata"),
             if (!any(is.na(value)) && value[1] > value[2]){
               stop('time start must proceed time stop in "times" slot for webdata')
             }
-            .Object@times <- value
+            .Object@times <- as.POSIXct(value)
             return(.Object)
           })
 
