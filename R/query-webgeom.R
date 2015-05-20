@@ -12,7 +12,6 @@ setMethod(f = "query",signature("webgeom",'character'),
               if (any(is.na(geom(.Object)))){
                 stop('cannot query for attribute w/o geom specified.')
               }
-              warning('function in development')
               
               url <- sprintf('%s?service=WFS&version=%s&request=DescribeFeatureType&typename=%s',
                              url(.Object), version(.Object), geom(.Object))
