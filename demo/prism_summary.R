@@ -1,12 +1,19 @@
-
 library(geoknife)
 
 fabric <- webdata('prism')
 fabric
-times(fabric)[2] <- '2000-01-01' 
+
+#see what times are avaiable:
+query(fabric, 'times')
+
+#set times to a different value:
+times(fabric)[2] <- '1900-01-01' 
 
 stencil <- webgeom('state::Oregon,Colorado,Connecticut')
 stencil
+
+#see what other states are available:
+query(stencil, 'values')
 
 job <- geoknife(stencil, fabric, wait = TRUE)
 
