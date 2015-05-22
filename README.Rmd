@@ -12,15 +12,13 @@ Tools for geo-web processing of gridded data via the [Geo Data Portal](http://ci
 
 ###Installing `geoknife`
 To install the stable version of `geoknife` package with dependencies:
-
-```r
+```{r, eval=FALSE}
 install.packages("geoknife", 
     repos = c("http://owi.usgs.gov/R"),
     dependencies = TRUE)
 ```
 Or to install the current development version of the package:
-
-```r
+```{r, eval=FALSE}
 install.packages("devtools")
 devtools::install_github('USGS-R/geoknife')
 ```
@@ -34,8 +32,7 @@ The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) i
 
 ###What can `geoknife` do?
 #####define a stencil that represents the geographic region to slice out of the data
-
-```r
+```{r}
 library(geoknife)
 # from a single point
 stencil <- simplegeom(c(-89, 46.23))
@@ -53,8 +50,7 @@ stencil <- webgeom('state::New Hampshire,Wisconsin,Alabama')
 stencil <- webgeom('HUC8::09020306,14060009')
 ```
 #####define a fabric that represents the underlying data
-
-```r
+```{r}
 # from the prism dataset:
 fabric <- webdata('prism')
    # -- or --
@@ -67,43 +63,26 @@ fabric <- webdata(list(
 times(fabric) <- as.POSIXct(c('1990-01-01','2005-01-01'))
 ```
 #####create the processing job that will carry out the subsetting/summarization task
-
-```r
+```{r}
 job <- geoknife(stencil, fabric, wait = TRUE)
 
 # use existing convienence functions to check on the job:
 check(job)
 ```
-
-```
-## $status
-## [1] "Process successful"
-## 
-## $URL
-## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=7ba7b018-0378-47e1-9b41-6820216ea88cOUTPUT"
-## 
-## $statusType
-## [1] "ProcessSucceeded"
-```
 see also: 
-
-```r
+```{r, eval=FALSE}
 running(job)
 error(job)
 successful(job)
 ```
 # wait a little for the process to complete
-
-```r
+```{r, fig.height=3.5, fig.width=7}
 data <- loadOutput(job)
 plot(data[,1:2], ylab = variables(fabric))
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
-
 # use an email to listen for process completion
-
-```r
+```{r, eval=FALSE}
 job <- geoknife(webgeom('state::NH'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
