@@ -1,0 +1,119 @@
+<wps:Execute service="WPS" version="1.0.0" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:draw="gov.usgs.cida.gdp.draw" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd">
+	<ows:Identifier>gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm</ows:Identifier>
+	<wps:DataInputs>
+		<wps:Input>
+			<ows:Identifier>FEATURE_ATTRIBUTE_NAME</ows:Identifier>
+			<wps:Data>
+				<wps:LiteralData>ID</wps:LiteralData>
+			</wps:Data>
+		</wps:Input>
+		<wps:Input>
+			<ows:Identifier>DATASET_URI</ows:Identifier>
+			<wps:Data>
+				<wps:LiteralData>dods://cida.usgs.gov/thredds/dodsC/gmo/GMO_w_meta.ncml</wps:LiteralData>
+			</wps:Data>
+		</wps:Input>
+		<wps:Input>
+			<ows:Identifier>DATASET_ID</ows:Identifier>
+			<wps:Data>
+				<wps:LiteralData>Prcp</wps:LiteralData>
+			</wps:Data>
+		</wps:Input>
+		<wps:Input>
+			<ows:Identifier>TIME_START</ows:Identifier>
+			<wps:Data>
+				<wps:LiteralData>1950-01-01T00:00:00.000Z</wps:LiteralData>
+			</wps:Data>
+		</wps:Input>
+		<wps:Input>
+			<ows:Identifier>TIME_END</ows:Identifier>
+			<wps:Data>
+				<wps:LiteralData>1950-02-15T00:00:00.000Z</wps:LiteralData>
+			</wps:Data>
+		</wps:Input>
+		<wps:Input>
+			<ows:Identifier>REQUIRE_FULL_COVERAGE</ows:Identifier>
+			<wps:Data>
+				<wps:LiteralData>true</wps:LiteralData>
+			</wps:Data>
+		</wps:Input>
+		<wps:Input>
+			<ows:Identifier>GROUP_BY</ows:Identifier>
+			<wps:Data>
+				<wps:LiteralData>STATISTIC</wps:LiteralData>
+			</wps:Data>
+		</wps:Input>
+		<wps:Input>
+			<ows:Identifier>STATISTICS</ows:Identifier>
+			<wps:Data>
+				<wps:LiteralData>MEAN</wps:LiteralData>
+			</wps:Data>
+		</wps:Input>
+		<wps:Input>
+			<ows:Identifier>DELIMITER</ows:Identifier>
+			<wps:Data>
+				<wps:LiteralData>TAB</wps:LiteralData>
+			</wps:Data>
+		</wps:Input>
+		<wps:Input>
+			<ows:Identifier>SUMMARIZE_TIMESTEP</ows:Identifier>
+			<wps:Data>
+				<wps:LiteralData>false</wps:LiteralData>
+			</wps:Data>
+		</wps:Input>
+		<wps:Input>
+			<ows:Identifier>SUMMARIZE_FEATURE_ATTRIBUTE</ows:Identifier>
+			<wps:Data>
+				<wps:LiteralData>false</wps:LiteralData>
+			</wps:Data>
+		</wps:Input>
+		<wps:Input>
+			<ows:Identifier>FEATURE_COLLECTION</ows:Identifier>
+			<wps:Data>
+				<wps:ComplexData mimeType="text/xml" schema="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd">
+					<gml:featureMembers xmlns:gml="http://www.opengis.net/gml" xsi:schemaLocation="gov.usgs.cida.gdp.draw http://cida.usgs.gov/climate/derivative/xsd/draw.xsd">
+						<draw:poly gml:id="poly.1">
+							<draw:the_geom>
+								<gml:MultiSurface srsDimension="2" srsName="urn:x-ogc:def:crs:EPSG:4326">
+									<gml:surfaceMember>
+										<gml:Polygon srsDimension="2">
+											<gml:exterior>
+												<gml:LinearRing srsDimension="2">
+													<gml:posList>44.26220703125 -90.57275390625 44.04248046875 -89.8916015625 43.625 -90.26513671875 43.86669921875 -90.88037109375 44.26220703125 -90.57275390625</gml:posList>
+												</gml:LinearRing>
+											</gml:exterior>
+										</gml:Polygon>
+									</gml:surfaceMember>
+								</gml:MultiSurface>
+							</draw:the_geom>
+							<draw:ID>first_test</draw:ID>
+						</draw:poly>
+						<draw:poly gml:id="poly.2">
+							<draw:the_geom>
+								<gml:MultiSurface srsDimension="2" srsName="urn:x-ogc:def:crs:EPSG:4326">
+									<gml:surfaceMember>
+										<gml:Polygon srsDimension="2">
+											<gml:exterior>
+												<gml:LinearRing srsDimension="2">
+													<gml:posList>44.61376953125 -90.39697265625 44.943359375 -90.39697265625 44.7236328125 -89.21044921875 44.3720703125 -89.91357421875 44.61376953125 -90.39697265625</gml:posList>
+												</gml:LinearRing>
+											</gml:exterior>
+										</gml:Polygon>
+									</gml:surfaceMember>
+								</gml:MultiSurface>
+							</draw:the_geom>
+							<draw:ID>second_test</draw:ID>
+						</draw:poly>
+					</gml:featureMembers>
+				</wps:ComplexData>
+			</wps:Data>
+		</wps:Input>
+	</wps:DataInputs>
+	<wps:ResponseForm>
+		<wps:ResponseDocument storeExecuteResponse="true" status="true">
+			<wps:Output asReference="true" mimeType="text/tab-separated-values">
+				<ows:Identifier>OUTPUT</ows:Identifier>
+			</wps:Output>
+		</wps:ResponseDocument>
+	</wps:ResponseForm>
+</wps:Execute>

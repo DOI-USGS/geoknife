@@ -1,0 +1,26 @@
+Package: geoknife
+Type: Package
+Title: Geo-web processing of gridded data
+Version: 0.10.0
+Date: 2013-05-23
+Author: Jordan S Read
+Maintainer: Jordan S Read <jread@usgs.gov>
+Description: Methods for geo-web processing of gridded data via the Geo Data
+    Portal (cida.usgs.gov/gdp).
+License: file LICENSE
+Copyright: This software is in the public domain because it contains materials
+    that originally came from the United States Geological Survey, an agency of
+    the United States Department of Interior. For more information, see the
+    official USGS copyright policy at
+    http://www.usgs.gov/visual-id/credit_usgs.html#copyright
+Imports:
+    XML,
+    methods,
+    httr,
+    sp
+Suggests:
+    testthat,
+    xtable,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
