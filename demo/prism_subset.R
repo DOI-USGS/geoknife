@@ -16,4 +16,4 @@ stencil <- simplegeom(data.frame('point1'=c(-89, 46), 'point2'=c(-78.6, 42.2)))
 knife = webprocess(algorithm = list('OPeNDAP Subset'="gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm"))
 
 job <- geoknife(stencil,fabric, knife, wait = TRUE)
-download(job)
+file <- download(job, destination = '../prism_data.nc')
