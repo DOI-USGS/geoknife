@@ -80,7 +80,7 @@ check(job)
 ## [1] "Process successful"
 ## 
 ## $URL
-## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=7ba7b018-0378-47e1-9b41-6820216ea88cOUTPUT"
+## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=b41ad582-61ad-44e4-8919-40f4788592e0OUTPUT"
 ## 
 ## $statusType
 ## [1] "ProcessSucceeded"
@@ -92,7 +92,7 @@ running(job)
 error(job)
 successful(job)
 ```
-# wait a little for the process to complete
+#####plot the results
 
 ```r
 data <- loadOutput(job)
@@ -101,10 +101,10 @@ plot(data[,1:2], ylab = variables(fabric))
 
 ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
 
-# use an email to listen for process completion
+#####use an email to listen for process completion
 
 ```r
-job <- geoknife(webgeom('state::NH'), fabric = 'prism', email = 'fake.email@gmail.com')
+job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
 ###`geoknife` Functions (as of v0.7.4)
@@ -114,6 +114,7 @@ job <- geoknife(webgeom('state::NH'), fabric = 'prism', email = 'fake.email@gmai
 | `algorithm` | the algorithm of a `webprocess` |
 | `attribute` | the attribute of an `webgeom` |
 | `check` | check status of `geojob` |
+| `download` | download the results of a `geojob` |
 | `error` | convenience  function for state of `geojob` |
 | `running` | convenience  function for state of `geojob` |
 | `successful` | convenience  function for state of `geojob` |

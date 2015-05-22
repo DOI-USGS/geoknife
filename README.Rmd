@@ -75,15 +75,15 @@ running(job)
 error(job)
 successful(job)
 ```
-# wait a little for the process to complete
+#####plot the results
 ```{r, fig.height=3.5, fig.width=7}
 data <- loadOutput(job)
 plot(data[,1:2], ylab = variables(fabric))
 ```
 
-# use an email to listen for process completion
+#####use an email to listen for process completion
 ```{r, eval=FALSE}
-job <- geoknife(webgeom('state::NH'), fabric = 'prism', email = 'fake.email@gmail.com')
+job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
 ###`geoknife` Functions (as of v0.7.4)
@@ -93,6 +93,7 @@ job <- geoknife(webgeom('state::NH'), fabric = 'prism', email = 'fake.email@gmai
 | `algorithm` | the algorithm of a `webprocess` |
 | `attribute` | the attribute of an `webgeom` |
 | `check` | check status of `geojob` |
+| `download` | download the results of a `geojob` |
 | `error` | convenience  function for state of `geojob` |
 | `running` | convenience  function for state of `geojob` |
 | `successful` | convenience  function for state of `geojob` |
