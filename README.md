@@ -75,7 +75,7 @@ if (successful(job)){
 }
 
 # use an email to listen for process completion
-job <- geoknife(webgeom('state::NH'), fabric = 'prism', emailComplete = 'fake.email@gmail.com')
+job <- geoknife(webgeom('state::NH'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
 ###`geoknife` Functions (as of v0.7.4)

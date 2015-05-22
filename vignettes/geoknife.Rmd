@@ -157,7 +157,7 @@ plot(data[,1:2], ylab = variables(fabric))
 
 For long running processes, it often makes sense to use an email listener:
 ```{r, eval=FALSE}
-job <- geoknife(webgeom('state::Wisconsin'), fabric = 'prism', emailComplete = 'fake.email@gmail.com')
+job <- geoknife(webgeom('state::Wisconsin'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
 # spatial features (`stencil`)
