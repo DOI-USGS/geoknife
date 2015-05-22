@@ -1,4 +1,4 @@
-#`geoknife`  
+#`geoknife` package version 0.10.0
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)
 [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife)
@@ -80,7 +80,7 @@ check(job)
 ## [1] "Process successful"
 ## 
 ## $URL
-## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=7ba7b018-0378-47e1-9b41-6820216ea88cOUTPUT"
+## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=9ee5582f-4034-4776-9cef-49862cc57a2bOUTPUT"
 ## 
 ## $statusType
 ## [1] "ProcessSucceeded"
@@ -92,7 +92,7 @@ running(job)
 error(job)
 successful(job)
 ```
-# wait a little for the process to complete
+#####plot the results
 
 ```r
 data <- loadOutput(job)
@@ -101,19 +101,20 @@ plot(data[,1:2], ylab = variables(fabric))
 
 ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
 
-# use an email to listen for process completion
+#####use an email to listen for process completion
 
 ```r
-job <- geoknife(webgeom('state::NH'), fabric = 'prism', email = 'fake.email@gmail.com')
+job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
-###`geoknife` Functions (as of v0.7.4)
+###`geoknife` Functions (as of v0.10.0)
 | Function       | Title           |
 | ------------- |:-------------|
 | `geoknife` | slice up gridded data according to overlap with feature(s) |
 | `algorithm` | the algorithm of a `webprocess` |
 | `attribute` | the attribute of an `webgeom` |
 | `check` | check status of `geojob` |
+| `download` | download the results of a `geojob` |
 | `error` | convenience  function for state of `geojob` |
 | `running` | convenience  function for state of `geojob` |
 | `successful` | convenience  function for state of `geojob` |
