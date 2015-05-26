@@ -29,7 +29,7 @@ setClass(
 
 setMethod("initialize", signature = "webdata", 
           definition = function(.Object, times = .Object@times, url = .Object@url, variables = .Object@variables){
-            .Object@times = times
+            .Object@times = as.POSIXct(times)
             .Object@url = url
             .Object@variables = variables
             .Object@dataList    = 'gov.usgs.cida.gdp.wps.algorithm.discovery.ListOpendapGrids'
