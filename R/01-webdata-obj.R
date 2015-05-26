@@ -98,11 +98,11 @@ setAs("character", "webdata", function(from){
                           variables = 'prcp'),
                    'gldas' = 
                      list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-01-02 00:00:00')),
-                          url = 'http://hydro1.sci.gsfc.nasa.gov/dods/GLDAS_NOAH10_3H.020',
+                          url = 'dods://hydro1.sci.gsfc.nasa.gov/dods/GLDAS_NOAH10_3H.020',
                           variables = 'avgsurftsfc'),
                    'nldas' = 
                      list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-01-02 00:00:00')),
-                          url = 'http://hydro1.sci.gsfc.nasa.gov/dods/NLDAS_FORA0125_H.002',
+                          url = 'dods://hydro1.sci.gsfc.nasa.gov/dods/NLDAS_FORA0125_H.002',
                           variables = 'tmp2m'),
                    'topowx' = 
                      list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-02-01 00:00:00')),
