@@ -6,7 +6,7 @@
 #'@param file a \linkS4class{geojob} timeseries processing result file location
 #'(See \code{\link{check}}).
 #'@param delim the file delimiter
-#'@param keep.units boolean for including a units column in returned data.frame
+#'@param with.units boolean for including a units column in returned data.frame
 #'@return a data.frame of timeseries values.
 #'@keywords methods
 #'@author Luke A. Winslow, Jordan S. Read
@@ -14,7 +14,7 @@
 #'@examples
 #'local_file <- system.file('extdata','tsv_linear_ring.tsv', package = 'geoknife')
 #'output <- parseTimeseries(local_file, delim = '\t')
-parseTimeseries <- function(file, delim, keep.units = FALSE){
+parseTimeseries <- function(file, delim, with.units = FALSE){
   
   config = parseConfig(file, delim)
   
@@ -53,7 +53,7 @@ parseTimeseries <- function(file, delim, keep.units = FALSE){
         'variable' = rep(as.character(config[['vars']][blk]), length.out = nrow(statData)),
         'statistic' = rep(cleanStat, length.out = nrow(statData)))
       )
-      if (keep.units){
+      if (with.units){
         statData = cbind(statData, data.frame('units'=rep(units, length.out = nrow(statData))))
       }
       dataOut <- rbind(dataOut, statData)

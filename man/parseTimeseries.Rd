@@ -4,7 +4,7 @@
 \alias{parseTimeseries}
 \title{parse timeseries file into R environment}
 \usage{
-parseTimeseries(file, delim, keep.units = FALSE)
+parseTimeseries(file, delim, with.units = FALSE)
 }
 \arguments{
 \item{file}{a \linkS4class{geojob} timeseries processing result file location
@@ -12,7 +12,7 @@ parseTimeseries(file, delim, keep.units = FALSE)
 
 \item{delim}{the file delimiter}
 
-\item{keep.units}{boolean for including a units column in returned data.frame}
+\item{with.units}{boolean for including a units column in returned data.frame}
 }
 \value{
 a data.frame of timeseries values.
