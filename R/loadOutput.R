@@ -4,6 +4,7 @@
 #'
 #'@param .Object a \code{\link{geojob}} object with a successful processID. 
 #'(See \code{\link{check}}).
+#'@param ... additional arguments passed to parsers (e.g., keep.units = TRUE)
 #'@return data.frame of timeseries values. 
 #'@rdname loadOutput-methods
 #'@aliases loadOutput
@@ -14,22 +15,18 @@
 #'@export
 #'@examples
 #'\dontrun{
-#'wp <- quick_wp()
-#'job <- geoknife(stencil = c(-89,42), fabric = 'prism', knife = wp)
-#'check(job)
-#'
-#'Sys.sleep(10) # give it some time to process
-#'loadOutput(job) # load and print output
+#'job <- geoknife(stencil = c(-89,42), fabric = 'prism', wait = TRUE)
+#'loadOutput(job, with.units = TRUE) # load and print output
 #'}
 #'
-setGeneric(name="loadOutput",def=function(.Object){standardGeneric("loadOutput")})
+setGeneric(name="loadOutput",def=function(.Object, ...){standardGeneric("loadOutput")})
 
 #'@rdname loadOutput-methods
 #'@aliases loadOutput
 setMethod(f = "loadOutput",signature="geojob",
-  definition = function(.Object){
+  definition = function(.Object, ...){
             if (successful(.Object)){
-              output <- outputParse(.Object)
+              output <- outputParse(.Object, ...)
               return(output)
             } else {
               stop('processing is incomplete or has failed. See checkProcess(). Processing status: ',
@@ -39,10 +36,10 @@ setMethod(f = "loadOutput",signature="geojob",
           }
   )
 
-outputParse = function(.Object){
+outputParse = function(.Object, ...){
   funcInfo <- getParseFunction(id(.Object))
   fileLocation <- check(.Object)$URL
-  output <- do.call(funcInfo$function_name, args = list(file = fileLocation, 'delim' = funcInfo$delim))
+  output <- do.call(funcInfo$function_name, args = list(file = fileLocation, 'delim' = funcInfo$delim, ...))
   return(output)
 }
 

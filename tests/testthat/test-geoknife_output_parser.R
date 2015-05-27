@@ -9,10 +9,10 @@ test_that("loadOutput fails with no process", {
 
 test_that("timeseries parser works on multi feature, single variable", {
   local_file <- system.file('extdata','tsv_multi_feature.tsv', package = 'geoknife')
-  output <- parseTimeseries(local_file, delim = '\t', keep.units = T)
+  output <- parseTimeseries(local_file, delim = '\t', with.units = T)
   expect_is(output, "data.frame")
   expect_true('units' %in% names(output))
-  output <- parseTimeseries(local_file, delim = '\t', keep.units = F)
+  output <- parseTimeseries(local_file, delim = '\t', with.units = F)
   expect_false('units' %in% names(output))
 })
 

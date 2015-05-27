@@ -6,13 +6,15 @@
 \alias{loadOutput,geojob-method}
 \title{parse process output into R environment}
 \usage{
-loadOutput(.Object)
+loadOutput(.Object, ...)
 
-\S4method{loadOutput}{geojob}(.Object)
+\S4method{loadOutput}{geojob}(.Object, ...)
 }
 \arguments{
 \item{.Object}{a \code{\link{geojob}} object with a successful processID.
 (See \code{\link{check}}).}
+
+\item{...}{additional arguments passed to parsers (e.g., keep.units = TRUE)}
 }
 \value{
 data.frame of timeseries values.
@@ -25,12 +27,8 @@ a \code{geojob} method for loading data into R from a completed processing reque
 }
 \examples{
 \dontrun{
-wp <- quick_wp()
-job <- geoknife(stencil = c(-89,42), fabric = 'prism', knife = wp)
-check(job)
-
-Sys.sleep(10) # give it some time to process
-loadOutput(job) # load and print output
+job <- geoknife(stencil = c(-89,42), fabric = 'prism', wait = TRUE)
+loadOutput(job, with.units = TRUE) # load and print output
 }
 }
 \author{
