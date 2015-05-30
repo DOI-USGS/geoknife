@@ -26,7 +26,7 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
                   header = TRUE, 
                   nrows = config[['nrows']][blk], 
                   skip = config[['skip']][blk], 
-                  as.is=TRUE, check.names = FALSE)
+                  as.is=TRUE, check.names = FALSE, stringsAsFactors = FALSE)
     #parse the date into POSIXct format
     blockData$TIMESTEP = as.POSIXct(blockData$TIMESTEP, "%Y-%m-%dT%H:%M:%S", tz="UTC")
     statNames <- unique(names(blockData)[-1])
@@ -51,10 +51,10 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
       
       statData = cbind(statData, data.frame(
         'variable' = rep(as.character(config[['vars']][blk]), length.out = nrow(statData)),
-        'statistic' = rep(cleanStat, length.out = nrow(statData)))
+        'statistic' = rep(cleanStat, length.out = nrow(statData)), stringsAsFactors = FALSE)
       )
       if (with.units){
-        statData = cbind(statData, data.frame('units'=rep(units, length.out = nrow(statData))))
+        statData = cbind(statData, data.frame('units'=rep(units, length.out = nrow(statData)), stringsAsFactors = FALSE))
       }
       dataOut <- rbind(dataOut, statData)
     }
