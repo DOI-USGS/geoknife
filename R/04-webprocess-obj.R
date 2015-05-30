@@ -87,7 +87,7 @@ setMethod(f="initialize",signature="webprocess",
             processInputs <- defaultProcessInputs(algorithm = .Object@algorithm[[1]], .Object@url, .Object@version)
             .Object@processInputs  <-	processInputs
             
-            .Object <- inputs(.Object, ...)
+            inputs(.Object) <- list(...)
             
             return(.Object)
           })
