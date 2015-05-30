@@ -61,7 +61,7 @@ setMethod(f="initialize",signature="webprocess",
             algorithm = .Object@algorithm,
             version = .Object@version,
             email = .Object@email,
-            wait = .Object@wait)
+            wait = .Object@wait, ...)
             {
 
             .Object@WPS_SCHEMA_LOCATION = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
@@ -86,6 +86,8 @@ setMethod(f="initialize",signature="webprocess",
             .Object@wait = wait
             processInputs <- defaultProcessInputs(algorithm = .Object@algorithm[[1]], .Object@url, .Object@version)
             .Object@processInputs  <-	processInputs
+            
+            .Object <- inputs(.Object, ...)
             
             return(.Object)
           })
