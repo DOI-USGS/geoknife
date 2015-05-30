@@ -16,8 +16,21 @@ inputs(.Object, ...)
 
 \S4method{inputs}{webprocess}(.Object, ...) <- value
 }
+\arguments{
+\item{.Object}{a webprocessing object}
+
+\item{...}{arguments matching fields in .Object's processInputs slot}
+}
 \description{
 access or set the inputs of a webprocess
+}
+\examples{
+wp <- webprocess(DELIMITER = 'TAB')
+inputs(wp)
+
+inputs(wp) <- list(DELIMITER = 'COMMA', SUMMARIZE_FEATURE_ATTRIBUTE = 'false')
+inputs(wp)
+inputs(wp, "DELIMITER")
 }
 \keyword{internal}
 
