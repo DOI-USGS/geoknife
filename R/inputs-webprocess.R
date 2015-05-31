@@ -1,11 +1,10 @@
 #'@title inputs of webprocess
 #'@description access or set the inputs of a webprocess
 #'@param .Object a webprocessing object
-#'@param value a field pair for .Object processInputs
 #'@param ... arguments matching fields in .Object's processInputs slot
+#'@param value a field pair for .Object processInputs
 #'@rdname inputs-webprocess
 #'@aliases
-#'inputs
 #'inputs<-
 #'@examples
 #'wp <- webprocess(DELIMITER = 'TAB')
@@ -14,22 +13,27 @@
 #'inputs(wp) <- list(DELIMITER = 'COMMA', SUMMARIZE_FEATURE_ATTRIBUTE = 'false')
 #'inputs(wp)
 #'inputs(wp, "DELIMITER")
+#'inputs(wp, "DELIMITER") <- "TAB"
 #'@export
 #'@keywords internal
-setGeneric(name="inputs<-",def=function(.Object, value, ...){
+setGeneric(name="inputs<-",def=function(.Object, ..., value){
   standardGeneric("inputs<-")
 })
 
+#'@title inputs of webprocess
+#'@description access or set the inputs of a webprocess
+#'@param .Object a webprocessing object
+#'@param ... arguments matching fields in .Object's processInputs slot
 #'@rdname inputs-webprocess
 #'@aliases inputs
 #'@export
 #'@keywords internal
-setGeneric(name="inputs",def=function(.Object, ...){standardGeneric("inputs")})
+setGeneric(name="inputs",def=function(.Object, ..., value){standardGeneric("inputs")})
 
 #'@rdname inputs-webprocess
 #'@aliases inputs
 setMethod(f = "inputs",signature = "webprocess",
-          definition = function(.Object, ...){
+          definition = function(.Object, ..., value){
             if (missing(...)){
               return(.Object@processInputs)
             } else {
@@ -40,9 +44,9 @@ setMethod(f = "inputs",signature = "webprocess",
 
 
 #'@rdname inputs-webprocess
-#'@aliases inputs
+#'@aliases inputs<-
 setMethod(f = "inputs<-",signature = c("webprocess",'missing'),
-          definition = function(.Object, value, ...){
+          definition = function(.Object, ..., value){
 
             args <- expand.grid(..., stringsAsFactors = FALSE)
             for (i in seq_len(ncol(args))){
@@ -53,9 +57,9 @@ setMethod(f = "inputs<-",signature = c("webprocess",'missing'),
           })
 
 #'@rdname inputs-webprocess
-#'@aliases inputs
+#'@aliases inputs<-
 setMethod(f = "inputs<-",signature = c("webprocess",'character'),
-          definition = function(.Object, value, ...){
+          definition = function(.Object, ..., value){
             if (length(value) > 1)
               stop('character input cannot exceed length 1.')
             name <- as.character(expand.grid(..., stringsAsFactors = FALSE))
@@ -65,9 +69,9 @@ setMethod(f = "inputs<-",signature = c("webprocess",'character'),
           })
 
 #'@rdname inputs-webprocess
-#'@aliases inputs
+#'@aliases inputs<-
 setMethod(f = "inputs<-",signature = c("webprocess",'list'),
-          definition = function(.Object, value, ...){
+          definition = function(.Object, ..., value){
 
             for (i in seq_len(length(value))){
               .Object <- .setInput(.Object, names(value)[i], value[[i]])
