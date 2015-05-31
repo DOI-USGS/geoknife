@@ -1,6 +1,7 @@
 #'@title inputs of webprocess
 #'@description access or set the inputs of a webprocess
 #'@param .Object a webprocessing object
+#'@param value a field pair for .Object processInputs
 #'@param ... arguments matching fields in .Object's processInputs slot
 #'@rdname inputs-webprocess
 #'@aliases
@@ -15,7 +16,7 @@
 #'inputs(wp, "DELIMITER")
 #'@export
 #'@keywords internal
-setGeneric(name="inputs<-",def=function(.Object, ...){
+setGeneric(name="inputs<-",def=function(.Object, value, ...){
   standardGeneric("inputs<-")
 })
 
@@ -29,7 +30,6 @@ setGeneric(name="inputs",def=function(.Object, ...){standardGeneric("inputs")})
 #'@aliases inputs
 setMethod(f = "inputs",signature = "webprocess",
           definition = function(.Object, ...){
-            browser()
             if (missing(...)){
               return(.Object@processInputs)
             } else {
@@ -41,16 +41,46 @@ setMethod(f = "inputs",signature = "webprocess",
 
 #'@rdname inputs-webprocess
 #'@aliases inputs
-setMethod(f = "inputs<-",signature = "webprocess",
-          definition = function(.Object,...){
+setMethod(f = "inputs<-",signature = c("webprocess",'missing'),
+          definition = function(.Object, value, ...){
 
             args <- expand.grid(..., stringsAsFactors = FALSE)
             for (i in seq_len(ncol(args))){
-              if (!is.character(args[[i]]))
-                stop('Process inputs values must be characters.')
-              if (!names(args)[i] %in% names(.Object@processInputs))
-                stop(names(args)[i],' not found in ', paste(names(inputs(.Object)), collapse = ', '))
-              .Object@processInputs[[names(args)[i]]] <- args[[i]]
+              .Object <- .setInput(.Object, names(args)[i], args[[i]])
             }
             return(.Object)
+
           })
+
+#'@rdname inputs-webprocess
+#'@aliases inputs
+setMethod(f = "inputs<-",signature = c("webprocess",'character'),
+          definition = function(.Object, value, ...){
+            if (length(value) > 1)
+              stop('character input cannot exceed length 1.')
+            name <- as.character(expand.grid(..., stringsAsFactors = FALSE))
+            .Object <- .setInput(.Object, name, value)
+            return(.Object)
+            
+          })
+
+#'@rdname inputs-webprocess
+#'@aliases inputs
+setMethod(f = "inputs<-",signature = c("webprocess",'list'),
+          definition = function(.Object, value, ...){
+
+            for (i in seq_len(length(value))){
+              .Object <- .setInput(.Object, names(value)[i], value[[i]])
+            }
+            inputs(.Object, ...)
+            return(.Object)
+          })
+
+.setInput <- function(.Object, name, arg){
+  if (!is.character(arg))
+    stop('Process inputs values must be characters.')
+  if (!name %in% names(.Object@processInputs))
+    stop(name,' not found in ', paste(names(inputs(.Object)), collapse = ', '))
+  .Object@processInputs[[name]] <- arg
+  return(.Object)
+}
