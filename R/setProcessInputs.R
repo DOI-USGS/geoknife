@@ -5,7 +5,7 @@
     fun <- processNames[i]
     if (exists(fun)){
       inputs(webprocess,fun) <- do.call(fun, list(...))
-    } else if (is.null(inputs(webprocess,fun))){
+    } else if (is.null(inputs(webprocess,fun)[[1]])){
       inputs(webprocess,fun) <- .defaultWhenNull(fun)
     } else {
       # / skip. will skip and allow NA, which is an optional input.
