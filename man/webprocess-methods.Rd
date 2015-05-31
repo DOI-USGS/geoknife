@@ -4,11 +4,14 @@
 \name{webprocess}
 \alias{webprocess}
 \alias{webprocess,ANY-method}
+\alias{webprocess,missing-method}
 \title{create webprocess object}
 \usage{
-webprocess(...)
+webprocess(.Object, ...)
 
-\S4method{webprocess}{ANY}(...)
+\S4method{webprocess}{missing}(.Object, ...)
+
+\S4method{webprocess}{ANY}(.Object, ...)
 }
 \arguments{
 \item{...}{additional arguments passed initialize method (e.g., \code{url}, \code{version})}

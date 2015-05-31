@@ -98,18 +98,27 @@ setMethod(f="initialize",signature="webprocess",
 #' @author Jordan S Read
 #' @rdname webprocess-methods
 #' @export
-setGeneric("webprocess", function(...) {
+setGeneric("webprocess", function(.Object, ...) {
   standardGeneric("webprocess")
 })
 
 #'@param ... additional arguments passed initialize method (e.g., \code{url}, \code{version})
-#'@rdname webprocess-methods
 #'@aliases webprocess
 #'@rdname webprocess-methods
-setMethod("webprocess", signature(), function(...) {
+setMethod("webprocess", signature('missing'), function(.Object, ...) {
   ## create new webprocess object
   webprocess <- new("webprocess",...)
   return(webprocess)
 })
 
+#'@aliases webprocess
+#'@rdname webprocess-methods
+setMethod("webprocess", signature("ANY"), function(.Object,...) {
+  ## create new webprocess object
+  webprocess <- as(.Object, "webprocess")
+  if (!missing(...)){
+    webprocess <- initialize(webprocess, ...)
+  }
+  return(webprocess)
+})
 
