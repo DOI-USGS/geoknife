@@ -102,6 +102,7 @@ setGeneric("webprocess", function(.Object, ...) {
   standardGeneric("webprocess")
 })
 
+#'@param .Object any object that can be coerced into \linkS4class{webprocess}
 #'@param ... additional arguments passed initialize method (e.g., \code{url}, \code{version})
 #'@aliases webprocess
 #'@rdname webprocess-methods

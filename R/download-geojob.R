@@ -28,6 +28,7 @@ setMethod("download", signature("geojob",'missing'), function(.Object, destinati
 #'@aliases download
 setMethod("download", signature("geojob",'character'), function(.Object, destination, ...) {
   
+  status <- check(.Object)
   GET(url=status$URL, write_disk(destination, ...), progress())
   return(destination)
 })

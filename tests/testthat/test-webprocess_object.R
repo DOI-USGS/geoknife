@@ -25,3 +25,15 @@ test_that("webprocess object get and set", {
   
   
 })
+
+context('test pass through of webprocess')
+test_that("test pass through of webprocess", {
+  wp1 <- webprocess()
+  wp2 <- webprocess(wp1, DATASET_URI = 'www.test.com')
+  expect_null(inputs(wp1,'DATASET_URI')[[1]])
+  expect_equal(inputs(wp2,'DATASET_URI')[[1]], 'www.test.com')
+  expect_is(url(wp2),'character')
+  expect_is(version(wp2), 'character')
+  expect_is(slot(wp2, "processInputs"), 'list')
+
+})
