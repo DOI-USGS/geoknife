@@ -1,12 +1,12 @@
 
 .setProcessInputs <- function(webprocess, ...){
-  processNames <- names(webprocess@processInputs)
+  processNames <- names(inputs(webprocess))
   for (i in 1:length(processNames)){
     fun <- processNames[i]
     if (exists(fun)){
-      webprocess@processInputs[[fun]] <- do.call(fun, list(...))
-    } else if (is.null(webprocess@processInputs[[fun]])){
-      webprocess@processInputs[[fun]] <- .defaultWhenNull(fun)
+      inputs(webprocess,fun) <- do.call(fun, list(...))
+    } else if (is.null(inputs(webprocess,fun)[[1]])){
+      inputs(webprocess,fun) <- .defaultWhenNull(fun)
     } else {
       # / skip. will skip and allow NA, which is an optional input.
     }

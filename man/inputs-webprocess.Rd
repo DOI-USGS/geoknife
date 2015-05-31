@@ -5,23 +5,37 @@
 \alias{inputs}
 \alias{inputs,webprocess-method}
 \alias{inputs<-}
-\alias{inputs<-,webprocess-method}
+\alias{inputs<-,webprocess,character-method}
+\alias{inputs<-,webprocess,list-method}
+\alias{inputs<-,webprocess,missing-method}
 \title{inputs of webprocess}
 \usage{
 inputs(.Object, ...) <- value
 
-inputs(.Object, ...)
+inputs(.Object, ..., value)
 
-\S4method{inputs}{webprocess}(.Object, ...)
+\S4method{inputs}{webprocess}(.Object, ..., value)
 
-\S4method{inputs}{webprocess}(.Object, ...) <- value
+\S4method{inputs}{webprocess,missing}(.Object, ...) <- value
+
+\S4method{inputs}{webprocess,character}(.Object, ...) <- value
+
+\S4method{inputs}{webprocess,list}(.Object, ...) <- value
 }
 \arguments{
 \item{.Object}{a webprocessing object}
 
 \item{...}{arguments matching fields in .Object's processInputs slot}
+
+\item{value}{a field pair for .Object processInputs}
+
+\item{.Object}{a webprocessing object}
+
+\item{...}{arguments matching fields in .Object's processInputs slot}
 }
 \description{
+access or set the inputs of a webprocess
+
 access or set the inputs of a webprocess
 }
 \examples{
@@ -31,6 +45,7 @@ inputs(wp)
 inputs(wp) <- list(DELIMITER = 'COMMA', SUMMARIZE_FEATURE_ATTRIBUTE = 'false')
 inputs(wp)
 inputs(wp, "DELIMITER")
+inputs(wp, "DELIMITER") <- "TAB"
 }
 \keyword{internal}
 
