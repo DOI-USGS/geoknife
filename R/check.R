@@ -40,6 +40,7 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
     )
   if (is.null(checkForComplete)){
     process$status <- 'unknown'
+    process$statusType <- 'unknown'
   }
 	if (is.null(process$status)){
 		checkForCompleteResponse	<-	xmlTreeParse(checkForComplete, asText = TRUE,useInternalNodes=TRUE)

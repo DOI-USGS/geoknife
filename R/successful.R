@@ -43,15 +43,19 @@ setMethod(f = "successful",signature(.Object = "geojob"), definition = function(
 
 
 #'@export
-setGeneric(name="running",def=function(.Object){standardGeneric("running")})
+setGeneric(name="running",def=function(.Object, ...){standardGeneric("running")})
 
 #'@rdname successful-methods
 #'@aliases running
-setMethod(f = "running",signature(.Object = "geojob"), definition = function(.Object){
+setMethod(f = "running",signature(.Object = "geojob"), definition = function(.Object, retry = FALSE){
   
-  status = check(.Object)
+  process = check(.Object)
+  if (process$status == 'unknown' && !retry){
+    Sys.sleep(10)
+    process = check(.Object)
+  }
   
-  return(status$statusType == "ProcessStarted")
+  return(process$statusType == "ProcessStarted")
 })
 
 
