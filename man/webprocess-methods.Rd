@@ -14,7 +14,7 @@ webprocess(.Object, ...)
 \S4method{webprocess}{ANY}(.Object, ...)
 }
 \arguments{
-\item{.Object}{any object that can be coerced into \linkS4class{webdprocess}}
+\item{.Object}{any object that can be coerced into \linkS4class{webprocess}}
 
 \item{...}{additional arguments passed initialize method (e.g., \code{url}, \code{version})}
 }

@@ -16,7 +16,7 @@ running(.Object)
 
 \S4method{successful}{geojob}(.Object)
 
-\S4method{running}{geojob}(.Object)
+\S4method{running}{geojob}(.Object, retry = FALSE)
 
 \S4method{error}{geojob}(.Object)
 }

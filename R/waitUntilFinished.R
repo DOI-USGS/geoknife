@@ -5,9 +5,9 @@
 #' @keywords internal
 #' 
 waitUntilFinished <- function(.Object, sleep.time = 5){
-  running <- running(.Object)
+  running <- running(.Object, retry = TRUE)
   while(running){
     Sys.sleep(sleep.time)
-    running <- running(.Object)
+    running <- running(.Object, retry = TRUE)
   }
 }
