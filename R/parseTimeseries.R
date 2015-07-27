@@ -33,7 +33,7 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
                   as.is=TRUE, check.names = FALSE, stringsAsFactors = FALSE)
     #parse the date into POSIXct format
     blockData$TIMESTEP = as.POSIXct(blockData$TIMESTEP, "%Y-%m-%dT%H:%M:%S", tz="UTC")
-    if(grepl('threshold', names(blockData)[2])){
+    if(any(grepl("threshold",names(blockData)))){
       startCol<-3
     } else {
       startCol<-2
@@ -77,8 +77,7 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
   return(dataOut)
 }
 
-parseConfig = function(file, delim, largeFile=FALSE){
-  if(largeFile==FALSE){
+parseConfig = function(file, delim){
     featureLine = 2 # Line containing unique IDs of features (stencil) that were processed
     skipHead = 1 # Number of lines to skip past the variable marker header?
     varMarker = '# ' # Symbol that denotes a variable identifier and a new block of output.
@@ -93,9 +92,6 @@ parseConfig = function(file, delim, largeFile=FALSE){
     features = unique(strsplit(fileLines[featureLine], split = delim)[[1]][-1]) # Parsing out feature identifiers
     vars = sub(varMarker,"",fileLines[blockStart]) # Getting the variable names from the block starts.
     config = list(vars = vars, features = features, skip = skips, nrows = nrows) # Return all the good stuff!
-  } else {
-    stop('Large File Support Not Implemented')
-  }
   return(config)
 }
 parseChunk = function(lines, delim, use_cols){
