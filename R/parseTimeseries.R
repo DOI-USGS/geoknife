@@ -18,6 +18,10 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
   
   config = parseConfig(file, delim)
   
+  if(!is.na(config[['features']][1]) && config[['features']][1]=="") {
+    config[['features']]<-config[['features']][-1]
+  }
+  
   dataOut <- data.frame(
     row.names = c('TIMESTEP',config[['features']], 'variable', 'statistic'))
   
@@ -29,7 +33,12 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
                   as.is=TRUE, check.names = FALSE, stringsAsFactors = FALSE)
     #parse the date into POSIXct format
     blockData$TIMESTEP = as.POSIXct(blockData$TIMESTEP, "%Y-%m-%dT%H:%M:%S", tz="UTC")
-    statNames <- unique(names(blockData)[-1])
+    if(grepl('threshold', names(blockData)[2])){
+      startCol<-3
+    } else {
+      startCol<-2
+    }
+    statNames <- unique(names(blockData)[startCol:ncol(blockData)])
     for (st in 1:length(statNames)){
       # select data columns based on stat code
       statI <- which(names(blockData) == statNames[st])
@@ -53,6 +62,9 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
         'variable' = rep(as.character(config[['vars']][blk]), length.out = nrow(statData)),
         'statistic' = rep(cleanStat, length.out = nrow(statData)), stringsAsFactors = FALSE)
       )
+      if (startCol==3) {
+        statData=cbind(statData,blockData[2]) # This is a little ugly as the units on the threshold are still in the name, but it works.
+      }
       if (with.units){
         statData = cbind(statData, data.frame('units'=rep(units, length.out = nrow(statData)), stringsAsFactors = FALSE))
       }
