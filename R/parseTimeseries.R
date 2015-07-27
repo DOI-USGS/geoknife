@@ -65,21 +65,25 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
   return(dataOut)
 }
 
-parseConfig = function(file, delim){
-  featureLine = 2
-  skipHead = 1
-  varMarker = '# '
-  c <- file(file,"r") 
-  fileLines <- readLines(c)
-  close(c)
-  nRead <- length(fileLines)
-  blockStart <- grep(varMarker, fileLines)
-  skips = blockStart+skipHead
-  blockEnd = c(blockStart[-1] - 1, nRead)
-  nrows = blockEnd - skips - 1
-  features = unique(strsplit(fileLines[featureLine], split = delim)[[1]][-1])
-  vars = sub(varMarker,"",fileLines[blockStart])
-  config = list(vars = vars, features = features, skip = skips, nrows = nrows)
+parseConfig = function(file, delim, largeFile=FALSE){
+  if(largeFile==FALSE){
+    featureLine = 2 # Line containing unique IDs of features (stencil) that were processed
+    skipHead = 1 # Number of lines to skip past the variable marker header?
+    varMarker = '# ' # Symbol that denotes a variable identifier and a new block of output.
+    c <- file(file,"r") 
+    fileLines <- readLines(c) # This concerns me!!!
+    close(c)
+    nRead <- length(fileLines)
+    blockStart <- grep(varMarker, fileLines) # Lines containing variable IDs.
+    skips = blockStart+skipHead 
+    blockEnd = c(blockStart[-1] - 1, nRead) # End of blocks
+    nrows = blockEnd - skips - 1 # Number of ros per block.
+    features = unique(strsplit(fileLines[featureLine], split = delim)[[1]][-1]) # Parsing out feature identifiers
+    vars = sub(varMarker,"",fileLines[blockStart]) # Getting the variable names from the block starts.
+    config = list(vars = vars, features = features, skip = skips, nrows = nrows) # Return all the good stuff!
+  } else {
+    stop('Large File Support Not Implemented')
+  }
   return(config)
 }
 parseChunk = function(lines, delim, use_cols){
