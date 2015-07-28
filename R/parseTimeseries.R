@@ -18,6 +18,10 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
   
   config = parseConfig(file, delim)
   
+  if(!is.na(config[['features']][1]) && config[['features']][1]=="") {
+    config[['features']]<-config[['features']][-1]
+  }
+  
   dataOut <- data.frame(
     row.names = c('TIMESTEP',config[['features']], 'variable', 'statistic'))
   
@@ -29,7 +33,12 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
                   as.is=TRUE, check.names = FALSE, stringsAsFactors = FALSE)
     #parse the date into POSIXct format
     blockData$TIMESTEP = as.POSIXct(blockData$TIMESTEP, "%Y-%m-%dT%H:%M:%S", tz="UTC")
-    statNames <- unique(names(blockData)[-1])
+    if(any(grepl("threshold",names(blockData)))){
+      startCol<-3
+    } else {
+      startCol<-2
+    }
+    statNames <- unique(names(blockData)[startCol:ncol(blockData)])
     for (st in 1:length(statNames)){
       # select data columns based on stat code
       statI <- which(names(blockData) == statNames[st])
@@ -53,6 +62,9 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
         'variable' = rep(as.character(config[['vars']][blk]), length.out = nrow(statData)),
         'statistic' = rep(cleanStat, length.out = nrow(statData)), stringsAsFactors = FALSE)
       )
+      if (startCol==3) {
+        statData=cbind(statData,blockData[2]) # This is a little ugly as the units on the threshold are still in the name, but it works.
+      }
       if (with.units){
         statData = cbind(statData, data.frame('units'=rep(units, length.out = nrow(statData)), stringsAsFactors = FALSE))
       }
@@ -66,20 +78,20 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
 }
 
 parseConfig = function(file, delim){
-  featureLine = 2
-  skipHead = 1
-  varMarker = '# '
-  c <- file(file,"r") 
-  fileLines <- readLines(c)
-  close(c)
-  nRead <- length(fileLines)
-  blockStart <- grep(varMarker, fileLines)
-  skips = blockStart+skipHead
-  blockEnd = c(blockStart[-1] - 1, nRead)
-  nrows = blockEnd - skips - 1
-  features = unique(strsplit(fileLines[featureLine], split = delim)[[1]][-1])
-  vars = sub(varMarker,"",fileLines[blockStart])
-  config = list(vars = vars, features = features, skip = skips, nrows = nrows)
+    featureLine = 2 # Line containing unique IDs of features (stencil) that were processed
+    skipHead = 1 # Number of lines to skip past the variable marker header?
+    varMarker = '# ' # Symbol that denotes a variable identifier and a new block of output.
+    c <- file(file,"r") 
+    fileLines <- readLines(c) # This concerns me!!!
+    close(c)
+    nRead <- length(fileLines)
+    blockStart <- grep(varMarker, fileLines) # Lines containing variable IDs.
+    skips = blockStart+skipHead 
+    blockEnd = c(blockStart[-1] - 1, nRead) # End of blocks
+    nrows = blockEnd - skips - 1 # Number of ros per block.
+    features = unique(strsplit(fileLines[featureLine], split = delim)[[1]][-1]) # Parsing out feature identifiers
+    vars = sub(varMarker,"",fileLines[blockStart]) # Getting the variable names from the block starts.
+    config = list(vars = vars, features = features, skip = skips, nrows = nrows) # Return all the good stuff!
   return(config)
 }
 parseChunk = function(lines, delim, use_cols){

@@ -55,4 +55,9 @@ test_that("timeseries parser works on multi var multi feature", {
   expect_error(parseTimeseries(local_file, delim = ' '))
 })
 
+test_that("timeseries parser works on multi threshold output",{
+  local_file <- system.file('extdata','csv_multi_threshold.csv', package = 'geoknife')
+  output <- parseTimeseries(local_file, delim = ',')
+  expect_is(output, "data.frame")
+})
 
