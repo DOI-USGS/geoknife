@@ -63,14 +63,21 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
         'statistic' = rep(cleanStat, length.out = nrow(statData)), stringsAsFactors = FALSE)
       )
       if (startCol==3) {
-        statData=cbind(statData,blockData[2]) # This is a little ugly as the units on the threshold are still in the name, but it works.
+      	names(blockData)[2]<-'threshold'
+        statData=cbind(statData,blockData[2])
       }
       if (with.units){
         statData = cbind(statData, data.frame('units'=rep(units, length.out = nrow(statData)), stringsAsFactors = FALSE))
       }
-      dataOut <- rbind(dataOut, statData)
+      tryCatch({
+        dataOut <- rbind(dataOut, statData)
+      }, warning = function(w) {
+        stop(paste('Variable',as.character(config[['vars']][blk]),'had a problem being added to the data frame.'))
+      }, error = function(e) {
+        stop(paste('Variable',as.character(config[['vars']][blk]),'had a problem being added to the data frame.'))
+        }
+      )
     }
-    
   }
 
   names(dataOut)[1] = 'DateTime'
