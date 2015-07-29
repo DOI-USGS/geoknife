@@ -59,5 +59,9 @@ test_that("timeseries parser works on multi threshold output",{
   local_file <- system.file('extdata','csv_multi_threshold.csv', package = 'geoknife')
   output <- parseTimeseries(local_file, delim = ',')
   expect_is(output, "data.frame")
+  expect_equivalent(names(output)[1],'DateTime')
+  expect_equivalent(names(output)[length(output)],'threshold')
+  expect_equal(output$threshold[1],32)
+  expect_equivalent(output$variable[1],'MIROC-ESM-CHEM_rcp26_r1i1p1-longest_run_tmax_abv')
 })
 
