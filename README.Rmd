@@ -1,3 +1,12 @@
+---
+title: "README"
+author: "Jordan S Read"
+package version: "`r as.character(packageVersion('geoknife'))`"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  md_document:
+    variant: markdown_github
+---
 #`geoknife` package version `r packageVersion('geoknife')`
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)

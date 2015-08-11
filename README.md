@@ -1,41 +1,40 @@
-#`geoknife` package version 0.10.0
+`geoknife` package version 0.11.5
+=================================
 
-[![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)
-[![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife)
-[![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife)
-Tools for geo-web processing of gridded data via the [Geo Data Portal](http://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
+[![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) Tools for geo-web processing of gridded data via the [Geo Data Portal](http://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
-  <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
+<img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
 </p>
+### Installing `geoknife`
 
-
-
-###Installing `geoknife`
 To install the stable version of `geoknife` package with dependencies:
 
-```r
+``` r
 install.packages("geoknife", 
     repos = c("http://owi.usgs.gov/R"),
     dependencies = TRUE)
 ```
+
 Or to install the current development version of the package:
 
-```r
+``` r
 install.packages("devtools")
 devtools::install_github('USGS-R/geoknife')
 ```
 
-###`geoknife` overview
-The `geoknife` package was created to support web-based geoprocessing of large gridded datasets according to their overlap with landscape (or aquatic/ocean) features that are often irregularly shaped. `geoknife` creates data access and subsequent geoprocessing requests for the USGS's Geo Data Portal to carry out on a web server. The results of these requests are available for download after the processes have been completed. This type of workflow has three main advantages: 1) it allows the user to avoid downloading large datasets, 2) it avoids reinventing the wheel for the creation and optimization of complex geoprocessing algorithms, and 3) computing resources are dedicated elsewhere, so `geoknife` operations do not have much of an impact on a local computer. 
+### `geoknife` overview
 
-`geoknife` interacts with a remote server to figure out what types of processing capabilities are available, in addition to seeing what types of geospatial features are already available to be used as an area of interest (commonly, these are user-uploaded shapefiles). Because communication with web resources are central to `geoknife` operations, users must have an active internet connection. 
+The `geoknife` package was created to support web-based geoprocessing of large gridded datasets according to their overlap with landscape (or aquatic/ocean) features that are often irregularly shaped. `geoknife` creates data access and subsequent geoprocessing requests for the USGS's Geo Data Portal to carry out on a web server. The results of these requests are available for download after the processes have been completed. This type of workflow has three main advantages: 1) it allows the user to avoid downloading large datasets, 2) it avoids reinventing the wheel for the creation and optimization of complex geoprocessing algorithms, and 3) computing resources are dedicated elsewhere, so `geoknife` operations do not have much of an impact on a local computer.
 
-The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm parameters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `loadOutput`. 
+`geoknife` interacts with a remote server to figure out what types of processing capabilities are available, in addition to seeing what types of geospatial features are already available to be used as an area of interest (commonly, these are user-uploaded shapefiles). Because communication with web resources are central to `geoknife` operations, users must have an active internet connection.
 
-###What can `geoknife` do?
-#####define a stencil that represents the geographic region to slice out of the data
+The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm parameters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `loadOutput`.
 
-```r
+### What can `geoknife` do?
+
+##### define a stencil that represents the geographic region to slice out of the data
+
+``` r
 library(geoknife)
 # from a single point
 stencil <- simplegeom(c(-89, 46.23))
@@ -52,9 +51,10 @@ stencil <- webgeom('state::New Hampshire,Wisconsin,Alabama')
 #for HUC8s from a web available dataset
 stencil <- webgeom('HUC8::09020306,14060009')
 ```
-#####define a fabric that represents the underlying data
 
-```r
+##### define a fabric that represents the underlying data
+
+``` r
 # from the prism dataset:
 fabric <- webdata('prism')
    # -- or --
@@ -66,83 +66,91 @@ fabric <- webdata(list(
 # modify the times field:
 times(fabric) <- as.POSIXct(c('1990-01-01','2005-01-01'))
 ```
-#####create the processing job that will carry out the subsetting/summarization task
 
-```r
+##### create the processing job that will carry out the subsetting/summarization task
+
+``` r
 job <- geoknife(stencil, fabric, wait = TRUE)
 
 # use existing convienence functions to check on the job:
 check(job)
 ```
 
-```
-## $status
-## [1] "Process successful"
-## 
-## $URL
-## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=0810e795-509f-49d7-bedd-66bba09c8ca2OUTPUT"
-## 
-## $statusType
-## [1] "ProcessSucceeded"
-```
-see also: 
+    ## $status
+    ## [1] "Process successful"
+    ## 
+    ## $URL
+    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=ef42b9f8-3865-4799-827c-a045890272c8OUTPUT"
+    ## 
+    ## $statusType
+    ## [1] "ProcessSucceeded"
 
-```r
+see also:
+
+``` r
 running(job)
 error(job)
 successful(job)
 ```
-#####plot the results
 
-```r
+##### plot the results
+
+``` r
 data <- loadOutput(job)
 plot(data[,1:2], ylab = variables(fabric))
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
+![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
-#####use an email to listen for process completion
+##### use an email to listen for process completion
 
-```r
+``` r
 job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
-###`geoknife` Functions (as of v0.10.0)
-| Function       | Title           |
-| ------------- |:-------------|
-| `geoknife` | slice up gridded data according to overlap with feature(s) |
-| `algorithm` | the algorithm of a `webprocess` |
-| `attribute` | the attribute of an `webgeom` |
-| `check` | check status of `geojob` |
-| `download` | download the results of a `geojob` |
-| `error` | convenience  function for state of `geojob` |
-| `running` | convenience  function for state of `geojob` |
-| `successful` | convenience  function for state of `geojob` |
-| `start` | start a `geojob` |
-| `cancel` | cancel a `geojob` |
-| `geom` | the geom of a `webgeom` | 
-| `id` | the process id of a `geojob` |
-| `values` | the values of a `webgeom` | 
-| `loadOutput` | load the output of a completed `geojob` into data.frame |
-| `variables` | the variables for a `webdata` object |
-| `times` | the times of a `webdata` object |
-| `url` | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess` |
-| `version` | the version of a `webgeom` or `webdata` |
-| `xml` | the xml of a `geojob` |
+### `geoknife` Functions (as of v0.11.0)
 
-###`geoknife` classes (as of v0.6.2)
-| Class       | Title           |
-| ------------- |:-------------|
+| Function     | Title                                                        |
+|--------------|:-------------------------------------------------------------|
+| `geoknife`   | slice up gridded data according to overlap with feature(s)   |
+| `algorithm`  | the algorithm of a `webprocess`                              |
+| `attribute`  | the attribute of an `webgeom`                                |
+| `check`      | check status of `geojob`                                     |
+| `download`   | download the results of a `geojob`                           |
+| `error`      | convenience function for state of `geojob`                   |
+| `running`    | convenience function for state of `geojob`                   |
+| `successful` | convenience function for state of `geojob`                   |
+| `start`      | start a `geojob`                                             |
+| `cancel`     | cancel a `geojob`                                            |
+| `geom`       | the geom of a `webgeom`                                      |
+| `inputs`     | the inputs of a `webprocess`                                 |
+| `id`         | the process id of a `geojob`                                 |
+| `values`     | the values of a `webgeom`                                    |
+| `loadOutput` | load the output of a completed `geojob` into data.frame      |
+| `variables`  | the variables for a `webdata` object                         |
+| `times`      | the times of a `webdata` object                              |
+| `url`        | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess` |
+| `version`    | the version of a `webgeom` or `webdata`                      |
+| `xml`        | the xml of a `geojob`                                        |
+
+### `geoknife` classes (as of v0.6.2)
+
+| Class        | Title                                                   |
+|--------------|:--------------------------------------------------------|
 | `simplegeom` | a simple geometric class. Extends `sp::SpatialPolygons` |
-| `webgeom` | a web feature service geometry |
-| `webprocess` | a web processing service |
-| `webdata` | web data |
-| `geojob` | a geo data portal processing job |
+| `webgeom`    | a web feature service geometry                          |
+| `webprocess` | a web processing service                                |
+| `webdata`    | web data                                                |
+| `geojob`     | a geo data portal processing job                        |
 
-##What libraries does `geoknife` need?
+What libraries does `geoknife` need?
+------------------------------------
+
 This version requires `httr`, `jsonlite`, `lubridate` and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
 
-##Disclaimer
+Disclaimer
+----------
+
 This software is in the public domain because it contains materials that originally came from the U.S. Geological Survey, an agency of the United States Department of Interior. For more information, see the [official USGS copyright policy](http://www.usgs.gov/visual-id/credit_usgs.html#copyright/ "official USGS copyright policy")
 
 Although this software program has been used by the U.S. Geological Survey (USGS), no warranty, expressed or implied, is made by the USGS or the U.S. Government as to the accuracy and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and no responsibility is assumed by the USGS in connection therewith.
