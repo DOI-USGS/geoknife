@@ -20,5 +20,7 @@ Imports:
     sp
 Suggests:
     testthat,
-    knitr
+    xtable,
+    knitr,
+    rmarkdown
 VignetteBuilder: knitr

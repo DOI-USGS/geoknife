@@ -22,7 +22,7 @@ setMethod(f="initialize",signature="geojob",
             
             .Object@xml <- xml
             .Object@id	<- id
-            .Object@version = package_version(packageVersion('geoknife'))
+            .Object@version = package_version(packageVersion(getPackageName()))
             return(.Object)
           })
 
