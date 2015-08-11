@@ -32,7 +32,7 @@ The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) i
 
 ###What can `geoknife` do?
 #####define a stencil that represents the geographic region to slice out of the data
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(geoknife)
 # from a single point
 stencil <- simplegeom(c(-89, 46.23))
