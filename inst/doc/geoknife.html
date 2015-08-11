@@ -71,7 +71,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="header">
 <h1 class="title">geoknife package</h1>
 <h4 class="author"><em>Jordan Read</em></h4>
-<h4 class="date"><em>20 July, 2015</em></h4>
+<h4 class="date"><em>11 August, 2015</em></h4>
 </div>
 
 <div id="TOC">
@@ -213,7 +213,7 @@ fabric</code></pre></div>
 <p>use convienence functions to check on the job:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">check</span>(job)</code></pre></div>
 <pre><code>## $status
-## [1] &quot;ProcessStarted&quot;
+## [1] &quot;Process Started&quot;
 ## 
 ## $URL
 ## NULL
@@ -366,21 +366,26 @@ stencil</code></pre></div>
 <p>The <code>query</code> function on <code>webgeom</code> can be used to find possible inputs for each public field (other than <code>version</code> and <code>url</code> currently):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'geoms'</span>)</code></pre></div>
 <pre><code>##  [1] &quot;sample:Alaska&quot;                  
-##  [2] &quot;derivative:CONUS_States&quot;        
-##  [3] &quot;sample:CONUS_states&quot;            
-##  [4] &quot;sample:CSC_Boundaries&quot;          
-##  [5] &quot;derivative:FWS_LCC&quot;             
-##  [6] &quot;sample:FWS_LCC&quot;                 
-##  [7] &quot;derivative:wbdhu8_alb_simp&quot;     
-##  [8] &quot;derivative:Level_III_Ecoregions&quot;
-##  [9] &quot;derivative:NCA_Regions&quot;         
-## [10] &quot;upload:Region1&quot;                 
-## [11] &quot;upload:Region2&quot;                 
-## [12] &quot;derivative:US_Counties&quot;         
-## [13] &quot;sample:nps_boundary_2013&quot;       
-## [14] &quot;draw:odompoly&quot;                  
-## [15] &quot;sample:simplified_HUC8s&quot;        
-## [16] &quot;draw:uspoly&quot;</code></pre>
+##  [2] &quot;sample:CONUS_Climate_Divisions&quot; 
+##  [3] &quot;derivative:CONUS_States&quot;        
+##  [4] &quot;sample:CONUS_states&quot;            
+##  [5] &quot;sample:CSC_Boundaries&quot;          
+##  [6] &quot;derivative:FWS_LCC&quot;             
+##  [7] &quot;sample:FWS_LCC&quot;                 
+##  [8] &quot;upload:GIS&quot;                     
+##  [9] &quot;upload:GIS_trout&quot;               
+## [10] &quot;derivative:wbdhu8_alb_simp&quot;     
+## [11] &quot;derivative:Level_III_Ecoregions&quot;
+## [12] &quot;derivative:NCA_Regions&quot;         
+## [13] &quot;draw:Philadelphia_Airport&quot;      
+## [14] &quot;draw:Philly_airport&quot;            
+## [15] &quot;derivative:US_Counties&quot;         
+## [16] &quot;upload:delin&quot;                   
+## [17] &quot;draw:junk&quot;                      
+## [18] &quot;sample:nps_boundary_2013&quot;       
+## [19] &quot;sample:simplified_HUC8s&quot;        
+## [20] &quot;draw:sq&quot;                        
+## [21] &quot;upload:tl_f&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'attributes'</span>)</code></pre></div>
 <pre><code>## [1] &quot;STATE&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'values'</span>)</code></pre></div>
@@ -579,12 +584,12 @@ knife</code></pre></div>
 ##    TIME_END: NA
 ##    SUMMARIZE_TIMESTEP: false
 ##    SUMMARIZE_FEATURE_ATTRIBUTE: false
+##    FEATURE_ATTRIBUTE_NAME: 
 ##    DATASET_URI: 
 ##    DATASET_ID: 
 ##    REQUIRE_FULL_COVERAGE: true
-##    FEATURE_ATTRIBUTE_NAME: 
-##    DELIMITER: COMMA
 ##    STATISTICS: 
+##    DELIMITER: COMMA
 ##    GROUP_BY: 
 ## wait: TRUE 
 ## email: NA</code></pre>
@@ -603,12 +608,12 @@ knife</code></pre></div>
 ##    TIME_END: NA
 ##    SUMMARIZE_TIMESTEP: false
 ##    SUMMARIZE_FEATURE_ATTRIBUTE: false
+##    FEATURE_ATTRIBUTE_NAME: 
 ##    DATASET_URI: 
 ##    DATASET_ID: 
 ##    REQUIRE_FULL_COVERAGE: true
-##    FEATURE_ATTRIBUTE_NAME: 
-##    DELIMITER: COMMA
 ##    STATISTICS: 
+##    DELIMITER: COMMA
 ##    GROUP_BY: 
 ## wait: FALSE 
 ## email: fake.email@gmail.com</code></pre>
@@ -632,7 +637,7 @@ knife</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">geoknife</span>(stencil, <span class="dt">fabric =</span> <span class="st">'prism'</span>, <span class="dt">wait =</span> <span class="ot">FALSE</span>)
 <span class="kw">check</span>(job)</code></pre></div>
 <pre><code>## $status
-## [1] &quot;ProcessStarted&quot;
+## [1] &quot;Process Started&quot;
 ## 
 ## $URL
 ## NULL
@@ -649,7 +654,7 @@ knife</code></pre></div>
 <p>The <code>geoknife</code> package currently limits the user processing requests to single-running processes, so as to avoid creating thousands of requests in error, which could overwhelm the processing resources. If there is a reason to support additional jobs at one time, please email the package maintainers with your query.</p>
 <p>To cancel and existing job: Cancel a running job but retain the details:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">id</span>(job)</code></pre></div>
-<pre><code>## [1] &quot;http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=7cf67130-eed2-49b6-bd43-677bcdf3a1ea&quot;</code></pre>
+<pre><code>## [1] &quot;http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=6cf2e928-8a4a-4767-abc6-1ae3f70d207b&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">cancel</span>(job)
 <span class="kw">id</span>(job)</code></pre></div>
 <pre><code>## [1] &quot;&lt;no active job&gt;&quot;</code></pre>
