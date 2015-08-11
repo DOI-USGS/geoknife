@@ -1,4 +1,4 @@
-#' @title geojob class
+  #' @title geojob class
 #' @slot url URL of web processing endpoint
 #' @slot xml XML character for post
 #' @slot id job identifier
@@ -8,6 +8,7 @@ setClass(
   representation = representation(
     url = 'character',
     xml = 'character',
+    version = 'package_version',
     id = "character")
 )
 
@@ -21,6 +22,7 @@ setMethod(f="initialize",signature="geojob",
             
             .Object@xml <- xml
             .Object@id	<- id
+            .Object@version = package_version(packageVersion('geoknife'))
             return(.Object)
           })
 
@@ -107,3 +109,4 @@ setMethod(f = "id",signature = "geojob", definition = function(.Object){
   return(value)
 }
 )
+  
