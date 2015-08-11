@@ -8,7 +8,8 @@ setClass(
   representation = representation(
     url = 'character',
     xml = 'character',
-    version = 'package_version',
+    package.version = 'package_version',
+    algorithm.version = 'numeric_version',
     id = "character")
 )
 
@@ -18,11 +19,13 @@ setMethod(f="initialize",signature="geojob",
             .Object, 
             id = '<no active job>',
             url = as.character(NA),
+            algorithm.version = as.numeric_version(NULL),
             xml = as.character(NA)){
             
             .Object@xml <- xml
             .Object@id	<- id
-            .Object@version = package_version(packageVersion(getPackageName()))
+            .Object@package.version = package_version(packageVersion(getPackageName()))
+            .Object@algorithm.version = algorithm.version
             return(.Object)
           })
 

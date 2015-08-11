@@ -61,7 +61,7 @@ geoknife <- function(stencil, fabric, knife = webprocess(...), ...){
   geojob <- geojob()
   xml(geojob) <- XML(stencil, fabric, knife)
   url(geojob) <- url(knife)
-  
+  geojob@algorithm.version = algorithmVersion(knife)
   geojob <- start(geojob)
   if (!is.na(knife@email)) {
     email(geojob, knife)
