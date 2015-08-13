@@ -32,11 +32,11 @@
 #'@aliases
 #'geoknife
 #'@examples
+#'\dontrun{
 #'job <- geoknife(stencil = c(-89,42), fabric = 'prism')
 #'check(job)
 #'
 #'#-- set up geoknife to email user when the process is complete
-#'\dontrun{
 #'
 #' job <- geoknife(webgeom("state::Wisconsin"), fabric = 'prism', email = 'fake.email@@gmail.com')
 #' 
@@ -61,7 +61,7 @@ geoknife <- function(stencil, fabric, knife = webprocess(...), ...){
   geojob <- geojob()
   xml(geojob) <- XML(stencil, fabric, knife)
   url(geojob) <- url(knife)
-  
+  geojob@algorithm.version = algorithmVersion(knife)
   geojob <- start(geojob)
   if (!is.na(knife@email)) {
     email(geojob, knife)

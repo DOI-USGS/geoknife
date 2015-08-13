@@ -10,18 +10,20 @@
 \alias{successful,geojob-method}
 \title{Convenience function for GDP process state}
 \usage{
-successful(.Object)
-error(.Object)
-running(.Object)
+successful(.Object, retry)
+error(.Object, retry)
+running(.Object, retry)
 
-\S4method{successful}{geojob}(.Object)
+\S4method{successful}{geojob}(.Object, retry = FALSE)
 
 \S4method{running}{geojob}(.Object, retry = FALSE)
 
-\S4method{error}{geojob}(.Object)
+\S4method{error}{geojob}(.Object, retry = FALSE)
 }
 \arguments{
 \item{.Object}{a \linkS4class{geojob} object}
+
+\item{retry}{attempt to retry again if communication failed with the server}
 }
 \value{
 TRUE/FALSE indicating if process is in the given state (error, processing, successful)
@@ -41,7 +43,7 @@ successful(job)
 }
 }
 \author{
-Luke Winslow
+Luke Winslow, Jordan S Read
 }
 \seealso{
 \code{\link{check}}

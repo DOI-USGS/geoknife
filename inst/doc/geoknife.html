@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Jordan Read" />
+
+
+<title>geoknife package</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<link href="data:text/css;charset=utf-8,body%7Bbackground%2Dcolor%3A%23fff%3Bmargin%3A1emauto%3Bmax%2Dwidth%3A700px%3Boverflow%3Avisible%3Bpadding%2Dleft%3A2em%3Bpadding%2Dright%3A2em%3Bfont%2Dfamily%3A%22OpenSans%22%2C%22HelveticaNeue%22%2CHelvetica%2CArial%2Csans%2Dserif%3Bfont%2Dsize%3A14px%3Bline%2Dheight%3A1%2E35%3B%7D%23header%7Btext%2Dalign%3Acenter%3B%7D%23TOC%7Bclear%3Aboth%3Bmargin%3A0010px10px%3Bpadding%3A4px%3Bwidth%3A400px%3Bborder%3A1pxsolid%23CCCCCC%3Bborder%2Dradius%3A5px%3Bbackground%2Dcolor%3A%23f6f6f6%3Bfont%2Dsize%3A13px%3Bline%2Dheight%3A1%2E3%3B%7D%23TOC%2Etoctitle%7Bfont%2Dweight%3Abold%3Bfont%2Dsize%3A15px%3Bmargin%2Dleft%3A5px%3B%7D%23TOCul%7Bpadding%2Dleft%3A40px%3Bmargin%2Dleft%3A%2D1%2E5em%3Bmargin%2Dtop%3A5px%3Bmargin%2Dbottom%3A5px%3B%7D%23TOCulul%7Bmargin%2Dleft%3A%2D2em%3B%7D%23TOCli%7Bline%2Dheight%3A16px%3B%7Dtable%7Bmargin%3A1emauto%3Bborder%2Dwidth%3A1px%3Bborder%2Dcolor%3A%23DDDDDD%3Bborder%2Dstyle%3Aoutset%3Bborder%2Dcollapse%3Acollapse%3B%7Dtableth%7Bborder%2Dwidth%3A2px%3Bpadding%3A5px%3Bborder%2Dstyle%3Ainset%3B%7Dtabletd%7Bborder%2Dwidth%3A1px%3Bborder%2Dstyle%3Ainset%3Bline%2Dheight%3A18px%3Bpadding%3A5px5px%3B%7Dtable%2Ctableth%2Ctabletd%7Bborder%2Dleft%2Dstyle%3Anone%3Bborder%2Dright%2Dstyle%3Anone%3B%7Dtablethead%2Ctabletr%2Eeven%7Bbackground%2Dcolor%3A%23f7f7f7%3B%7Dp%7Bmargin%3A0%2E5em0%3B%7Dblockquote%7Bbackground%2Dcolor%3A%23f6f6f6%3Bpadding%3A0%2E25em0%2E75em%3B%7Dhr%7Bborder%2Dstyle%3Asolid%3Bborder%3Anone%3Bborder%2Dtop%3A1pxsolid%23777%3Bmargin%3A28px0%3B%7Ddl%7Bmargin%2Dleft%3A0%3B%7Ddldd%7Bmargin%2Dbottom%3A13px%3Bmargin%2Dleft%3A13px%3B%7Ddldt%7Bfont%2Dweight%3Abold%3B%7Dul%7Bmargin%2Dtop%3A0%3B%7Dulli%7Blist%2Dstyle%3Acircleoutside%3B%7Dulul%7Bmargin%2Dbottom%3A0%3B%7Dpre%2Ccode%7Bbackground%2Dcolor%3A%23f7f7f7%3Bborder%2Dradius%3A3px%3Bcolor%3A%23333%3B%7Dpre%7Bwhite%2Dspace%3Apre%2Dwrap%3Bborder%2Dradius%3A3px%3Bmargin%3A5px0px10px0px%3Bpadding%3A10px%3B%7Dpre%3Anot%28%5Bclass%5D%29%7Bbackground%2Dcolor%3A%23f7f7f7%3B%7Dcode%7Bfont%2Dfamily%3AConsolas%2CMonaco%2C%27CourierNew%27%2Cmonospace%3Bfont%2Dsize%3A85%25%3B%7Dp%3Ecode%2Cli%3Ecode%7Bpadding%3A2px0px%3B%7Ddiv%2Efigure%7Btext%2Dalign%3Acenter%3B%7Dimg%7Bbackground%2Dcolor%3A%23FFFFFF%3Bpadding%3A2px%3Bborder%3A1pxsolid%23DDDDDD%3Bborder%2Dradius%3A3px%3Bborder%3A1pxsolid%23CCCCCC%3Bmargin%3A05px%3B%7Dh1%7Bmargin%2Dtop%3A0%3Bfont%2Dsize%3A35px%3Bline%2Dheight%3A40px%3B%7Dh2%7Bborder%2Dbottom%3A4pxsolid%23f7f7f7%3Bpadding%2Dtop%3A10px%3Bpadding%2Dbottom%3A2px%3Bfont%2Dsize%3A145%25%3B%7Dh3%7Bborder%2Dbottom%3A2pxsolid%23f7f7f7%3Bpadding%2Dtop%3A10px%3Bfont%2Dsize%3A120%25%3B%7Dh4%7Bborder%2Dbottom%3A1pxsolid%23f7f7f7%3Bmargin%2Dleft%3A8px%3Bfont%2Dsize%3A105%25%3B%7Dh5%2Ch6%7Bborder%2Dbottom%3A1pxsolid%23ccc%3Bfont%2Dsize%3A105%25%3B%7Da%7Bcolor%3A%230033dd%3Btext%2Ddecoration%3Anone%3B%7Da%3Ahover%7Bcolor%3A%236666ff%3B%7Da%3Avisited%7Bcolor%3A%23800080%3B%7Da%3Avisited%3Ahover%7Bcolor%3A%23BB00BB%3B%7Da%5Bhref%5E%3D%22http%3A%22%5D%7Btext%2Ddecoration%3Aunderline%3B%7Da%5Bhref%5E%3D%22https%3A%22%5D%7Btext%2Ddecoration%3Aunderline%3B%7Dcode%3Espan%2Ekw%7Bcolor%3A%23555%3Bfont%2Dweight%3Abold%3B%7Dcode%3Espan%2Edt%7Bcolor%3A%23902000%3B%7Dcode%3Espan%2Edv%7Bcolor%3A%2340a070%3B%7Dcode%3Espan%2Ebn%7Bcolor%3A%23d14%3B%7Dcode%3Espan%2Efl%7Bcolor%3A%23d14%3B%7Dcode%3Espan%2Ech%7Bcolor%3A%23d14%3B%7Dcode%3Espan%2Est%7Bcolor%3A%23d14%3B%7Dcode%3Espan%2Eco%7Bcolor%3A%23888888%3Bfont%2Dstyle%3Aitalic%3B%7Dcode%3Espan%2Eot%7Bcolor%3A%23007020%3B%7Dcode%3Espan%2Eal%7Bcolor%3A%23ff0000%3Bfont%2Dweight%3Abold%3B%7Dcode%3Espan%2Efu%7Bcolor%3A%23900%3Bfont%2Dweight%3Abold%3B%7Dcode%3Espan%2Eer%7Bcolor%3A%23a61717%3Bbackground%2Dcolor%3A%23e3d2d2%3B%7D" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div id="header">
+<h1 class="title">geoknife package</h1>
+<h4 class="author"><em>Jordan Read</em></h4>
+<h4 class="date"><em>11 August, 2015</em></h4>
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#getting-started">getting started</a><ul>
+<li><a href="#geoknife-concepts">geoknife concepts</a></li>
+<li><a href="#remote-processing-basics">remote processing basics</a></li>
+<li><a href="#quick-start-guide">quick start guide</a></li>
+</ul></li>
+<li><a href="#spatial-features-stencil">spatial features (<code>stencil</code>)</a><ul>
+<li><a href="#simplegeom-object"><code>simplegeom</code> object</a></li>
+<li><a href="#webgeom-object"><code>webgeom</code> object</a></li>
+<li><a href="#quick-access-to-web-available-data-for-webgeoms">quick access to web available data for webgeoms</a></li>
+<li><a href="#query-function-for-webgeom">query function for <code>webgeom</code></a></li>
+</ul></li>
+<li><a href="#gridded-data-fabric">gridded data (<code>fabric</code>)</a><ul>
+<li><a href="#webdata-object"><code>webdata</code> object</a></li>
+<li><a href="#quick-access-to-web-available-data">quick access to web available data</a></li>
+<li><a href="#query-function-for-webdata">query function for <code>webdata</code></a></li>
+</ul></li>
+<li><a href="#knife-object"><code>knife</code> object</a><ul>
+<li><a href="#query-function-for-webprocess">query function for <code>webprocess</code></a></li>
+<li><a href="#algorithm">algorithm</a></li>
+<li><a href="#inputs">inputs</a></li>
+<li><a href="#url">url</a></li>
+<li><a href="#wait"><code>wait</code></a></li>
+<li><a href="#email"><code>email</code></a></li>
+</ul></li>
+<li><a href="#geojob-details"><code>geojob</code> details</a><ul>
+<li><a href="#geojob-class-and-details"><code>geojob</code> class and details</a></li>
+<li><a href="#check-and-related-functions"><code>check</code> and related functions</a></li>
+<li><a href="#cancel-geojob"><code>cancel</code> geojob</a></li>
+</ul></li>
+<li><a href="#geoknife-web-resources">geoknife web resources</a><ul>
+<li><a href="#geo-data-portal">Geo Data Portal</a></li>
+<li><a href="#csw-catalog-service-for-the-web">CSW (catalog service for the web)</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The <strong>geoknife</strong> package was created to support web-based geoprocessing of large gridded datasets according to their overlap with landscape (or aquatic/ocean) features that are often irregularly shaped. geoknife creates data access and subsequent geoprocessing requests for the USGS’s Geo Data Portal to carry out on a web server. The results of these requests are available for download after the processes have been completed. This type of workflow has three main advantages: 1) it allows the user to avoid downloading large datasets, 2) it avoids reinventing the wheel for the creation and optimization of complex geoprocessing algorithms, and 3) computing resources are dedicated elsewhere, so geoknife operations do not have much of an impact on a local computer.</p>
+<p>Because communication with web resources are central to geoknife operations, users must have an active internet connection. geoknife interacts with a remote server to discover processing capabilities, find already available geospatial areas of interest (these are normally user-uploaded shapefiles), get gridded dataset characteristics, execute geoprocessing requests, and get geoprocessing results.</p>
+<p>The main elements of setting up and carrying out a geoknife ‘job’ (geojob) include defining the feature of interest (the stencil argument in the geoknife function), the gridded web dataset to be processed (the fabric argument in the geoknife function), and the the processing algorithm parameters (the knife argument in the geoknife function). The status of the geojob can be checked with check, and output can be loaded into a data.frame with loadOutput. See below for more details.</p>
+</div>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>To install the stable version of <strong>geoknife</strong> package with dependencies:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;geoknife&quot;</span>, 
+    <span class="dt">repos =</span> <span class="kw">c</span>(<span class="st">&quot;http://owi.usgs.gov/R&quot;</span>),
+    <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Or to install the current development version of the package:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)
+devtools::<span class="kw">install_github</span>(<span class="st">'USGS-R/geoknife'</span>)</code></pre></div>
+</div>
+<div id="getting-started" class="section level2">
+<h2>getting started</h2>
+<p>The <code>geoknife</code> package was created to support web-based geoprocessing of large gridded datasets according to their overlap with landscape (or aquatic/ocean) features that are often irregularly shaped. geoknife creates data access and subsequent geoprocessing requests for the USGS’s Geo Data Portal to carry out on a web server.</p>
+<div id="geoknife-concepts" class="section level3">
+<h3>geoknife concepts</h3>
+<p>geoknife has abstractions for web-available gridded data, geospatial features, and geoprocessing details. These abstractions are the basic geoknife arguments of <code>fabric</code>, <code>stencil</code> and <code>knife</code>.<br />
+* <code>fabric</code> defines the web data that will be accessed, subset, and processed (see <a href="#gridded-data-fabric">the fabric section</a> for more details). These data are limited to gridded datasets that are web-accessible through the definitions presented in <a href="#opendap">the OPeNDAP section</a>. Metadata for <code>fabric</code> include time, the URL for the data, and variables.<br />
+* <code>stencil</code> is the geospatial feature (or set of features) that will be used to delineate specific regions of interest on the fabric (see <a href="#spatial-features-stencil">the stencil section</a> for more details). <code>stencil</code> can include point or polygon groupings of various forms (including classes from the sp R package).<br />
+* <code>knife</code> defines the way the analysis will be performed, including the algorithm and version used, the URL that receives the processing request, the statistics returned, and the format of the results (see <a href="#web-processing-details-knife">the knife section</a> for more details).<br />
+* The <code>geoknife()</code> function takes the <code>fabric</code>, <code>stencil</code>, and <code>knife</code>, and returns a <code>geojob</code>, which is a live geoprocessing request that will be carried out on a remote web server (see <a href="#geojob-details">the geojob section</a> for more details). The <code>geojob</code> can be checked by users, and results can be parsed and loaded into the R environment for analyses.</p>
+</div>
+<div id="remote-processing-basics" class="section level3">
+<h3>remote processing basics</h3>
+<p>Because <code>geoknife</code> executes geospatial computations on a remote webserver, the workflow for to execute geoprocessing operations may feel a bit foreign to users who usually performing their analyses on a local computer. To find available datasets and their details (variables, time range, etc.), <code>geoknife</code> must query remote servers because data for use with <code>geoknife</code> is typically hosted on open access servers near the processing service. These operations are covered in detail below, but this section is designed to provide a quick overview.</p>
+<p>Interactions with web resources may take on the following forms, and each involve separate requests to various webservers:</p>
+<ol style="list-style-type: decimal">
+<li>Using the <code>query</code> function to figure out what data exist for <code>fabric</code>. This function will request data from a CSW (catalog service for the web) resource and return results, or, if a dataset is already specified, it can be used to query for the variables or time dimension.</li>
+<li>Using the <code>query</code> function to use a web resource for the geometry of <code>stencil</code>, including a US State, Level III Ecoregion, and many others.</li>
+<li>Submitting a <code>geojob</code> to be processed externally</li>
+<li>Checking the status of a <code>geojob</code></li>
+<li>Loading the results from a successful <code>geojob</code></li>
+</ol>
+</div>
+<div id="quick-start-guide" class="section level3">
+<h3>quick start guide</h3>
+<p>There are various ways to get up and running quickly with <code>geoknife</code>. See sections below for additional details on any of the following operations. As mentioned above, <code>geoknife</code> has the basic arguments of <code>fabric</code>, <code>stencil</code> and <code>knife</code>. <code>knife</code> is an optional argument, and if not used, a default <code>knife</code> will be used to specify the processing details.</p>
+<div id="define-a-stencil-that-represents-the-geographic-region-to-slice-out-of-the-data" class="section level4">
+<h4>define a stencil that represents the geographic region to slice out of the data</h4>
+<p>There are many different ways to specify geometry (<code>stencil</code>) for <code>geoknife</code>. The two basic functions that support building <code>stencil</code> objects are <code>simplegeom</code> and <code>webdata</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(geoknife)</code></pre></div>
+<p>Use a single longitude latitude pair as the geometry with the <code>simplegeom</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stencil &lt;-<span class="st"> </span><span class="kw">simplegeom</span>(<span class="kw">c</span>(-<span class="dv">89</span>, <span class="fl">46.23</span>))</code></pre></div>
+<p>Or specify a collection of named points in a <code>data.frame</code> (note that naming is important for multi-features because it specifies how the results are filtered):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stencil &lt;-<span class="st"> </span><span class="kw">simplegeom</span>(<span class="kw">data.frame</span>(
+              <span class="st">'point1'</span> =<span class="st"> </span><span class="kw">c</span>(-<span class="dv">89</span>, <span class="dv">46</span>), 
+              <span class="st">'point2'</span> =<span class="st"> </span><span class="kw">c</span>(-<span class="fl">88.6</span>, <span class="fl">45.2</span>)))</code></pre></div>
+<p>Use a web-available geometry dataset with the <code>webgeom</code> function to specify state boundaries:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stencil &lt;-<span class="st"> </span><span class="kw">webgeom</span>(<span class="st">'state::New Hampshire'</span>)
+stencil &lt;-<span class="st"> </span><span class="kw">webgeom</span>(<span class="st">'state::New Hampshire,Wisconsin,Alabama'</span>)</code></pre></div>
+<p>or HUC8s (hydrologic unit code):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stencil &lt;-<span class="st"> </span><span class="kw">webgeom</span>(<span class="st">'HUC8::09020306,14060009'</span>)
+<span class="co"># display stencil:</span>
+stencil</code></pre></div>
+<pre><code>## An object of class &quot;webgeom&quot;:
+## url: http://cida.usgs.gov/gdp/geoserver/wfs 
+## geom: derivative:wbdhu8_alb_simp 
+## attribute: HUC_8 
+## values: 09020306 14060009 
+## version: 1.1.0</code></pre>
+<p>see what other HUCs could be used via the <code>query</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">HUCs &lt;-<span class="st"> </span><span class="kw">query</span>(stencil, <span class="st">'values'</span>)
+<span class="co"># there are thousands of results, but head() will only display a few of them</span>
+<span class="kw">head</span>(HUCs) </code></pre></div>
+<pre><code>## [1] &quot;11060006&quot; &quot;11060005&quot; &quot;11060001&quot; &quot;11060004&quot; &quot;11060003&quot;
+## [6] &quot;11060002&quot;</code></pre>
+</div>
+<div id="define-a-fabric-that-represents-the-underlying-data" class="section level4">
+<h4>define a fabric that represents the underlying data</h4>
+<p>The <code>fabric</code> is specified using the <code>webdata</code> function, and can be done explicity or with a quick-start dataset name (such as ‘prism’)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fabric &lt;-<span class="st"> </span><span class="kw">webdata</span>(<span class="st">'prism'</span>)
+<span class="co"># display fabric:</span>
+fabric</code></pre></div>
+<pre><code>## An object of class &quot;webdata&quot;:
+## times: 1895-01-01 1899-01-01 
+## url: http://cida.usgs.gov/thredds/dodsC/prism 
+## variables: ppt</code></pre>
+<p>The same can be done explicitly by passing a list to webdata:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fabric &lt;-<span class="st"> </span><span class="kw">webdata</span>(<span class="kw">list</span>(
+            <span class="dt">times =</span> <span class="kw">as.POSIXct</span>(<span class="kw">c</span>(<span class="st">'1895-01-01'</span>,<span class="st">'1899-01-01'</span>)),
+            <span class="dt">url =</span> <span class="st">'http://cida.usgs.gov/thredds/dodsC/prism'</span>,
+            <span class="dt">variables =</span> <span class="st">'ppt'</span>))</code></pre></div>
+<p>To modify the times in <code>fabric</code>, use <code>times()</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">times</span>(fabric) &lt;-<span class="st"> </span><span class="kw">as.POSIXct</span>(<span class="kw">c</span>(<span class="st">'1990-01-01'</span>,<span class="st">'2005-01-01'</span>))</code></pre></div>
+<p>Similar to <code>webgeom</code>, the query method can be used on <code>webdata</code> objects:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(fabric, <span class="st">'times'</span>)
+<span class="kw">query</span>(fabric, <span class="st">'variables'</span>)</code></pre></div>
+</div>
+<div id="create-the-processing-job-that-will-carry-out-the-subsettingsummarization-task" class="section level4">
+<h4>create the processing job that will carry out the subsetting/summarization task</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">geoknife</span>(stencil, fabric)</code></pre></div>
+<p>use convienence functions to check on the job:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">check</span>(job)</code></pre></div>
+<pre><code>## $status
+## [1] &quot;Process Started&quot;
+## 
+## $URL
+## NULL
+## 
+## $statusType
+## [1] &quot;ProcessStarted&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">running</span>(job)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">error</span>(job)</code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">successful</span>(job)</code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>Cancel a running job:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">cancel</span>(job)</code></pre></div>
+<p>Run the job again, but have R wait until the process is finished:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">geoknife</span>(stencil, fabric, <span class="dt">wait =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Load up the output and plot it</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">loadOutput</span>(job)
+<span class="kw">plot</span>(data[,<span class="dv">1</span>:<span class="dv">2</span>], <span class="dt">ylab =</span> <span class="kw">variables</span>(fabric))</code></pre></div>
+<p><img src="data:image/png;base64,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ISAEhECjCIgBbRRuNSYEhIAQEAJCQAgIASEgBlRjQAgIASEgBISAEBACQqBRBMSANgq3GhMCQkAICAEhIASEgBAQA6oxIASEgBAQAkJACAgBIdAoAmJAG4VbjQkBISAEhIAQEAJCQAiIAdUYEAJCQAgIASEgBISAEGgUATGgjcKtxoSAEBACQkAICAEhIATEgGoMCAEhIASEgBAQAkJACDSKgBjQRuFWY0JACAgBISAEhIAQEAJiQDUGhIAQEAJCQAgIASEgBBpFQAxoo3CrMSEgBISAEBACQkAICAExoBoDQkAICAEhIASEgBAQAo0iIAa0UbjVmBAQAkJACAgBISAEhIAYUI0BISAEhIAQEAJCQAgIgUYREAPaKNxqTAgIASEgBISAEBACQkAMqMaAEBACQkAICAEhIASEQKMIiAFtFG41JgSEgBAQAkJACAgBISAGVGNACAgBISAEhIAQEAJCoFEExIA2CrcaEwJCQAgIASEgBISAEBADqjEgBISAEBACQkAICAEh0CgCYkAbhVuNCQEhIASEgBAQAkJACIgB1RgQAkJACAgBISAEhIAQaBQBMaCNwq3GhIAQEAJCQAgIASEgBMSAagwIASEgBISAEBACQkAINIqAGNBG4VZjQkAICAEhIASEgBAQAmJANQaEgBAQAkJACAgBISAEGkVADGijcKsxISAEhIAQEAJCQAgIATGgGgNCQAgIASEgBISAEBACjSIgBrRRuNWYEBACQkAICAEhIASEgBhQjQEhIASEgBAQAkJACAiBRhEQA9oo3GpMCAgBISAEhIAQEAJCQAyoxoAQEAJCQAgIASEgBIRAowiIAW0UbjUmBISAEBACQkAICAEhIAZUY0AICAEhIASEgBAQAkKgUQTEgDYKtxoTAkJACAgBISAEhIAQEAOqMSAEhIAQEAJCQAgIASHQKAJiQBuFW40JASEgBISAEBACQkAIiAHVGBACQkAICAEhIASEgBBoFAExoI3CrcaEgBAQAkJACAgBISAExIBqDAgBISAEhIAQEAJCQAg0ioAY0EbhVmNCQAgIASEgBISAEBACYkA1BoSAEBACQkAICAEhIAQaRUAMaKNwqzEhIASEgBAQAkJACAgBMaAaA0JACAgBISAEhIAQEAKNIiAGtFG41ZgQEAJCQAgIASEgBITAEwTBYAgcd9xx4YQTTggLLrjgYBXoV0JACAgBISAEhIAQqAGB+eefP3z9618Pz3jGM2qovZoqH5cZVVPV7KpltdVWC4ceeqgY0Nn12HW3QkAICAEhIATGHoF11103XH/99WGllVYa275KAjrgo3nCE54QFlhggbD66qsPWIN+JgSEgBAQAkKgfQg88sgj4aKLLgp33nlnWGKJJcLrXve6sOiii7bvRia4xy984QvH/u5kAzr2j0gdFAJCQAgIASEwHgg88MADYeWVVw6nn356ePTRR8NXv/rVsNhii4Vbb711PDqoXrQGAUlAW/Oo1FEhIASEgBAQAqND4OGHHw4LL7xweNe73hWOP/74qY6cc845YcUVVwy33357WH755afK9UUITIeAJKDToaNzQkAICAEhIASEgCNwwQUXhFVXXbWD+eTElltuGfbff//wuc99TkgJgZ4REAPaM1S6UAgIASEgBITA7EUAm8+NNtooCQD+EJwXCYFeERAD2itSuk4ICAEhIASEwCxG4LnPfW646667kgj84he/CIssskjynAqFQAoBMaApVFQmBISAEBACQkAIdCDwpje9KVx44YVh7ty5HeW/+93vwt577x3e8pa3dJTrQAhMh4CckKZDR+eEgBAQAkJACAgBR2DJJZcMF198sYcf3G+//QKxJufNmxfe/e53u13oeuutJ6SEQM8ISALaM1S6UAgIASEgBITA7EbgFa94Rfjxj38cHnroofDJT34y/OAHPwiXXnqpe8bPbmR09/0iIAlov4jpeiEgBISAEBACswCB+++/35nM73znO+EpT3lK2HjjjcM73vGO8NKXvtRTUc8CCHSLNSIgCWiN4KpqISAEhIAQEAJtRICYn895znPCPffcEz7wgQ+EXXbZJey8887h+c9/fnjsscfaeEvq85ghIAnomD0QdUcICAEhIASEwCgR+Mc//hGWWWaZsMkmm4RTTjllqitZlrn088QTTwy77777VLm+CIFBEJAEdBDU9BshIASEgBAQAhOKAFLPf/7zn+H888/vukNywB9++OFd5SoQAv0iIAa0X8R0vRAQAkJACAiBCUbgvvvucwno4x73uK67XGKJJQL54EVCYFgExIAOi6B+LwSEgBAQAkJgghCYM2dOuOOOO8Kjjz7adVfXXnttWHbZZbvKVSAE+kVANqD9IqbrhYAQEAJCQAhMMAILLbRQ2HrrrcPSSy8d7r333vD4x/9LVoVX/Nprrx3OOuusCb573VpTCIgBbQpptSMEhIAQEAJCoCUIfPaznw233357mG+++cJ73vOe8Oc//9ltQo888siw7bbbtuQu1M1xRkAM6Dg/HfVNCAgBISAEhMAIEEDqedVVV4Xvf//7gTig888/fyD70Qte8IIR9EZNTiICYkAn8anqnoSAEBACQkAIVIDAaqutFvgTCYGqEZATUtWIqj4hIASEgBAQAkJACAiBaREQAzotPDopBISAEBACQkAICAEhUDUCYkCrRlT1CQEhIASEgBAQAkJACEyLgBjQaeHRSSEgBISAEBACQkAICIGqEZATUtWIqj4hIARKEXjkkUfCOeecE2655ZawwAILhA033DCsuuqqpdfrhBBoEoHrr78+fPzjHw8//elPw8ILLxw23XTT8O53v7vJLqgtITBrEJAEdNY8at2oEBgtAn/605/Cy172snDhhRcG0vn95S9/ce/aE044YbQdU+tCwBC47rrrwitf+cqw5pprhtNPPz3stddeYbfddgvbbLON8JnlCPzzn//0rFD/+7//G/72t7/NcjSqu31JQKvDUjUJASFQggCT9tOe9rSw/vrrhwsuuGDqKhb5RRZZJDz3uc8Nm2+++VS5vgiBJhH47W9/G171qleFK664wjP90PZKK60U/vGPf4TFFlssnHTSSWGnnXZqsktqa0wQePDBB30TQgrSZz3rWeGPf/xjOOCAA8K+++47Jj1sbzckAW3vs1PPhUBrECCYNQv5ZZdd1tFnGM+zzz47HH/88R3lOhACTSLw7W9/O7z5zW+eYj5j2wRjJyPQ1772tVikz1mEANmfnv3sZ/sG+fe//3349a9/HX70ox95QH4xoMMPBDGgw2OoGoSAEJgBgbvuuiuss846yauQNKHaEgmBUSHwhz/8wc1CUu2zSeK8aPYhcOihh7rZ0Oc///nwxCc+0QFYeumlw8MPPxzOOOOM8Itf/GL2gVLhHYsBrRBMVSUEhEAagSWXXDLccccdyZPkm1588cWT51QoBJpAYMUVV/R0k6m2zjvvvMB50exD4Oqrrw7HHnts140//elPD2984xvDNddc03VOBb0jIAa0d6x0pRAQAgMigKc7TkfYfObp0UcfDRtvvHF429veli/WdyHQKAI4Hz3jGc8Ic+bM6WiXiA14xb/vfe/rKNfB7EEAB6QUYR/8uMc9LnVKZT0iICekHoHSZUJACAyOwPzzzx/mzp3rDkfYUO2www7h/vvvD4cddlg45phjwlvf+tbBK9cvhcCQCDzhCU8I3/zmN8OCCy7o4cE222yzcM8997i9H+N1ueWWG7IF/byNCGA2hH160XwIk4yzzjorfPjDH27jbY1Nn8WAjs2jUEeEwGQjEG3pTjnllHDVVVf5Yv+Vr3zFPeMn+851d21A4ElPepKH2vne977n5iI4n7z61a8Oz3zmM9vQffWxBgSQfPP8X/CCF4Sbb745sJHGlGiFFVYIBx98cFhmmWVqaHX2VCkGdPY8a92pEBg5AkiY9t5775H3Qx0QAikE8HpfffXV/S91XmWzCwHmq7/+9a9ho402cm94QsnhjHTUUUeFffbZZ3aBUcPdigGtAVRVKQSEgBAQAkJACLQfASTjl1xySXjsscfc+x2JKCYbouEREIoFDAkHQ5rAmeg3v/lNuPfee2e6TOeFgAezxmaIIMZIWERCQAgIASHQHgRwNnryk5/sf+3p9fj3VAxo4Rnddttt7vVYKO46vPvuu90mhFzBIiGQQgDvyf322y987nOfc7UNqpxDDjkkvPe9701drjIhIASEgBAQArMGATGghUdNqkD+ZiJCdpDZRSQEyhAgTtyVV14ZfvnLX4ZFF100kNIN71qyqlx++eVhvvnmK/upyoWAEBACQkAITDQC0gdO9OPVzY0KAVJO8kcqN5hPaKGFFvJc04888kgguLVICAgBISAEhMBsRUAM6Gx98rrvWhEg5uVHP/rRZKDiHXfcMZB7WiQEhIAQEAJCYLYiIBX8bH3yuu9aEciyrNThCA/KsuwaVXeK7EM///nPA+FDSIcp782qEVZ9QkAICAEhMAgCkoAOgpp+IwRmQIAA1qjZYUSLtPvuu4e11lqrWFz5MSkEl1hiibDlllt6QG3sln/1q19V3o4qbC8CpBMk8seNN94YiNQgEgJCQAg0hYAY0KaQVjuzCoENN9wwLLzwwi4F/eMf/+j3/qc//SlssMEGnnN62223rRWPc8891wO+f/e73w0/+clPnMkgbdzzn//88OMf/7jWtlV5OxB44IEHPMXgy172svDOd77Tw4QRoSG1aWrHHamXQkAItAkBqeDb9LTU19YgQNy4b3zjG2GrrbbyhX2ppZYK9913X9hkk02cGeR8XfTQQw+51BPvexjOSPvuu6/bpB544IHhggsuiMX6HDECMHy//e1vPV4sDmtNREd49NFHfYOEPTJpURmPOMchJec70nPReCCAIyN56u+8886w+OKLh9e85jU+p4xH79QLITA4ApKADo6dfikEZkSAXOcs7DglwYCeddZZgcwaddJNN90U1lhjjQ7mM7a3ww47hO985zvxUJ8jRuDaa68NL33pS8N//Md/hNVWW81Du1FWNx1zzDGebvLUU0+dcpR7+tOf7kzw//zP/4Trrruu7i6o/h4QwCxilVVWCUceeWSYN29eOPHEEz2aBt9FQqDtCIgBbfsTVP/HHoGnPOUpYc6cOYHPJggGl6D3KaKcjB6i0SMAE4Gt8P777x9+97vfhXvuuSecfvrpXla3hJpNCJLwIpGpCzMRMaBFZJo/xmSH7GlsTK6++urwiU98wuMHk9himWWWcYa0+V6pRSFQHQJiQKvDUjUJgbFAYKWVVvLg99dff31Xf5CArr322l3lKmgege222y4cddRRIW8PDPN3xRVXhD333NOlkXX1av755/cYtan6iZxQt5Q+1a7KOhG48MILXTp+5plndpzYaaedwvve9z6Xhnac0IEQaBkCYkBb9sDUXSEwEwJIWk8++eTwyle+0lX+f//73wN2oe9617vcFAA1nmi0CPBMbrjhhrDXXnt1dYQNAnaYdUYswI4QtW6RUPl+9rOfDeutt17xlI4bRuD2228PW2yxRbJVTGx++tOfJs+pUAi0BQExoG15UuqnEOgDgY033jjgAf/JT37SY4A+73nPc8ejF7/4xWHTTTcNJ510Uh+16dKqEcDxCCazLB4s4ZE4XxexGcEmOTK69IPxgsr3sMMOC4yTInHNNddcE44//njf2Nx9993FS3RcIQJE0cAsI0WEznrOc56TOqUyIdAaBMSAtuZRqaNCoD8EXv7yl4fvf//74aKLLgrYk2Hz98UvftHVuzvvvHPgTzQaBJ74xCeGV7ziFeEzn/lMVwfOPvvs8PDDDyedyLouHrCAhAQkKNhtt928H6jk3/rWtzpziU1qkZDYvv71rw+77LJLuO222wLqYRIbXH755cVLdVwRAhtttFFgLPzgBz/oqBEpNbGEN998845yHQiBtiGgMExte2LqrxDoA4Ff//rX4XWve1343ve+584M/BQb0b/97W9hkUUWCWuuuaYz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zHWrrrpquPzyyzt+duONN4Ztt902POtZzwrLLLNMOOSQQzrOc1DVNV0Vq0AI/D8CX/rSl8KKK64YnvzkJ4eFFloobLXVVuHuu+/uwKeXdXumax555JHwohe9qGtO3WmnnTraasWBcdmiChG48847MxuEiDeziy66qKPmnXfeObPBme2xxx7ZlVdeme24446ZTZrZz372s6nrermG3z7pSU/KPvWpT2U2sWa77rprNv/882c33XTTVD36IgRmQuCrX/2qj6OnPOUpHZc+/PDD2RJLLJE9//nPz44//viM62zhz9Zff/3s73//u1/byzVcuPfee2dLLrlk9qEPfajj74c//GFHmzoQAkUEHnjggcw269kqq6ySfeELX8guvfTSbMMNN8ye+MQnZnH8PProo5kxndk222yT3XDDDdlpp/1fe2cCI0XRxfG3sJ6IoAiCBxJRMCCXSOTSiBAEEwQMJgSJKDHiAdFIUFQUTxSiBIlKQLzQxANDFJSoAUkAuURFiYIIKhAQBBU8EETtr/71pTszwy70srM9O/Svktnprnldx69qu19VvXr9YuAU1eCRRx6JksuXTJQgBxDIITBnzhz/zB8yZEjgJoOCadOm+X7ZqlWrYN++fV46znM7jszSpUt9XrfffnvWPdUprjmlqv6nmgom5ImAHta1atUKmjdvfoACumXLlqCkpCRwo5Ss3Nq3bx9069bNx8WRkaAb/QRuxJ+VjpTeoUOHZsVxAoGyCOzevdv3Hw2SmjVrFuQqoJMnT/b91800RZdv2LDBx6mPK8SRkVz37t2D6667TocECFSIwPPPP+/73IoVK6Lr1HdPOOGEYPjw4T5u7NixgZulD5wZSSTz4IMPBm5WP9i7d29eZaIMOIBADoFevXoFTZo0Cdzye/TL66+/7vuvlEqFOM/tODJTp071/wPOxC/Kq1gPWILP4zz1o48+aiNGjLC5c+cekOpXX33l7T40LZ8Z+vfvb4sXLzZ3s7Q4MprSX7Nmjem6zNC3b98y882U4RgCIuBmj3yfe/vtt83NnpsbGGWBWb16tdWvX9/cwCiK19Jm69atbd68eT4ujowEv/zyS2vXrp2/Jo5tlBfkDwQcATfzaVOmTLEOHTpEPGQSIpMRp4j6ODcrar179za3AhTJ6F64c+dO++STT/IqE2XAAQRyCGj52ymGWfdSmS4pqK/G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" alt /></p>
+<p>For long running processes, it often makes sense to use an email listener:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">geoknife</span>(<span class="kw">webgeom</span>(<span class="st">'state::Wisconsin'</span>), <span class="dt">fabric =</span> <span class="st">'prism'</span>, <span class="dt">email =</span> <span class="st">'fake.email@gmail.com'</span>)</code></pre></div>
+</div>
+</div>
+</div>
+<div id="spatial-features-stencil" class="section level2">
+<h2>spatial features (<code>stencil</code>)</h2>
+<p>The <code>stencil</code> concept in <code>geoknife</code> represents the area(s) of interest for geoprocessing. <code>stencil</code> can be represented by two classes in <code>geoknife</code>: <code>simplegeom</code> and <code>webdata</code>. Any other classes can also be used that can be coerced into either of these two classes (such as <code>data.frame</code>).</p>
+<div id="simplegeom-object" class="section level3">
+<h3><code>simplegeom</code> object</h3>
+<p>The <code>simplegeom</code> class is designed to hold spatial information from the R environment and make it available to the processing engine. <code>simplegeom</code> is effectively a wrapper for the <code>sp</code> package’s <code>SpatialPolygons</code> class, but also coerces a number of different other types into this class. For example:</p>
+<p>Points can be specified as longitude latitude pairs:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stencil &lt;-<span class="st"> </span><span class="kw">simplegeom</span>(<span class="kw">c</span>(-<span class="dv">89</span>, <span class="fl">45.43</span>))</code></pre></div>
+<p>or as a data.frame:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stencil &lt;-<span class="st"> </span><span class="kw">simplegeom</span>(<span class="kw">data.frame</span>(
+              <span class="st">'point1'</span> =<span class="st"> </span><span class="kw">c</span>(-<span class="dv">89</span>, <span class="dv">46</span>), 
+              <span class="st">'point2'</span> =<span class="st"> </span><span class="kw">c</span>(-<span class="fl">88.6</span>, <span class="fl">45.2</span>)))</code></pre></div>
+<p>Also, a <code>SpatialPolygons</code> object can be used as well (example from <code>sp</code> package):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sp)
+Sr1 =<span class="st"> </span><span class="kw">Polygon</span>(<span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">2</span>)))
+Sr2 =<span class="st"> </span><span class="kw">Polygon</span>(<span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">5</span>),<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">2</span>)))
+Sr3 =<span class="st"> </span><span class="kw">Polygon</span>(<span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">4</span>),<span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">5</span>)))
+Sr4 =<span class="st"> </span><span class="kw">Polygon</span>(<span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">5</span>),<span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>)), <span class="dt">hole =</span> <span class="ot">TRUE</span>)
+
+Srs1 =<span class="st"> </span><span class="kw">Polygons</span>(<span class="kw">list</span>(Sr1), <span class="st">&quot;s1&quot;</span>)
+Srs2 =<span class="st"> </span><span class="kw">Polygons</span>(<span class="kw">list</span>(Sr2), <span class="st">&quot;s2&quot;</span>)
+Srs3 =<span class="st"> </span><span class="kw">Polygons</span>(<span class="kw">list</span>(Sr3, Sr4), <span class="st">&quot;s3/4&quot;</span>)
+stencil &lt;-<span class="st"> </span><span class="kw">simplegeom</span>(<span class="dt">Srl =</span> <span class="kw">list</span>(Srs1,Srs2,Srs3), <span class="dt">proj4string =</span> <span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>))</code></pre></div>
+</div>
+<div id="webgeom-object" class="section level3">
+<h3><code>webgeom</code> object</h3>
+<p>The <code>webgeom</code> class is designed to hold references to web feature service (WFS) details and make it available to the processing engine.</p>
+<p>Similar to <code>webdata</code> (see below), the <code>webgeom</code> class has public fields that can be set and accessed using simple methods. Public fields in <code>webgeom</code>:</p>
+<ul>
+<li><code>url</code>: the WFS endpoint to use for the data</li>
+<li><code>geom</code>: the feature collection name (can be namespaced shapefile names)</li>
+<li><code>attribute</code>: the attribute of the feature collection to be use</li>
+<li><code>values</code>: the values of the chosen attribute to use (or <code>NA</code> for all)</li>
+<li><code>version</code>: the WFS version to use.</li>
+</ul>
+<p>To create a default <code>webgeom</code> object:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stencil &lt;-<span class="st"> </span><span class="kw">webgeom</span>()</code></pre></div>
+<p>The user-level information in webgeom is all available with the webgeom “show” method (or print).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stencil</code></pre></div>
+<pre><code>## An object of class &quot;webgeom&quot;:
+## url: http://cida.usgs.gov/gdp/geoserver/wfs 
+## geom: NA 
+## attribute: NA 
+## values: NA 
+## version: 1.1.0</code></pre>
+<p>The public fields can be accessed in by using the field name:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">geom</span>(stencil) &lt;-<span class="st"> &quot;derivative:CONUS_States&quot;</span>
+<span class="kw">version</span>(stencil)</code></pre></div>
+<pre><code>## [1] &quot;1.1.0&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">attribute</span>(stencil) &lt;-<span class="st"> &quot;STATE&quot;</span>
+<span class="kw">values</span>(stencil) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Wisconsin&quot;</span>,<span class="st">&quot;Maine&quot;</span>)</code></pre></div>
+</div>
+<div id="quick-access-to-web-available-data-for-webgeoms" class="section level3">
+<h3>quick access to web available data for webgeoms</h3>
+<p>There are some built in <code>webgeom</code> templates that can be used to figure out the pattern, or to use these datasets for analysis. Currently, the package only supports US States, Level III Ecoregions, or HUC8s:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stencil &lt;-<span class="st"> </span><span class="kw">webgeom</span>(<span class="st">'state::Wisconsin'</span>)
+stencil</code></pre></div>
+<pre><code>## An object of class &quot;webgeom&quot;:
+## url: http://cida.usgs.gov/gdp/geoserver/wfs 
+## geom: derivative:CONUS_States 
+## attribute: STATE 
+## values: Wisconsin 
+## version: 1.1.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'values'</span>)</code></pre></div>
+<pre><code>##  [1] &quot;Alabama&quot;              &quot;Arizona&quot;             
+##  [3] &quot;Arkansas&quot;             &quot;California&quot;          
+##  [5] &quot;Colorado&quot;             &quot;Connecticut&quot;         
+##  [7] &quot;Delaware&quot;             &quot;District of Columbia&quot;
+##  [9] &quot;Florida&quot;              &quot;Georgia&quot;             
+## [11] &quot;Idaho&quot;                &quot;Illinois&quot;            
+## [13] &quot;Indiana&quot;              &quot;Iowa&quot;                
+## [15] &quot;Kansas&quot;               &quot;Kentucky&quot;            
+## [17] &quot;Louisiana&quot;            &quot;Maine&quot;               
+## [19] &quot;Maryland&quot;             &quot;Massachusetts&quot;       
+## [21] &quot;Michigan&quot;             &quot;Minnesota&quot;           
+## [23] &quot;Mississippi&quot;          &quot;Missouri&quot;            
+## [25] &quot;Montana&quot;              &quot;Nebraska&quot;            
+## [27] &quot;Nevada&quot;               &quot;New Hampshire&quot;       
+## [29] &quot;New Jersey&quot;           &quot;New Mexico&quot;          
+## [31] &quot;New York&quot;             &quot;North Carolina&quot;      
+## [33] &quot;North Dakota&quot;         &quot;Ohio&quot;                
+## [35] &quot;Oklahoma&quot;             &quot;Oregon&quot;              
+## [37] &quot;Pennsylvania&quot;         &quot;Rhode Island&quot;        
+## [39] &quot;South Carolina&quot;       &quot;South Dakota&quot;        
+## [41] &quot;Tennessee&quot;            &quot;Texas&quot;               
+## [43] &quot;Utah&quot;                 &quot;Vermont&quot;             
+## [45] &quot;Virginia&quot;             &quot;Washington&quot;          
+## [47] &quot;West Virginia&quot;        &quot;Wisconsin&quot;           
+## [49] &quot;Wyoming&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">webgeom</span>(<span class="st">'state::Wisconsin,Maine'</span>)</code></pre></div>
+<pre><code>## An object of class &quot;webgeom&quot;:
+## url: http://cida.usgs.gov/gdp/geoserver/wfs 
+## geom: derivative:CONUS_States 
+## attribute: STATE 
+## values: Wisconsin Maine 
+## version: 1.1.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">webgeom</span>(<span class="st">'HUC8::09020306,14060009'</span>)</code></pre></div>
+<pre><code>## An object of class &quot;webgeom&quot;:
+## url: http://cida.usgs.gov/gdp/geoserver/wfs 
+## geom: derivative:wbdhu8_alb_simp 
+## attribute: HUC_8 
+## values: 09020306 14060009 
+## version: 1.1.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">webgeom</span>(<span class="st">'ecoregion::Colorado Plateaus,Driftless Area'</span>)</code></pre></div>
+<pre><code>## An object of class &quot;webgeom&quot;:
+## url: http://cida.usgs.gov/gdp/geoserver/wfs 
+## geom: derivative:Level_III_Ecoregions 
+## attribute: LEVEL3_NAM 
+## values: Colorado Plateaus Driftless Area 
+## version: 1.1.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">query</span>(<span class="kw">webgeom</span>(<span class="st">'ecoregion::Colorado Plateaus,Driftless Area'</span>), <span class="st">'values'</span>), <span class="dv">10</span>)</code></pre></div>
+<pre><code>##  [1] &quot;Ahklun And Kilbuck Mountains&quot; 
+##  [2] &quot;Alaska Peninsula Mountains&quot;   
+##  [3] &quot;Alaska Range&quot;                 
+##  [4] &quot;Aleutian Islands&quot;             
+##  [5] &quot;Arctic Coastal Plain&quot;         
+##  [6] &quot;Arctic Foothills&quot;             
+##  [7] &quot;Arizona/New Mexico Mountains&quot; 
+##  [8] &quot;Arizona/New Mexico Plateau&quot;   
+##  [9] &quot;Arkansas Valley&quot;              
+## [10] &quot;Atlantic Coastal Pine Barrens&quot;</code></pre>
+</div>
+<div id="query-function-for-webgeom" class="section level3">
+<h3>query function for <code>webgeom</code></h3>
+<p>The <code>query</code> function on <code>webgeom</code> can be used to find possible inputs for each public field (other than <code>version</code> and <code>url</code> currently):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'geoms'</span>)</code></pre></div>
+<pre><code>##  [1] &quot;sample:Alaska&quot;                  
+##  [2] &quot;sample:CONUS_Climate_Divisions&quot; 
+##  [3] &quot;derivative:CONUS_States&quot;        
+##  [4] &quot;sample:CONUS_states&quot;            
+##  [5] &quot;sample:CSC_Boundaries&quot;          
+##  [6] &quot;derivative:FWS_LCC&quot;             
+##  [7] &quot;sample:FWS_LCC&quot;                 
+##  [8] &quot;upload:GIS&quot;                     
+##  [9] &quot;upload:GIS_trout&quot;               
+## [10] &quot;derivative:wbdhu8_alb_simp&quot;     
+## [11] &quot;derivative:Level_III_Ecoregions&quot;
+## [12] &quot;derivative:NCA_Regions&quot;         
+## [13] &quot;draw:Philadelphia_Airport&quot;      
+## [14] &quot;draw:Philly_airport&quot;            
+## [15] &quot;derivative:US_Counties&quot;         
+## [16] &quot;upload:delin&quot;                   
+## [17] &quot;draw:junk&quot;                      
+## [18] &quot;sample:nps_boundary_2013&quot;       
+## [19] &quot;sample:simplified_HUC8s&quot;        
+## [20] &quot;draw:sq&quot;                        
+## [21] &quot;upload:tl_f&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'attributes'</span>)</code></pre></div>
+<pre><code>## [1] &quot;STATE&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'values'</span>)</code></pre></div>
+<pre><code>##  [1] &quot;Alabama&quot;              &quot;Arizona&quot;             
+##  [3] &quot;Arkansas&quot;             &quot;California&quot;          
+##  [5] &quot;Colorado&quot;             &quot;Connecticut&quot;         
+##  [7] &quot;Delaware&quot;             &quot;District of Columbia&quot;
+##  [9] &quot;Florida&quot;              &quot;Georgia&quot;             
+## [11] &quot;Idaho&quot;                &quot;Illinois&quot;            
+## [13] &quot;Indiana&quot;              &quot;Iowa&quot;                
+## [15] &quot;Kansas&quot;               &quot;Kentucky&quot;            
+## [17] &quot;Louisiana&quot;            &quot;Maine&quot;               
+## [19] &quot;Maryland&quot;             &quot;Massachusetts&quot;       
+## [21] &quot;Michigan&quot;             &quot;Minnesota&quot;           
+## [23] &quot;Mississippi&quot;          &quot;Missouri&quot;            
+## [25] &quot;Montana&quot;              &quot;Nebraska&quot;            
+## [27] &quot;Nevada&quot;               &quot;New Hampshire&quot;       
+## [29] &quot;New Jersey&quot;           &quot;New Mexico&quot;          
+## [31] &quot;New York&quot;             &quot;North Carolina&quot;      
+## [33] &quot;North Dakota&quot;         &quot;Ohio&quot;                
+## [35] &quot;Oklahoma&quot;             &quot;Oregon&quot;              
+## [37] &quot;Pennsylvania&quot;         &quot;Rhode Island&quot;        
+## [39] &quot;South Carolina&quot;       &quot;South Dakota&quot;        
+## [41] &quot;Tennessee&quot;            &quot;Texas&quot;               
+## [43] &quot;Utah&quot;                 &quot;Vermont&quot;             
+## [45] &quot;Virginia&quot;             &quot;Washington&quot;          
+## [47] &quot;West Virginia&quot;        &quot;Wisconsin&quot;           
+## [49] &quot;Wyoming&quot;</code></pre>
+</div>
+</div>
+<div id="gridded-data-fabric" class="section level2">
+<h2>gridded data (<code>fabric</code>)</h2>
+<p>The <code>fabric</code> concept in <code>geoknife</code> represents the gridded dataset that will be operated on by the tool. <code>fabric</code> can be a time-varying dataset (such as PRISM) or a spatial snapshot coverage dataset (such as the NLCD). At present, <code>fabric</code> is limited to datasets that can be accessed using the OPeNDAP protocol or WMS (web map service). Most helper functions in geoknife, including <code>query(fabric,'variables')</code> tend to work better for OPeNDAP datasets.</p>
+<div id="webdata-object" class="section level3">
+<h3><code>webdata</code> object</h3>
+<p>The <code>webdata</code> class holds all the important information for webdatasets in order to make them available for processing by geoknife’s outsourced geoprocessing engine, the Geo Data Portal. Public fields in <code>webdata</code>:</p>
+<ul>
+<li><code>times</code>: a POSIXct vector of length 2. This specifies the start and end time of the process request. If <code>times()[1]</code> is <code>NA</code>, the start time will be the begining of the dataset. If <code>times()[2]</code> is <code>NA</code> the end time will be the end of the dataset. <code>times</code> must be <code>as.POSIXct(c(NA,NC))</code> for datasets without a time dimension.</li>
+<li><code>url</code>: a character for the location of a web available dataset. This URL will be queried for data access and used for the processing task.</li>
+<li><code>variables</code>: a character vector for the variables of the dataset to use. Must be valid variables that exist within the dataset specified with <code>url</code>.</li>
+</ul>
+<p>To create a default <code>webdata</code> object:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fabric &lt;-<span class="st"> </span><span class="kw">webdata</span>()</code></pre></div>
+<p>The user-level information in webdata is all available with the webdata “show” method (or print).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fabric</code></pre></div>
+<pre><code>## An object of class &quot;webdata&quot;:
+## times: NA NA 
+## url: NA 
+## variables: NA</code></pre>
+<p>The public fields can be accessed in by using the field name:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">times</span>(fabric)</code></pre></div>
+<pre><code>## [1] NA NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">url</span>(fabric) &lt;-<span class="st"> 'http://cida.usgs.gov/thredds/dodsC/prism'</span>
+<span class="kw">variables</span>(fabric) &lt;-<span class="st"> 'ppt'</span>
+
+<span class="kw">times</span>(fabric)[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">as.POSIXct</span>(<span class="st">'1990-01-01'</span>)</code></pre></div>
+</div>
+<div id="quick-access-to-web-available-data" class="section level3">
+<h3>quick access to web available data</h3>
+<p>The Geo Data Portal’s web data catalog is quite extensive, and inludes many datasets that can all be processed with <code>geoknife</code>. Check it out at cida.usgs.gov/gdp. This is not a complete list of all relevant datasets that can be accessed and processed. The <code>geoknife</code> package has a number of quick access datasets build in (similar to quick start <code>webgeom</code> objects).</p>
+<p>An example of a quick start dataset:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fabric &lt;-<span class="st"> </span><span class="kw">webdata</span>(<span class="st">'prism'</span>)
+fabric</code></pre></div>
+<pre><code>## An object of class &quot;webdata&quot;:
+## times: 1895-01-01 1899-01-01 
+## url: http://cida.usgs.gov/thredds/dodsC/prism 
+## variables: ppt</code></pre>
+<p>which can be a starting point for the PRISM dataset, as the fields can be modified:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">times</span>(fabric) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'1990-01-01'</span>,<span class="st">'2010-01-01'</span>)
+<span class="kw">variables</span>(fabric) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'ppt'</span>,<span class="st">'tmx'</span>, <span class="st">'tmn'</span>)
+fabric</code></pre></div>
+<pre><code>## An object of class &quot;webdata&quot;:
+## times: 1990-01-01 2010-01-01 
+## url: http://cida.usgs.gov/thredds/dodsC/prism 
+## variables: ppt tmx tmn</code></pre>
+</div>
+<div id="query-function-for-webdata" class="section level3">
+<h3>query function for <code>webdata</code></h3>
+<p>The <code>query</code> function works on <code>webdata</code>, similar to how it works for <code>webgeom</code> objects. For the PRISM dataset specified above, the time range of the dataset can come from <code>query</code> with <code>times</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">variables</span>(fabric) &lt;-<span class="st"> 'ppt'</span>
+<span class="kw">query</span>(fabric, <span class="st">'times'</span>)</code></pre></div>
+<pre><code>## [1] &quot;1895-01-01 UTC&quot; &quot;2013-02-01 UTC&quot;</code></pre>
+<p>likewise, variables with <code>variables</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(fabric, <span class="st">'variables'</span>)</code></pre></div>
+<pre><code>## [1] &quot;ppt&quot; &quot;tmx&quot; &quot;tmn&quot;</code></pre>
+<p>Note that a variable has to be specified to use the <code>times</code> query:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">variables</span>(fabric) &lt;-<span class="st"> </span><span class="ot">NA</span></code></pre></div>
+<p>This will fail:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(fabric, <span class="st">'times'</span>)</code></pre></div>
+<p>At present, the <code>geoknife</code> package does not have a query method for dataset urls.</p>
+</div>
+</div>
+<div id="knife-object" class="section level2">
+<h2><code>knife</code> object</h2>
+<p>The <code>webprocess</code> class holds all the important information for geoknife processing details for the outsourced geoprocessing engine, the Geo Data Portal. Public fields in <code>webprocess</code>:</p>
+<ul>
+<li><code>url</code>: a character for the location of the web processing service to be used. Defaults to <a href="http://cida.usgs.gov/gdp/process/WebProcessingService" class="uri">http://cida.usgs.gov/gdp/process/WebProcessingService</a>.</li>
+<li><code>algorithm</code>: a list specifying the algorithm to be used for processing. Defaults to Area Grid Statistics (weighted).</li>
+<li><code>version</code>: a character specifying the version of the web processing service to be used. Defaults to 1.0.0.</li>
+<li><code>processInputs</code>: a list of processing details for the specified <code>algorithm</code>. These details vary depending on <code>algorithm</code> and are this field is automatically reset when the <code>algorithm</code> field is set.</li>
+<li><code>wait</code>: a boolean that specifies whether to have R wait until the process is finished. Defaults to <code>FALSE</code></li>
+<li><code>email</code>: a character that species an email address to send the finished process result to.</li>
+</ul>
+<div id="query-function-for-webprocess" class="section level3">
+<h3>query function for <code>webprocess</code></h3>
+<p>The <code>query</code> function works on <code>webprocess</code>, similar to how it works for <code>webgeom</code> and <code>webdata</code> objects. For a default <code>webprocess</code> object, the available algorithms can be queried by:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knife &lt;-<span class="st"> </span><span class="kw">webprocess</span>()
+<span class="kw">query</span>(knife, <span class="st">'algorithms'</span>)</code></pre></div>
+<pre><code>## $`WCS Subset`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageIntersectionAlgorithm&quot;
+## 
+## $`OPeNDAP Subset`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm&quot;
+## 
+## $`Categorical Coverage Fraction`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.FeatureCategoricalGridCoverageAlgorithm&quot;
+## 
+## $`Area Grid Statistics (weighted)`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm&quot;
+## 
+## $`Area Grid Statistics (unweighted)`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.FeatureGridStatisticsAlgorithm&quot;
+## 
+## $`PRMS Parameter Generator`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.PRMSParameterGeneratorAlgorithm&quot;
+## 
+## $`A generalized daily climate statistics algorithm`
+## [1] &quot;org.n52.wps.server.r.gridded_daily&quot;
+## 
+## $`A generalized bioclim algorithm`
+## [1] &quot;org.n52.wps.server.r.gridded_bioclim&quot;</code></pre>
+<p>Changing the <code>webprocess</code> url will modify the endpoint for the query, and different algorithms may be available:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">url</span>(knife) &lt;-<span class="st"> 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService'</span>
+<span class="kw">query</span>(knife, <span class="st">'algorithms'</span>)</code></pre></div>
+<pre><code>## $`WCS Subset`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageIntersectionAlgorithm&quot;
+## 
+## $`OPeNDAP Subset`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm&quot;
+## 
+## $`Categorical Coverage Fraction`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.FeatureCategoricalGridCoverageAlgorithm&quot;
+## 
+## $`Area Grid Statistics (weighted)`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm&quot;
+## 
+## $`Area Grid Statistics (unweighted)`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.FeatureGridStatisticsAlgorithm&quot;
+## 
+## $`PRMS Parameter Generator`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.PRMSParameterGeneratorAlgorithm&quot;
+## 
+## $`A generalized daily climate statistics algorithm`
+## [1] &quot;org.n52.wps.server.r.gridded_daily&quot;
+## 
+## $`A generalized bioclim algorithm`
+## [1] &quot;org.n52.wps.server.r.gridded_bioclim&quot;</code></pre>
+</div>
+<div id="algorithm" class="section level3">
+<h3>algorithm</h3>
+<p>As noted above, the <code>algorithm</code> field in <code>webprocess</code> is a list, specifying the algorithm name and relative path to the algorithm endpoint. To access or change the algorithm:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knife &lt;-<span class="st"> </span><span class="kw">webprocess</span>()
+<span class="kw">algorithm</span>(knife)</code></pre></div>
+<pre><code>## $`Area Grid Statistics (weighted)`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">algorithm</span>(knife) &lt;-<span class="st"> </span><span class="kw">query</span>(knife, <span class="st">'algorithms'</span>)[<span class="dv">1</span>]
+<span class="kw">algorithm</span>(knife)</code></pre></div>
+<pre><code>## $`WCS Subset`
+## [1] &quot;gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageIntersectionAlgorithm&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># -- or --</span>
+<span class="kw">algorithm</span>(knife) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="st">'Area Grid Statistics (weighted)'</span> =<span class="st"> </span>
+<span class="st">                           &quot;gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm&quot;</span>)</code></pre></div>
+</div>
+<div id="inputs" class="section level3">
+<h3>inputs</h3>
+<p>getting and setting <code>processInputs</code> for <code>geoknife</code> is currently in. Check back later.</p>
+</div>
+<div id="url" class="section level3">
+<h3>url</h3>
+<p>The <code>url</code> field in <code>webprocess</code> can be accessed and set as expected:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">url</span>(knife)</code></pre></div>
+<pre><code>## [1] &quot;http://cida.usgs.gov/gdp/process/WebProcessingService&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">url</span>(knife) &lt;-<span class="st"> 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService'</span></code></pre></div>
+</div>
+<div id="wait" class="section level3">
+<h3><code>wait</code></h3>
+<p>The <code>wait</code> boolean in <code>webprocess</code> can set during creation:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knife &lt;-<span class="st"> </span><span class="kw">webprocess</span>(<span class="dt">wait =</span> <span class="ot">TRUE</span>)
+knife</code></pre></div>
+<pre><code>## An object of class &quot;webprocess&quot;:
+## url: http://cida.usgs.gov/gdp/process/WebProcessingService 
+## algorithm: Area Grid Statistics (weighted) 
+## version: 1.0.0 
+## process inputs: 
+##    TIME_START: NA
+##    TIME_END: NA
+##    SUMMARIZE_TIMESTEP: false
+##    SUMMARIZE_FEATURE_ATTRIBUTE: false
+##    FEATURE_ATTRIBUTE_NAME: 
+##    DATASET_URI: 
+##    DATASET_ID: 
+##    REQUIRE_FULL_COVERAGE: true
+##    STATISTICS: 
+##    DELIMITER: COMMA
+##    GROUP_BY: 
+## wait: TRUE 
+## email: NA</code></pre>
+</div>
+<div id="email" class="section level3">
+<h3><code>email</code></h3>
+<p>The <code>email</code> field in <code>webprocess</code> can be accessed and set as expected:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knife &lt;-<span class="st"> </span><span class="kw">webprocess</span>(<span class="dt">email =</span> <span class="st">'fake.email@gmail.com'</span>)
+knife</code></pre></div>
+<pre><code>## An object of class &quot;webprocess&quot;:
+## url: http://cida.usgs.gov/gdp/process/WebProcessingService 
+## algorithm: Area Grid Statistics (weighted) 
+## version: 1.0.0 
+## process inputs: 
+##    TIME_START: NA
+##    TIME_END: NA
+##    SUMMARIZE_TIMESTEP: false
+##    SUMMARIZE_FEATURE_ATTRIBUTE: false
+##    FEATURE_ATTRIBUTE_NAME: 
+##    DATASET_URI: 
+##    DATASET_ID: 
+##    REQUIRE_FULL_COVERAGE: true
+##    STATISTICS: 
+##    DELIMITER: COMMA
+##    GROUP_BY: 
+## wait: FALSE 
+## email: fake.email@gmail.com</code></pre>
+</div>
+</div>
+<div id="geojob-details" class="section level2">
+<h2><code>geojob</code> details</h2>
+<p>The <code>geojob</code> in the <code>geoknife</code> package contains all of the processing configuration details required to execute a processing request to the Geo Data Portal and check up on the state of that request. A <code>geojob</code> object is created using the high-level function <code>geoknife()</code> with the <code>stencil</code>, <code>fabric</code> and optional <code>knife</code> arguments as described above.</p>
+<div id="geojob-class-and-details" class="section level3">
+<h3><code>geojob</code> class and details</h3>
+<p>The <code>geojob</code> public fields include:</p>
+<ul>
+<li><code>url</code>: the url where the processing job was sent to. Is defined by the <code>url</code> field of the <code>knife</code> argument used to create the job</li>
+<li><code>xml</code>: the XML used in the POST to the web geoprocessing service. This XML includes configurations set up by the <code>fabric</code>, <code>stencil</code>, and <code>knife</code> arguments.</li>
+<li><code>id</code>: the url of the process that is currently running, or <no active job> for no job.</li>
+</ul>
+</div>
+<div id="check-and-related-functions" class="section level3">
+<h3><code>check</code> and related functions</h3>
+<p>The status of a <code>geojob</code> can be checked with the <code>check</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">geoknife</span>(stencil, <span class="dt">fabric =</span> <span class="st">'prism'</span>, <span class="dt">wait =</span> <span class="ot">FALSE</span>)
+<span class="kw">check</span>(job)</code></pre></div>
+<pre><code>## $status
+## [1] &quot;Process Started&quot;
+## 
+## $URL
+## NULL
+## 
+## $statusType
+## [1] &quot;ProcessStarted&quot;</code></pre>
+<p>use other convienence functions related to <code>check</code> to return boolean (<code>TRUE</code> or <code>FALSE</code>) responses</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">running</span>(job)
+<span class="kw">error</span>(job)
+<span class="kw">successful</span>(job)</code></pre></div>
+</div>
+<div id="cancel-geojob" class="section level3">
+<h3><code>cancel</code> geojob</h3>
+<p>The <code>geoknife</code> package currently limits the user processing requests to single-running processes, so as to avoid creating thousands of requests in error, which could overwhelm the processing resources. If there is a reason to support additional jobs at one time, please email the package maintainers with your query.</p>
+<p>To cancel and existing job: Cancel a running job but retain the details:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">id</span>(job)</code></pre></div>
+<pre><code>## [1] &quot;http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=6cf2e928-8a4a-4767-abc6-1ae3f70d207b&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">cancel</span>(job)
+<span class="kw">id</span>(job)</code></pre></div>
+<pre><code>## [1] &quot;&lt;no active job&gt;&quot;</code></pre>
+<p>To cancel any running job without specifying the <code>geojob</code> reference:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cancel</span>()</code></pre></div>
+</div>
+</div>
+<div id="geoknife-web-resources" class="section level2">
+<h2>geoknife web resources</h2>
+<p>geoknife outsources all major geospatial processing tasks to a remote server. Because of this, users must have an active internet connection. Problems with connections to datasets or the processing resources are rare, but they do happen. When experiencing a connectivity problem, the best approach is often to try again later or email <a href="mailto:gdp@usgs.gov">gdp@usgs.gov</a> with any questions. The various web dependencies are described below.</p>
+<div id="geo-data-portal" class="section level3">
+<h3>Geo Data Portal</h3>
+<p>The U.S. Geological Survey’s “Geo Data Portal” (GDP) provides the data access and processing services that are leveraged by the <code>geoknife</code> package. See <a href="http://cida.usgs.gov/gdp">cida.usgs.gov/gdp</a> for the GDP user interface.</p>
+</div>
+<div id="csw-catalog-service-for-the-web" class="section level3">
+<h3>CSW (catalog service for the web)</h3>
+<p>The Catalog Service for the Web is an OGC standard for dataset metadata storage and access. The GDP has a catalog of datasets known to work with geoknife and the GDP, which are available through the <code>httr</code> R package:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">response &lt;-<span class="st"> </span>httr::<span class="kw">POST</span>(<span class="dt">url =</span> <span class="st">'http://cida.usgs.gov/gdp/geonetwork/srv/en/csw'</span>, <span class="dt">body =</span> request, <span class="kw">content_type_xml</span>())</code></pre></div>
+<p>a more user-friendly dataset query function is currently in development to return these datasets and their associated metadata.</p>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

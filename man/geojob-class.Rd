@@ -15,5 +15,9 @@ geojob class
 \item{\code{xml}}{XML character for post}
 
 \item{\code{id}}{job identifier}
+
+\item{\code{package.version}}{the version of the geoknife package}
+
+\item{\code{algorithm.version}}{the version of the algorithm used for processing}
 }}
 

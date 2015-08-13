@@ -6,7 +6,7 @@ stencil
 #see what other ecoregions are available:
 query(stencil, 'values')
 
-fabric <- webdata(url = ' http://cida.usgs.gov/thredds/dodsC/iclus/hc') #, variables = 
+fabric <- webdata(url = 'http://cida.usgs.gov/thredds/dodsC/iclus/hc') #, variables = 
 
 #see what variables are available:
 query(fabric, 'variables')

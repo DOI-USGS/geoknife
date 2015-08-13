@@ -60,8 +60,6 @@ setMethod(f = "inputs<-",signature = c("webprocess",'missing'),
 #'@aliases inputs<-
 setMethod(f = "inputs<-",signature = c("webprocess",'character'),
           definition = function(.Object, ..., value){
-            if (length(value) > 1)
-              stop('character input cannot exceed length 1.')
             name <- as.character(expand.grid(..., stringsAsFactors = FALSE))
             .Object <- .setInput(.Object, name, value)
             return(.Object)

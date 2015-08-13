@@ -1,13 +1,17 @@
-#' @title geojob class
+  #' @title geojob class
 #' @slot url URL of web processing endpoint
 #' @slot xml XML character for post
 #' @slot id job identifier
+#' @slot package.version the version of the geoknife package
+#' @slot algorithm.version the version of the algorithm used for processing
 #' @rdname geojob-class
 setClass(
   Class = "geojob",
   representation = representation(
     url = 'character',
     xml = 'character',
+    package.version = 'character',
+    algorithm.version = 'character',
     id = "character")
 )
 
@@ -17,10 +21,13 @@ setMethod(f="initialize",signature="geojob",
             .Object, 
             id = '<no active job>',
             url = as.character(NA),
+            algorithm.version = as.character(NULL),
             xml = as.character(NA)){
             
             .Object@xml <- xml
             .Object@id	<- id
+            .Object@package.version = as.character(package_version(packageVersion(getPackageName())))
+            .Object@algorithm.version = algorithm.version
             return(.Object)
           })
 
@@ -107,3 +114,4 @@ setMethod(f = "id",signature = "geojob", definition = function(.Object){
   return(value)
 }
 )
+  

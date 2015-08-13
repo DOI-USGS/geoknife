@@ -42,3 +42,32 @@ setMethod(f = "query",signature("webdata",'missing'),
             stop('specify a field to query against for webdata object')
           }
 )
+#'@rdname query
+#'@aliases query,webdata-method  
+setMethod(f = "query",signature("character",'missing'),
+          definition = function(.Object, field, ...){
+            field <- match.arg(.Object, c('webdata'))
+            values <- do.call(paste0(field,"_query"), list(...))
+            return(values)
+          }
+)
+
+#' @importFrom httr content POST content_type_xml
+webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54dd2326e4b08de9379b2fb1/csw'){
+  warning('function in development. Currently ignores all catalogued WCS endpoints. Output is likely to change.')
+  request = '<csw:GetRecords xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2" resultType="results" outputSchema="http://www.isotc211.org/2005/gmd" maxRecords="1000">
+    <csw:Query typeNames="csw:Record">
+    <csw:ElementSetName>full</csw:ElementSetName>
+    </csw:Query>
+    </csw:GetRecords>'
+  xpath <- '//srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL'
+  parentxpath <- paste0(xpath,paste(rep('/parent::node()[1]',6), collapse='')) #/parent::node()[1]
+  namespaces = c('srv','gmd','gco')
+ 
+  response <- content(httr::POST(url = csw_url, body = request, content_type_xml()))
+  values <- lapply(getNodeSet(response, xpath, namespaces = namespaces), xmlValue)
+  names(values) <- sapply(getNodeSet(response, paste0(parentxpath,'/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString'), namespaces = namespaces), xmlValue)
+  types = unname(sapply(getNodeSet(response, parentxpath, namespaces = namespaces), xmlAttrs))
+  values[which(substr(types,1,6) == 'OGC-WC')] <- NULL
+  return(values)
+}

@@ -3,6 +3,7 @@
 \docType{methods}
 \name{query}
 \alias{query}
+\alias{query,character,missing-method}
 \alias{query,webdata,character-method}
 \alias{query,webdata,missing-method}
 \alias{query,webdata-method}
@@ -17,6 +18,8 @@ query(.Object, field, ...)
 \S4method{query}{webdata,character}(.Object, field, ...)
 
 \S4method{query}{webdata,missing}(.Object, field, ...)
+
+\S4method{query}{character,missing}(.Object, field, ...)
 
 \S4method{query}{webgeom,character}(.Object, field, ...)
 

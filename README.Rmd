@@ -1,3 +1,12 @@
+---
+title: "README"
+author: "Jordan S Read"
+package version: "`r as.character(packageVersion('geoknife'))`"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  md_document:
+    variant: markdown_github
+---
 #`geoknife` package version `r packageVersion('geoknife')`
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)
@@ -32,7 +41,7 @@ The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) i
 
 ###What can `geoknife` do?
 #####define a stencil that represents the geographic region to slice out of the data
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(geoknife)
 # from a single point
 stencil <- simplegeom(c(-89, 46.23))
