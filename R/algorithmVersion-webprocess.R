@@ -4,6 +4,6 @@ algorithmVersion <- function(knife){
     'service' = 'WPS', 'version' = version(knife),'request' = 'DescribeProcess', 'identifier'=algorithm(knife)[[1]]))
   doc	<-	htmlParse(getCaps,isURL=FALSE, useInternalNodes = TRUE)
   
-  version <- as.numeric_version(xmlAttrs(getNodeSet(doc,'//processdescription')[[1]])[['wps:processversion']])
+  version <- xmlAttrs(getNodeSet(doc,'//processdescription')[[1]])[['wps:processversion']]
   return(version)
 }

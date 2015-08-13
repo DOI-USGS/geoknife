@@ -5,15 +5,16 @@
 #'running
 #'error
 #'@usage
-#'successful(.Object)
-#'error(.Object)
-#'running(.Object)
+#'successful(.Object, retry)
+#'error(.Object, retry)
+#'running(.Object, retry)
 #'
 #'@param .Object a \linkS4class{geojob} object
+#'@param retry attempt to retry again if communication failed with the server
 #'@return TRUE/FALSE indicating if process is in the given state (error, processing, successful)
 #'@description Simple wrapper to check process status
 #'
-#'@author Luke Winslow
+#'@author Luke Winslow, Jordan S Read
 #'@seealso \code{\link{check}}
 #'
 #'@examples
@@ -28,22 +29,26 @@
 #'}
 #'
 #'@export
-setGeneric(name="successful",def=function(.Object){standardGeneric("successful")})
+setGeneric(name="successful",def=function(.Object, retry){standardGeneric("successful")})
 
 
 #'@rdname successful-methods
 #'@aliases successful
-setMethod(f = "successful",signature(.Object = "geojob"), definition = function(.Object){
+setMethod(f = "successful",signature(.Object = "geojob"), definition = function(.Object, retry = FALSE){
 	
-	status = check(.Object)
+  process = check(.Object)
+  if (process$status == 'unknown' && !retry){
+    Sys.sleep(10)
+    process = check(.Object)
+  }
 	
-	return(status$statusType == "ProcessSucceeded")
+	return(process$statusType == "ProcessSucceeded")
 	
 })
 
 
 #'@export
-setGeneric(name="running",def=function(.Object, ...){standardGeneric("running")})
+setGeneric(name="running",def=function(.Object, retry){standardGeneric("running")})
 
 #'@rdname successful-methods
 #'@aliases running
@@ -55,18 +60,23 @@ setMethod(f = "running",signature(.Object = "geojob"), definition = function(.Ob
     process = check(.Object)
   }
   
-  return(process$statusType == "ProcessStarted")
+  return(process$statusType == "ProcessStarted" | process$statusType == "ProcessAccepted")
 })
 
 
 #'@export
-setGeneric(name="error",def=function(.Object){standardGeneric("error")})
+setGeneric(name="error",def=function(.Object, retry){standardGeneric("error")})
 
 #'@rdname successful-methods
 #'@aliases error
-setMethod(f = "error",signature = "geojob", definition = function(.Object){
+setMethod(f = "error",signature = "geojob", definition = function(.Object, retry = FALSE){
   
-  status = check(.Object)
+  process = check(.Object)
+  if (process$status == 'unknown' && !retry){
+    Sys.sleep(10)
+    process = check(.Object)
+  }
   
-  return(status$statusType == "ProcessFailed")
+  
+  return(process$statusType == "ProcessFailed")
 })

@@ -32,11 +32,11 @@
 #'@aliases
 #'geoknife
 #'@examples
+#'\dontrun{
 #'job <- geoknife(stencil = c(-89,42), fabric = 'prism')
 #'check(job)
 #'
 #'#-- set up geoknife to email user when the process is complete
-#'\dontrun{
 #'
 #' job <- geoknife(webgeom("state::Wisconsin"), fabric = 'prism', email = 'fake.email@@gmail.com')
 #' 

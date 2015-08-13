@@ -45,11 +45,11 @@ Several quick start methods for creating a \code{\link{webdata}} object (only \c
 an type that can be coerced into \code{\link{webdata}} are valid arguments for \code{fabric}).
 }
 \examples{
+\dontrun{
 job <- geoknife(stencil = c(-89,42), fabric = 'prism')
 check(job)
 
 #-- set up geoknife to email user when the process is complete
-\dontrun{
 
 job <- geoknife(webgeom("state::Wisconsin"), fabric = 'prism', email = 'fake.email@gmail.com')
 
