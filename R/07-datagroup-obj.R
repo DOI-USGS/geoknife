@@ -36,3 +36,19 @@ setMethod("datagroup", signature(), function(...) {
   datagroup <- new("datagroup",...)
   return(datagroup)
 })
+
+#'@rdname datagroup-methods
+#'@aliases datagroup,datagroup-methods
+setMethod("[", signature('datagroup'), function(x, i, j, ..., drop = TRUE) {
+  
+  
+  return(datagroup(x@group[i]))
+})
+
+#'@rdname datagroup-methods
+#'@aliases datagroup,datagroup-methods
+setMethod("[[", signature('datagroup'), function(x, i, j, ..., drop = TRUE) {
+  
+  
+  return(x@group[[i]])
+})
