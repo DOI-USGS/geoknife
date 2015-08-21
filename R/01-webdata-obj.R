@@ -128,3 +128,11 @@ setAs('list', 'webdata', function(from){
   .Object <- do.call(what = "webdata", args = from)
   return(.Object)
 })
+
+setAs('datagroup', 'webdata', function(from){
+  if (length(from@group) > 1){
+    warning('coercing datagroup into webdata. More than one dataset specified, using the first.')
+  }
+  .Object <- do.call(what = "webdata", args = list(url = from[[1]]))
+  return(.Object)
+})

@@ -69,5 +69,6 @@ webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54
   names(values) <- sapply(getNodeSet(response, paste0(parentxpath,'/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString'), namespaces = namespaces), xmlValue)
   types = unname(sapply(getNodeSet(response, parentxpath, namespaces = namespaces), xmlAttrs))
   values[which(substr(types,1,6) == 'OGC-WC')] <- NULL
-  return(values)
+  
+  return(datagroup(values))
 }
