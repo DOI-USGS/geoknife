@@ -1,8 +1,8 @@
 context("using query for webdata")
 
 
-test_that("webdata query returns a list", {
-  expect_warning(datasets <<- query('webdata'))
+test_that("webdata query returns a datagroup", {
+  datasets <<- query('webdata')
   expect_is(datasets, 'datagroup')
 })
 
