@@ -68,9 +68,10 @@ webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54
   abstracts = sapply(getNodeSet(response, paste0(parentxpath,'/gmd:abstract/gco:CharacterString'), namespaces = namespaces), xmlValue)
   titles = sapply(getNodeSet(response, paste0(parentxpath,'/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString'), namespaces = namespaces), xmlValue)
   group = list()
-  for (i in 1:length(urls)){
-    group[[i]] <- list(title = titles[i], url=urls[[i]], abstract = abstracts[i])
-  }
+  sort.ix <- sort(titles, index.return = TRUE)$ix
   
+  for (i in 1:length(urls)){
+    group[[i]] <- list(title = titles[sort.ix[i]], url=urls[[sort.ix[i]]], abstract = abstracts[sort.ix[i]])
+  }
   return(datagroup(group))
 }
