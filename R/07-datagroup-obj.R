@@ -41,7 +41,6 @@ setMethod("datagroup", signature(), function(...) {
 #'@aliases datagroup,datagroup-methods
 setMethod("[", signature('datagroup'), function(x, i, j, ..., drop = TRUE) {
   
-  
   return(datagroup(x@group[i]))
 })
 
@@ -52,3 +51,30 @@ setMethod("[[", signature('datagroup'), function(x, i, j, ..., drop = TRUE) {
   
   return(x@group[[i]])
 })
+
+setAs('datagroup', 'webdata', function(from){
+  if (length(from@group) > 1){
+    warning('coercing datagroup into webdata. More than one dataset specified, using the first.')
+  }
+  .Object <- do.call(what = "webdata", args = list(url = from@group[[1]]$url))
+  return(.Object)
+})
+
+
+#' get abstract from a datagroup
+#' 
+#' extracts the abstract information from a datagroup object
+#' 
+#'@rdname abstract-datagroup
+#'@aliases 
+#'abstract
+#'@export
+setGeneric(name="abstract",def=function(.Object){standardGeneric("abstract")})
+
+#'@rdname abstract-datagroup
+#'@aliases abstract
+setMethod(f = "abstract",signature(.Object = "datagroup"),
+          definition = function(.Object){
+            return(sapply(.Object@group, function(x) x$abstract))
+          })
+
