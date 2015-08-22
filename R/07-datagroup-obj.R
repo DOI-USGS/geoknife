@@ -78,3 +78,7 @@ setMethod(f = "abstract",signature(.Object = "datagroup"),
             return(sapply(.Object@group, function(x) x$abstract))
           })
 
+setMethod(f = "length",signature(x = "datagroup"),
+          definition = function(x){
+            return(length(x@group))
+          })
