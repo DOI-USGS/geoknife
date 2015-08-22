@@ -40,7 +40,8 @@ setMethod("datagroup", signature(), function(...) {
 #'@rdname datagroup-methods
 #'@aliases datagroup,datagroup-methods
 setMethod("[", signature('datagroup'), function(x, i, j, ..., drop = TRUE) {
-  
+  if (is.character(i))
+    i = which(title(x) %in% i)
   return(datagroup(x@group[i]))
 })
 
@@ -68,6 +69,7 @@ setAs('datagroup', 'webdata', function(from){
 #'@rdname abstract-datagroup
 #'@aliases 
 #'abstract
+#'title
 #'@export
 setGeneric(name="abstract",def=function(.Object){standardGeneric("abstract")})
 
@@ -76,6 +78,22 @@ setGeneric(name="abstract",def=function(.Object){standardGeneric("abstract")})
 setMethod(f = "abstract",signature(.Object = "datagroup"),
           definition = function(.Object){
             return(sapply(.Object@group, function(x) x$abstract))
+          })
+
+#'@rdname abstract-datagroup
+#'@aliases 
+#'abstract
+#'title
+#'@export
+setGeneric(name="title",def=function(.Object){standardGeneric("title")})
+
+#'@rdname abstract-datagroup
+#'@aliases 
+#'abstract
+#'title
+setMethod(f = "title",signature(.Object = "datagroup"),
+          definition = function(.Object){
+            return(sapply(.Object@group, function(x) x$title))
           })
 
 setMethod(f = "length",signature(x = "datagroup"),
