@@ -1,8 +1,8 @@
 context("Test output file parsing")
 
-test_that("loadOutput fails with no process", {
+test_that("result fails with no process", {
 #   gk <- geoknife()
-#   expect_error(loadOutput(gk))
+#   expect_error(result(gk))
 #   gk@processID = "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=31b0e0e4-5dbb-474a-9018-f251deGARBAGE"
 #   expect_error(loadOutput(gk))
 })
