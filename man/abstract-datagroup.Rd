@@ -4,11 +4,17 @@
 \name{abstract}
 \alias{abstract}
 \alias{abstract,datagroup-method}
+\alias{title}
+\alias{title,datagroup-method}
 \title{get abstract from a datagroup}
 \usage{
 abstract(.Object)
 
 \S4method{abstract}{datagroup}(.Object)
+
+title(.Object)
+
+\S4method{title}{datagroup}(.Object)
 }
 \description{
 extracts the abstract information from a datagroup object

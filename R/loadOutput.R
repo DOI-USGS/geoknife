@@ -6,8 +6,8 @@
 #'(See \code{\link{check}}).
 #'@param ... additional arguments passed to parsers (e.g., keep.units = TRUE)
 #'@return data.frame of timeseries values. 
-#'@rdname loadOutput-methods
-#'@aliases loadOutput
+#'@rdname result-methods
+#'@aliases result
 #'@docType methods
 #'@keywords methods
 #'@importFrom XML xmlGetAttr getNodeSet xmlParse xmlChildren xmlName xpathApply
@@ -16,14 +16,14 @@
 #'@examples
 #'\dontrun{
 #'job <- geoknife(stencil = c(-89,42), fabric = 'prism', wait = TRUE)
-#'loadOutput(job, with.units = TRUE) # load and print output
+#'result(job, with.units = TRUE) # load and print output
 #'}
 #'
-setGeneric(name="loadOutput",def=function(.Object, ...){standardGeneric("loadOutput")})
+setGeneric(name="result",def=function(.Object, ...){standardGeneric("result")})
 
-#'@rdname loadOutput-methods
-#'@aliases loadOutput
-setMethod(f = "loadOutput",signature="geojob",
+#'@rdname result-methods
+#'@aliases result
+setMethod(f = "result",signature="geojob",
   definition = function(.Object, ...){
             if (successful(.Object)){
               output <- outputParse(.Object, ...)
