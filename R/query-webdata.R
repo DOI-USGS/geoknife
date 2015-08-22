@@ -54,7 +54,6 @@ setMethod(f = "query",signature("character",'missing'),
 
 #' @importFrom httr content POST content_type_xml
 webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54dd2326e4b08de9379b2fb1/csw'){
-  warning('function in development. Currently ignores all catalogued WCS endpoints. Output is likely to change.')
   request = '<csw:GetRecords xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2" resultType="results" outputSchema="http://www.isotc211.org/2005/gmd" maxRecords="1000">
     <csw:Query typeNames="csw:Record">
     <csw:ElementSetName>full</csw:ElementSetName>
@@ -65,9 +64,13 @@ webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54
   namespaces = c('srv','gmd','gco')
  
   response <- content(httr::POST(url = csw_url, body = request, content_type_xml()))
-  values <- lapply(getNodeSet(response, xpath, namespaces = namespaces), xmlValue)
-  names(values) <- sapply(getNodeSet(response, paste0(parentxpath,'/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString'), namespaces = namespaces), xmlValue)
-  types = unname(sapply(getNodeSet(response, parentxpath, namespaces = namespaces), xmlAttrs))
-  values[which(substr(types,1,6) == 'OGC-WC')] <- NULL
-  return(values)
+  urls <- lapply(getNodeSet(response, xpath, namespaces = namespaces), xmlValue)
+  abstracts = sapply(getNodeSet(response, paste0(parentxpath,'/gmd:abstract/gco:CharacterString'), namespaces = namespaces), xmlValue)
+  titles = sapply(getNodeSet(response, paste0(parentxpath,'/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString'), namespaces = namespaces), xmlValue)
+  group = list()
+  for (i in 1:length(urls)){
+    group[[i]] <- list(title = titles[i], url=urls[[i]], abstract = abstracts[i])
+  }
+  
+  return(datagroup(group))
 }

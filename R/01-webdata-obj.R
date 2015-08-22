@@ -128,3 +128,4 @@ setAs('list', 'webdata', function(from){
   .Object <- do.call(what = "webdata", args = from)
   return(.Object)
 })
+
