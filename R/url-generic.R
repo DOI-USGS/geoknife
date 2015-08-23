@@ -40,6 +40,13 @@ setMethod(f = "url<-",signature(.Object = "webprocess"), definition = function(.
 
 #'@aliases url
 #'@rdname url
+setMethod(f = "url",signature(.Object = "datagroup"),
+          definition = function(.Object){
+            return(sapply(.Object@group, function(x) x$url))
+          })
+
+#'@aliases url
+#'@rdname url
 setMethod(f = "url",signature(.Object = "ANY"),
           definition = function(.Object){
             return(.Object@url)

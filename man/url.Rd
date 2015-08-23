@@ -4,6 +4,7 @@
 \name{url<-}
 \alias{url}
 \alias{url,ANY-method}
+\alias{url,datagroup-method}
 \alias{url<-}
 \alias{url<-,ANY-method}
 \alias{url<-,webprocess-method}
@@ -17,6 +18,8 @@ url(.Object)
 \S4method{url}{ANY}(.Object) <- value
 
 \S4method{url}{webprocess}(.Object) <- value
+
+\S4method{url}{datagroup}(.Object)
 
 \S4method{url}{ANY}(.Object)
 }
