@@ -23,7 +23,7 @@ Tools for geo-web processing of gridded data via the [Geo Data Portal](http://ci
 To install the stable version of `geoknife` package with dependencies:
 ```{r, eval=FALSE}
 install.packages("geoknife", 
-    repos = c("http://owi.usgs.gov/R"),
+    repos = c("http://owi.usgs.gov/R","http://cran.rstudio.com/"),
     dependencies = TRUE)
 ```
 Or to install the current development version of the package:

@@ -11,7 +11,7 @@ To install the stable version of `geoknife` package with dependencies:
 
 ``` r
 install.packages("geoknife", 
-    repos = c("http://owi.usgs.gov/R"),
+    repos = c("http://owi.usgs.gov/R","http://cran.rstudio.com/"),
     dependencies = TRUE)
 ```
 
@@ -80,7 +80,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=f28eba8f-ac7b-4717-a9a7-5eb95c0515beOUTPUT"
+    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=32654583-4dfe-4aef-b46c-4c0f3fae3f1bOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
