@@ -30,3 +30,10 @@ test_that("geoknife sets stencil correctly", {
   expect_is(job, 'geojob')
   cancel(job)
 })
+
+context("geoknife w/ knife modified in line")
+test_that("geoknife sets knife correctly", {
+  job <- geoknife('HUC8::09020306', 'prism', knife=webprocess(), wait=TRUE)
+  expect_true(geoknife:::canStart())
+})
+
