@@ -74,15 +74,6 @@ geoknife <- function(stencil, fabric, knife = webprocess(...), ...){
 }
 
 
-
-# is this used anymore??? seems id(geojob) does this.
-setProcessID	<-	function(.Object,processID){
-	.Object@processID	<-	processID
-	return(.Object)
-}
-
-
-
 #'@importFrom httr POST content_type_xml
 genericExecute	<-	function(url,requestXML){
 

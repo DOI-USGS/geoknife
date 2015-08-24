@@ -23,7 +23,7 @@ Tools for geo-web processing of gridded data via the [Geo Data Portal](http://ci
 To install the stable version of `geoknife` package with dependencies:
 ```{r, eval=FALSE}
 install.packages("geoknife", 
-    repos = c("http://owi.usgs.gov/R"),
+    repos = c("http://owi.usgs.gov/R","http://cran.rstudio.com/"),
     dependencies = TRUE)
 ```
 Or to install the current development version of the package:
@@ -95,7 +95,7 @@ plot(data[,1:2], ylab = variables(fabric))
 job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
-###`geoknife` Functions (as of v0.11.0)
+###`geoknife` Functions (as of v0.12.1)
 | Function       | Title           |
 | ------------- |:-------------|
 | `geoknife` | slice up gridded data according to overlap with feature(s) |
@@ -119,7 +119,7 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 | `version` | the version of a `webgeom` or `webdata` |
 | `xml` | the xml of a `geojob` |
 
-###`geoknife` classes (as of v0.6.2)
+###`geoknife` classes (as of v0.12.0)
 | Class       | Title           |
 | ------------- |:-------------|
 | `simplegeom` | a simple geometric class. Extends `sp::SpatialPolygons` |
@@ -127,9 +127,10 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 | `webprocess` | a web processing service |
 | `webdata` | web data |
 | `geojob` | a geo data portal processing job |
+| `datagroup` | a simple class that contains data lists that can be `webdata` |
 
 ##What libraries does `geoknife` need?
-This version requires `httr`, `jsonlite`, `lubridate` and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
+This version requires `httr`, `jsonlite`, and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
 
 ##Disclaimer
 This software is in the public domain because it contains materials that originally came from the U.S. Geological Survey, an agency of the United States Department of Interior. For more information, see the [official USGS copyright policy](http://www.usgs.gov/visual-id/credit_usgs.html#copyright/ "official USGS copyright policy")
