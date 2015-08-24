@@ -24,11 +24,3 @@ test_that("query values", {
                 values = "New Hampshire")
   expect_is(query(wg, 'values'),'character')
 })
-
-test_that("changing version",{
-  wp <- webprocess()
-  v1 = version(wp)
-  version(wp) = '1.0.0'
-  expect_false(v1 == version(wp))
-  expect_equal(version(wp), '1.0.0')
-})
