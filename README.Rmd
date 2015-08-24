@@ -23,7 +23,7 @@ Tools for geo-web processing of gridded data via the [Geo Data Portal](http://ci
 To install the stable version of `geoknife` package with dependencies:
 ```{r, eval=FALSE}
 install.packages("geoknife", 
-    repos = c("http://owi.usgs.gov/R"),
+    repos = c("http://owi.usgs.gov/R","http://cran.rstudio.com/"),
     dependencies = TRUE)
 ```
 Or to install the current development version of the package:
@@ -37,7 +37,7 @@ The `geoknife` package was created to support web-based geoprocessing of large g
 
 `geoknife` interacts with a remote server to figure out what types of processing capabilities are available, in addition to seeing what types of geospatial features are already available to be used as an area of interest (commonly, these are user-uploaded shapefiles). Because communication with web resources are central to `geoknife` operations, users must have an active internet connection. 
 
-The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm parameters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `loadOutput`. 
+The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm parameters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `result`. 
 
 ###What can `geoknife` do?
 #####define a stencil that represents the geographic region to slice out of the data
@@ -86,7 +86,7 @@ successful(job)
 ```
 #####plot the results
 ```{r, fig.height=3.5, fig.width=7}
-data <- loadOutput(job)
+data <- result(job)
 plot(data[,1:2], ylab = variables(fabric))
 ```
 
@@ -95,7 +95,7 @@ plot(data[,1:2], ylab = variables(fabric))
 job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
-###`geoknife` Functions (as of v0.11.0)
+###`geoknife` Functions (as of v0.12.1)
 | Function       | Title           |
 | ------------- |:-------------|
 | `geoknife` | slice up gridded data according to overlap with feature(s) |
@@ -112,14 +112,14 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 | `inputs` | the inputs of a `webprocess` |
 | `id` | the process id of a `geojob` |
 | `values` | the values of a `webgeom` | 
-| `loadOutput` | load the output of a completed `geojob` into data.frame |
+| `result` | load the output of a completed `geojob` into data.frame |
 | `variables` | the variables for a `webdata` object |
 | `times` | the times of a `webdata` object |
 | `url` | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess` |
 | `version` | the version of a `webgeom` or `webdata` |
 | `xml` | the xml of a `geojob` |
 
-###`geoknife` classes (as of v0.6.2)
+###`geoknife` classes (as of v0.12.0)
 | Class       | Title           |
 | ------------- |:-------------|
 | `simplegeom` | a simple geometric class. Extends `sp::SpatialPolygons` |
@@ -127,9 +127,10 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 | `webprocess` | a web processing service |
 | `webdata` | web data |
 | `geojob` | a geo data portal processing job |
+| `datagroup` | a simple class that contains data lists that can be `webdata` |
 
 ##What libraries does `geoknife` need?
-This version requires `httr`, `jsonlite`, `lubridate` and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
+This version requires `httr`, `jsonlite`, and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
 
 ##Disclaimer
 This software is in the public domain because it contains materials that originally came from the U.S. Geological Survey, an agency of the United States Department of Interior. For more information, see the [official USGS copyright policy](http://www.usgs.gov/visual-id/credit_usgs.html#copyright/ "official USGS copyright policy")

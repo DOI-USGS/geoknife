@@ -1,4 +1,4 @@
-`geoknife` package version 0.12.0
+`geoknife` package version 0.12.1
 =================================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) Tools for geo-web processing of gridded data via the [Geo Data Portal](http://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
@@ -11,7 +11,7 @@ To install the stable version of `geoknife` package with dependencies:
 
 ``` r
 install.packages("geoknife", 
-    repos = c("http://owi.usgs.gov/R"),
+    repos = c("http://owi.usgs.gov/R","http://cran.rstudio.com/"),
     dependencies = TRUE)
 ```
 
@@ -28,7 +28,7 @@ The `geoknife` package was created to support web-based geoprocessing of large g
 
 `geoknife` interacts with a remote server to figure out what types of processing capabilities are available, in addition to seeing what types of geospatial features are already available to be used as an area of interest (commonly, these are user-uploaded shapefiles). Because communication with web resources are central to `geoknife` operations, users must have an active internet connection.
 
-The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm parameters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `loadOutput`.
+The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm parameters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `result`.
 
 ### What can `geoknife` do?
 
@@ -80,7 +80,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=8db68045-a23a-4385-afac-0399002bc948OUTPUT"
+    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=32654583-4dfe-4aef-b46c-4c0f3fae3f1bOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -96,7 +96,7 @@ successful(job)
 ##### plot the results
 
 ``` r
-data <- loadOutput(job)
+data <- result(job)
 plot(data[,1:2], ylab = variables(fabric))
 ```
 
@@ -108,7 +108,7 @@ plot(data[,1:2], ylab = variables(fabric))
 job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
-### `geoknife` Functions (as of v0.11.0)
+### `geoknife` Functions (as of v0.12.1)
 
 | Function     | Title                                                        |
 |--------------|:-------------------------------------------------------------|
@@ -126,27 +126,28 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 | `inputs`     | the inputs of a `webprocess`                                 |
 | `id`         | the process id of a `geojob`                                 |
 | `values`     | the values of a `webgeom`                                    |
-| `loadOutput` | load the output of a completed `geojob` into data.frame      |
+| `result`     | load the output of a completed `geojob` into data.frame      |
 | `variables`  | the variables for a `webdata` object                         |
 | `times`      | the times of a `webdata` object                              |
 | `url`        | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess` |
 | `version`    | the version of a `webgeom` or `webdata`                      |
 | `xml`        | the xml of a `geojob`                                        |
 
-### `geoknife` classes (as of v0.6.2)
+### `geoknife` classes (as of v0.12.0)
 
-| Class        | Title                                                   |
-|--------------|:--------------------------------------------------------|
-| `simplegeom` | a simple geometric class. Extends `sp::SpatialPolygons` |
-| `webgeom`    | a web feature service geometry                          |
-| `webprocess` | a web processing service                                |
-| `webdata`    | web data                                                |
-| `geojob`     | a geo data portal processing job                        |
+| Class        | Title                                                         |
+|--------------|:--------------------------------------------------------------|
+| `simplegeom` | a simple geometric class. Extends `sp::SpatialPolygons`       |
+| `webgeom`    | a web feature service geometry                                |
+| `webprocess` | a web processing service                                      |
+| `webdata`    | web data                                                      |
+| `geojob`     | a geo data portal processing job                              |
+| `datagroup`  | a simple class that contains data lists that can be `webdata` |
 
 What libraries does `geoknife` need?
 ------------------------------------
 
-This version requires `httr`, `jsonlite`, `lubridate` and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
+This version requires `httr`, `jsonlite`, and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
 
 Disclaimer
 ----------
