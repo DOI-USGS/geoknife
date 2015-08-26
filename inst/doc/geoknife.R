@@ -8,7 +8,7 @@ library(geoknife)
 
 ## ---- eval=FALSE------------------------------------------
 #  install.packages("geoknife",
-#      repos = c("http://owi.usgs.gov/R"),
+#      repos = c("http://owi.usgs.gov/R","http://cran.rstudio.com/"),
 #      dependencies = TRUE)
 
 ## ---- eval=FALSE------------------------------------------
@@ -42,21 +42,12 @@ head(HUCs)
 
 ## ---------------------------------------------------------
 fabric <- webdata('prism')
-# display fabric:
 fabric
 
 ## ---------------------------------------------------------
-fabric <- webdata(list(
-            times = as.POSIXct(c('1895-01-01','1899-01-01')),
-            url = 'http://cida.usgs.gov/thredds/dodsC/prism',
-            variables = 'ppt'))
-
-## ---------------------------------------------------------
-times(fabric) <- as.POSIXct(c('1990-01-01','2005-01-01'))
-
-## ---- eval=FALSE------------------------------------------
-#  query(fabric, 'times')
-#  query(fabric, 'variables')
+times(fabric) <- c('1990-01-01','2010-01-01')
+variables(fabric) <- c('ppt','tmx', 'tmn')
+fabric
 
 ## ---------------------------------------------------------
 job <- geoknife(stencil, fabric)
@@ -74,7 +65,7 @@ job <- cancel(job)
 job <- geoknife(stencil, fabric, wait = TRUE)
 
 ## ---- fig.height=3.5, fig.width=7-------------------------
-data <- loadOutput(job)
+data <- result(job)
 plot(data[,1:2], ylab = variables(fabric))
 
 ## ---- eval=FALSE------------------------------------------
@@ -141,15 +132,45 @@ variables(fabric) <- 'ppt'
 times(fabric)[1] <- as.POSIXct('1990-01-01')
 
 ## ---------------------------------------------------------
-fabric <- webdata('prism')
-fabric
+webdatasets = query('webdata')
+length(webdatasets)
 
 ## ---------------------------------------------------------
-times(fabric) <- c('1990-01-01','2010-01-01')
-variables(fabric) <- c('ppt','tmx', 'tmn')
-fabric
+webdatasets[61:65]
 
 ## ---------------------------------------------------------
+title(webdatasets[87])
+abstract(webdatasets[87])
+
+## ---------------------------------------------------------
+fabric <- webdata(webdatasets[99])
+evapotran <- webdata(webdatasets['Monthly Conterminous U.S. actual evapotranspiration data'])
+
+## ---------------------------------------------------------
+times(fabric) <- c('1990-01-01','2005-01-01')
+
+## ---- eval=FALSE------------------------------------------
+#  query(fabric, 'times')
+#  query(fabric, 'variables')
+
+## ---------------------------------------------------------
+fabric = webdata(url='dods://apdrc.soest.hawaii.edu/dods/public_data/satellite_product/AVHRR/avhrr_mon')
+
+## ---------------------------------------------------------
+variables(fabric) <- 'sst'
+query(fabric, 'times')
+
+times(fabric) <- c('1990-01-01','1999-12-31')
+
+## ---- fig.height=3.5, fig.width=7-------------------------
+sst = result(geoknife(data.frame('caspian.sea'=c(51,40)), fabric, wait = TRUE))
+head(sst)
+july.idx <- months(sst$DateTime) == 'July'
+plot(sst$DateTime[july.idx], sst$caspian.sea[july.idx], type='l', lwd=2, col='dodgerblue', ylab='Sea Surface Temperature (degC)',xlab=NA)
+         
+
+## ---------------------------------------------------------
+fabric = webdata('prism')
 variables(fabric) <- 'ppt'
 query(fabric, 'times')
 

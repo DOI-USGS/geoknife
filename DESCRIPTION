@@ -1,10 +1,20 @@
 Package: geoknife
 Type: Package
 Title: Geo-web processing of gridded data
-Version: 0.12.1
-Date: 2013-05-23
-Author: Jordan S Read
-Maintainer: Jordan S Read <jread@usgs.gov>
+Version: 0.12.2
+Date: 2013-05-26
+Authors@R: c( person("Jordan", "Read", role = c("aut","cre"),
+    email = "jread@usgs.gov"),
+    person("Jordan", "Walker", role = c("aut"),
+    email = "jiwalker@usgs.gov"),
+    person("Alison", "Appling", role = c("aut"),
+    email = "aappling@usgs.gov"),
+    person("David", "Blodgett", role = c("aut"),
+    email = "dblodgett@usgs.gov"),
+    person("Emily", "Read", role = c("aut"),
+    email = "eread@usgs.gov"),
+    person("Luke", "Winslow", role = c("aut"),
+    email = "lwinslow@usgs.gov"))
 Description: Methods for geo-web processing of gridded data via the Geo Data
     Portal (cida.usgs.gov/gdp).
 License: file LICENSE

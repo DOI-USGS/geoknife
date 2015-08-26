@@ -73,5 +73,10 @@ webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54
   for (i in 1:length(urls)){
     group[[i]] <- list(title = titles[sort.ix[i]], url=urls[[sort.ix[i]]], abstract = abstracts[sort.ix[i]])
   }
+  
+  types = unname(sapply(getNodeSet(response, parentxpath, namespaces = namespaces), xmlAttrs))
+  
+  # removing all non-OPeNDAP endpoints
+  group[which(substr(types[sort.ix],1,7) != "OPeNDAP")] <- NULL
   return(datagroup(group))
 }
