@@ -36,7 +36,7 @@ The main elements of setting up and carrying out a geoknife 'job' (geojob) inclu
 To install the stable version of **geoknife** package with dependencies:
 ```{r, eval=FALSE}
 install.packages("geoknife", 
-    repos = c("http://owi.usgs.gov/R"),
+    repos = c("http://owi.usgs.gov/R","http://cran.rstudio.com/"),
     dependencies = TRUE)
 ```
 Or to install the current development version of the package:
@@ -105,28 +105,21 @@ head(HUCs)
 ```
 
 #### define a fabric that represents the underlying data
-The `fabric` is specified using the `webdata` function, and can be done explicity or with a quick-start dataset name (such as 'prism')
+The Geo Data Portal's web data catalog is quite extensive, and inludes many datasets that can all be processed with `geoknife`. Check it out at cida.usgs.gov/gdp. This is not a complete list of all relevant datasets that can be accessed and processed. The `geoknife` package has a number of quick access datasets build in (similar to quick start `webgeom` objects). 
+
+An example of a quick start dataset:
 ```{r}
 fabric <- webdata('prism')
-# display fabric:
 fabric
 ```
-The same can be done explicitly by passing a list to webdata:
+which can be a starting point for the PRISM dataset, as the fields can be modified:
 ```{r}
-fabric <- webdata(list(
-            times = as.POSIXct(c('1895-01-01','1899-01-01')),
-            url = 'http://cida.usgs.gov/thredds/dodsC/prism',
-            variables = 'ppt'))
+times(fabric) <- c('1990-01-01','2010-01-01')
+variables(fabric) <- c('ppt','tmx', 'tmn')
+fabric
 ```
-To modify the times in `fabric`, use `times()`:
-```{r}
-times(fabric) <- as.POSIXct(c('1990-01-01','2005-01-01'))
-```
-Similar to `webgeom`, the query method can be used on `webdata` objects:
-```{r, eval=FALSE}
-query(fabric, 'times')
-query(fabric, 'variables')
-```
+
+
 #### create the processing job that will carry out the subsetting/summarization task
 
 ```{r}
@@ -153,7 +146,7 @@ job <- geoknife(stencil, fabric, wait = TRUE)
 
 Load up the output and plot it
 ```{r, fig.height=3.5, fig.width=7}
-data <- results(job)
+data <- result(job)
 plot(data[,1:2], ylab = variables(fabric))
 ```
 
@@ -268,24 +261,64 @@ variables(fabric) <- 'ppt'
 times(fabric)[1] <- as.POSIXct('1990-01-01')
 ```
 
-### quick access to web available data
-The Geo Data Portal's web data catalog is quite extensive, and inludes many datasets that can all be processed with `geoknife`. Check it out at cida.usgs.gov/gdp. This is not a complete list of all relevant datasets that can be accessed and processed. The `geoknife` package has a number of quick access datasets build in (similar to quick start `webgeom` objects). 
-
-An example of a quick start dataset:
+### find data that is indexed by the Geo Data Portal catalog
+The `fabric` is specified using the `webdata` function. `geoknife` can access a catalog of webdata by using the `query` function:
 ```{r}
-fabric <- webdata('prism')
-fabric
+webdatasets = query('webdata')
+length(webdatasets)
 ```
-which can be a starting point for the PRISM dataset, as the fields can be modified:
+Interogating datasets can be done with by printing for the returned dataset list, which displays the title and the url of each dataset by default (this example truncates the `r length(webdatasets)` datasets to display 5):
 ```{r}
-times(fabric) <- c('1990-01-01','2010-01-01')
-variables(fabric) <- c('ppt','tmx', 'tmn')
-fabric
+webdatasets[61:65]
 ```
 
+Finding additional information about a particular dataset is supported by `title()` and `abstract()`, which return the dataset titles and abstracts respectively:
+```{r}
+title(webdatasets[87])
+abstract(webdatasets[87])
+```
+
+indexing datasets based on order or title are equivalent  
+```{r}
+fabric <- webdata(webdatasets[99])
+evapotran <- webdata(webdatasets['Monthly Conterminous U.S. actual evapotranspiration data'])
+```
+
+To modify the times in `fabric`, use `times()`:
+```{r}
+times(fabric) <- c('1990-01-01','2005-01-01')
+```
+Similar to `webgeom`, the query method can be used on `webdata` objects:
+```{r, eval=FALSE}
+query(fabric, 'times')
+query(fabric, 'variables')
+```
+
+### find data that is *not* indexed by the Geo Data Portal catalog
+There are hundreds (or potentially thousands) of additional OPeNDAP datasets that will work with geoknife, but need to be found through web searches or catalogs (e.g., www.esrl.noaa.gov/psd/thredds/dodsC/Datasets, apdrc.soest.hawaii.edu/data/data.php). One such example is Sea Surface Temperature from the Advanced Very High Resolution Radiometer (AVHRR) temperature sensing system. Specifying datasets such as this requires finding out the OPeNDAP endpoint (URL) for the dataset, and specifying it as the `url` to webdata (we found this example in the extensive apdrc.soest.hawaii.edu/data/data.php catalog):
+```{r}
+fabric = webdata(url='dods://apdrc.soest.hawaii.edu/dods/public_data/satellite_product/AVHRR/avhrr_mon')
+```
+`query` for `variables` doesn't work for this dataset, because it actually doesn't have units and therefore "valid" variables are not returned (instead you get an empty list). From the OPeNDAP endpoint, it is clear that this dataset has one variable of interest, which is called 'sst':
+```{r}
+variables(fabric) <- 'sst'
+query(fabric, 'times')
+
+times(fabric) <- c('1990-01-01','1999-12-31')
+```
+
+plotting the July surface temperature of a spot on the Caspian Sea is done by:
+```{r, fig.height=3.5, fig.width=7}
+sst = result(geoknife(data.frame('caspian.sea'=c(51,40)), fabric, wait = TRUE))
+head(sst)
+july.idx <- months(sst$DateTime) == 'July'
+plot(sst$DateTime[july.idx], sst$caspian.sea[july.idx], type='l', lwd=2, col='dodgerblue', ylab='Sea Surface Temperature (degC)',xlab=NA)
+         
+```
 ### query function for `webdata`
 The `query` function works on `webdata`, similar to how it works for `webgeom` objects. For the PRISM dataset specified above, the time range of the dataset can come from `query` with `times`:
 ```{r}
+fabric = webdata('prism')
 variables(fabric) <- 'ppt'
 query(fabric, 'times')
 ```
