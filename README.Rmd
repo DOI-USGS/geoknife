@@ -118,6 +118,7 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 | `url` | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess` |
 | `version` | the version of a `webgeom` or `webdata` |
 | `xml` | the xml of a `geojob` |
+| `query` | query datasets or variables |
 
 ###`geoknife` classes (as of v0.12.0)
 | Class       | Title           |
