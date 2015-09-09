@@ -1,4 +1,4 @@
-`geoknife` package version 0.12.1
+`geoknife` package version 0.12.2
 =================================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) Tools for geo-web processing of gridded data via the [Geo Data Portal](http://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
@@ -80,7 +80,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=32654583-4dfe-4aef-b46c-4c0f3fae3f1bOUTPUT"
+    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=e8677c0b-9e16-4b97-8bcb-645569750b0fOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -132,6 +132,7 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 | `url`        | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess` |
 | `version`    | the version of a `webgeom` or `webdata`                      |
 | `xml`        | the xml of a `geojob`                                        |
+| `query`      | query datasets or variables                                  |
 
 ### `geoknife` classes (as of v0.12.0)
 
