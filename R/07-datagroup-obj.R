@@ -37,6 +37,10 @@ setMethod("datagroup", signature(), function(...) {
   return(datagroup)
 })
 
+#' @param x a datagroup object
+#' @param i index specifying elements to extract or replace.
+#' @param j not implemented
+#' @param drop not implemented
 #'@rdname datagroup-methods
 #'@aliases datagroup,datagroup-methods
 setMethod("[", signature('datagroup'), function(x, i, j, ..., drop = TRUE) {
@@ -66,6 +70,7 @@ setAs('datagroup', 'webdata', function(from){
 #' 
 #' extracts the abstract information from a datagroup object
 #' 
+#' @param .Object a datagroup object
 #'@rdname abstract-datagroup
 #'@aliases 
 #'abstract
@@ -80,10 +85,10 @@ setMethod(f = "abstract",signature(.Object = "datagroup"),
             return(sapply(.Object@group, function(x) x$abstract))
           })
 
-#'@rdname abstract-datagroup
-#'@aliases 
-#'abstract
-#'title
+#' @rdname abstract-datagroup
+#' @aliases 
+#' abstract
+#' title
 #'@export
 setGeneric(name="title",def=function(.Object){standardGeneric("title")})
 
@@ -95,7 +100,8 @@ setMethod(f = "title",signature(.Object = "datagroup"),
           definition = function(.Object){
             return(sapply(.Object@group, function(x) x$title))
           })
-
+#'@rdname datagroup-methods
+#'@aliases datagroup,datagroup-methods
 setMethod(f = "length",signature(x = "datagroup"),
           definition = function(x){
             return(length(x@group))

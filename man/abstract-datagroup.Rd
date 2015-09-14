@@ -16,6 +16,9 @@ title(.Object)
 
 \S4method{title}{datagroup}(.Object)
 }
+\arguments{
+\item{.Object}{a datagroup object}
+}
 \description{
 extracts the abstract information from a datagroup object
 }
