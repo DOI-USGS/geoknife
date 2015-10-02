@@ -71,7 +71,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="header">
 <h1 class="title">geoknife package</h1>
 <h4 class="author"><em>Jordan Read</em></h4>
-<h4 class="date"><em>26 August, 2015</em></h4>
+<h4 class="date"><em>02 October, 2015</em></h4>
 </div>
 
 <div id="TOC">
@@ -364,32 +364,23 @@ stencil</code></pre></div>
 <p>The <code>query</code> function on <code>webgeom</code> can be used to find possible inputs for each public field (other than <code>version</code> and <code>url</code> currently):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'geoms'</span>)</code></pre></div>
 <pre><code>##  [1] &quot;sample:Alaska&quot;                  
-##  [2] &quot;sample:CONUS_Climate_Divisions&quot; 
-##  [3] &quot;derivative:CONUS_States&quot;        
-##  [4] &quot;sample:CONUS_states&quot;            
-##  [5] &quot;sample:CSC_Boundaries&quot;          
-##  [6] &quot;derivative:FWS_LCC&quot;             
-##  [7] &quot;sample:FWS_LCC&quot;                 
-##  [8] &quot;upload:HRU107_C2_copy1b&quot;        
-##  [9] &quot;derivative:wbdhu8_alb_simp&quot;     
-## [10] &quot;derivative:Level_III_Ecoregions&quot;
-## [11] &quot;derivative:NCA_Regions&quot;         
-## [12] &quot;upload:PheasBR_SubBasins_V04&quot;   
-## [13] &quot;draw:Pullman&quot;                   
-## [14] &quot;upload:STH113_SubBasins&quot;        
-## [15] &quot;upload:STH113_SubBasins_2&quot;      
-## [16] &quot;derivative:US_Counties&quot;         
-## [17] &quot;draw:UpperSkagit&quot;               
-## [18] &quot;upload:buff4dennis&quot;             
-## [19] &quot;upload:buff4dennis2&quot;            
-## [20] &quot;upload:buffy4dennis&quot;            
-## [21] &quot;draw:eFlowPoly&quot;                 
-## [22] &quot;draw:eflows&quot;                    
-## [23] &quot;sample:nps_boundary_2013&quot;       
-## [24] &quot;draw:ocean&quot;                     
-## [25] &quot;draw:ocean2&quot;                    
-## [26] &quot;sample:simplified_HUC8s&quot;        
-## [27] &quot;draw:western_us&quot;</code></pre>
+##  [2] &quot;upload:CIDA_TEST_&quot;              
+##  [3] &quot;sample:CONUS_Climate_Divisions&quot; 
+##  [4] &quot;derivative:CONUS_States&quot;        
+##  [5] &quot;sample:CONUS_states&quot;            
+##  [6] &quot;sample:CSC_Boundaries&quot;          
+##  [7] &quot;derivative:FWS_LCC&quot;             
+##  [8] &quot;sample:FWS_LCC&quot;                 
+##  [9] &quot;upload:GIS&quot;                     
+## [10] &quot;derivative:wbdhu8_alb_simp&quot;     
+## [11] &quot;upload:KS_RPA&quot;                  
+## [12] &quot;upload:KS_cnty&quot;                 
+## [13] &quot;derivative:Level_III_Ecoregions&quot;
+## [14] &quot;derivative:NCA_Regions&quot;         
+## [15] &quot;derivative:US_Counties&quot;         
+## [16] &quot;upload:dwr_regions&quot;             
+## [17] &quot;sample:nps_boundary_2013&quot;       
+## [18] &quot;sample:simplified_HUC8s&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'attributes'</span>)</code></pre></div>
 <pre><code>## [1] &quot;STATE&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'values'</span>)</code></pre></div>
@@ -674,7 +665,7 @@ knife</code></pre></div>
 <p>The <code>geoknife</code> package currently limits the user processing requests to single-running processes, so as to avoid creating thousands of requests in error, which could overwhelm the processing resources. If there is a reason to support additional jobs at one time, please email the package maintainers with your query.</p>
 <p>To cancel and existing job: Cancel a running job but retain the details:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">id</span>(job)</code></pre></div>
-<pre><code>## [1] &quot;http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=a722d5cd-9739-4268-89ff-e8efe1f9107f&quot;</code></pre>
+<pre><code>## [1] &quot;http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=b5b1a03c-a5ad-48c5-b6df-a50369abd0a8&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">cancel</span>(job)
 <span class="kw">id</span>(job)</code></pre></div>
 <pre><code>## [1] &quot;&lt;no active job&gt;&quot;</code></pre>
