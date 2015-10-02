@@ -11,6 +11,7 @@
 #'@keywords methods
 #'@author Luke A. Winslow, Jordan S. Read
 #'@export
+#'@importFrom utils read.table
 #'@examples
 #'local_file <- system.file('extdata','tsv_linear_ring.tsv', package = 'geoknife')
 #'output <- parseTimeseries(local_file, delim = '\t')

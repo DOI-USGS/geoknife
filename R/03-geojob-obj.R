@@ -4,6 +4,7 @@
 #' @slot id job identifier
 #' @slot package.version the version of the geoknife package
 #' @slot algorithm.version the version of the algorithm used for processing
+#' @importFrom utils packageVersion
 #' @rdname geojob-class
 setClass(
   Class = "geojob",
