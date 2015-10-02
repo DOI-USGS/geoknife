@@ -1,0 +1,15 @@
+citHeader("To cite the geoknife package in publications use:")
+citEntry(entry = "Article", 
+    author = personList(
+        as.person("Jordan S. Read"), 
+        as.person("Jordan I. Walker"), 
+        as.person("Alison Appling"), 
+		as.person("David L. Blodgett"),
+		as.person("Emily K. Read"),
+		as.person("Luke A. Winslow")), 
+    title = "geoknife: Reproducible web-processing of large gridded datasets", 
+    journal = "Ecography", 
+    year = "in press", 
+    doi = "doi:10.1111/ecog.01880", 
+    url = "http://onlinelibrary.wiley.com/doi/10.1111/ecog.01880/abstract", 
+    textVersion = paste("Read JS, JI Walker, A Appling, DL Blodgett, EK Read, LA Winslow. in press. geoknife: Reproducible web-processing of large gridded datasets. Ecography. doi:10.1111/ecog.01880"))
