@@ -300,7 +300,7 @@ There are hundreds (or potentially thousands) of additional OPeNDAP datasets tha
 fabric = webdata(url='dods://apdrc.soest.hawaii.edu/dods/public_data/satellite_product/AVHRR/avhrr_mon')
 ```
 `query` for `variables` doesn't work for this dataset, because it actually doesn't have units and therefore "valid" variables are not returned (instead you get an empty list). From the OPeNDAP endpoint, it is clear that this dataset has one variable of interest, which is called 'sst':
-```{r}
+```{r, eval=FALSE}
 variables(fabric) <- 'sst'
 query(fabric, 'times')
 
@@ -308,7 +308,7 @@ times(fabric) <- c('1990-01-01','1999-12-31')
 ```
 
 plotting the July surface temperature of a spot on the Caspian Sea is done by:
-```{r, fig.height=3.5, fig.width=7}
+```{r, eval=FALSE}
 sst = result(geoknife(data.frame('caspian.sea'=c(51,40)), fabric, wait = TRUE))
 head(sst)
 july.idx <- months(sst$DateTime) == 'July'
@@ -439,10 +439,3 @@ geoknife outsources all major geospatial processing tasks to a remote server. Be
 ### Geo Data Portal
 The U.S. Geological Survey's "Geo Data Portal" (GDP) provides the data access and processing services that are leveraged by the `geoknife` package. See [cida.usgs.gov/gdp](http://cida.usgs.gov/gdp) for the GDP user interface.  
 
-### CSW (catalog service for the web)
-The Catalog Service for the Web is an OGC standard for dataset metadata storage and access. The GDP has a catalog of datasets known to work with geoknife and the GDP, which are available through the `httr` R package:
-
-```{r, eval=FALSE}
-response <- httr::POST(url = 'http://cida.usgs.gov/gdp/geonetwork/srv/en/csw', body = request, content_type_xml())
-```
-a more user-friendly dataset query function is currently in development to return these datasets and their associated metadata. 

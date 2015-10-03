@@ -156,18 +156,18 @@ times(fabric) <- c('1990-01-01','2005-01-01')
 ## ---------------------------------------------------------
 fabric = webdata(url='dods://apdrc.soest.hawaii.edu/dods/public_data/satellite_product/AVHRR/avhrr_mon')
 
-## ---------------------------------------------------------
-variables(fabric) <- 'sst'
-query(fabric, 'times')
+## ---- eval=FALSE------------------------------------------
+#  variables(fabric) <- 'sst'
+#  query(fabric, 'times')
+#  
+#  times(fabric) <- c('1990-01-01','1999-12-31')
 
-times(fabric) <- c('1990-01-01','1999-12-31')
-
-## ---- fig.height=3.5, fig.width=7-------------------------
-sst = result(geoknife(data.frame('caspian.sea'=c(51,40)), fabric, wait = TRUE))
-head(sst)
-july.idx <- months(sst$DateTime) == 'July'
-plot(sst$DateTime[july.idx], sst$caspian.sea[july.idx], type='l', lwd=2, col='dodgerblue', ylab='Sea Surface Temperature (degC)',xlab=NA)
-         
+## ---- eval=FALSE------------------------------------------
+#  sst = result(geoknife(data.frame('caspian.sea'=c(51,40)), fabric, wait = TRUE))
+#  head(sst)
+#  july.idx <- months(sst$DateTime) == 'July'
+#  plot(sst$DateTime[july.idx], sst$caspian.sea[july.idx], type='l', lwd=2, col='dodgerblue', ylab='Sea Surface Temperature (degC)',xlab=NA)
+#  
 
 ## ---------------------------------------------------------
 fabric = webdata('prism')
@@ -228,7 +228,4 @@ id(job)
 
 ## ---------------------------------------------------------
 cancel()
-
-## ---- eval=FALSE------------------------------------------
-#  response <- httr::POST(url = 'http://cida.usgs.gov/gdp/geonetwork/srv/en/csw', body = request, content_type_xml())
 

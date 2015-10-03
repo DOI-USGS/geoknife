@@ -1,6 +1,6 @@
 Package: geoknife
 Type: Package
-Title: Web-processing of large gridded datasets
+Title: Web-Processing of Large Gridded Datasets
 Version: 1.0.0
 Date: 2015-10-02
 Authors@R: c( person("Jordan", "Read", role = c("aut","cre"),
@@ -15,7 +15,7 @@ Authors@R: c( person("Jordan", "Read", role = c("aut","cre"),
     email = "eread@usgs.gov"),
     person("Luke", "Winslow", role = c("aut"),
     email = "lwinslow@usgs.gov"))
-Description: The geoknife R package processes gridded datasets found on the 
+Description: Processes gridded datasets found on the 
   U.S. Geological Survey Geo Data Portal web application or elsewhere, 
   using a web-enabled workflow that eliminates the need to download and store 
   large datasets that are reliably hosted on the Internet. The package provides 
