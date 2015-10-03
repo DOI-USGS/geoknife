@@ -2,7 +2,7 @@
 % Please edit documentation in R/07-datagroup-obj.R
 \docType{methods}
 \name{datagroup}
-\alias{[,datagroup-method}
+\alias{[,datagroup,ANY,ANY-method}
 \alias{[[,datagroup,ANY,ANY-method}
 \alias{datagroup}
 \alias{datagroup,ANY-method}
@@ -14,7 +14,7 @@ datagroup(...)
 
 \S4method{datagroup}{ANY}(...)
 
-\S4method{[}{datagroup}(x, i, j, ..., drop = TRUE)
+\S4method{[}{datagroup,ANY,ANY}(x, i, j, ..., drop = TRUE)
 
 \S4method{[[}{datagroup,ANY,ANY}(x, i, j, ..., drop = TRUE)
 
