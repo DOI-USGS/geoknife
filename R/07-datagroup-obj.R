@@ -43,7 +43,7 @@ setMethod("datagroup", signature(), function(...) {
 #' @param drop not implemented
 #'@rdname datagroup-methods
 #'@aliases datagroup,datagroup-methods
-setMethod("[", signature('datagroup'), function(x, i, j, ..., drop = TRUE) {
+setMethod("[", signature(x='datagroup',i="ANY",j='ANY'), function(x, i, j, ..., drop = TRUE) {
   if (is.character(i))
     i = which(title(x) %in% i)
   return(datagroup(x@group[i]))
@@ -51,7 +51,7 @@ setMethod("[", signature('datagroup'), function(x, i, j, ..., drop = TRUE) {
 
 #'@rdname datagroup-methods
 #'@aliases datagroup,datagroup-methods
-setMethod("[[", signature('datagroup'), function(x, i, j, ..., drop = TRUE) {
+setMethod("[[", signature('datagroup',i="ANY",j='ANY'), function(x, i, j, ..., drop = TRUE) {
   
   
   return(x@group[[i]])
