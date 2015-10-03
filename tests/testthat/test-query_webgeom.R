@@ -2,6 +2,7 @@ context("query webgeom")
 
 
 test_that("query geoms", {
+  testthat::skip_on_cran()
   expect_is(query(webgeom(), 'geoms'),'character')
   wg <- webgeom(geom = "sample:CONUS_states",
                 attribute = "STATE",
@@ -12,6 +13,7 @@ test_that("query geoms", {
 })
 
 test_that("query attributes", {
+  testthat::skip_on_cran()
   wg <- webgeom(geom = "sample:CONUS_states",
               attribute = "STATE",
               values = "New Hampshire")
@@ -19,6 +21,7 @@ test_that("query attributes", {
 })
 
 test_that("query values", {
+  testthat::skip_on_cran()
   wg <- webgeom(geom = "sample:CONUS_states",
                 attribute = "STATE",
                 values = "New Hampshire")
