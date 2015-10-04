@@ -8,7 +8,7 @@ This is a resubmission. In this version I have:
 * removed a long running web service call from the vignette, 
 which can sometimes fail.
 
-* issue with no vignette index was resolved
+* issue with no vignette index was resolved (see %\VignetteIndexEntry{geoknife package})
 
 ### a note about geoknife URLs:
 this package has a numer of service URLs that can be found in code, 
