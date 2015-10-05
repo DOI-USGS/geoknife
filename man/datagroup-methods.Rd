@@ -14,11 +14,11 @@ datagroup(...)
 
 \S4method{datagroup}{ANY}(...)
 
+\S4method{length}{datagroup}(x)
+
 \S4method{[}{datagroup}(x, i, j, ..., drop = TRUE)
 
 \S4method{[[}{datagroup,ANY,ANY}(x, i, j, ..., drop = TRUE)
-
-\S4method{length}{datagroup}(x)
 }
 \arguments{
 \item{...}{additional arguments passed to initialize method}

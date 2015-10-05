@@ -28,34 +28,19 @@ setGeneric("datagroup", function(...) {
   standardGeneric("datagroup")
 })
 
-#'@param ... additional arguments passed to initialize method
-#'@rdname datagroup-methods
-#'@aliases datagroup,datagroup-methods
+#' @param x a datagroup object
+#' @param i index specifying elements to extract or replace.
+#' @param j not implemented
+#' @param drop not implemented
+#' @param ... additional arguments passed to initialize method
+#' @rdname datagroup-methods
+#' @aliases datagroup,datagroup-methods
 setMethod("datagroup", signature(), function(...) {
   ## create new geojob object
   datagroup <- new("datagroup",...)
   return(datagroup)
 })
 
-#' @param x a datagroup object
-#' @param i index specifying elements to extract or replace.
-#' @param j not implemented
-#' @param drop not implemented
-#'@rdname datagroup-methods
-#'@aliases datagroup,datagroup-methods
-setMethod("[", signature('datagroup'), function(x, i, j, ..., drop = TRUE) {
-  if (is.character(i))
-    i = which(title(x) %in% i)
-  return(datagroup(x@group[i]))
-})
-
-#'@rdname datagroup-methods
-#'@aliases datagroup,datagroup-methods
-setMethod("[[", signature('datagroup'), function(x, i, j, ..., drop = TRUE) {
-  
-  
-  return(x@group[[i]])
-})
 
 setAs('datagroup', 'webdata', function(from){
   if (length(from@group) > 1){
@@ -106,3 +91,20 @@ setMethod(f = "length",signature(x = "datagroup"),
           definition = function(x){
             return(length(x@group))
           })
+
+
+#'@rdname datagroup-methods
+#'@aliases datagroup,datagroup-methods
+setMethod("[", signature(x='datagroup',i="ANY",j='ANY'), function(x, i, j, ..., drop = TRUE) {
+  if (is.character(i))
+    i = which(title(x) %in% i)
+  return(datagroup(x@group[i]))
+})
+
+#'@rdname datagroup-methods
+#'@aliases datagroup,datagroup-methods
+setMethod("[[", signature('datagroup',i="ANY",j='ANY'), function(x, i, j, ..., drop = TRUE) {
+  
+  
+  return(x@group[[i]])
+})
