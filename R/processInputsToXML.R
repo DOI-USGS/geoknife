@@ -23,7 +23,6 @@ setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML"
 setMethod(f = "XML",signature = c("ANY","webdata","webprocess"), 
           definition = function(stencil, fabric, knife){
             #stencil can be webgeom OR simplegeom 
-  
   knife <- .setProcessInputs(webprocess = knife, stencil = stencil, fabric = fabric)
   top <- newXMLNode(name='wps:Execute',
                     attrs=c('service'="WPS",'version'= version(knife),
@@ -81,11 +80,11 @@ addResponse <- function(.Object, xmlNodes){
   
   resDoc	<-	newXMLNode('wps:ResponseDocument',attrs=c('storeExecuteResponse'='true','status'='true'))
   addChildren(resForm,resDoc)
-  
-  #if text/tab-separated-values"
+
+  #if text/tab-separated-values" or output_type
   if (!is.null(.Object@processInputs$DELIMITER) && .Object@processInputs$DELIMITER=="TAB"){
     resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='text/tab-separated-values'))
-  } else if (!is.character(.Object@processInputs$OUTPUT_TYPE) && .Object@processInputs$OUTPUT_TYPE=="geotiff") { 
+  } else if (!is.null(.Object@processInputs$OUTPUT_TYPE) && .Object@processInputs$OUTPUT_TYPE=="geotiff") {
     resOut  <-  newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='application/zip'))
   } else {
     resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true'))
