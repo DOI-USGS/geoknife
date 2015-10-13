@@ -85,6 +85,8 @@ addResponse <- function(.Object, xmlNodes){
   #if text/tab-separated-values"
   if (!is.null(.Object@processInputs$DELIMITER) && .Object@processInputs$DELIMITER=="TAB"){
     resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='text/tab-separated-values'))
+  } else if (!is.character(.Object@processInputs$OUTPUT_TYPE) && .Object@processInputs$OUTPUT_TYPE=="geotiff") { 
+    resOut  <-  newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='application/zip'))
   } else {
     resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true'))
   }
