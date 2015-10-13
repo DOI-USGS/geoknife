@@ -47,4 +47,7 @@ test_that('test pass through of webprocess inputs', {
   wp = webprocess(algorithm = list('OPeNDAP Subset'="gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm"), REQUIRE_FULL_COVERAGE = 'false')
   wp = initialize(wp)
   expect_equal(inputs(wp,'REQUIRE_FULL_COVERAGE')[[1]], 'false')
+  wp = initialize(wp, OUTPUT_TYPE='geotiff', wait=TRUE)
+  expect_equal(inputs(wp,'OUTPUT_TYPE')[[1]], 'geotiff')
+  expect_true(wp@wait)
 })
