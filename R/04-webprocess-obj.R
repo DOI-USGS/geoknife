@@ -64,28 +64,42 @@ setMethod(f="initialize",signature="webprocess",
             wait = .Object@wait, ...)
             {
 
-            .Object@WPS_SCHEMA_LOCATION = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
-            .Object@WPS_NAMESPACE ='http://www.opengis.net/wps/1.0.0'
+            .Object@WPS_SCHEMA_LOCATION <- 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
+            .Object@WPS_NAMESPACE <- 'http://www.opengis.net/wps/1.0.0'
             
-            .Object@XSI_SCHEMA_LOCATION = 'http://www.opengis.net/wfs ../wfs/1.1.0/WFS.xsd'
-            .Object@XSI_NAMESPACE = 'http://www.w3.org/2001/XMLSchema-instance'
+            .Object@XSI_SCHEMA_LOCATION <- 'http://www.opengis.net/wfs ../wfs/1.1.0/WFS.xsd'
+            .Object@XSI_NAMESPACE <- 'http://www.w3.org/2001/XMLSchema-instance'
             
-            .Object@OGC_NAMESPACE = 'http://www.opengis.net/ogc'
-            .Object@XLINK_NAMESPACE = 'http://www.w3.org/1999/xlink'
+            .Object@OGC_NAMESPACE <- 'http://www.opengis.net/ogc'
+            .Object@XLINK_NAMESPACE <- 'http://www.w3.org/1999/xlink'
             
-            .Object@OWS_NAMESPACE = 'http://www.opengis.net/ows/1.1'
+            .Object@OWS_NAMESPACE <- 'http://www.opengis.net/ows/1.1'
             
-            .Object@UTILITY_URL = gsub('process','utility',url)
+            .Object@UTILITY_URL <- gsub('process','utility',url)
             
-            .Object@emailK      = 'gov.usgs.cida.gdp.wps.algorithm.communication.EmailWhenFinishedAlgorithm'
+            .Object@emailK <- 'gov.usgs.cida.gdp.wps.algorithm.communication.EmailWhenFinishedAlgorithm'
             
-            .Object@version = version
-            .Object@url = url
-            .Object@algorithm  <- algorithm
-            .Object@email = email
-            .Object@wait = wait
+            .Object@version <- version
+            .Object@url <- url
+            .Object@email <- email
+            .Object@wait <- wait
+            
+            # // -- supporting pass through of existing inputs arguments *when* they are applicable.
+            old.inputs = inputs(.Object)
+            old.algorithm = .Object@algorithm
+            .Object@algorithm <- algorithm
+            
             processInputs <- defaultProcessInputs(algorithm = .Object@algorithm[[1]], .Object@url, .Object@version)
+            
+            if (length(old.inputs) && old.algorithm[[1]] == algorithm[[1]]){
+              which.replace <- unlist(unname(lapply(old.inputs, function(x) !is.null(x[[1]]) && !is.na(x[[1]])))) & names(old.inputs) %in% names(processInputs)
+              which.to.rplc <- names(processInputs) %in% names(old.inputs[which.replace])
+            } else {
+              which.to.rplc <- which.replace <- FALSE
+            }
+            
             .Object@processInputs  <-	processInputs
+            .Object@processInputs[which.to.rplc] <- old.inputs[which.replace]
             
             inputs(.Object) <- list(...)
             

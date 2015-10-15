@@ -28,7 +28,8 @@ test_that("get inputs works as expected",{
 test_that("reseting algorithm sets inputs back to defaults",{
   wp <- webprocess(DELIMITER = 'TAB', SUMMARIZE_FEATURE_ATTRIBUTE = 'false', wait = TRUE, STATISTICS = "MEAN")
   expect_equal(inputs(wp, 'DELIMITER')[[1]], 'TAB')
-  algorithm(wp) <- algorithm(wp)
+  algorithm(wp) <- query(wp, 'algorithms')[1]
+  algorithm(wp) <- list('Area Grid Statistics (unweighted)'="gov.usgs.cida.gdp.wps.algorithm.FeatureGridStatisticsAlgorithm")
   expect_equal(inputs(wp), inputs(webprocess()))
 })
 
