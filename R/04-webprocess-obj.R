@@ -83,10 +83,23 @@ setMethod(f="initialize",signature="webprocess",
             .Object@url <- url
             .Object@email <- email
             .Object@wait <- wait
+            
+            # // -- supporting pass through of existing inputs arguments *when* they are applicable.
+            old.inputs = inputs(.Object)
+            old.algorithm = .Object@algorithm
             .Object@algorithm <- algorithm
             
             processInputs <- defaultProcessInputs(algorithm = .Object@algorithm[[1]], .Object@url, .Object@version)
+            
+            if (length(old.inputs) && old.algorithm[[1]] == algorithm[[1]]){
+              which.replace <- unlist(unname(lapply(old.inputs, function(x) !is.null(x[[1]]) && !is.na(x[[1]])))) & names(old.inputs) %in% names(processInputs)
+              which.to.rplc <- names(processInputs) %in% names(old.inputs[which.replace])
+            } else {
+              which.to.rplc <- which.replace <- FALSE
+            }
+            
             .Object@processInputs  <-	processInputs
+            .Object@processInputs[which.to.rplc] <- old.inputs[which.replace]
             
             inputs(.Object) <- list(...)
             
