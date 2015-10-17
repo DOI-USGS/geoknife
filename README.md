@@ -7,6 +7,11 @@
 </p>
 ### Installing `geoknife`
 
+To install the `geoknife` from CRAN:
+``` r
+install.packages("geoknife")
+```
+
 To install the stable version of `geoknife` package with dependencies:
 
 ``` r
