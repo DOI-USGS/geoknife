@@ -36,10 +36,10 @@ FEATURE_ATTRIBUTE_NAME <- function(stencil,...){
 }
 
 TIME_END <- function(fabric, ...){
-  strftime(times(fabric)[2] ,format = "%Y-%m-%dT%H:%M:%S.000Z")
+  strftime(times(fabric)[2] ,format = "%Y-%m-%dT%H:%M:%S.000Z", tz='UTC')
 }
 TIME_START <- function(fabric, ...){
-  strftime(times(fabric)[1] ,format = "%Y-%m-%dT%H:%M:%S.000Z")
+  strftime(times(fabric)[1] ,format = "%Y-%m-%dT%H:%M:%S.000Z", tz='UTC')
 }
 
 DATASET_ID <- function(fabric, ...){
