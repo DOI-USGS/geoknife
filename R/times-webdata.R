@@ -50,7 +50,7 @@ geotime.POSIXct = function(value){
   tz = "UTC"
   
   # check for tz, honor if it exists
-  if (attr(value,'tzone') == ''){
+  if (is.null(attr(value,'tzone')) ||  attr(value,'tzone') == ''){
     as.POSIXct(format(value,usetz=F), tz=tz)
   } else {
     attr(value,'tzone') <- tz
