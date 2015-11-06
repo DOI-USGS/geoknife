@@ -15,12 +15,11 @@ Authors@R: c( person("Jordan", "Read", role = c("aut","cre"),
     email = "eread@usgs.gov"),
     person("Luke", "Winslow", role = c("aut"),
     email = "lwinslow@usgs.gov"))
-Description: Processes gridded datasets found on the 
-  U.S. Geological Survey Geo Data Portal web application or elsewhere, 
-  using a web-enabled workflow that eliminates the need to download and store 
-  large datasets that are reliably hosted on the Internet. The package provides 
-  access to several data subset and summarization algorithms that are available 
-  on remote web processing servers.
+Description: Processes gridded datasets found on the U.S. Geological Survey
+    Geo Data Portal web application or elsewhere, using a web-enabled workflow
+    that eliminates the need to download and store large datasets that are reliably
+    hosted on the Internet. The package provides access to several data subset and
+    summarization algorithms that are available on remote web processing servers.
 License: CC0
 URL: https://github.com/USGS-R/geoknife
 BugReports: https://github.com/USGS-R/geoknife/issues
@@ -43,3 +42,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+RoxygenNote: 5.0.0

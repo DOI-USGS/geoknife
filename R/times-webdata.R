@@ -30,9 +30,37 @@ setMethod(f = "times<-",signature(.Object = "webdata"),
             if (!any(is.na(value)) && value[1] > value[2]){
               stop('time start must proceed time stop in "times" slot for webdata')
             }
-            .Object@times <- as.POSIXct(value)
+            .Object@times <- geotime(value)
             return(.Object)
           })
+
+geotime <- function(value){
+  if (is.character(value)){
+    geotime.character(value)
+  } else if ("POSIXct" %in% class(value)){
+    geotime.POSIXct(value)
+  } else {
+    warning('no applicable geotime method for ',class(value))
+  }
+  
+}
+
+geotime.POSIXct = function(value){
+  
+  tz = "UTC"
+  
+  # check for tz, honor if it exists
+  if (is.null(attr(value,'tzone')) ||  attr(value,'tzone') == ''){
+    as.POSIXct(format(value,usetz=F), tz=tz)
+  } else {
+    attr(value,'tzone') <- tz
+    return(value)
+  }
+}
+
+geotime.character = function(value){
+  geotime.POSIXct(as.POSIXct(value))
+}
 
 #'@rdname times-webdata
 #'@aliases times

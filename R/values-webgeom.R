@@ -17,7 +17,7 @@ setGeneric(name="values",def=function(.Object){standardGeneric("values")})
 #'@aliases values
 #'@rdname values
 setMethod(f = "values<-",signature(.Object = "webgeom"), definition = function(.Object, value){
-  .Object@values <- value
+  .Object@values <- as.character(value)
   if(is.na(value[1])){
     .Object@GML_IDs <- as.character(NA)
   } else {
