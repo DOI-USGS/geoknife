@@ -59,7 +59,7 @@ geotime.POSIXct = function(value){
 }
 
 geotime.character = function(value){
-  geotime.POSIXct(as.POSIXct(value))
+  geotime.POSIXct(do.call(c, lapply(value,as.POSIXct)))
 }
 
 #'@rdname times-webdata
