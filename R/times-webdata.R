@@ -35,6 +35,7 @@ setMethod(f = "times<-",signature(.Object = "webdata"),
           })
 
 geotime <- function(value){
+
   if (is.character(value)){
     geotime.character(value)
   } else if ("POSIXct" %in% class(value)){
@@ -59,7 +60,7 @@ geotime.POSIXct = function(value){
 }
 
 geotime.character = function(value){
-  geotime.POSIXct(as.POSIXct(value))
+  geotime.POSIXct(do.call(c, lapply(value,as.POSIXct)))
 }
 
 #'@rdname times-webdata
