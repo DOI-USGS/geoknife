@@ -16,7 +16,7 @@ setGeneric(name="url<-",def=function(.Object, value){standardGeneric("url<-")})
 #'@aliases url
 #'@rdname url
 #'@export
-setGeneric(name="url",def=function(.Object){standardGeneric("url")})
+setGeneric(name="url",def=function(.Object, ...){standardGeneric("url")})
 
 
 #'@aliases url
@@ -40,14 +40,21 @@ setMethod(f = "url<-",signature(.Object = "webprocess"), definition = function(.
 
 #'@aliases url
 #'@rdname url
+setMethod(f = "url",signature(.Object = "character"),
+          definition = function(.Object, ...){
+            return(base::url(.Object, ...))
+          })
+
+#'@aliases url
+#'@rdname url
 setMethod(f = "url",signature(.Object = "datagroup"),
-          definition = function(.Object){
+          definition = function(.Object, ...){
             return(sapply(.Object@group, function(x) x$url))
           })
 
 #'@aliases url
 #'@rdname url
 setMethod(f = "url",signature(.Object = "ANY"),
-          definition = function(.Object){
+          definition = function(.Object, ...){
             return(.Object@url)
           })

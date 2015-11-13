@@ -4,6 +4,7 @@
 \name{url<-}
 \alias{url}
 \alias{url,ANY-method}
+\alias{url,character-method}
 \alias{url,datagroup-method}
 \alias{url<-}
 \alias{url<-,ANY-method}
@@ -13,15 +14,17 @@
 url(.Object)
 url(.Object)<- value
 
-url(.Object)
+url(.Object, ...)
 
 \S4method{url}{ANY}(.Object) <- value
 
 \S4method{url}{webprocess}(.Object) <- value
 
-\S4method{url}{datagroup}(.Object)
+\S4method{url}{character}(.Object, ...)
 
-\S4method{url}{ANY}(.Object)
+\S4method{url}{datagroup}(.Object, ...)
+
+\S4method{url}{ANY}(.Object, ...)
 }
 \arguments{
 \item{.Object}{a \linkS4class{webgeom}, \linkS4class{webdata}, 
