@@ -79,6 +79,11 @@ setMethod(f = "inputs<-",signature = c("webprocess",'list'),
           })
 
 .setInput <- function(.Object, name, arg){
+  
+  if (is.logical(arg)){
+    arg <- ifelse(isTRUE(arg),'true','false')
+  }
+  
   if (!is.character(arg))
     stop('Process inputs values must be characters.')
   if (!name %in% names(.Object@processInputs))
