@@ -87,7 +87,7 @@ setMethod(f = "inputs<-",signature = c("webprocess",'list'),
   if (!is.character(arg))
     stop('Process inputs values must be characters.')
   if (!name %in% names(.Object@processInputs))
-    stop(name,' not found in ', paste(names(inputs(.Object)), collapse = ', '))
+    stop(name,' not found in ', paste(c('url', 'algorithm', 'version', 'email', 'wait', names(inputs(.Object))), collapse = ', '), call. = FALSE)
   .Object@processInputs[[name]] <- arg
   return(.Object)
 }
