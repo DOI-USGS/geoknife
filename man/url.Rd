@@ -6,13 +6,13 @@
 \alias{url,ANY-method}
 \alias{url,character-method}
 \alias{url,datagroup-method}
+\alias{url,missing-method}
 \alias{url<-}
 \alias{url<-,ANY-method}
 \alias{url<-,webprocess-method}
 \title{the url of an object}
 \usage{
-url(.Object)
-url(.Object)<- value
+url(.Object) <- value
 
 url(.Object, ...)
 
@@ -22,14 +22,22 @@ url(.Object, ...)
 
 \S4method{url}{character}(.Object, ...)
 
+\S4method{url}{missing}(.Object, ...)
+
 \S4method{url}{datagroup}(.Object, ...)
 
 \S4method{url}{ANY}(.Object, ...)
 }
 \arguments{
-\item{.Object}{a \linkS4class{webgeom}, \linkS4class{webdata}, 
-\linkS4class{geojob}, or \linkS4class{webprocess} object}
+\item{.Object}{a \linkS4class{webgeom}, \linkS4class{webdata},}
 
 \item{value}{a url}
+
+\item{\dots}{additional arguments that would be passed to the masked base::url function.
+These are only used when the .Object argument is character or missing
+\linkS4class{geojob}, or \linkS4class{webprocess} object}
+}
+\description{
+get or set the url of an object
 }
 
