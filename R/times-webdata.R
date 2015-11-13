@@ -35,6 +35,7 @@ setMethod(f = "times<-",signature(.Object = "webdata"),
           })
 
 geotime <- function(value){
+
   if (is.character(value)){
     geotime.character(value)
   } else if ("POSIXct" %in% class(value)){
