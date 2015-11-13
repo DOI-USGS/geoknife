@@ -1,14 +1,15 @@
-`geoknife` package version 1.0.0
+`geoknife` package version 1.1.1
 ================================
 
-[![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) 
-[![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](http://cran.r-project.org/web/packages/geoknife/index.html)  Tools for geo-web processing of gridded data via the [Geo Data Portal](http://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
+[![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](http://cran.r-project.org/web/packages/geoknife/index.html)
+Tools for geo-web processing of gridded data via the [Geo Data Portal](http://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
 <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
 </p>
 ### Installing `geoknife`
 
 To install the `geoknife` from CRAN:
+
 ``` r
 install.packages("geoknife")
 ```
@@ -86,7 +87,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=d5798a2e-0ea0-4ac2-89f2-c9cca72b41ccOUTPUT"
+    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=49dd54bc-ccb3-4fd7-ab75-293b243812aaOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"

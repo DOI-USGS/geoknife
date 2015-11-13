@@ -40,3 +40,16 @@ test_that("can use multiple dataset variables",{
   knife <- webprocess(algorithm = list('Categorical Coverage Fraction'="gov.usgs.cida.gdp.wps.algorithm.FeatureCategoricalGridCoverageAlgorithm"))
   expect_is(geoknife(stencil = 'state::Wisconsin', fabric, knife),'geojob')
 })
+
+test_that("you can set booleans and they will be lowercase strings for post",{
+  expect_equal(webprocess(REQUIRE_FULL_COVERAGE = F), webprocess(REQUIRE_FULL_COVERAGE = 'false'))
+})
+
+test_that("you can set booleans as pass through",{
+  cancel()
+  job = geoknife(simplegeom(data.frame(point1 = c(-48.6, 45.2), point2=c(-88.6, 45.2))), 'prism', REQUIRE_FULL_COVERAGE = FALSE, wait=TRUE)
+  expect_true(all(is.na(result(job)$point1)))
+  job = geoknife(simplegeom(data.frame(point1 = c(-48.6, 45.2), point2=c(-88.6, 45.2))), 'prism', REQUIRE_FULL_COVERAGE = TRUE, wait=TRUE)
+  
+  expect_true(error(job))
+})
