@@ -1,5 +1,9 @@
-#'@title the algorithm of a webprocess object
-#'@description Functions to get or set the algorithm of a \linkS4class{webprocess} object
+#' the algorithm of a webprocess object
+#' 
+#' Functions to get or set the algorithm of a \linkS4class{webprocess} object. 
+#' The algorithm is the type of process that will be used, and can be accessed 
+#' or modified using the algorithm method. 
+#' 
 #'@param .Object a \linkS4class{webprocess} object
 #'@param value a list with name of algorithm and relative url endpoint
 #'@examples
@@ -9,7 +13,6 @@
 #'algorithm
 #'algorithm<-
 #'@rdname algorithm-webprocess
-#'@keywords internal
 #'@export
 setGeneric(name="algorithm",def=function(.Object){
   standardGeneric("algorithm")
@@ -22,8 +25,8 @@ setGeneric(name="algorithm<-",def=function(.Object, value){
   standardGeneric("algorithm<-")
 })
 
-#'@rdname algorithm-webprocess
-#'@aliases algorithm
+#' @rdname algorithm-webprocess
+#' @aliases algorithm
 setMethod(f = "algorithm",signature="webprocess",
           definition = function(.Object){
             return(.Object@algorithm)

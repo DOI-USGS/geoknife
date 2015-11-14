@@ -1,9 +1,17 @@
-#'@title inputs of webprocess
-#'@description access or set the inputs of a webprocess
-#'@param .Object a webprocessing object
-#'@param ... arguments matching fields in .Object's processInputs slot
-#'@param value a field pair for .Object processInputs
-#'@rdname inputs-webprocess
+#' inputs of webprocess
+#' 
+#' The webprocess inputs are a list of parameter names and their associated values.  
+#' These inputs are specific to an individual \code{algorithm} used by the webprocess, 
+#' and are pulled in from the web with defaults. An NA value in an input field means that 
+#' this parameter will be left out of the web processing request. NULL values are required fields 
+#' for the post and must be populated. For some values, there are defaults used if NULL (e.g.,
+#' the mean for 'STATISTIC' is "mean"). Only characters can be used in input fields, but 
+#' booleans are changed to characters as 'true' and 'false'. 
+#' 
+#' @param .Object a webprocessing object
+#' @param \dots arguments matching fields in .Object's processInputs slot
+#' @param value a field pair for .Object processInputs
+#' @rdname inputs-webprocess
 #'@aliases
 #'inputs<-
 #'@examples
