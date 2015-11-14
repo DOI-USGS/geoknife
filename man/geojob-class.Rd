@@ -4,6 +4,10 @@
 \name{geojob-class}
 \alias{geojob-class}
 \title{geojob class}
+\description{
+contains the information for processing the job, and the versions 
+of the resources used.
+}
 \section{Slots}{
 
 \describe{

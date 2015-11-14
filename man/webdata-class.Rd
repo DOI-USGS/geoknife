@@ -4,6 +4,10 @@
 \name{webdata-class}
 \alias{webdata-class}
 \title{webdata class}
+\description{
+a class for specifying details of web datasets (webdata!). These datasets have to be  
+accessible through the OPeNDAP protocol or as WCS (web coverage services).
+}
 \section{Slots}{
 
 \describe{

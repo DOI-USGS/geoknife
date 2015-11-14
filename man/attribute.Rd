@@ -18,4 +18,7 @@ attribute(.Object)
 
 \item{value}{a attribute}
 }
+\description{
+get or set the attribute of a webgeom object.
+}
 

@@ -1,28 +1,28 @@
-#'@title parse process output into R environment
+#' parse process output into R environment
 #'
-#'@details a \code{geojob} method for loading data into R from a completed processing request
+#' a \code{geojob} method for loading data into R from a completed processing request
 #'
-#'@param .Object a \code{\link{geojob}} object with a successful processID. 
-#'(See \code{\link{check}}).
-#'@param ... additional arguments passed to parsers (e.g., keep.units = TRUE)
-#'@return data.frame of timeseries values. 
-#'@rdname result-methods
-#'@aliases result
-#'@docType methods
-#'@keywords methods
-#'@importFrom XML xmlGetAttr getNodeSet xmlParse xmlChildren xmlName xpathApply
-#'@author Jordan S. Read
-#'@export
-#'@examples
-#'\dontrun{
-#'job <- geoknife(stencil = c(-89,42), fabric = 'prism', wait = TRUE)
-#'result(job, with.units = TRUE) # load and print output
-#'}
+#' @param .Object a \code{\link{geojob}} object with a successful processID. 
+#' (See \code{\link{check}}).
+#' @param ... additional arguments passed to parsers (e.g., keep.units = TRUE)
+#' @return data.frame of timeseries values. 
+#' @rdname result-methods
+#' @aliases result
+#' @docType methods
+#' @keywords methods
+#' @importFrom XML xmlGetAttr getNodeSet xmlParse xmlChildren xmlName xpathApply
+#' @author Jordan S. Read
+#' @export
+#' @examples
+#' \dontrun{
+#' job <- geoknife(stencil = c(-89,42), fabric = 'prism', wait = TRUE)
+#' result(job, with.units = TRUE) # load and print output
+#' }
 #'
 setGeneric(name="result",def=function(.Object, ...){standardGeneric("result")})
 
-#'@rdname result-methods
-#'@aliases result
+#' @rdname result-methods
+#' @aliases result
 setMethod(f = "result",signature="geojob",
   definition = function(.Object, ...){
             if (successful(.Object)){

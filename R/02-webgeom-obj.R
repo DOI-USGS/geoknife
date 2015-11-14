@@ -38,7 +38,7 @@ setClass(
     GML_IDs = "character",
     WFS_NAMESPACE = "character",
     GML_NAMESPACE = "character",
-    GML_SCHEMA_LOCATION = "character"),
+    GML_SCHEMA_LOCATION = "character")
 )
 
 
@@ -67,11 +67,19 @@ setMethod("initialize", signature = "webgeom",
 #' create webgeom object
 #' @description A class representing a web dataset.
 #'
-#' @slot url value of type \code{"character"}, the web location for the dataset
-#' @slot variable value of type \code{"character"}, the variable(s) for data
+#' @slot url value of type \code{"character"}, the web location for the web feature service
+#' @slot geom value of type \code{"character"}, the feature for webgeom
+#' @slot attribute the attribute (e.g., "State")
+#' @slot values the values of the attribute, (e.g., "Wisconsin") or NA (all)
+#'
+#' @details slots can be accessed or set with methods of the same names 
+#' (e.g., url(webgeom()))
+#' 
+#' @seealso \code{\link{url}}, \code{\link{geom}}, \code{\link{attribute}}, \code{\link{values}}
 #'
 #' @param .Object any object that can be coerced into \linkS4class{webgeom}
-#' @param ... additional arguments passed initialize method (e.g., \code{url})
+#' @param \dots additional arguments passed initialize method (e.g., \code{url}). See 
+#' the named slots above for arguments for \dots
 #' @return the webgeom object representing a dataset and parameters
 #' @author Jordan S Read
 #' @rdname webgeom-methods

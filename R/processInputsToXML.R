@@ -3,7 +3,10 @@
 #'@export
 setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML")})
 
-#'@title XML from set of objects
+#' XML from set of objects
+#' 
+#' Extract important parts of stencil, fabric, and knife into POST XML
+#' 
 #'@param stencil a \code{\link{webdata}} OR \code{\link{simplegeom}} object
 #'@param fabric a \code{\link{webdata}} object
 #'@param knife a \code{\link{webprocess}} object

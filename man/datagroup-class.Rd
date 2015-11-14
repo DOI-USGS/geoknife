@@ -4,6 +4,10 @@
 \name{datagroup-class}
 \alias{datagroup-class}
 \title{datagroup class}
+\description{
+contains collections of webdata that can be processed with 
+\code{\link{geoknife}}
+}
 \section{Slots}{
 
 \describe{

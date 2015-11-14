@@ -1,4 +1,8 @@
-  #' @title geojob class
+#' geojob class
+#' 
+#' contains the information for processing the job, and the versions 
+#' of the resources used. 
+#' 
 #' @slot url URL of web processing endpoint
 #' @slot xml XML character for post
 #' @slot id job identifier

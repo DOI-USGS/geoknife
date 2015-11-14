@@ -22,11 +22,12 @@ algorithm(.Object) <- value
 \item{value}{a list with name of algorithm and relative url endpoint}
 }
 \description{
-Functions to get or set the algorithm of a \linkS4class{webprocess} object
+Functions to get or set the algorithm of a \linkS4class{webprocess} object. 
+The algorithm is the type of process that will be used, and can be accessed 
+or modified using the algorithm method.
 }
 \examples{
 wp <- webprocess()
 algorithm(wp)
 }
-\keyword{internal}
 

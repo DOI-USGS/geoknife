@@ -16,7 +16,8 @@ webgeom(.Object, ...)
 \arguments{
 \item{.Object}{any object that can be coerced into \linkS4class{webgeom}}
 
-\item{...}{additional arguments passed initialize method (e.g., \code{url})}
+\item{\dots}{additional arguments passed initialize method (e.g., \code{url}). See 
+the named slots above for arguments for \dots}
 }
 \value{
 the webgeom object representing a dataset and parameters
@@ -24,12 +25,20 @@ the webgeom object representing a dataset and parameters
 \description{
 A class representing a web dataset.
 }
+\details{
+slots can be accessed or set with methods of the same names 
+(e.g., url(webgeom()))
+}
 \section{Slots}{
 
 \describe{
-\item{\code{url}}{value of type \code{"character"}, the web location for the dataset}
+\item{\code{url}}{value of type \code{"character"}, the web location for the web feature service}
 
-\item{\code{variable}}{value of type \code{"character"}, the variable(s) for data}
+\item{\code{geom}}{value of type \code{"character"}, the feature for webgeom}
+
+\item{\code{attribute}}{the attribute (e.g., "State")}
+
+\item{\code{values}}{the values of the attribute, (e.g., "Wisconsin") or NA (all)}
 }}
 \examples{
 wg <- webgeom(geom = "sample:CONUS_states", 
@@ -46,5 +55,8 @@ wg <- webgeom()
 }
 \author{
 Jordan S Read
+}
+\seealso{
+\code{\link{url}}, \code{\link{geom}}, \code{\link{attribute}}, \code{\link{values}}
 }
 

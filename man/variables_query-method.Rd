@@ -17,5 +17,8 @@ variables_query(fabric, knife)
 \arguments{
 \item{variables}{}
 }
+\description{
+find possible variables in a webdata datset
+}
 \keyword{internal}
 

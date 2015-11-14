@@ -22,4 +22,7 @@ variables(.Object) <- value
 
 \item{value}{a character vector for variables}
 }
+\description{
+access or set the variables of a webdata object
+}
 

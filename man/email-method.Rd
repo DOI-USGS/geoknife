@@ -14,5 +14,8 @@ email(geojob, knife)
 \arguments{
 \item{email}{a character for email address to use}
 }
+\description{
+configure job to send an email when complete (success or failure)
+}
 \keyword{internal}
 

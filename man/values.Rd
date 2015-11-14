@@ -6,7 +6,7 @@
 \alias{values,webgeom-method}
 \alias{values<-}
 \alias{values<-,webgeom-method}
-\title{the values of an object}
+\title{the values of a webgeom}
 \usage{
 values(.Object) <- value
 
@@ -20,5 +20,16 @@ values(.Object)
 \item{.Object}{a \linkS4class{webgeom} object}
 
 \item{value}{a values}
+}
+\description{
+The values of a webgeom are the values of the attributes used in the geometries. 
+For example, if the webgeom's "geom" field is a feature collection containing states 
+and counties, and the "attributes" are the states, then the values would be the 
+specific states.
+}
+\examples{
+wg <- webgeom('state::Wisconsin')
+values(wg)
+values(wg) <- c('Wisconsin','New Hampshire')
 }
 

@@ -1,4 +1,7 @@
-#'@title the attribute of an webgeom object
+#' the attribute of an webgeom object
+#'
+#' get or set the attribute of a webgeom object. 
+#'
 #'@param .Object a \linkS4class{webgeom} object
 #'@param value a attribute
 #'@rdname attribute

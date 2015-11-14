@@ -1,4 +1,8 @@
-#' @title datagroup class
+#' datagroup class
+#' 
+#' contains collections of webdata that can be processed with 
+#' \code{\link{geoknife}}
+#' 
 #' @slot group a list of webdata compatable elements
 #' @rdname datagroup-class
 setClass(

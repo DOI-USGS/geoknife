@@ -1,16 +1,27 @@
-#'@title the values of an object
-#'@param .Object a \linkS4class{webgeom} object
-#'@param value a values
-#'@rdname values
-#'@aliases
-#'values
-#'values<-
-#'@export
+#' the values of a webgeom
+#' 
+#' The values of a webgeom are the values of the attributes used in the geometries. 
+#' For example, if the webgeom's "geom" field is a feature collection containing states 
+#' and counties, and the "attributes" are the states, then the values would be the 
+#' specific states. 
+#' 
+#' @param .Object a \linkS4class{webgeom} object
+#' @param value a values
+#' @rdname values
+#'
+#' @examples 
+#' wg <- webgeom('state::Wisconsin')
+#' values(wg)
+#' values(wg) <- c('Wisconsin','New Hampshire')
+#' @aliases
+#' values
+#' values<-
+#' @export
 setGeneric(name="values<-",def=function(.Object, value){standardGeneric("values<-")})
 
-#'@aliases values
-#'@rdname values
-#'@export
+#' @aliases values
+#' @rdname values
+#' @export
 setGeneric(name="values",def=function(.Object){standardGeneric("values")})
 
 

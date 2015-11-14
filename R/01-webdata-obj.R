@@ -3,7 +3,13 @@ pkg.env <- new.env()
   setJobState()
 }
 library(methods)
-#' @title webdata class
+
+#' 
+#' webdata class
+#' 
+#' a class for specifying details of web datasets (webdata!). These datasets have to be  
+#' accessible through the OPeNDAP protocol or as WCS (web coverage services). 
+#' 
 #' @slot times vector of POSIXct dates (specifying start and end time of processing)
 #' @slot url URL of web data
 #' @slot variables variable(s) used for processin from dataset
