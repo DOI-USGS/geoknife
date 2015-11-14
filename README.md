@@ -87,7 +87,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=49dd54bc-ccb3-4fd7-ab75-293b243812aaOUTPUT"
+    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=92e6a2e9-b23e-42ea-ba5b-c6112e2dc5c7OUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -155,7 +155,7 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 What libraries does `geoknife` need?
 ------------------------------------
 
-This version requires `httr`, `jsonlite`, and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
+This version requires `httr`, `sp`, and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
 
 Disclaimer
 ----------
