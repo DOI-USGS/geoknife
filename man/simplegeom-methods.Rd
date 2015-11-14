@@ -5,7 +5,7 @@
 \alias{simplegeom}
 \alias{simplegeom,ANY-method}
 \alias{simplegeom,missing-method}
-\title{create simplegeom object}
+\title{Create simplegeom object}
 \usage{
 simplegeom(.Object, ...)
 
@@ -20,6 +20,10 @@ simplegeom(.Object, ...)
 }
 \value{
 the simplegeom object
+}
+\description{
+A simple geom is a simple set of geometries specified locally. See 
+\code{\link{webgeom}} for web features.
 }
 \examples{
 simplegeom(c(-88.6, 45.2))

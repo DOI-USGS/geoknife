@@ -21,4 +21,7 @@ version(.Object)
 
 \item{value}{a version}
 }
+\description{
+get the version of webgeom or webprocess
+}
 

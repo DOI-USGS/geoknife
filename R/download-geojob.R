@@ -1,4 +1,7 @@
-#'@title download output from geojob
+#' download output from geojob
+#' 
+#' download the result of a processing job to a local destination. 
+#' 
 #'@param .Object a \code{\link{geojob}} that has completed
 #'@param destination a file destination. If missing, a temp directory will be used
 #'@param ... additional arguments passed to \code{\link[httr]{write_disk}}, such as overwrite = TRUE

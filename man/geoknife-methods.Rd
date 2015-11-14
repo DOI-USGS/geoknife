@@ -22,6 +22,9 @@ Can also be used to modify the \code{knife} argument, if it is supplied.}
 \value{
 and object of class \linkS4class{geojob}
 }
+\description{
+Creates the processing job and allows specifying the processing details.
+}
 \details{
 The \code{stencil} argument is akin to cookie cutter(s), which specify how the dataset is 
 to be subsampled spatially. Supported types are all geometric in nature, be they collections 

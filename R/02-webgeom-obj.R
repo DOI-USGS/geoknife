@@ -75,7 +75,7 @@ setMethod("initialize", signature = "webgeom",
 #' @details slots can be accessed or set with methods of the same names 
 #' (e.g., url(webgeom()))
 #' 
-#' @seealso \code{\link{url}}, \code{\link{geom}}, \code{\link{attribute}}, \code{\link{value}}
+#' @seealso \code{\link{url}}, \code{\link{geom}}, \code{\link{attribute}}, \code{\link{values}}
 #'
 #' @param .Object any object that can be coerced into \linkS4class{webgeom}
 #' @param \dots additional arguments passed initialize method (e.g., \code{url}). See 

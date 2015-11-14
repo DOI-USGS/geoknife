@@ -14,5 +14,8 @@ times_query(fabric, knife)
 
 \S4method{times_query}{webdata,webprocess}(fabric, knife)
 }
+\description{
+query a webdata object for the time range
+}
 \keyword{internal}
 

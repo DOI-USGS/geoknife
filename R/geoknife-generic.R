@@ -1,5 +1,8 @@
 
-#'@title geoknife 
+#' geoknife 
+#' 
+#' Creates the processing job and allows specifying the processing details. 
+#' 
 #'@param stencil a \code{\link{webgeom}}, \code{\link{simplegeom}}, or any type 
 #'that can be coerced into \code{\link{simplegeom}}.
 #'@param fabric a dataset. A \code{\link{webdata}} or any type that 

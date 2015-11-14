@@ -35,7 +35,7 @@ query(.Object, field, ...)
 \value{
 a character vector of values corresponding to the query field specified
 }
-\details{
+\description{
 a method for finding possible values for a given field
 }
 \examples{

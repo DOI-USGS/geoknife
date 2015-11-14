@@ -17,7 +17,7 @@ parseTimeseries(file, delim, with.units = FALSE)
 \value{
 a data.frame of timeseries values.
 }
-\details{
+\description{
 a function for loading data into R from a file (or URL) from a completed processing request
 }
 \examples{

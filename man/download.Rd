@@ -23,6 +23,9 @@ download(.Object, destination, ...)
 \value{
 the file handle
 }
+\description{
+download the result of a processing job to a local destination.
+}
 \author{
 Jordan S Read
 }

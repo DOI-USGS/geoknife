@@ -57,6 +57,6 @@ wg <- webgeom()
 Jordan S Read
 }
 \seealso{
-\code{\link{url}}, \code{\link{geom}}, \code{\link{attribute}}, \code{\link{value}}
+\code{\link{url}}, \code{\link{geom}}, \code{\link{attribute}}, \code{\link{values}}
 }
 

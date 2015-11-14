@@ -23,8 +23,10 @@ getJobState <- function(){
   pkg.env$jobState
 }
 
-#' @title checks package job state and returns a boolean for 
-#' whether a new job can be started
+#' can start a new job?
+#' 
+#' checks package job state and returns a boolean for whether a new job can be started
+#' 
 #' @return TRUE or FALSE
 #' @keywords internal
 #' 
