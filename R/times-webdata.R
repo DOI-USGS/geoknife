@@ -1,26 +1,28 @@
-#'@title the times of an webdata object
-#'@description Functions to get or set the times of a \code{\link{webdata}} object
-#'@param .Object a \code{\link{webdata}} object
-#'@param value a POSIXct vector
-#'@examples
-#'wd <- webdata('prism')
-#'times(wd) <- as.POSIXct(c("2012-11-04", "2012-11-12"))
-#'times(wd)[1] <- as.POSIXct("2012-11-04")
-#'times(wd)
-#'@rdname times-webdata
-#'@aliases 
-#'times
-#'times<-
-#'@export
+#' the times of an webdata object
+#'
+#' Functions to get or set the times of a \code{\link{webdata}} object
+#' 
+#' @param .Object a \code{\link{webdata}} object
+#' @param value a POSIXct vector
+#' @examples
+#' wd <- webdata('prism')
+#' times(wd) <- as.POSIXct(c("2012-11-04", "2012-11-12"))
+#' times(wd)[1] <- as.POSIXct("2012-11-04")
+#' times(wd)
+#' @rdname times-webdata
+#' @aliases 
+#' times
+#' times<-
+#' @export
 setGeneric(name="times",def=function(.Object){standardGeneric("times")})
 
-#'@rdname times-webdata
-#'@aliases times
-#'@export
+#' @rdname times-webdata
+#' @aliases times
+#' @export
 setGeneric(name="times<-",def=function(.Object, value){standardGeneric("times<-")})
 
-#'@rdname times-webdata
-#'@aliases times
+#' @rdname times-webdata
+#' @aliases times
 setMethod(f = "times<-",signature(.Object = "webdata"),
           definition = function(.Object, value){
             if (length(value) != 2){
@@ -63,8 +65,8 @@ geotime.character = function(value){
   geotime.POSIXct(do.call(c, lapply(value,as.POSIXct)))
 }
 
-#'@rdname times-webdata
-#'@aliases times
+#' @rdname times-webdata
+#' @aliases times
 setMethod(f = "times",signature(.Object = "webdata"),
           definition = function(.Object){
             return(.Object@times)
