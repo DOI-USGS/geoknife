@@ -6,7 +6,6 @@
 #' @return A \linkS4class{geojob} object with an active GDP process request.
 #'
 #' @docType methods
-#' @keywords methods
 #' @description Start process for \code{\link{geojob}}
 #' @title Submit a GDP web processing request
 #' @seealso \code{\link{check}}
@@ -32,7 +31,7 @@ setMethod(f = "start",signature(.Object = "geojob"),definition = function(.Objec
 	
   if (!canStart()){
     stop('Cannot start a new geojob until a previous one is completed or is error. ',
-         'See "check(geojob)"')
+         'See "check(geojob)"', call.=FALSE)
   }
 	requestXML <- xml(.Object)
 	data <- genericExecute(url = url(.Object), requestXML)
