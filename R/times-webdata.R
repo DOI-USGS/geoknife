@@ -28,7 +28,7 @@ setMethod(f = "times<-",signature(.Object = "webdata"),
             }
             
             if (!any(is.na(value)) && value[1] > value[2]){
-              stop('time start must proceed time stop in "times" slot for webdata')
+              stop('time start must proceed time stop in "times" slot for webdata', call. = FALSE)
             }
             .Object@times <- geotime(value)
             return(.Object)
