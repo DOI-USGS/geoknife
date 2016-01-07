@@ -67,7 +67,8 @@ setMethod("initialize", signature = "webgeom",
           })
 
 #' create webgeom object
-#' @description A class representing a web dataset.
+#' 
+#' A class representing a web available feature geometry.
 #'
 #' @slot url value of type \code{"character"}, the web location for the web feature service
 #' @slot geom value of type \code{"character"}, the feature for webgeom
@@ -80,7 +81,7 @@ setMethod("initialize", signature = "webgeom",
 #' @seealso \code{\link{url}}, \code{\link{geom}}, \code{\link{attribute}}, \code{\link{values}}
 #'
 #' @param .Object any object that can be coerced into \linkS4class{webgeom}
-#' @param \dots additional arguments passed initialize method (e.g., \code{url}). See 
+#' @param \dots additional arguments passed initialize method (e.g., \code{\link{url}}). See 
 #' the named slots above for arguments for \dots
 #' @return the webgeom object representing a dataset and parameters
 #' @author Jordan S Read
@@ -134,6 +135,9 @@ setAs("character", "webgeom", function(from){
                           attribute = "HUC_8"))
                    
   pieces <- strsplit(from, split = '::')[[1]]
+  
+  if (length(pieces) > 2)
+    stop('invalid value for ', from, call.=FALSE)
   
   quickgeom <- match.arg(pieces[1], names(datasets))
   
