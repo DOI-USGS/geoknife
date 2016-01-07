@@ -1,7 +1,9 @@
-#' @title webgeom class
-#' @description The \code{webgeom} class represents a web feature service (WFS) dataset.
+#' webgeom class
+#' 
+#' The \code{webgeom} class represents a web feature service (WFS) dataset.
 #' WFS is an open geospatial consortium standard for spatial data on the web. WFS supports 
 #' filtering of spatial elements and this object can support many of those filters. 
+#' 
 #' @slot url URL of web feature service endpoint. 
 #' Can be set or accessed using \code{\link[geoknife]{url}}
 #' @slot geom character for geometric feature name. 

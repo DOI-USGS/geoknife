@@ -17,7 +17,7 @@ start(.Object)
 A \linkS4class{geojob} object with an active GDP process request.
 }
 \description{
-Start process for \code{geojob}
+Start process for \code{\link{geojob}}
 }
 \details{
 start is a method for submitting a geo-web processing request.
@@ -34,7 +34,7 @@ gj <- start(gj)
 }
 }
 \seealso{
-\code{check}
+\code{\link{check}}
 }
 \keyword{methods}
 

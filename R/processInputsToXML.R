@@ -177,10 +177,9 @@ setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
   
   geom <- stencil@sp
   
-  lng	<-	length(geom) # number of polygons
-  for (j in 1:lng){
+  for (j in seq_along(geom)){
     
-    gmlBoxEL  <-	newXMLNode('draw:poly',attrs=c("gml:id"=paste("poly.",j,sep='')))
+    gmlBoxEL  <-	newXMLNode('draw:poly',attrs=c("gml:id"=sprintf("poly.%s",j)))
     
     addChildren(gmlFeatEL,gmlBoxEL) 
     gmlGeomEL  <-	newXMLNode('draw:the_geom')

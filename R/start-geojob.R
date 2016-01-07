@@ -6,9 +6,9 @@
 #'
 #'@docType methods
 #'@keywords methods
-#'@description Start process for \code{geojob}
+#'@description Start process for \code{\link{geojob}}
 #'@title Submit a GDP web processing request
-#'@seealso \code{check}
+#'@seealso \code{\link{check}}
 #'@aliases start
 #'@docType methods
 #'@export
