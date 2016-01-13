@@ -48,14 +48,14 @@ setMethod(f = "values",signature="webgeom",
 #' @title fetch GML_IDs from WFS
 #' @description fetch GML_IDs from WFS when geom, attribute, and values are specified
 #' @param .Object a webgeom object
-#' @importFrom httr GET content
+#' @importFrom httr GET
 #' @keywords internal 
 fetchGML_IDs <- function(.Object){
   url <- sprintf('%s?service=WFS&version=%s&request=GetFeature&typename=%s&MAXFEATURES=5000&propertyname=%s',
                  url(.Object), version(.Object), geom(.Object), .Object@attribute)
   ns_geom <- strsplit(geom(.Object), ":")[[1]][1]
   response <- GET(url)
-  xml <- content(response)
+  xml <- gcontent(response)
   value_path <- sprintf('//gml:featureMembers/%s/%s:%s', geom(.Object), ns_geom, .Object@attribute)
   value_names <- sapply(getNodeSet(xml,paste0(value_path, '/node()[1]')), 
                         FUN = function(x) xmlValue(x)[1])
