@@ -16,14 +16,14 @@ webgeom(.Object, ...)
 \arguments{
 \item{.Object}{any object that can be coerced into \linkS4class{webgeom}}
 
-\item{\dots}{additional arguments passed initialize method (e.g., \code{url}). See 
+\item{\dots}{additional arguments passed initialize method (e.g., \code{\link{url}}). See 
 the named slots above for arguments for \dots}
 }
 \value{
 the webgeom object representing a dataset and parameters
 }
 \description{
-A class representing a web dataset.
+A class representing a web available feature geometry.
 }
 \details{
 slots can be accessed or set with methods of the same names 

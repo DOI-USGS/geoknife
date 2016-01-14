@@ -1,7 +1,7 @@
 
 .setProcessInputs <- function(webprocess, ...){
   processNames <- names(inputs(webprocess))
-  for (i in 1:length(processNames)){
+  for (i in seq_along(processNames)){
     fun <- processNames[i]
     if (exists(fun)){
       inputs(webprocess,fun) <- do.call(fun, list(...))

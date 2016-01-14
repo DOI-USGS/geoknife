@@ -60,7 +60,7 @@ setMethod(f = "times_query",signature = c("webdata","webprocess"),
             newXMLNode("ows:Identifier", newXMLTextNode('result_as_xml'), parent = rd)
             response <- genericExecute(knife@UTILITY_URL,toString.XMLNode(root))
             values <- tryCatch({
-              nodes <- getNodeSet(content(response),'//gdp:availabletimes/gdp:time')
+              nodes <- getNodeSet(gcontent(response),'//gdp:availabletimes/gdp:time')
               as.POSIXct(sapply(nodes,xmlValue), tz = 'UTC')
             }, error = function(err) {
               return(as.POSIXct(c(NA,NA)))

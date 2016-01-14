@@ -52,7 +52,7 @@ setMethod(f = "query",signature("character",'missing'),
           }
 )
 
-#' @importFrom httr content POST content_type_xml
+#' @importFrom httr  POST content_type_xml
 webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54dd2326e4b08de9379b2fb1/csw'){
   request = '<csw:GetRecords xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2" resultType="results" outputSchema="http://www.isotc211.org/2005/gmd" maxRecords="1000">
     <csw:Query typeNames="csw:Record">
@@ -63,7 +63,7 @@ webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54
   parentxpath <- paste0(xpath,paste(rep('/parent::node()[1]',6), collapse='')) #/parent::node()[1]
   namespaces = c('srv','gmd','gco')
  
-  response <- content(httr::POST(url = csw_url, body = request, content_type_xml()))
+  response <- gcontent(httr::POST(url = csw_url, body = request, content_type_xml()))
   urls <- lapply(getNodeSet(response, xpath, namespaces = namespaces), xmlValue)
   abstracts = sapply(getNodeSet(response, paste0(parentxpath,'/gmd:abstract'), namespaces = namespaces), xmlValue)
   titles = sapply(getNodeSet(response, paste0(parentxpath,'/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString'), namespaces = namespaces), xmlValue)

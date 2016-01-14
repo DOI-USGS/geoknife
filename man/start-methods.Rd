@@ -4,7 +4,7 @@
 \name{start}
 \alias{start}
 \alias{start,geojob-method}
-\title{start a geo-web processing request}
+\title{Submit a GDP web processing request}
 \usage{
 start(.Object)
 
@@ -17,9 +17,11 @@ start(.Object)
 A \linkS4class{geojob} object with an active GDP process request.
 }
 \description{
-Start process for \code{geojob}
+Start process for \code{\link{geojob}}
 }
 \details{
+start a geo-web processing request
+
 start is a method for submitting a geo-web processing request.
 }
 \examples{
@@ -34,7 +36,6 @@ gj <- start(gj)
 }
 }
 \seealso{
-\code{check}
+\code{\link{check}}
 }
-\keyword{methods}
 
