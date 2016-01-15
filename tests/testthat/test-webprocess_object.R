@@ -44,6 +44,7 @@ test_that("test pass through of webprocess", {
 
 context('test pass through of webprocess inputs')
 test_that('test pass through of webprocess inputs', {
+  testthat::skip_on_cran()
   wp = webprocess(algorithm = list('OPeNDAP Subset'="gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm"), REQUIRE_FULL_COVERAGE = 'false', TIME_END='never!')
   wp = initialize(wp)
   expect_equal(inputs(wp,'REQUIRE_FULL_COVERAGE')[[1]], 'false')

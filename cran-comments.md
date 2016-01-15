@@ -1,14 +1,13 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Converted the DESCRIPTION title to title case.
+* Added a new output type to data subsets (geotiff)
 
-* Modified the Description to begin with "Process..."
+* Modified the GET and POST requests to work correctly with the release and dev version of the httr package
 
-* removed a long running web service call from the vignette, 
-which can sometimes fail.
+* improved documentation
 
-* issue with no vignette index was resolved (see %\VignetteIndexEntry{geoknife package})
+* Fixed the CITATION file DOI, which was improperly formatted
 
 ### a note about geoknife URLs:
 this package has a numer of service URLs that can be found in code, 
