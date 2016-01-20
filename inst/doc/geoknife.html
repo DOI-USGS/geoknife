@@ -71,7 +71,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="header">
 <h1 class="title">geoknife package</h1>
 <h4 class="author"><em>Jordan Read</em></h4>
-<h4 class="date"><em>15 January, 2016</em></h4>
+<h4 class="date"><em>20 January, 2016</em></h4>
 </div>
 
 <div id="TOC">
@@ -371,18 +371,16 @@ stencil</code></pre></div>
 ##  [6] &quot;sample:CSC_Boundaries&quot;          
 ##  [7] &quot;derivative:FWS_LCC&quot;             
 ##  [8] &quot;sample:FWS_LCC&quot;                 
-##  [9] &quot;derivative:wbdhu8_alb_simp&quot;     
-## [10] &quot;derivative:Level_III_Ecoregions&quot;
-## [11] &quot;derivative:NCA_Regions&quot;         
-## [12] &quot;derivative:US_Counties&quot;         
-## [13] &quot;upload:climate_regions_poly2&quot;   
-## [14] &quot;upload:ecoregions_poly&quot;         
-## [15] &quot;upload:ecoregions_poly2&quot;        
-## [16] &quot;upload:ecoregions_poly3&quot;        
-## [17] &quot;sample:nps_boundary_2013&quot;       
-## [18] &quot;draw:reter&quot;                     
-## [19] &quot;sample:simplified_HUC8s&quot;        
-## [20] &quot;upload:study_area&quot;</code></pre>
+##  [9] &quot;draw:Flag&quot;                      
+## [10] &quot;derivative:wbdhu8_alb_simp&quot;     
+## [11] &quot;derivative:Level_III_Ecoregions&quot;
+## [12] &quot;derivative:NCA_Regions&quot;         
+## [13] &quot;draw:US&quot;                        
+## [14] &quot;derivative:US_Counties&quot;         
+## [15] &quot;sample:nps_boundary_2013&quot;       
+## [16] &quot;upload:risk_region4c&quot;           
+## [17] &quot;sample:simplified_HUC8s&quot;        
+## [18] &quot;draw:x&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'attributes'</span>)</code></pre></div>
 <pre><code>## [1] &quot;STATE&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'values'</span>)</code></pre></div>
@@ -509,7 +507,7 @@ july.idx &lt;-<span class="st"> </span><span class="kw">months</span>(sst$DateTi
 <h2><code>knife</code> object</h2>
 <p>The <code>webprocess</code> class holds all the important information for geoknife processing details for the outsourced geoprocessing engine, the Geo Data Portal. Public fields in <code>webprocess</code>:</p>
 <ul>
-<li><code>url</code>: a character for the location of the web processing service to be used. Defaults to <a href="http://cida.usgs.gov/gdp/process/WebProcessingService" class="uri">http://cida.usgs.gov/gdp/process/WebProcessingService</a>.</li>
+<li><code>url</code>: a character for the location of the web processing service to be used.</li>
 <li><code>algorithm</code>: a list specifying the algorithm to be used for processing. Defaults to Area Grid Statistics (weighted).</li>
 <li><code>version</code>: a character specifying the version of the web processing service to be used. Defaults to 1.0.0.</li>
 <li><code>processInputs</code>: a list of processing details for the specified <code>algorithm</code>. These details vary depending on <code>algorithm</code> and are this field is automatically reset when the <code>algorithm</code> field is set.</li>
@@ -663,7 +661,7 @@ knife</code></pre></div>
 <p>The <code>geoknife</code> package currently limits the user processing requests to single-running processes, so as to avoid creating thousands of requests in error, which could overwhelm the processing resources. If there is a reason to support additional jobs at one time, please email the package maintainers with your query.</p>
 <p>To cancel and existing job: Cancel a running job but retain the details:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">id</span>(job)</code></pre></div>
-<pre><code>## [1] &quot;http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=857b4a06-9e28-4da0-b536-c17e9e3102c0&quot;</code></pre>
+<pre><code>## [1] &quot;http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=6d7b544a-53ba-408a-83b0-65c110aeca60&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">cancel</span>(job)
 <span class="kw">id</span>(job)</code></pre></div>
 <pre><code>## [1] &quot;&lt;no active job&gt;&quot;</code></pre>

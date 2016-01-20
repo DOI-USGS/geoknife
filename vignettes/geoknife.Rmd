@@ -339,7 +339,7 @@ At present, the `geoknife` package does not have a query method for dataset urls
 ## `knife` object
 The `webprocess` class holds all the important information for geoknife processing details for the outsourced geoprocessing engine, the Geo Data Portal. Public fields in `webprocess`:
 
- * `url`: a character for the location of the web processing service to be used. Defaults to `r url(webprocess())`.
+ * `url`: a character for the location of the web processing service to be used.
  * `algorithm`: a list specifying the algorithm to be used for processing. Defaults to `r names(algorithm(webprocess()))`.
  * `version`: a character specifying the version of the web processing service to be used. Defaults to `r version(webprocess())`.
  * `processInputs`: a list of processing details for the specified `algorithm`. These details vary depending on `algorithm` and are this field is automatically reset when the `algorithm` field is set. 
