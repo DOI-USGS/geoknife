@@ -82,6 +82,7 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
   }
 
   names(dataOut)[1] = 'DateTime'
+
   return(dataOut)
 }
 
