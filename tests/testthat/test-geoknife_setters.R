@@ -37,7 +37,7 @@ test_that("geoknife sets stencil correctly", {
 context("geoknife w/ knife modified in line")
 test_that("geoknife sets knife correctly", {
   testthat::skip_on_cran()
-  job <- geoknife('HUC8::09020306', 'prism', knife=webprocess(), wait=TRUE)
+  job <- geoknife('HUC8::09020306', 'prism', wait=TRUE)
   expect_true(geoknife:::canStart())
 })
 

@@ -4,18 +4,18 @@ defaultProcessInputs <- function(algorithm, wps_url, wps_version){
     'service' = 'WPS', 'version' = wps_version,'request' = 'DescribeProcess', 'identifier'=algorithm))
 
   doc	<- gcontent(getCaps)
-  
-  if(length(getNodeSet(doc,'//Exception/ExceptionText'))>0){
-    stop(xmlValue(getNodeSet(doc,'//Exception/ExceptionText')[[1]]))
+
+  if(length(getNodeSet(doc,'//ows:Exception/ows:ExceptionText'))>0){
+    stop(xmlValue(getNodeSet(doc,'//ows:Exception/ows:ExceptionText')[[1]]))
   }
   
-  optionNd	<-	getNodeSet(doc,'//DataInputs/Input[@minOccurs=0]/following-sibling::node()[1]')
+  optionNd	<-	getNodeSet(doc,'//DataInputs/Input[@minOccurs=0]/ows:Identifier')
   optionLs	<-	vector("list",length(optionNd))
   optionLs[]	<-	NA # "NA" is the equivalent of "optional" as an input
   names(optionLs)	<-	sapply(optionNd,xmlValue)
   
+  requirNd	<-	getNodeSet(doc,'//DataInputs/Input[@minOccurs>0]/ows:Identifier')
   requirLs	<-	vector("list",length(requirNd))	# max > 0 is required
-  requirNd	<-	getNodeSet(doc,'//DataInputs/Input[@minOccurs>0]/following-sibling::node()[1]')
   names(requirLs)	<-	sapply(requirNd,xmlValue)
   
   # now find any defaults and set those fields to those default values

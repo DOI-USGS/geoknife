@@ -8,7 +8,7 @@
 #'@return the file handle
 #'@author Jordan S Read
 #'@rdname download
-#'@importFrom httr GET write_disk progress
+#'@importFrom httr write_disk progress
 #'@export
 setGeneric("download", function(.Object, destination, ...) {
   standardGeneric("download")
@@ -32,6 +32,6 @@ setMethod("download", signature("geojob",'missing'), function(.Object, destinati
 setMethod("download", signature("geojob",'character'), function(.Object, destination, ...) {
   
   status <- check(.Object)
-  GET(url=status$URL, write_disk(destination, ...), progress())
+  gGET(url=status$URL, write_disk(destination, ...), progress())
   return(destination)
 })
