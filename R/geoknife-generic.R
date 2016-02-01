@@ -60,6 +60,7 @@ geoknife <- function(stencil, fabric, knife = webprocess(...), ...){
       return(wg)
     })
   }
+
   fabric <- as(fabric, Class = "webdata")
   geojob <- geojob()
   xml(geojob) <- XML(stencil, fabric, knife)
@@ -77,10 +78,10 @@ geoknife <- function(stencil, fabric, knife = webprocess(...), ...){
 }
 
 
-#'@importFrom httr POST content_type_xml
+#'@importFrom httr content_type_xml
 genericExecute	<-	function(url,requestXML){
 
-	response <-	POST(url,content_type_xml(),
+	response <-	gPOST(url,content_type_xml(),
                   body = requestXML)		
 
 	return(response)

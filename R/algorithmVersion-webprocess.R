@@ -1,6 +1,6 @@
 #' @importFrom XML xmlAttrs
 algorithmVersion <- function(knife){
-  getCaps <- GET(url(knife), query = list(
+  getCaps <- gGET(url(knife), query = list(
     'service' = 'WPS', 'version' = version(knife),'request' = 'DescribeProcess', 'identifier'=algorithm(knife)[[1]]))
   doc	<-	htmlParse(getCaps,isURL=FALSE, useInternalNodes = TRUE)
   

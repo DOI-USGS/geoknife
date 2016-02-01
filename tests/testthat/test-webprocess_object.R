@@ -2,7 +2,7 @@ context("Test create webprocess object")
 test_that("creation of webprocess object", {
   testthat::skip_on_cran()
   expect_is(webprocess(), "webprocess")
-  wp <- webprocess(url = 'http://cida-test.er.usgs.gov/process/WebProcessingService')
+  wp <- webprocess(url = 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
   expect_is(wp, "webprocess")
 })
 
