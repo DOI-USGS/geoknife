@@ -1,37 +1,36 @@
 #'@importFrom XML htmlParse getNodeSet xmlValue
-#'@importFrom httr GET
 defaultProcessInputs <- function(algorithm, wps_url, wps_version){
-  getCaps <- GET(wps_url, query = list(
+  getCaps <- gGET(wps_url, query = list(
     'service' = 'WPS', 'version' = wps_version,'request' = 'DescribeProcess', 'identifier'=algorithm))
 
-  doc	<-	htmlParse(getCaps,isURL=FALSE, useInternalNodes = TRUE)
+  doc	<- gcontent(getCaps)
   
-  if(length(getNodeSet(doc,'//exception/exceptiontext'))>0){
-    stop(xmlValue(getNodeSet(doc,'//exception/exceptiontext')[[1]]))
+  if(length(getNodeSet(doc,'//Exception/ExceptionText'))>0){
+    stop(xmlValue(getNodeSet(doc,'//Exception/ExceptionText')[[1]]))
   }
   
-  optionNd	<-	getNodeSet(doc,'//datainputs/input[@minoccurs=0]/following-sibling::node()[1]')
+  optionNd	<-	getNodeSet(doc,'//DataInputs/Input[@minOccurs=0]/following-sibling::node()[1]')
   optionLs	<-	vector("list",length(optionNd))
   optionLs[]	<-	NA # "NA" is the equivalent of "optional" as an input
   names(optionLs)	<-	sapply(optionNd,xmlValue)
   
-  requirNd	<-	getNodeSet(doc,'//datainputs/input[@minoccurs>0]/following-sibling::node()[1]')
   requirLs	<-	vector("list",length(requirNd))	# max > 0 is required
+  requirNd	<-	getNodeSet(doc,'//DataInputs/Input[@minOccurs>0]/following-sibling::node()[1]')
   names(requirLs)	<-	sapply(requirNd,xmlValue)
   
   # now find any defaults and set those fields to those default values
-  defaultNd	<-	getNodeSet(doc,'//datainputs/literaldata/defaultvalue/parent::node()[1]/defaultvalue')
+  defaultNd	<-	getNodeSet(doc,'//DataInputs/Input/LiteralData/DefaultValue/parent::node()[1]/DefaultValue')
   defaultLs	<-	vector("list",length(sapply(defaultNd,xmlValue)))
   defaultLs[]	<-	sapply(defaultNd,xmlValue)
-  names(defaultLs)	<-	sapply(getNodeSet(doc,'//datainputs/literaldata/defaultvalue/
+  names(defaultLs)	<-	sapply(getNodeSet(doc,'//DataInputs/Input/LiteralData/DefaultValue/
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)	
   
   
   # now set any accepted values
-  allowNd    <-	getNodeSet(doc,'//datainputs/literaldata//parent::node()/allowedvalues/value[1]')
+  allowNd    <-	getNodeSet(doc,'//DataInputs/Input/LiteralData//parent::node()/ows:AllowedValues/ows:Value[1]')
   allowLs	<-	vector("list",length(sapply(allowNd,xmlValue)))
   allowLs[]	<-	sapply(allowNd,xmlValue)
-  names(allowLs)	<-	sapply(getNodeSet(doc,'//datainputs/literaldata/allowedvalues/
+  names(allowLs)	<-	sapply(getNodeSet(doc,'//DataInputs/Input/LiteralData/ows:AllowedValues/
 			parent::node()[1]/preceding-sibling::node()[3]'),xmlValue)
   
   # add fields for optionLs and requirLs
