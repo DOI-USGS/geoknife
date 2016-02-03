@@ -34,7 +34,8 @@ setClass(
                        "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
     version = '1.0.0',
     email = as.character(NA),
-    wait = FALSE
+    wait = FALSE,
+    sleep.time = 5
     ),
   representation = representation(
     url="character",
@@ -42,6 +43,7 @@ setClass(
     version="character",
     email = "character",
     wait = 'logical',
+    sleep.time = "numeric",
     processInputs="list",
     WPS_SCHEMA_LOCATION="character",
     WPS_NAMESPACE="character",
@@ -61,7 +63,8 @@ setMethod(f="initialize",signature="webprocess",
             algorithm = .Object@algorithm,
             version = .Object@version,
             email = .Object@email,
-            wait = .Object@wait, ...)
+            wait = .Object@wait, 
+            sleep.time = .Object@sleep.time, ...)
             {
 
             .Object@WPS_SCHEMA_LOCATION <- 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
@@ -83,6 +86,7 @@ setMethod(f="initialize",signature="webprocess",
             .Object@url <- url
             .Object@email <- email
             .Object@wait <- wait
+            .Object@sleep.time <- sleep.time
             
             # // -- supporting pass through of existing inputs arguments *when* they are applicable.
             old.inputs = inputs(.Object)
