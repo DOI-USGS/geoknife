@@ -1,4 +1,4 @@
-`geoknife` package version 1.1.3
+`geoknife` package version 1.1.4
 ================================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)
@@ -71,7 +71,7 @@ fabric <- webdata(list(
             url = 'http://cida.usgs.gov/thredds/dodsC/prism',
             variables = 'ppt'))
 # modify the times field:
-times(fabric) <- as.POSIXct(c('1990-01-01','2005-01-01'))
+times(fabric) <- as.POSIXct(c('2003-01-01','2005-01-01'))
 ```
 
 ##### create the processing job that will carry out the subsetting/summarization task
@@ -87,7 +87,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=6eb2b033-ca7b-4366-8bf7-21d66774d585OUTPUT"
+    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=0ac86798-7a2f-47c8-b153-3673e77e3e80OUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -107,8 +107,9 @@ data <- result(job)
 plot(data[,1:2], ylab = variables(fabric))
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)
- \#\#\#\#\#use an email to listen for process completion
+![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)<!-- -->
+
+##### use an email to listen for process completion
 
 ``` r
 job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake.email@gmail.com')

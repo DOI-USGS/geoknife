@@ -77,7 +77,7 @@ fabric <- webdata(list(
             url = 'http://cida.usgs.gov/thredds/dodsC/prism',
             variables = 'ppt'))
 # modify the times field:
-times(fabric) <- as.POSIXct(c('1990-01-01','2005-01-01'))
+times(fabric) <- as.POSIXct(c('2003-01-01','2005-01-01'))
 ```
 #####create the processing job that will carry out the subsetting/summarization task
 ```{r}

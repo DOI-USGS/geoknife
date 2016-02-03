@@ -34,6 +34,7 @@ Imports:
     XML,
     methods,
     httr,
+    curl,
     sp,
     utils
 Suggests:
