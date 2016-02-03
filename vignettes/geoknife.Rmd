@@ -114,7 +114,7 @@ fabric
 ```
 which can be a starting point for the PRISM dataset, as the fields can be modified:
 ```{r}
-times(fabric) <- c('1990-01-01','2010-01-01')
+times(fabric) <- c('2002-01-01','2010-01-01')
 variables(fabric) <- c('ppt','tmx', 'tmn')
 fabric
 ```
