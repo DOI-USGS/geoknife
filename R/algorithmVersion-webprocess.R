@@ -2,8 +2,8 @@
 algorithmVersion <- function(knife){
   getCaps <- gGET(url(knife), query = list(
     'service' = 'WPS', 'version' = version(knife),'request' = 'DescribeProcess', 'identifier'=algorithm(knife)[[1]]))
-  doc	<-	htmlParse(getCaps,isURL=FALSE, useInternalNodes = TRUE)
+  doc <- gcontent(getCaps)
   
-  version <- xmlAttrs(getNodeSet(doc,'//processdescription')[[1]])[['wps:processversion']]
+  version <- xmlAttrs(getNodeSet(doc,'//ProcessDescription')[[1]])[['processVersion']]
   return(version)
 }
