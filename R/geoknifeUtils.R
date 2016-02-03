@@ -1,3 +1,5 @@
+#' @importFrom curl curl_version
+#' @importFrom utils packageVersion
 geoknifeUserAgent <- function() {
   versions <- c(
     libcurl = curl::curl_version()$version,
