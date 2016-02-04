@@ -1,6 +1,15 @@
 pkg.env <- new.env()
 .onLoad <- function(libname, pkgname){
   setJobState()
+  setSleepTime()
+}
+
+setSleepTime <- function(sleep.time = 5){
+  pkg.env$sleep.time <- sleep.time
+}
+
+getSleepTime <- function(){
+  pkg.env$sleep.time
 }
 library(methods)
 

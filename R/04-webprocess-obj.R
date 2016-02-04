@@ -35,7 +35,7 @@ setClass(
     version = '1.0.0',
     email = as.character(NA),
     wait = FALSE,
-    sleep.time = 5
+    sleep.time = as.numeric(NA)
     ),
   representation = representation(
     url="character",
@@ -66,7 +66,6 @@ setMethod(f="initialize",signature="webprocess",
             wait = .Object@wait, 
             sleep.time = .Object@sleep.time, ...)
             {
-
             .Object@WPS_SCHEMA_LOCATION <- 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
             .Object@WPS_NAMESPACE <- 'http://www.opengis.net/wps/1.0.0'
             
@@ -86,7 +85,7 @@ setMethod(f="initialize",signature="webprocess",
             .Object@url <- url
             .Object@email <- email
             .Object@wait <- wait
-            .Object@sleep.time <- sleep.time
+            .Object@sleep.time <- ifelse(is.na(sleep.time), getSleepTime(), sleep.time)
             
             # // -- supporting pass through of existing inputs arguments *when* they are applicable.
             old.inputs = inputs(.Object)
