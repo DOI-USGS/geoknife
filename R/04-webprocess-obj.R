@@ -8,6 +8,7 @@
 #' Can be set or accessed using \code{\link[geoknife]{version}}
 #' @slot email an email to send finished process alert to
 #' @slot wait boolean for wait until complete (hold up R until processing is complete)
+#' @slot sleep.time numeric for time to wait in between calls to \code{\link{check}}. Only used if \code{wait=TRUE}
 #' @slot processInputs (_private) a list of required and options process inputs, and their 
 #' default values (if specified). This is populated (or repopulated) whenever \code{algorithm} is set.
 #' @slot WPS_SCHEMA_LOCATION (_private) location for web processing service schema
@@ -29,13 +30,11 @@
 setClass(
   Class = "webprocess",
   prototype = prototype(
-    url = gconfig('wps.url'), 
     algorithm = list('Area Grid Statistics (weighted)'=
                        "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
     version = '1.0.0',
     email = as.character(NA),
-    wait = FALSE,
-    sleep.time = gconfig('sleep.time')
+    wait = FALSE
     ),
   representation = representation(
     url="character",
@@ -66,6 +65,14 @@ setMethod(f="initialize",signature="webprocess",
             wait = .Object@wait, 
             sleep.time = .Object@sleep.time, ...)
             {
+            
+            #things that use package globals:
+            if(!length(url))
+              url <- gconfig('wps.url')
+            
+            if(!length(sleep.time))
+              sleep.time <- gconfig('sleep.time')
+            
             .Object@WPS_SCHEMA_LOCATION <- 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
             .Object@WPS_NAMESPACE <- 'http://www.opengis.net/wps/1.0.0'
             

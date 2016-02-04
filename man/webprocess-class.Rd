@@ -23,6 +23,8 @@ Can be set or accessed using \code{\link[geoknife]{version}}}
 
 \item{\code{wait}}{boolean for wait until complete (hold up R until processing is complete)}
 
+\item{\code{sleep.time}}{numeric for time to wait in between calls to \code{\link{check}}. Only used if \code{wait=TRUE}}
+
 \item{\code{processInputs}}{(_private) a list of required and options process inputs, and their 
 default values (if specified). This is populated (or repopulated) whenever \code{algorithm} is set.}
 

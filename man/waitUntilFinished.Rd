@@ -4,7 +4,7 @@
 \alias{waitUntilFinished}
 \title{hold up R while GDP is processing}
 \usage{
-waitUntilFinished(.Object, sleep.time = 5)
+waitUntilFinished(.Object, sleep.time = gconfig("sleep.time"))
 }
 \description{
 keeps R in a loop while GDP works on the request. 
