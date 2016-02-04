@@ -29,13 +29,13 @@
 setClass(
   Class = "webprocess",
   prototype = prototype(
-    url = 'http://cida.usgs.gov/gdp/process/WebProcessingService', 
+    url = gconfig('wps.url'), 
     algorithm = list('Area Grid Statistics (weighted)'=
                        "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
     version = '1.0.0',
     email = as.character(NA),
     wait = FALSE,
-    sleep.time = as.numeric(NA)
+    sleep.time = gconfig('sleep.time')
     ),
   representation = representation(
     url="character",
@@ -85,7 +85,7 @@ setMethod(f="initialize",signature="webprocess",
             .Object@url <- url
             .Object@email <- email
             .Object@wait <- wait
-            .Object@sleep.time <- ifelse(is.na(sleep.time), getSleepTime(), sleep.time)
+            .Object@sleep.time <- sleep.time
             
             # // -- supporting pass through of existing inputs arguments *when* they are applicable.
             old.inputs = inputs(.Object)

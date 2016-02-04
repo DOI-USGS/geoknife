@@ -1,16 +1,40 @@
 pkg.env <- new.env()
+pkg.env$gconfig <- list('wps.url'='http://cida.usgs.gov/gdp/process/WebProcessingService',
+                        'sleep.time'=5, 
+                        'verbose'=FALSE)
 .onLoad <- function(libname, pkgname){
   setJobState()
-  setSleepTime()
 }
 
-setSleepTime <- function(sleep.time = 5){
-  pkg.env$sleep.time <- sleep.time
+
+gconfig <- function(..., no.readonly = FALSE){
+  stopifnot(!no.readonly)
+  .gconfig.readonly <- c() # nothing right now?
+  single <- FALSE
+  args <- list(...)
+  if (!length(args)) 
+    return(pkg.env$gconfig)
+  else {
+    if (all(unlist(lapply(args, is.character)))) 
+      args <- as.list(unlist(args))
+    if (length(args) == 1) {
+      if (is.list(args[[1L]]) | is.null(args[[1L]])) 
+        args <- args[[1L]]
+      else if (is.null(names(args))) 
+        single <- TRUE
+    }
+  }
+  
+  if (single) 
+    value <- pkg.env$gconfig[args[[1L]]][[1L]]
+  if (!is.null(names(args))){
+    pkg.env$gconfig[c(names(args))][[1L]] <- args[[1L]]
+    invisible(pkg.env$gconfig[c(names(args))])
+  }
+  else value
+  
 }
 
-getSleepTime <- function(){
-  pkg.env$sleep.time
-}
 library(methods)
 
 #' 
