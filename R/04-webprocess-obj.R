@@ -32,9 +32,7 @@ setClass(
   prototype = prototype(
     algorithm = list('Area Grid Statistics (weighted)'=
                        "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
-    version = '1.0.0',
-    email = as.character(NA),
-    wait = FALSE
+    version = '1.0.0'
     ),
   representation = representation(
     url="character",
@@ -72,6 +70,13 @@ setMethod(f="initialize",signature="webprocess",
             
             if(!length(sleep.time))
               sleep.time <- gconfig('sleep.time')
+            
+            if(!length(wait))
+              wait <- gconfig('wait')
+            
+            if(!length(email))
+              email <- gconfig('email')
+            
             
             .Object@WPS_SCHEMA_LOCATION <- 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
             .Object@WPS_NAMESPACE <- 'http://www.opengis.net/wps/1.0.0'

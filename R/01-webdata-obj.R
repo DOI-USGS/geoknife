@@ -1,7 +1,9 @@
 pkg.env <- new.env()
 pkg.env$gconfig <- list('wps.url'='http://cida.usgs.gov/gdp/process/WebProcessingService',
-                        'sleep.time'=5, 
-                        'verbose'=FALSE)
+                        'sleep.time' = 5, 
+                        'wait' = FALSE,
+                        'email' = as.character(NA),
+                        'verbose' = FALSE)
 .onLoad <- function(libname, pkgname){
   setJobState()
 }
@@ -28,7 +30,7 @@ gconfig <- function(..., no.readonly = FALSE){
   if (single) 
     value <- pkg.env$gconfig[args[[1L]]][[1L]]
   if (!is.null(names(args))){
-    pkg.env$gconfig[c(names(args))][[1L]] <- args[[1L]]
+    pkg.env$gconfig[c(names(args))] <- args
     invisible(pkg.env$gconfig[c(names(args))])
   }
   else value
