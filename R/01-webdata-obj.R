@@ -9,12 +9,31 @@ pkg.env$gconfig <- list('wps.url'='http://cida.usgs.gov/gdp/process/WebProcessin
 }
 
 
+#' congfigure geoknife settings
+#' 
+#' access and set defaults for geoknife configuration
+#' 
+#' @param \dots values for gconfig
+#' @param no.readonly currently not implemented for \code{TRUE}
+#' @return Borrowed text and functionality from \code{\link[graphics]{par}}. 
+#' When parameters are set, their previous values are returned in an invisible named list. 
+#' Such a list can be passed as an argument to par to restore the parameter values. Use gconfig(no.readonly = TRUE) 
+#' for the full list of parameters that can be restored. When just one parameter is queried, the value of that 
+#' parameter is returned as (atomic) vector. When two or more parameters are queried, their values are returned 
+#' in a list, with the list names giving the parameters. Note the inconsistency: setting one parameter returns a list, 
+#' but querying one parameter returns a vector.
+#' @export
+#' @examples 
+#' gconfig # all config
+#' gconfig('wait')
+#' gconfig('sleep.time' = 10)
+#' gconfig('sleep.time' = 8, wait=TRUE)
 gconfig <- function(..., no.readonly = FALSE){
   stopifnot(!no.readonly)
   .gconfig.readonly <- c() # nothing right now?
   single <- FALSE
   args <- list(...)
-  if (!length(args)) 
+  if (length(args) == 0) 
     return(pkg.env$gconfig)
   else {
     if (all(unlist(lapply(args, is.character)))) 

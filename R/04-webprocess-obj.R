@@ -65,17 +65,10 @@ setMethod(f="initialize",signature="webprocess",
             {
             
             #things that use package globals:
-            if(!length(url))
-              url <- gconfig('wps.url')
-            
-            if(!length(sleep.time))
-              sleep.time <- gconfig('sleep.time')
-            
-            if(!length(wait))
-              wait <- gconfig('wait')
-            
-            if(!length(email))
-              email <- gconfig('email')
+            .Object@url <- if(length(url) > 0) url else gconfig('wps.url')
+            .Object@sleep.time <- if(length(sleep.time) > 0) url else gconfig('sleep.time')
+            .Object@wait <- if(length(wait) > 0) url else gconfig('wait')
+            .Object@email <- if(length(email) > 0) url else gconfig('email')
             
             
             .Object@WPS_SCHEMA_LOCATION <- 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
@@ -94,11 +87,7 @@ setMethod(f="initialize",signature="webprocess",
             .Object@emailK <- 'gov.usgs.cida.gdp.wps.algorithm.communication.EmailWhenFinishedAlgorithm'
             
             .Object@version <- version
-            .Object@url <- url
-            .Object@email <- email
-            .Object@wait <- wait
-            .Object@sleep.time <- sleep.time
-            
+
             # // -- supporting pass through of existing inputs arguments *when* they are applicable.
             old.inputs = inputs(.Object)
             old.algorithm = .Object@algorithm
