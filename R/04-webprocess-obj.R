@@ -30,7 +30,15 @@
 setClass(
   Class = "webprocess",
   prototype = prototype(
-    version = gconfig('version')
+    version = gconfig('version'),
+    WPS_SCHEMA_LOCATION = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd',
+    WPS_NAMESPACE = 'http://www.opengis.net/wps/1.0.0',
+    XSI_SCHEMA_LOCATION = 'http://www.opengis.net/wfs ../wfs/1.1.0/WFS.xsd',
+    XSI_NAMESPACE = 'http://www.w3.org/2001/XMLSchema-instance',
+    OGC_NAMESPACE = 'http://www.opengis.net/ogc',
+    XLINK_NAMESPACE = 'http://www.w3.org/1999/xlink',
+    OWS_NAMESPACE = 'http://www.opengis.net/ows/1.1',
+    emailK = 'gov.usgs.cida.gdp.wps.algorithm.communication.EmailWhenFinishedAlgorithm'
   ),
   representation = representation(
     url="character",
@@ -61,36 +69,23 @@ setMethod(f="initialize",signature="webprocess",
             wait = .Object@wait, 
             sleep.time = .Object@sleep.time, ...)
             {
+          
+            # // -- supporting pass through of existing inputs arguments *when* they are applicable.
+            old.algorithm <- if(length(.Object@algorithm) > 0) .Object@algorithm else gconfig('algorithm')
+            old.inputs = inputs(.Object)
             
-            #things that use package globals:
+            #things that use package variables:
             .Object@url <- if(length(url) > 0) url else gconfig('wps.url')
             .Object@sleep.time <- if(length(sleep.time) > 0) sleep.time else gconfig('sleep.time')
             .Object@wait <- if(length(wait) > 0) wait else gconfig('wait')
             .Object@email <- if(length(email) > 0) email else gconfig('email')
             .Object@algorithm <- if(length(algorithm) > 0) algorithm else gconfig('algorithm') # will need to do this differently...
             
-            # // -- supporting pass through of existing inputs arguments *when* they are applicable.
-            old.inputs = inputs(.Object)
-            old.algorithm = .Object@algorithm
-            
-            .Object@WPS_SCHEMA_LOCATION <- 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
-            .Object@WPS_NAMESPACE <- 'http://www.opengis.net/wps/1.0.0'
-            
-            .Object@XSI_SCHEMA_LOCATION <- 'http://www.opengis.net/wfs ../wfs/1.1.0/WFS.xsd'
-            .Object@XSI_NAMESPACE <- 'http://www.w3.org/2001/XMLSchema-instance'
-            
-            .Object@OGC_NAMESPACE <- 'http://www.opengis.net/ogc'
-            .Object@XLINK_NAMESPACE <- 'http://www.w3.org/1999/xlink'
-            
-            .Object@OWS_NAMESPACE <- 'http://www.opengis.net/ows/1.1'
-            
             .Object@UTILITY_URL <- gsub('process','utility', .Object@url)
-            
-            .Object@emailK <- 'gov.usgs.cida.gdp.wps.algorithm.communication.EmailWhenFinishedAlgorithm'
             
             processInputs <- defaultProcessInputs(algorithm = .Object@algorithm[[1]], .Object@url, .Object@version)
             
-            if (length(old.inputs) && old.algorithm[[1]] == algorithm[[1]]){
+            if (length(old.inputs) > 0 && old.algorithm[[1]] == algorithm[[1]]){
               which.replace <- unlist(unname(lapply(old.inputs, function(x) !is.null(x[[1]]) && !is.na(x[[1]])))) & names(old.inputs) %in% names(processInputs)
               which.to.rplc <- names(processInputs) %in% names(old.inputs[which.replace])
             } else {
