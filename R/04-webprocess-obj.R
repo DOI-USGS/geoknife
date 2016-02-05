@@ -8,6 +8,7 @@
 #' Can be set or accessed using \code{\link[geoknife]{version}}
 #' @slot email an email to send finished process alert to
 #' @slot wait boolean for wait until complete (hold up R until processing is complete)
+#' @slot sleep.time numeric for time to wait in between calls to \code{\link{check}}. Only used if \code{wait=TRUE}
 #' @slot processInputs (_private) a list of required and options process inputs, and their 
 #' default values (if specified). This is populated (or repopulated) whenever \code{algorithm} is set.
 #' @slot WPS_SCHEMA_LOCATION (_private) location for web processing service schema
@@ -29,12 +30,9 @@
 setClass(
   Class = "webprocess",
   prototype = prototype(
-    url = 'http://cida.usgs.gov/gdp/process/WebProcessingService', 
     algorithm = list('Area Grid Statistics (weighted)'=
                        "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
-    version = '1.0.0',
-    email = as.character(NA),
-    wait = FALSE
+    version = '1.0.0'
     ),
   representation = representation(
     url="character",
@@ -42,6 +40,7 @@ setClass(
     version="character",
     email = "character",
     wait = 'logical',
+    sleep.time = "numeric",
     processInputs="list",
     WPS_SCHEMA_LOCATION="character",
     WPS_NAMESPACE="character",
@@ -61,9 +60,17 @@ setMethod(f="initialize",signature="webprocess",
             algorithm = .Object@algorithm,
             version = .Object@version,
             email = .Object@email,
-            wait = .Object@wait, ...)
+            wait = .Object@wait, 
+            sleep.time = .Object@sleep.time, ...)
             {
-
+            
+            #things that use package globals:
+            .Object@url <- if(length(url) > 0) url else gconfig('wps.url')
+            .Object@sleep.time <- if(length(sleep.time) > 0) sleep.time else gconfig('sleep.time')
+            .Object@wait <- if(length(wait) > 0) wait else gconfig('wait')
+            .Object@email <- if(length(email) > 0) email else gconfig('email')
+            
+            
             .Object@WPS_SCHEMA_LOCATION <- 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
             .Object@WPS_NAMESPACE <- 'http://www.opengis.net/wps/1.0.0'
             
@@ -75,15 +82,12 @@ setMethod(f="initialize",signature="webprocess",
             
             .Object@OWS_NAMESPACE <- 'http://www.opengis.net/ows/1.1'
             
-            .Object@UTILITY_URL <- gsub('process','utility',url)
+            .Object@UTILITY_URL <- gsub('process','utility', .Object@url)
             
             .Object@emailK <- 'gov.usgs.cida.gdp.wps.algorithm.communication.EmailWhenFinishedAlgorithm'
             
             .Object@version <- version
-            .Object@url <- url
-            .Object@email <- email
-            .Object@wait <- wait
-            
+
             # // -- supporting pass through of existing inputs arguments *when* they are applicable.
             old.inputs = inputs(.Object)
             old.algorithm = .Object@algorithm

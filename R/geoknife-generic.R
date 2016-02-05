@@ -72,7 +72,7 @@ geoknife <- function(stencil, fabric, knife = webprocess(...), ...){
   }
   
   if (knife@wait){
-    waitUntilFinished(geojob)
+    waitUntilFinished(geojob, sleep.time = knife@sleep.time)
   }
   return(geojob)
 }
