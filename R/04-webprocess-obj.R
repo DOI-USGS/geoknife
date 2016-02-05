@@ -29,11 +29,6 @@
 #' @exportClass webprocess
 setClass(
   Class = "webprocess",
-  prototype = prototype(
-    algorithm = list('Area Grid Statistics (weighted)'=
-                       "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
-    version = '1.0.0'
-    ),
   representation = representation(
     url="character",
     algorithm="list",
@@ -69,7 +64,12 @@ setMethod(f="initialize",signature="webprocess",
             .Object@sleep.time <- if(length(sleep.time) > 0) sleep.time else gconfig('sleep.time')
             .Object@wait <- if(length(wait) > 0) wait else gconfig('wait')
             .Object@email <- if(length(email) > 0) email else gconfig('email')
+            .Object@algorithm <- if(length(algorithm) > 0) algorithm else gconfig('algorithm')
+            .Object@version <- if(length(version) > 0) version else gconfig('version') # this should probably be in the prototype because it is read.only..
             
+            # // -- supporting pass through of existing inputs arguments *when* they are applicable.
+            old.inputs = inputs(.Object)
+            old.algorithm = .Object@algorithm
             
             .Object@WPS_SCHEMA_LOCATION <- 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
             .Object@WPS_NAMESPACE <- 'http://www.opengis.net/wps/1.0.0'
@@ -85,13 +85,6 @@ setMethod(f="initialize",signature="webprocess",
             .Object@UTILITY_URL <- gsub('process','utility', .Object@url)
             
             .Object@emailK <- 'gov.usgs.cida.gdp.wps.algorithm.communication.EmailWhenFinishedAlgorithm'
-            
-            .Object@version <- version
-
-            # // -- supporting pass through of existing inputs arguments *when* they are applicable.
-            old.inputs = inputs(.Object)
-            old.algorithm = .Object@algorithm
-            .Object@algorithm <- algorithm
             
             processInputs <- defaultProcessInputs(algorithm = .Object@algorithm[[1]], .Object@url, .Object@version)
             
