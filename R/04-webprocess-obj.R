@@ -66,9 +66,9 @@ setMethod(f="initialize",signature="webprocess",
             
             #things that use package globals:
             .Object@url <- if(length(url) > 0) url else gconfig('wps.url')
-            .Object@sleep.time <- if(length(sleep.time) > 0) url else gconfig('sleep.time')
-            .Object@wait <- if(length(wait) > 0) url else gconfig('wait')
-            .Object@email <- if(length(email) > 0) url else gconfig('email')
+            .Object@sleep.time <- if(length(sleep.time) > 0) sleep.time else gconfig('sleep.time')
+            .Object@wait <- if(length(wait) > 0) wait else gconfig('wait')
+            .Object@email <- if(length(email) > 0) email else gconfig('email')
             
             
             .Object@WPS_SCHEMA_LOCATION <- 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd'
@@ -82,7 +82,7 @@ setMethod(f="initialize",signature="webprocess",
             
             .Object@OWS_NAMESPACE <- 'http://www.opengis.net/ows/1.1'
             
-            .Object@UTILITY_URL <- gsub('process','utility',url)
+            .Object@UTILITY_URL <- gsub('process','utility', .Object@url)
             
             .Object@emailK <- 'gov.usgs.cida.gdp.wps.algorithm.communication.EmailWhenFinishedAlgorithm'
             
