@@ -29,6 +29,9 @@
 #' @exportClass webprocess
 setClass(
   Class = "webprocess",
+  prototype = prototype(
+    version = gconfig('version')
+  ),
   representation = representation(
     url="character",
     algorithm="list",
@@ -64,8 +67,7 @@ setMethod(f="initialize",signature="webprocess",
             .Object@sleep.time <- if(length(sleep.time) > 0) sleep.time else gconfig('sleep.time')
             .Object@wait <- if(length(wait) > 0) wait else gconfig('wait')
             .Object@email <- if(length(email) > 0) email else gconfig('email')
-            .Object@algorithm <- if(length(algorithm) > 0) algorithm else gconfig('algorithm')
-            .Object@version <- if(length(version) > 0) version else gconfig('version') # this should probably be in the prototype because it is read.only..
+            .Object@algorithm <- if(length(algorithm) > 0) algorithm else gconfig('algorithm') # will need to do this differently...
             
             # // -- supporting pass through of existing inputs arguments *when* they are applicable.
             old.inputs = inputs(.Object)
