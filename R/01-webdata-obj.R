@@ -3,7 +3,10 @@ pkg.env$gconfig <- list('wps.url'='http://cida.usgs.gov/gdp/process/WebProcessin
                         'sleep.time' = 5, 
                         'wait' = FALSE,
                         'email' = as.character(NA),
-                        'verbose' = FALSE)
+                        'algorithm' = list('Area Grid Statistics (weighted)' = 
+                                             "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
+                        'verbose' = FALSE,
+                        'version' = '1.0.0')
 .onLoad <- function(libname, pkgname){
   setJobState()
 }
@@ -30,7 +33,7 @@ pkg.env$gconfig <- list('wps.url'='http://cida.usgs.gov/gdp/process/WebProcessin
 #' gconfig('sleep.time' = 8, wait=TRUE)
 gconfig <- function(..., no.readonly = FALSE){
   stopifnot(!no.readonly)
-  .gconfig.readonly <- c() # nothing right now?
+  .gconfig.readonly <- c('version') 
   single <- FALSE
   args <- list(...)
   if (length(args) == 0) 
