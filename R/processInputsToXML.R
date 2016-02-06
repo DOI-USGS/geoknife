@@ -155,7 +155,7 @@ setMethod(f = "addGeom",signature = c("ANY","ANY"),
 setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
           definition = function(stencil, xmlNodes){
             
-  filterID <- FEATURE_ATTRIBUTE_NAME(stencil)
+  filterID <- .FEATURE_ATTRIBUTE_NAME(stencil)
   inEL <- findIdentifierNode(xmlNodes, 'FEATURE_COLLECTION')
   inDatEL  <-	newXMLNode('wps:Data')
   addChildren(inEL,inDatEL)
