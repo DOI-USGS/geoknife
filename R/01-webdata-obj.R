@@ -7,8 +7,12 @@ pkg.env$gconfig <- list('wps.url'='http://cida.usgs.gov/gdp/process/WebProcessin
                                              "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
                         'verbose' = FALSE,
                         'version' = '1.0.0')
+
 .onLoad <- function(libname, pkgname){
   setJobState()
+  funs <- unclass(lsf.str(envir = asNamespace(packageName()), all = TRUE))
+  pkg.env$private.funs <- funs[substr(funs,1,1) == '.']
+  rm(funs)
 }
 
 
