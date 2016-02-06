@@ -4,9 +4,9 @@
   for (i in seq_along(processNames)){
     fun <- paste0('.',processNames[i])
     if (exists(fun)){
-      inputs(webprocess,fun) <- do.call(fun, list(...))
-    } else if (is.null(inputs(webprocess,fun)[[1]])){
-      inputs(webprocess,fun) <- .defaultWhenNull(fun)
+      inputs(webprocess,processNames[i]) <- do.call(fun, list(...))
+    } else if (is.null(inputs(webprocess,processNames[i])[[1]])){
+      inputs(webprocess,processNames[i]) <- .defaultWhenNull(processNames[i])
     } else {
       # / skip. will skip and allow NA, which is an optional input.
     }
