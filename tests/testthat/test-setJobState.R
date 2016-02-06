@@ -14,7 +14,7 @@ test_that("can start first job",{
   stencil <- webgeom('state::Wisconsin')
   fabric <- webdata('prism')
   job <- geoknife(stencil, fabric)
-  expect_equal(geoknife:::getJobState(), "ProcessStarted")
+  expect_true(geoknife:::getJobState() %in% c("ProcessStarted","Process successful"))
   
 })
 
