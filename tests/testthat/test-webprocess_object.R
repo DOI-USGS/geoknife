@@ -53,3 +53,9 @@ test_that('test pass through of webprocess inputs', {
   expect_equal(inputs(wp,'OUTPUT_TYPE')[[1]], 'geotiff')
   expect_true(wp@wait)
 })
+
+context("valid wps url")
+
+test_that("error is thrown for non-WPS", {
+  expect_error(webprocess(url='http://www.google.com'))
+})
