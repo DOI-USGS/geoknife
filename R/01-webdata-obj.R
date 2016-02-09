@@ -1,12 +1,30 @@
 pkg.env <- new.env()
-.onAttach <- function(libname, pkgname) {
-  packageStartupMessage("This information is preliminary or provisional and is subject to revision. It is being provided to meet the need for timely best science. The information has not received final approval by the U.S. Geological Survey (USGS) and is provided on the condition that neither the USGS nor the U.S. Government shall be held liable for any damages resulting from the authorized or unauthorized use of the information. Although this software program has been used by the USGS, no warranty, expressed or implied, is made by the USGS or the U.S. Government as to the accuracy and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and no responsibility is assumed by the USGS in connection therewith.")
-}
+pkg.env$gconfig <- list('wps.url'='http://cida.usgs.gov/gdp/process/WebProcessingService',
+                        'sleep.time' = 5, 
+                        'wait' = FALSE,
+                        'email' = as.character(NA),
+                        'algorithm' = list('Area Grid Statistics (weighted)' = 
+                                             "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
+                        'verbose' = FALSE,
+                        'version' = '1.0.0')
+
 .onLoad <- function(libname, pkgname){
   setJobState()
+  funs <- unclass(lsf.str(envir = asNamespace(packageName()), all = TRUE))
+  pkg.env$private.funs <- funs[substr(funs,1,1) == '.']
+  rm(funs)
 }
+
+
+
 library(methods)
-#' @title webdata class
+
+#' 
+#' webdata class
+#' 
+#' a class for specifying details of web datasets (webdata!). These datasets have to be  
+#' accessible through the OPeNDAP protocol or as WCS (web coverage services). 
+#' 
 #' @slot times vector of POSIXct dates (specifying start and end time of processing)
 #' @slot url URL of web data
 #' @slot variables variable(s) used for processin from dataset
@@ -29,11 +47,11 @@ setClass(
 
 setMethod("initialize", signature = "webdata", 
           definition = function(.Object, times = .Object@times, url = .Object@url, variables = .Object@variables){
-            .Object@times = as.POSIXct(times)
-            .Object@url = url
-            .Object@variables = variables
-            .Object@dataList    = 'gov.usgs.cida.gdp.wps.algorithm.discovery.ListOpendapGrids'
-            .Object@timeList    = 'gov.usgs.cida.gdp.wps.algorithm.discovery.GetGridTimeRange'
+            .Object@times <- geotime(times)
+            .Object@url <- url
+            .Object@variables <- variables
+            .Object@dataList <- 'gov.usgs.cida.gdp.wps.algorithm.discovery.ListOpendapGrids'
+            .Object@timeList <- 'gov.usgs.cida.gdp.wps.algorithm.discovery.GetGridTimeRange'
             return(.Object)
           })
 

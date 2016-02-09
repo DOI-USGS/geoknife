@@ -1,26 +1,46 @@
 Package: geoknife
 Type: Package
-Title: Geo-web processing of gridded data
-Version: 0.12.1
-Date: 2013-05-23
-Author: Jordan S Read
-Maintainer: Jordan S Read <jread@usgs.gov>
-Description: Methods for geo-web processing of gridded data via the Geo Data
-    Portal (cida.usgs.gov/gdp).
-License: file LICENSE
+Title: Web-Processing of Large Gridded Datasets
+Version: 1.1.5
+Date: 2016-01-15
+Authors@R: c( person("Jordan", "Read", role = c("aut","cre"),
+    email = "jread@usgs.gov"),
+    person("Jordan", "Walker", role = c("aut"),
+    email = "jiwalker@usgs.gov"),
+    person("Alison", "Appling", role = c("aut"),
+    email = "aappling@usgs.gov"),
+    person("David", "Blodgett", role = c("aut"),
+    email = "dblodgett@usgs.gov"),
+    person("Emily", "Read", role = c("aut"),
+    email = "eread@usgs.gov"),
+    person("Luke", "Winslow", role = c("aut"),
+    email = "lwinslow@usgs.gov"))
+Description: Processes gridded datasets found on the U.S. Geological Survey
+    Geo Data Portal web application or elsewhere, using a web-enabled workflow
+    that eliminates the need to download and store large datasets that are reliably
+    hosted on the Internet. The package provides access to several data subset and
+    summarization algorithms that are available on remote web processing servers.
+License: CC0
+URL: https://github.com/USGS-R/geoknife
+BugReports: https://github.com/USGS-R/geoknife/issues
 Copyright: This software is in the public domain because it contains materials
     that originally came from the United States Geological Survey, an agency of
     the United States Department of Interior. For more information, see the
     official USGS copyright policy at
     http://www.usgs.gov/visual-id/credit_usgs.html#copyright
+Depends:
+    R (>= 3.0)
 Imports:
     XML,
     methods,
     httr,
-    sp
+    curl,
+    sp,
+    utils
 Suggests:
     testthat,
     xtable,
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1

@@ -1,9 +1,14 @@
-  #' @title geojob class
+#' geojob class
+#' 
+#' contains the information for processing the job, and the versions 
+#' of the resources used. 
+#' 
 #' @slot url URL of web processing endpoint
 #' @slot xml XML character for post
 #' @slot id job identifier
 #' @slot package.version the version of the geoknife package
 #' @slot algorithm.version the version of the algorithm used for processing
+#' @importFrom utils packageVersion
 #' @rdname geojob-class
 setClass(
   Class = "geojob",

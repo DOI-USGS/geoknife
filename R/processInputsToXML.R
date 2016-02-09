@@ -3,7 +3,10 @@
 #'@export
 setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML")})
 
-#'@title XML from set of objects
+#' XML from set of objects
+#' 
+#' Extract important parts of stencil, fabric, and knife into POST XML
+#' 
 #'@param stencil a \code{\link{webdata}} OR \code{\link{simplegeom}} object
 #'@param fabric a \code{\link{webdata}} object
 #'@param knife a \code{\link{webprocess}} object
@@ -23,7 +26,7 @@ setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML"
 setMethod(f = "XML",signature = c("ANY","webdata","webprocess"), 
           definition = function(stencil, fabric, knife){
             #stencil can be webgeom OR simplegeom 
-  
+            
   knife <- .setProcessInputs(webprocess = knife, stencil = stencil, fabric = fabric)
   top <- newXMLNode(name='wps:Execute',
                     attrs=c('service'="WPS",'version'= version(knife),
@@ -33,7 +36,6 @@ setMethod(f = "XML",signature = c("ANY","webdata","webprocess"),
                                            'ogc' = knife@OGC_NAMESPACE,
                                            'xlink' = knife@XLINK_NAMESPACE,
                                            'xsi' = knife@XSI_NAMESPACE))
-  
   
   id	<-	newXMLNode("ows:Identifier",newXMLTextNode(knife@algorithm),parent=top)
   di	<-	newXMLNode("wps:DataInputs",parent=top)
@@ -81,10 +83,12 @@ addResponse <- function(.Object, xmlNodes){
   
   resDoc	<-	newXMLNode('wps:ResponseDocument',attrs=c('storeExecuteResponse'='true','status'='true'))
   addChildren(resForm,resDoc)
-  
-  #if text/tab-separated-values"
+
+  #if text/tab-separated-values" or output_type
   if (!is.null(.Object@processInputs$DELIMITER) && .Object@processInputs$DELIMITER=="TAB"){
     resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='text/tab-separated-values'))
+  } else if (!is.null(.Object@processInputs$OUTPUT_TYPE) && .Object@processInputs$OUTPUT_TYPE=="geotiff") {
+    resOut  <-  newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='application/zip'))
   } else {
     resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true'))
   }
@@ -151,7 +155,7 @@ setMethod(f = "addGeom",signature = c("ANY","ANY"),
 setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
           definition = function(stencil, xmlNodes){
             
-  filterID <- FEATURE_ATTRIBUTE_NAME(stencil)
+  filterID <- .FEATURE_ATTRIBUTE_NAME(stencil)
   inEL <- findIdentifierNode(xmlNodes, 'FEATURE_COLLECTION')
   inDatEL  <-	newXMLNode('wps:Data')
   addChildren(inEL,inDatEL)
@@ -173,10 +177,9 @@ setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
   
   geom <- stencil@sp
   
-  lng	<-	length(geom) # number of polygons
-  for (j in 1:lng){
+  for (j in seq_along(geom)){
     
-    gmlBoxEL  <-	newXMLNode('draw:poly',attrs=c("gml:id"=paste("poly.",j,sep='')))
+    gmlBoxEL  <-	newXMLNode('draw:poly',attrs=c("gml:id"=sprintf("poly.%s",j)))
     
     addChildren(gmlFeatEL,gmlBoxEL) 
     gmlGeomEL  <-	newXMLNode('draw:the_geom')

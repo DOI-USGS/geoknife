@@ -1,12 +1,12 @@
 
 .setProcessInputs <- function(webprocess, ...){
   processNames <- names(inputs(webprocess))
-  for (i in 1:length(processNames)){
-    fun <- processNames[i]
+  for (i in seq_along(processNames)){
+    fun <- paste0('.',processNames[i])
     if (exists(fun)){
-      inputs(webprocess,fun) <- do.call(fun, list(...))
-    } else if (is.null(inputs(webprocess,fun)[[1]])){
-      inputs(webprocess,fun) <- .defaultWhenNull(fun)
+      inputs(webprocess,processNames[i]) <- do.call(fun, list(...))
+    } else if (is.null(inputs(webprocess,processNames[i])[[1]])){
+      inputs(webprocess,processNames[i]) <- .defaultWhenNull(processNames[i])
     } else {
       # / skip. will skip and allow NA, which is an optional input.
     }
@@ -24,7 +24,7 @@
 }
 
 
-FEATURE_ATTRIBUTE_NAME <- function(stencil,...){
+.FEATURE_ATTRIBUTE_NAME <- function(stencil,...){
   if (is(stencil,'webgeom')){
     filterBy <- stencil@attribute
   } else if (is(stencil,'simplegeom')){
@@ -35,14 +35,14 @@ FEATURE_ATTRIBUTE_NAME <- function(stencil,...){
   return(filterBy)
 }
 
-TIME_END <- function(fabric, ...){
-  strftime(times(fabric)[2] ,format = "%Y-%m-%dT%H:%M:%S.000Z")
+.TIME_END <- function(fabric, ...){
+  strftime(times(fabric)[2] ,format = "%Y-%m-%dT%H:%M:%S.000Z", tz='UTC')
 }
-TIME_START <- function(fabric, ...){
-  strftime(times(fabric)[1] ,format = "%Y-%m-%dT%H:%M:%S.000Z")
+.TIME_START <- function(fabric, ...){
+  strftime(times(fabric)[1] ,format = "%Y-%m-%dT%H:%M:%S.000Z", tz='UTC')
 }
 
-DATASET_ID <- function(fabric, ...){
+.DATASET_ID <- function(fabric, ...){
   if(!is.na(variables(fabric)[1])) {
     return(variables(fabric))
   } else {
@@ -50,7 +50,7 @@ DATASET_ID <- function(fabric, ...){
   }
 }
 
-DATASET_URI <- function(fabric, ...){
+.DATASET_URI <- function(fabric, ...){
   dodsReplace(url(fabric))
 }
 

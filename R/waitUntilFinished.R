@@ -4,7 +4,7 @@
 #' Checks \code{\link{running}}. Will drop out of loop whenever !running(geojob)
 #' @keywords internal
 #' 
-waitUntilFinished <- function(.Object, sleep.time = 5){
+waitUntilFinished <- function(.Object, sleep.time = gconfig('sleep.time')){
   running <- running(.Object, retry = TRUE)
   while(running){
     Sys.sleep(sleep.time)

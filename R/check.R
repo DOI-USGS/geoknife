@@ -13,7 +13,6 @@
 #'@author Jordan S. Read
 #'@seealso \code{\link{start}}
 #'@importFrom XML xmlTreeParse xmlNamespaceDefinitions xmlRoot
-#'@importFrom httr GET
 #'@rdname check-geojob
 #'@examples 
 #'gj <- geojob() # create geojob object
@@ -24,7 +23,7 @@ setGeneric(name="check",def=function(.Object){standardGeneric("check")})
 #'@rdname check-geojob
 #'@aliases check
 setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Object){
-	
+
 	process	<-	list(status=NULL,URL=NULL)
 	if (id(.Object)=="<no active job>"){
 		process$status	<-	'none'
@@ -33,7 +32,7 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
 	}
 
 	checkForComplete = tryCatch({
-    GET(url = id(.Object))
+    gGET(url = id(.Object))
     },error = function(e) {
       return(NULL)
       }
@@ -43,7 +42,7 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
     process$statusType <- 'unknown'
   }
 	if (is.null(process$status)){
-		checkForCompleteResponse	<-	xmlTreeParse(checkForComplete, asText = TRUE,useInternalNodes=TRUE)
+		checkForCompleteResponse <- gcontent(checkForComplete)
 		checkResponseNS <- xmlNamespaceDefinitions(checkForCompleteResponse, simplify = TRUE) 
 		root <- xmlRoot(checkForCompleteResponse)
 		status <- sapply(xmlChildren(root[["Status"]]),xmlValue)
@@ -52,7 +51,7 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
 		
 		if (process$status == "Process successful"){
 			root <- xmlRoot(checkForCompleteResponse)
-		    process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
+			process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
 		} else if (process$status == ""){
 		  process$status <- "ProcessStarted"
 		} else if (substr(process$status, 1, 34) == "org.n52.wps.server.ExceptionReport"){

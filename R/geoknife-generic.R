@@ -1,5 +1,8 @@
 
-#'@title geoknife 
+#' geoknife 
+#' 
+#' Creates the processing job and allows specifying the processing details. 
+#' 
 #'@param stencil a \code{\link{webgeom}}, \code{\link{simplegeom}}, or any type 
 #'that can be coerced into \code{\link{simplegeom}}.
 #'@param fabric a dataset. A \code{\link{webdata}} or any type that 
@@ -57,27 +60,28 @@ geoknife <- function(stencil, fabric, knife = webprocess(...), ...){
       return(wg)
     })
   }
+
   fabric <- as(fabric, Class = "webdata")
   geojob <- geojob()
   xml(geojob) <- XML(stencil, fabric, knife)
   url(geojob) <- url(knife)
-  geojob@algorithm.version = algorithmVersion(knife)
+  geojob@algorithm.version <- algorithmVersion(knife)
   geojob <- start(geojob)
   if (!is.na(knife@email)) {
     email(geojob, knife)
   }
   
   if (knife@wait){
-    waitUntilFinished(geojob)
+    waitUntilFinished(geojob, sleep.time = knife@sleep.time)
   }
   return(geojob)
 }
 
 
-#'@importFrom httr POST content_type_xml
+#'@importFrom httr content_type_xml
 genericExecute	<-	function(url,requestXML){
 
-	response <-	POST(url,content_type_xml(),
+	response <-	gPOST(url,content_type_xml(),
                   body = requestXML)		
 
 	return(response)

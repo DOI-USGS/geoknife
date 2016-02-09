@@ -3,7 +3,11 @@
 #'@export
 setGeneric(name="variables_query",def=function(fabric, knife){standardGeneric("variables_query")})
 
-#'@title variables query
+#' variables query
+#' 
+#' find possible variables in a webdata datset
+#' 
+#' 
 #'@param variables
 #'
 #'@rdname variables_query-method
@@ -52,6 +56,6 @@ setMethod(f = "variables_query",signature = c("webdata","webprocess"),
             response <- genericExecute(knife@UTILITY_URL,toString.XMLNode(root))
         
             # will error if none found
-            values	<-	sapply(getNodeSet(content(response),'//gdp:shortname'),xmlValue)
+            values	<-	sapply(getNodeSet(gcontent(response),'//gdp:shortname'),xmlValue)
             return(values)
           })

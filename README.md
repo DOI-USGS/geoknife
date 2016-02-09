@@ -1,11 +1,18 @@
-`geoknife` package version 0.12.1
-=================================
+`geoknife` package version 1.1.4
+================================
 
-[![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) Tools for geo-web processing of gridded data via the [Geo Data Portal](http://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
+[![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)
+Tools for geo-web processing of gridded data via the [Geo Data Portal](http://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
 <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
 </p>
 ### Installing `geoknife`
+
+To install the `geoknife` from CRAN:
+
+``` r
+install.packages("geoknife")
+```
 
 To install the stable version of `geoknife` package with dependencies:
 
@@ -64,7 +71,7 @@ fabric <- webdata(list(
             url = 'http://cida.usgs.gov/thredds/dodsC/prism',
             variables = 'ppt'))
 # modify the times field:
-times(fabric) <- as.POSIXct(c('1990-01-01','2005-01-01'))
+times(fabric) <- as.POSIXct(c('2003-01-01','2005-01-01'))
 ```
 
 ##### create the processing job that will carry out the subsetting/summarization task
@@ -80,7 +87,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=32654583-4dfe-4aef-b46c-4c0f3fae3f1bOUTPUT"
+    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=0ac86798-7a2f-47c8-b153-3673e77e3e80OUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -100,7 +107,7 @@ data <- result(job)
 plot(data[,1:2], ylab = variables(fabric))
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)<!-- -->
 
 ##### use an email to listen for process completion
 
@@ -132,6 +139,7 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 | `url`        | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess` |
 | `version`    | the version of a `webgeom` or `webdata`                      |
 | `xml`        | the xml of a `geojob`                                        |
+| `query`      | query datasets or variables                                  |
 
 ### `geoknife` classes (as of v0.12.0)
 
@@ -147,7 +155,7 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 What libraries does `geoknife` need?
 ------------------------------------
 
-This version requires `httr`, `jsonlite`, and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
+This version requires `httr`, `sp`, and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
 
 Disclaimer
 ----------

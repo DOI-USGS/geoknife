@@ -1,4 +1,8 @@
-#' @title datagroup class
+#' datagroup class
+#' 
+#' contains collections of webdata that can be processed with 
+#' \code{\link{geoknife}}
+#' 
 #' @slot group a list of webdata compatable elements
 #' @rdname datagroup-class
 setClass(
@@ -28,30 +32,19 @@ setGeneric("datagroup", function(...) {
   standardGeneric("datagroup")
 })
 
-#'@param ... additional arguments passed to initialize method
-#'@rdname datagroup-methods
-#'@aliases datagroup,datagroup-methods
+#' @param x a datagroup object
+#' @param i index specifying elements to extract or replace.
+#' @param j not implemented
+#' @param drop not implemented
+#' @param ... additional arguments passed to initialize method
+#' @rdname datagroup-methods
+#' @aliases datagroup,datagroup-methods
 setMethod("datagroup", signature(), function(...) {
   ## create new geojob object
   datagroup <- new("datagroup",...)
   return(datagroup)
 })
 
-#'@rdname datagroup-methods
-#'@aliases datagroup,datagroup-methods
-setMethod("[", signature('datagroup'), function(x, i, j, ..., drop = TRUE) {
-  if (is.character(i))
-    i = which(title(x) %in% i)
-  return(datagroup(x@group[i]))
-})
-
-#'@rdname datagroup-methods
-#'@aliases datagroup,datagroup-methods
-setMethod("[[", signature('datagroup'), function(x, i, j, ..., drop = TRUE) {
-  
-  
-  return(x@group[[i]])
-})
 
 setAs('datagroup', 'webdata', function(from){
   if (length(from@group) > 1){
@@ -66,6 +59,7 @@ setAs('datagroup', 'webdata', function(from){
 #' 
 #' extracts the abstract information from a datagroup object
 #' 
+#' @param .Object a datagroup object
 #'@rdname abstract-datagroup
 #'@aliases 
 #'abstract
@@ -80,10 +74,10 @@ setMethod(f = "abstract",signature(.Object = "datagroup"),
             return(sapply(.Object@group, function(x) x$abstract))
           })
 
-#'@rdname abstract-datagroup
-#'@aliases 
-#'abstract
-#'title
+#' @rdname abstract-datagroup
+#' @aliases 
+#' abstract
+#' title
 #'@export
 setGeneric(name="title",def=function(.Object){standardGeneric("title")})
 
@@ -95,8 +89,26 @@ setMethod(f = "title",signature(.Object = "datagroup"),
           definition = function(.Object){
             return(sapply(.Object@group, function(x) x$title))
           })
-
+#'@rdname datagroup-methods
+#'@aliases datagroup,datagroup-methods
 setMethod(f = "length",signature(x = "datagroup"),
           definition = function(x){
             return(length(x@group))
           })
+
+
+#'@rdname datagroup-methods
+#'@aliases datagroup,datagroup-methods
+setMethod("[", signature(x='datagroup',i="ANY",j='ANY'), function(x, i, j, ..., drop = TRUE) {
+  if (is.character(i))
+    i = which(title(x) %in% i)
+  return(datagroup(x@group[i]))
+})
+
+#'@rdname datagroup-methods
+#'@aliases datagroup,datagroup-methods
+setMethod("[[", signature('datagroup',i="ANY",j='ANY'), function(x, i, j, ..., drop = TRUE) {
+  
+  
+  return(x@group[[i]])
+})

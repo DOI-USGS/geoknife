@@ -5,6 +5,7 @@ setMethod("show", "webprocess", function(object){
   cat('web processing service version:', version(object),'\n')
   cat('process inputs: \n')
   inputs <- inputs(object)
+  inputs <- inputs[!paste0('.',names(inputs)) %in% pkg.env$private.funs]
   for (i in 1:length(inputs)){
     cat(paste0('   ',names(inputs)[i],": ",inputs[[i]], '\n'))
   }

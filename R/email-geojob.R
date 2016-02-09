@@ -3,7 +3,10 @@
 #'@export
 setGeneric(name="email",def=function(geojob, knife){standardGeneric("email")})
 
-#'@title email user when processing job is complete
+#' email user when processing job is complete
+#' 
+#' configure job to send an email when complete (success or failure)
+#'
 #'@param email a character for email address to use
 #'
 #'@rdname email-method

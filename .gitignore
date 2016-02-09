@@ -4,13 +4,7 @@
 # Example code in package build process
 *-Ex.R
 .Rproj.user
-<<<<<<< HEAD
 **.DS_Store
-
-=======
-R/.DS_Store
-examples/.DS_Store
->>>>>>> gh-pages
 geoknife.Rproj
 nbproject/
 .Rbuildignore

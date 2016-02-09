@@ -1,19 +1,20 @@
 
-#'@title parse timeseries file into R environment
+#' parse timeseries file into R environment
 #'
-#'@details a function for loading data into R from a file (or URL) from a completed processing request
+#' a function for loading data into R from a file (or URL) from a completed processing request
 #'
-#'@param file a \linkS4class{geojob} timeseries processing result file location
-#'(See \code{\link{check}}).
-#'@param delim the file delimiter
-#'@param with.units boolean for including a units column in returned data.frame
-#'@return a data.frame of timeseries values.
-#'@keywords methods
-#'@author Luke A. Winslow, Jordan S. Read
-#'@export
-#'@examples
-#'local_file <- system.file('extdata','tsv_linear_ring.tsv', package = 'geoknife')
-#'output <- parseTimeseries(local_file, delim = '\t')
+#' @param file a \linkS4class{geojob} timeseries processing result file location
+#' (See \code{\link{check}}).
+#' @param delim the file delimiter
+#' @param with.units boolean for including a units column in returned data.frame
+#' @return a data.frame of timeseries values.
+#' @keywords methods
+#' @author Luke A. Winslow, Jordan S. Read
+#' @export
+#' @importFrom utils read.table
+#' @examples
+#' local_file <- system.file('extdata','tsv_linear_ring.tsv', package = 'geoknife')
+#' output <- parseTimeseries(local_file, delim = '\t')
 parseTimeseries <- function(file, delim, with.units = FALSE){
   
   config = parseConfig(file, delim)
@@ -81,6 +82,7 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
   }
 
   names(dataOut)[1] = 'DateTime'
+
   return(dataOut)
 }
 
