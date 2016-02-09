@@ -95,7 +95,10 @@ setMethod(f="initialize",signature="webprocess",
             .Object@processInputs  <-	processInputs
             .Object@processInputs[which.to.rplc] <- old.inputs[which.replace]
             
-            inputs(.Object) <- list(...)
+            other.inputs <- list(...)
+            if (any(paste0('.',names(other.inputs)) %in% pkg.env$private.funs))
+              stop('read only variables in webprocess cannot be set', call. = FALSE)
+            inputs(.Object) <- other.inputs
             
             return(.Object)
           })
