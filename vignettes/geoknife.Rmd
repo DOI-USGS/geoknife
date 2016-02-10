@@ -212,7 +212,7 @@ The public fields can be accessed in by using the field name:
 geom(stencil) <- "derivative:CONUS_States"
 version(stencil)
 attribute(stencil) <- "STATE"
-geoknife::values(stencil) <- c("Wisconsin","Maine")
+values(stencil) <- c("Wisconsin","Maine")
 ```
 
 ### quick access to web available data for webgeoms

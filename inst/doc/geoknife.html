@@ -287,7 +287,7 @@ stencil &lt;-<span class="st"> </span><span class="kw">simplegeom</span>(<span c
 <span class="kw">version</span>(stencil)</code></pre></div>
 <pre><code>## [1] &quot;1.1.0&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">attribute</span>(stencil) &lt;-<span class="st"> &quot;STATE&quot;</span>
-geoknife::<span class="kw">values</span>(stencil) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Wisconsin&quot;</span>,<span class="st">&quot;Maine&quot;</span>)</code></pre></div>
+<span class="kw">values</span>(stencil) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Wisconsin&quot;</span>,<span class="st">&quot;Maine&quot;</span>)</code></pre></div>
 </div>
 <div id="quick-access-to-web-available-data-for-webgeoms" class="section level3">
 <h3>quick access to web available data for webgeoms</h3>
@@ -653,7 +653,7 @@ knife</code></pre></div>
 <p>The <code>geoknife</code> package currently limits the user processing requests to single-running processes, so as to avoid creating thousands of requests in error, which could overwhelm the processing resources. If there is a reason to support additional jobs at one time, please email the package maintainers with your query.</p>
 <p>To cancel and existing job: Cancel a running job but retain the details:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">id</span>(job)</code></pre></div>
-<pre><code>## [1] &quot;http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=f226e6a8-ceba-40f7-8ed1-2549c6c6a3f5&quot;</code></pre>
+<pre><code>## [1] &quot;http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=723c5a1f-2adb-4d3e-955a-5891e18c7df7&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">cancel</span>(job)
 <span class="kw">id</span>(job)</code></pre></div>
 <pre><code>## [1] &quot;&lt;no active job&gt;&quot;</code></pre>

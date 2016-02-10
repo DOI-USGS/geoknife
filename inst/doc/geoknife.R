@@ -104,7 +104,7 @@ stencil
 geom(stencil) <- "derivative:CONUS_States"
 version(stencil)
 attribute(stencil) <- "STATE"
-geoknife::values(stencil) <- c("Wisconsin","Maine")
+values(stencil) <- c("Wisconsin","Maine")
 
 ## ---------------------------------------------------------
 stencil <- webgeom('state::Wisconsin')
