@@ -3,7 +3,12 @@ defaultProcessInputs <- function(algorithm, wps_url, wps_version){
   getCaps <- gGET(wps_url, query = list(
     'service' = 'WPS', 'version' = wps_version,'request' = 'DescribeProcess', 'identifier'=algorithm))
 
-  doc	<- gcontent(getCaps)
+  
+  doc = tryCatch({
+    gcontent(getCaps)
+  }, error = function(e) {
+    stop(wps_url, ' does not seem to be a valid Web Processing Service url.', call. = FALSE)
+  })
 
   if(length(getNodeSet(doc,'//ows:Exception/ows:ExceptionText'))>0){
     stop(xmlValue(getNodeSet(doc,'//ows:Exception/ows:ExceptionText')[[1]]))

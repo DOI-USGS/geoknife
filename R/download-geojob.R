@@ -32,6 +32,6 @@ setMethod("download", signature("geojob",'missing'), function(.Object, destinati
 setMethod("download", signature("geojob",'character'), function(.Object, destination, ...) {
   
   status <- check(.Object)
-  gGET(url=status$URL, write_disk(destination, ...), progress())
+  gGET(url=status$URL, write_disk(destination, ...))
   return(destination)
 })
