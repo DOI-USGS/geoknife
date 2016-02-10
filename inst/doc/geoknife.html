@@ -653,7 +653,7 @@ knife</code></pre></div>
 <p>The <code>geoknife</code> package currently limits the user processing requests to single-running processes, so as to avoid creating thousands of requests in error, which could overwhelm the processing resources. If there is a reason to support additional jobs at one time, please email the package maintainers with your query.</p>
 <p>To cancel and existing job: Cancel a running job but retain the details:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">id</span>(job)</code></pre></div>
-<pre><code>## [1] &quot;http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=723c5a1f-2adb-4d3e-955a-5891e18c7df7&quot;</code></pre>
+<pre><code>## [1] &quot;http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=8d6f59b2-09be-4802-ab8a-a2609da1c158&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">job &lt;-<span class="st"> </span><span class="kw">cancel</span>(job)
 <span class="kw">id</span>(job)</code></pre></div>
 <pre><code>## [1] &quot;&lt;no active job&gt;&quot;</code></pre>

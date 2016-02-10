@@ -44,6 +44,8 @@ Suggests:
     rmarkdown,
     ggmap,
     rasterVis,
-    ggplot2
+    ggplot2,
+    rgdal,
+    maps
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1

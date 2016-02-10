@@ -102,10 +102,12 @@ tiff.dir &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span c
 <div id="plot-the-data" class="section level2">
 <h2>plot the data</h2>
 <p>using the <code>rasterVis</code> package, read this in and create a raster object:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rasterVis)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgdal)
+<span class="kw">library</span>(rasterVis)
 nasa &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="kw">file.path</span>(tiff.dir , <span class="kw">dir</span>(tiff.dir)))</code></pre></div>
 <p>Now, use <code>ggplot2</code> and <code>ggmap</code> to plot this as a map:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggmap)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(maps)
+<span class="kw">library</span>(ggmap)
 <span class="kw">library</span>(ggplot2)
 
 
