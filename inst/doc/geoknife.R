@@ -4,6 +4,9 @@ options(continue=" ")
 options(width=60)
 library(knitr)
 library(geoknife)
+query <- geoknife::query
+`values<-` <- geoknife::`values<-`
+id <- geoknife::id
 
 
 ## ---- eval=FALSE------------------------------------------
@@ -45,7 +48,7 @@ fabric <- webdata('prism')
 fabric
 
 ## ---------------------------------------------------------
-times(fabric) <- c('1990-01-01','2010-01-01')
+times(fabric) <- c('2002-01-01','2010-01-01')
 variables(fabric) <- c('ppt','tmx', 'tmn')
 fabric
 

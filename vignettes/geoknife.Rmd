@@ -20,6 +20,9 @@ options(continue=" ")
 options(width=60)
 library(knitr)
 library(geoknife)
+query <- geoknife::query
+`values<-` <- geoknife::`values<-`
+id <- geoknife::id
 
 ```
 

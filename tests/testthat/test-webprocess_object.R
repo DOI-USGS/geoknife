@@ -30,26 +30,37 @@ test_that("webprocess object get and set", {
 })
 
 context('test pass through of webprocess')
-test_that("test pass through of webprocess", {
-  testthat::skip_on_cran()
-  wp1 <- webprocess()
-  wp2 <- webprocess(wp1, DATASET_URI = 'www.test.com')
-  expect_null(inputs(wp1,'DATASET_URI')[[1]])
-  expect_equal(inputs(wp2,'DATASET_URI')[[1]], 'www.test.com')
-  expect_is(url(wp2),'character')
-  expect_is(version(wp2), 'character')
-  expect_is(slot(wp2, "processInputs"), 'list')
-
-})
 
 context('test pass through of webprocess inputs')
 test_that('test pass through of webprocess inputs', {
   testthat::skip_on_cran()
-  wp = webprocess(algorithm = list('OPeNDAP Subset'="gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm"), REQUIRE_FULL_COVERAGE = 'false', TIME_END='never!')
+  wp = webprocess(algorithm = list('OPeNDAP Subset'="gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm"), REQUIRE_FULL_COVERAGE = 'false')
   wp = initialize(wp)
   expect_equal(inputs(wp,'REQUIRE_FULL_COVERAGE')[[1]], 'false')
-  expect_equal(inputs(wp,'TIME_END')[[1]], 'never!')
   wp = initialize(wp, OUTPUT_TYPE='geotiff', wait=TRUE)
   expect_equal(inputs(wp,'OUTPUT_TYPE')[[1]], 'geotiff')
   expect_true(wp@wait)
+})
+
+context("valid wps url")
+
+test_that("error is thrown for non-WPS", {
+  expect_error(webprocess(url='http://www.google.com'))
+})
+
+context("can't set read only process inputs")
+
+test_that("error is thrown read-only set on initialize", {
+  
+  expect_error(webprocess(TIME_START='1990-01-01T00:00:000Z'))
+})
+
+test_that("error is thrown read-only set on initialize w/ multiple vars", {
+  
+  expect_error(webprocess(TIME_START='1990-01-01T00:00:000Z', wait=TRUE))
+})
+
+test_that("error is thrown on job start for read only vars", {
+  expect_error(job <- geoknife(stencil = c(-89,42), fabric = 'prism', TIME_START='1990-01-01T00:00:000Z', wait=TRUE))
+  expect_error(job <- geoknife(stencil = c(-89,42), fabric = 'prism', TIME_START='1990-01-01T00:00:000Z'))
 })
