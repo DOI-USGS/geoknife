@@ -15,6 +15,8 @@ test_that("can set !read.only variables", {
   expect_false(gconfig('wait'))
   gconfig('wait'=TRUE)
   expect_true(gconfig('wait'))
+  gconfig('wait'=FALSE)
+  expect_false(gconfig('wait'))
 })
 
 test_that("can set !read.only variables on webprocess()", {

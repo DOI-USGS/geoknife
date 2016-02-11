@@ -1,6 +1,6 @@
 context("download and load")
 
-
+gconfig(wps.url = "http://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
 test_that("download works", {
   testthat::skip_on_cran()
   cancel()
