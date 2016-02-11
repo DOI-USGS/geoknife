@@ -103,10 +103,11 @@ plot(data[,1:2], ylab = variables(fabric))
 job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
-###`geoknife` Functions (as of v0.12.1)
+###`geoknife` Functions (as of v1.1.5)
 | Function       | Title           |
 | ------------- |:-------------|
 | `geoknife` | slice up gridded data according to overlap with feature(s) |
+| `gconfig` | set or query package settings for `geoknife` processing defaults |
 | `algorithm` | the algorithm of a `webprocess` |
 | `attribute` | the attribute of an `webgeom` |
 | `check` | check status of `geojob` |
