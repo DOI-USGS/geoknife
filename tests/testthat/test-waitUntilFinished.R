@@ -13,3 +13,15 @@ test_that("creating simple job", {
   geoknife(stencil, fabric, wait = FALSE)
   expect_false(geoknife:::getJobState() == "Process successful")
 })
+
+context("Test re-enter wait loop")
+test_that("creation of webprocess object", {
+  testthat::skip_on_cran()
+  fabric <- webdata('prism',times <- c('1895-01-01T00:00:00Z', '1930-01-01T00:00:00Z')) # should take longer than a re-check
+  job <- geoknife(stencil = c(-89,42), fabric)
+  expect_true(running(job))
+  expect_equal(2+2, 4)
+  expect_true(running(job))
+  wait(job)
+  expect_false(running(job))
+})
