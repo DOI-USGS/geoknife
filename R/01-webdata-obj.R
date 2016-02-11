@@ -8,6 +8,7 @@ pkg.env$gconfig <- list('wps.url'='http://cida.usgs.gov/gdp/process/WebProcessin
                         'verbose' = FALSE,
                         'version' = '1.0.0')
 
+#' @importFrom utils lsf.str
 .onLoad <- function(libname, pkgname){
   setJobState()
   funs <- unclass(lsf.str(envir = asNamespace(packageName()), all = TRUE))
