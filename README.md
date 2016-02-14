@@ -1,4 +1,4 @@
-`geoknife` package version 1.2.0
+`geoknife` package version 1.2.1
 ================================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)
@@ -87,7 +87,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=c8e3fd6a-c3b5-44f8-a82c-73e4092d8acbOUTPUT"
+    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=e657f36d-4b2d-4f74-aa5d-5803dc2dc198OUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -136,6 +136,7 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 | `values`     | the values of a `webgeom`                                        |
 | `result`     | load the output of a completed `geojob` into data.frame          |
 | `variables`  | the variables for a `webdata` object                             |
+| `wait`       | wait for a `geojob` to complete processing                       |
 | `times`      | the times of a `webdata` object                                  |
 | `url`        | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess`     |
 | `version`    | the version of a `webgeom` or `webdata`                          |
