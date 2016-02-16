@@ -9,7 +9,7 @@ output:
     fig_height: 6
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{geoknife package}
+  %\VignetteIndexEntry{geoknife plot geotiff}
   \usepackage[utf8]{inputenc}
 ---
 
@@ -51,11 +51,13 @@ tiff.dir <- file.path(tempdir(),'NASA')
 ## plot the data
 using the `rasterVis` package, read this in and create a raster object:
 ```{r, warning=FALSE, message=FALSE}
+library(rgdal)
 library(rasterVis)
 nasa <- raster(file.path(tiff.dir , dir(tiff.dir)))
 ```
 Now, use `ggplot2` and `ggmap` to plot this as a map:
 ```{r, warning=FALSE, message=FALSE}
+library(maps)
 library(ggmap)
 library(ggplot2)
 

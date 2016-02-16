@@ -71,7 +71,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="header">
 <h1 class="title">subset gridded data as geotiff and plot</h1>
 <h4 class="author"><em>Jordan Read, Alison Appling</em></h4>
-<h4 class="date"><em>10 February, 2016</em></h4>
+<h4 class="date"><em>12 February, 2016</em></h4>
 </div>
 
 <div id="TOC">
@@ -102,10 +102,12 @@ tiff.dir &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span c
 <div id="plot-the-data" class="section level2">
 <h2>plot the data</h2>
 <p>using the <code>rasterVis</code> package, read this in and create a raster object:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rasterVis)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgdal)
+<span class="kw">library</span>(rasterVis)
 nasa &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="kw">file.path</span>(tiff.dir , <span class="kw">dir</span>(tiff.dir)))</code></pre></div>
 <p>Now, use <code>ggplot2</code> and <code>ggmap</code> to plot this as a map:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggmap)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(maps)
+<span class="kw">library</span>(ggmap)
 <span class="kw">library</span>(ggplot2)
 
 

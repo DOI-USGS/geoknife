@@ -1,4 +1,4 @@
-`geoknife` package version 1.1.4
+`geoknife` package version 1.2.1
 ================================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)
@@ -87,7 +87,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=0ac86798-7a2f-47c8-b153-3673e77e3e80OUTPUT"
+    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=e657f36d-4b2d-4f74-aa5d-5803dc2dc198OUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -115,31 +115,33 @@ plot(data[,1:2], ylab = variables(fabric))
 job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
-### `geoknife` Functions (as of v0.12.1)
+### `geoknife` Functions (as of v1.1.5)
 
-| Function     | Title                                                        |
-|--------------|:-------------------------------------------------------------|
-| `geoknife`   | slice up gridded data according to overlap with feature(s)   |
-| `algorithm`  | the algorithm of a `webprocess`                              |
-| `attribute`  | the attribute of an `webgeom`                                |
-| `check`      | check status of `geojob`                                     |
-| `download`   | download the results of a `geojob`                           |
-| `error`      | convenience function for state of `geojob`                   |
-| `running`    | convenience function for state of `geojob`                   |
-| `successful` | convenience function for state of `geojob`                   |
-| `start`      | start a `geojob`                                             |
-| `cancel`     | cancel a `geojob`                                            |
-| `geom`       | the geom of a `webgeom`                                      |
-| `inputs`     | the inputs of a `webprocess`                                 |
-| `id`         | the process id of a `geojob`                                 |
-| `values`     | the values of a `webgeom`                                    |
-| `result`     | load the output of a completed `geojob` into data.frame      |
-| `variables`  | the variables for a `webdata` object                         |
-| `times`      | the times of a `webdata` object                              |
-| `url`        | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess` |
-| `version`    | the version of a `webgeom` or `webdata`                      |
-| `xml`        | the xml of a `geojob`                                        |
-| `query`      | query datasets or variables                                  |
+| Function     | Title                                                            |
+|--------------|:-----------------------------------------------------------------|
+| `geoknife`   | slice up gridded data according to overlap with feature(s)       |
+| `gconfig`    | set or query package settings for `geoknife` processing defaults |
+| `algorithm`  | the algorithm of a `webprocess`                                  |
+| `attribute`  | the attribute of an `webgeom`                                    |
+| `check`      | check status of `geojob`                                         |
+| `download`   | download the results of a `geojob`                               |
+| `error`      | convenience function for state of `geojob`                       |
+| `running`    | convenience function for state of `geojob`                       |
+| `successful` | convenience function for state of `geojob`                       |
+| `start`      | start a `geojob`                                                 |
+| `cancel`     | cancel a `geojob`                                                |
+| `geom`       | the geom of a `webgeom`                                          |
+| `inputs`     | the inputs of a `webprocess`                                     |
+| `id`         | the process id of a `geojob`                                     |
+| `values`     | the values of a `webgeom`                                        |
+| `result`     | load the output of a completed `geojob` into data.frame          |
+| `variables`  | the variables for a `webdata` object                             |
+| `wait`       | wait for a `geojob` to complete processing                       |
+| `times`      | the times of a `webdata` object                                  |
+| `url`        | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess`     |
+| `version`    | the version of a `webgeom` or `webdata`                          |
+| `xml`        | the xml of a `geojob`                                            |
+| `query`      | query datasets or variables                                      |
 
 ### `geoknife` classes (as of v0.12.0)
 

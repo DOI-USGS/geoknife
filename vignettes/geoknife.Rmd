@@ -9,7 +9,7 @@ output:
     fig_height: 6
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{geoknife package}
+  %\VignetteIndexEntry{geoknife package guide}
   \usepackage[utf8]{inputenc}
 ---
 

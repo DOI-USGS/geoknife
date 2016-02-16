@@ -23,10 +23,12 @@ unzip(file, exdir=file.path(tempdir(),'NASA'))
 tiff.dir <- file.path(tempdir(),'NASA')
 
 ## ---- warning=FALSE, message=FALSE------------------------
+library(rgdal)
 library(rasterVis)
 nasa <- raster(file.path(tiff.dir , dir(tiff.dir)))
 
 ## ---- warning=FALSE, message=FALSE------------------------
+library(maps)
 library(ggmap)
 library(ggplot2)
 
