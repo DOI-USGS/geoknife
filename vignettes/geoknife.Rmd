@@ -368,18 +368,24 @@ plot(sst$DateTime[july.idx], sst$caspian.sea[july.idx], type='l', lwd=2, col='do
 
 ### query function for `webdata`
 The `query` function works on `webdata`, similar to how it works for `webgeom` objects. For the PRISM dataset specified above, the time range of the dataset can come from `query` with `times`:
-```{r}
+```{r, eval=FALSE}
 fabric = webdata('prism')
 variables(fabric) <- 'ppt'
 query(fabric, 'times')
 ```
+```
+## [1] "1895-01-01 UTC" "2013-02-01 UTC"
+```
 likewise, variables with `variables`:
-```{r}
+```{r, eval=FALSE}
 query(fabric, 'variables')
 ```
 Note that a variable has to be specified to use the `times` query:
 ```{r}
 variables(fabric) <- NA
+```
+```
+## [1] "ppt" "tmx" "tmn"
 ```
 This will fail:
 ```{r,eval=FALSE}

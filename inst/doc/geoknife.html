@@ -452,9 +452,9 @@ july.idx &lt;-<span class="st"> </span><span class="kw">months</span>(sst$DateTi
 <pre><code>## [1] &quot;1895-01-01 UTC&quot; &quot;2013-02-01 UTC&quot;</code></pre>
 <p>likewise, variables with <code>variables</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(fabric, <span class="st">'variables'</span>)</code></pre></div>
-<pre><code>## [1] &quot;ppt&quot; &quot;tmx&quot; &quot;tmn&quot;</code></pre>
 <p>Note that a variable has to be specified to use the <code>times</code> query:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">variables</span>(fabric) &lt;-<span class="st"> </span><span class="ot">NA</span></code></pre></div>
+<pre><code>## [1] &quot;ppt&quot; &quot;tmx&quot; &quot;tmn&quot;</code></pre>
 <p>This will fail:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(fabric, <span class="st">'times'</span>)</code></pre></div>
 <pre><code> Error in times_query(fabric, knife) : 

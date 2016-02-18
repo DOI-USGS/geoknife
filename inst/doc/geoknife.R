@@ -192,13 +192,13 @@ head(sst)
 july.idx <- months(sst$DateTime) == 'July'
 plot(sst$DateTime[july.idx], sst$caspian.sea[july.idx], type='l', lwd=2, col='dodgerblue', ylab='Sea Surface Temperature (degC)',xlab=NA)
 
-## ---------------------------------------------------------
-fabric = webdata('prism')
-variables(fabric) <- 'ppt'
-query(fabric, 'times')
+## ---- eval=FALSE------------------------------------------
+#  fabric = webdata('prism')
+#  variables(fabric) <- 'ppt'
+#  query(fabric, 'times')
 
-## ---------------------------------------------------------
-query(fabric, 'variables')
+## ---- eval=FALSE------------------------------------------
+#  query(fabric, 'variables')
 
 ## ---------------------------------------------------------
 variables(fabric) <- NA
