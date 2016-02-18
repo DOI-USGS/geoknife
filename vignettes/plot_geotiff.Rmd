@@ -32,22 +32,28 @@ First things first, load up the `geoknife` package
 ```{r, warning=FALSE, message=FALSE}
 library(geoknife)
 ```
-For this example, I am going to use a dataset that is hosted by NASA, and includes a number of radiation estimates for various components. There is a lot of global data here, but I am just going to pluck a subset in time (one timepoint for the month of July of one year) and a spatial subset. I am going to use the `OUTPUT_TYPE='geotiff'` argument that was added in version 1.1.0 of `geoknife`.
+For this example, I am going to use a dataset that is hosted by NASA, and includes a number of radiation estimates for various components. There is a lot of global data here, but I am just going to pluck a subset in time (one timepoint for the month of July of one year) and a spatial subset. I am going to use the `OUTPUT_TYPE='geotiff'` argument that was added in version 1.1.0 of `geoknife`. We are relying on a NASA dataset here, so apologies if they change the url in the future and this doesn't work...
 
-```{r}
+```{r, eval=FALSE}
 knife <- webprocess(algorithm = list('OPeNDAP Subset'="gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm"))
-fabric <- webdata(url='dods://opendap.larc.nasa.gov/opendap/SortByProduct/CERES/EBAF/Surface_Edition2.8/CERES_EBAF-Surface_Edition2.8_200003-201502.nc', 
+fabric <- webdata(url='dods://opendap.larc.nasa.gov/opendap/hyrax/SortByProduct/CERES/EBAF/Surface_Edition2.8/CERES_EBAF-Surface_Edition2.8_200003-201506.nc', 
                   variable="sfc_sw_down_all_mon", #Surface Shortwave Flux Down, Monthly Means, All-Sky conditions
                   times=c('2014-07-15','2014-07-15'))
 stencil <- simplegeom(data.frame('point1' = c(-5,32), 'point2' = c(-90,-78))) # big 'ol chunk 'o data
 job <- geoknife(stencil, fabric, knife, wait = TRUE, OUTPUT_TYPE = "geotiff")
 ```
 now that the job is complete (because `wait=TRUE` was used), we can download the result and unzip it:
-```{r, message=FALSE}
+```{r, eval=FALSE}
 file <- download(job, destination = file.path(tempdir(), 'nasa_data.zip'), overwrite=TRUE)
 unzip(file, exdir=file.path(tempdir(),'NASA'))
 tiff.dir <- file.path(tempdir(),'NASA')
 ```
+```{r, message=FALSE, echo=FALSE}
+file <- system.file('extdata','nasa_data.zip', package='geoknife')
+unzip(file, exdir=file.path(tempdir(),'NASA'))
+tiff.dir <- file.path(tempdir(),'NASA')
+```
+
 ## plot the data
 using the `rasterVis` package, read this in and create a raster object:
 ```{r, warning=FALSE, message=FALSE}

@@ -29,18 +29,26 @@ stencil <- simplegeom(data.frame(
               'point1' = c(-89, 46), 
               'point2' = c(-88.6, 45.2)))
 
-## ---------------------------------------------------------
-stencil <- webgeom('state::New Hampshire')
-stencil <- webgeom('state::New Hampshire,Wisconsin,Alabama')
+## ---- eval=FALSE------------------------------------------
+#  stencil <- webgeom('state::New Hampshire')
+#  stencil <- webgeom('state::New Hampshire,Wisconsin,Alabama')
+
+## ---- eval=FALSE------------------------------------------
+#  stencil <- webgeom('HUC8::09020306,14060009')
+
+## ---- echo=FALSE------------------------------------------
+load(system.file('extdata', 'HUC8_stencil.RData', package = 'geoknife'))
 
 ## ---------------------------------------------------------
-stencil <- webgeom('HUC8::09020306,14060009')
-# display stencil:
 stencil
 
+## ---- eval=FALSE------------------------------------------
+#  HUCs <- query(stencil, 'values')
+
+## ---- echo=FALSE------------------------------------------
+load(system.file('extdata', 'HUC8_query.RData', package = 'geoknife'))
+
 ## ---------------------------------------------------------
-HUCs <- query(stencil, 'values')
-# there are thousands of results, but head() will only display a few of them
 head(HUCs) 
 
 ## ---------------------------------------------------------
@@ -49,26 +57,30 @@ fabric
 
 ## ---------------------------------------------------------
 times(fabric) <- c('2002-01-01','2010-01-01')
-variables(fabric) <- c('ppt','tmx', 'tmn')
+variables(fabric) <- c('tmx')
 fabric
 
-## ---------------------------------------------------------
-job <- geoknife(stencil, fabric)
+## ---- eval=FALSE------------------------------------------
+#  job <- geoknife(stencil, fabric)
 
-## ---------------------------------------------------------
-check(job)
-running(job)
-error(job)
-successful(job)
+## ---- eval=FALSE------------------------------------------
+#  check(job)
+#  running(job)
+#  error(job)
+#  successful(job)
 
-## ---------------------------------------------------------
-job <- cancel(job)
+## ---- eval=FALSE------------------------------------------
+#  job <- cancel(job)
 
-## ---------------------------------------------------------
-job <- geoknife(stencil, fabric, wait = TRUE)
+## ---- eval=FALSE------------------------------------------
+#  job <- geoknife(stencil, fabric, wait = TRUE)
 
-## ---- fig.height=3.5, fig.width=7-------------------------
-data <- result(job)
+## ---- fig.height=3.5, fig.width=7, eval=FALSE-------------
+#  data <- result(job)
+#  plot(data[,1:2], ylab = variables(fabric))
+
+## ---- fig.height=3.5, fig.width=7, echo=FALSE-------------
+load(system.file('extdata', 'prism_job.RData', package = 'geoknife'))
 plot(data[,1:2], ylab = variables(fabric))
 
 ## ---- eval=FALSE------------------------------------------
@@ -100,11 +112,10 @@ stencil <- webgeom()
 ## ---------------------------------------------------------
 stencil
 
-## ---------------------------------------------------------
-geom(stencil) <- "derivative:CONUS_States"
-version(stencil)
-attribute(stencil) <- "STATE"
-values(stencil) <- c("Wisconsin","Maine")
+## ---- eval=FALSE------------------------------------------
+#  geom(stencil) <- "derivative:CONUS_States"
+#  attribute(stencil) <- "STATE"
+#  values(stencil) <- c("Wisconsin","Maine")
 
 ## ---------------------------------------------------------
 stencil <- webgeom('state::Wisconsin')
@@ -114,12 +125,11 @@ webgeom('state::Wisconsin,Maine')
 webgeom('HUC8::09020306,14060009')
 webgeom('ecoregion::Colorado Plateaus,Driftless Area')
 
-head(query(webgeom('ecoregion::Colorado Plateaus,Driftless Area'), 'values'), 10)
+## ---- eval=FALSE------------------------------------------
+#  query(stencil, 'geoms')
 
-## ---------------------------------------------------------
-query(stencil, 'geoms')
-query(stencil, 'attributes')
-query(stencil, 'values')
+## ---- eval=FALSE------------------------------------------
+#  query(stencil, 'attributes')
 
 ## ---------------------------------------------------------
 fabric <- webdata()
@@ -130,12 +140,16 @@ fabric
 ## ---------------------------------------------------------
 times(fabric)
 url(fabric) <- 'http://cida.usgs.gov/thredds/dodsC/prism'
-variables(fabric) <- 'ppt'
+variables(fabric) <- 'tmx'
 
 times(fabric)[1] <- as.POSIXct('1990-01-01')
 
-## ---------------------------------------------------------
-webdatasets = query('webdata')
+## ---- eval=FALSE------------------------------------------
+#  webdatasets = query('webdata')
+#  length(webdatasets)
+
+## ---- echo=FALSE------------------------------------------
+load(system.file('extdata', 'webdata_query.RData', package = 'geoknife'))
 length(webdatasets)
 
 ## ---------------------------------------------------------
@@ -162,15 +176,21 @@ fabric = webdata(url='dods://apdrc.soest.hawaii.edu/dods/public_data/satellite_p
 ## ---- eval=FALSE------------------------------------------
 #  variables(fabric) <- 'sst'
 #  query(fabric, 'times')
-#  
-#  times(fabric) <- c('1990-01-01','1999-12-31')
+
+## ---------------------------------------------------------
+times(fabric) <- c('1990-01-01','1999-12-31')
 
 ## ---- eval=FALSE------------------------------------------
 #  sst = result(geoknife(data.frame('caspian.sea'=c(51,40)), fabric, wait = TRUE))
 #  head(sst)
 #  july.idx <- months(sst$DateTime) == 'July'
 #  plot(sst$DateTime[july.idx], sst$caspian.sea[july.idx], type='l', lwd=2, col='dodgerblue', ylab='Sea Surface Temperature (degC)',xlab=NA)
-#  
+
+## ---- echo=FALSE, fig.height=4, fig.width=6---------------
+load(system.file('extdata', 'sst_result.RData', package = 'geoknife'))
+head(sst)
+july.idx <- months(sst$DateTime) == 'July'
+plot(sst$DateTime[july.idx], sst$caspian.sea[july.idx], type='l', lwd=2, col='dodgerblue', ylab='Sea Surface Temperature (degC)',xlab=NA)
 
 ## ---------------------------------------------------------
 fabric = webdata('prism')
@@ -186,46 +206,48 @@ variables(fabric) <- NA
 ## ----eval=FALSE-------------------------------------------
 #  query(fabric, 'times')
 
-## ---------------------------------------------------------
-knife <- webprocess()
-query(knife, 'algorithms')
+## ---- eval=FALSE------------------------------------------
+#  knife <- webprocess()
+#  query(knife, 'algorithms')
 
-## ---------------------------------------------------------
-url(knife) <- 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
-query(knife, 'algorithms')
+## ----eval=FALSE-------------------------------------------
+#  url(knife) <- 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
+#  query(knife, 'algorithms')
 
-## ---------------------------------------------------------
-knife <- webprocess()
-algorithm(knife)
-algorithm(knife) <- query(knife, 'algorithms')[1]
-algorithm(knife)
-# -- or --
-algorithm(knife) <- list('Area Grid Statistics (weighted)' = 
-                           "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
+## ---- eval=FALSE------------------------------------------
+#  knife <- webprocess()
+#  algorithm(knife) <- query(knife, 'algorithms')[1]
+#  # -- or --
+#  algorithm(knife) <- list('Area Grid Statistics (weighted)' =
+#                             "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
 
-## ---------------------------------------------------------
-url(knife)
-url(knife) <- 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
+## ---- eval=FALSE------------------------------------------
+#  url(knife) <- 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
 
-## ---------------------------------------------------------
-knife <- webprocess(wait = TRUE)
-knife
+## ---- eval=FALSE------------------------------------------
+#  knife <- webprocess(wait = TRUE)
+#  knife
 
-## ---------------------------------------------------------
-knife <- webprocess(email = 'fake.email@gmail.com')
-knife
+## ---- eval=FALSE------------------------------------------
+#  knife <- webprocess(email = 'fake.email@gmail.com')
+#  knife
 
-## ---------------------------------------------------------
-job <- geoknife(stencil, fabric = 'prism', wait = FALSE)
-check(job)
+## ---- eval=FALSE------------------------------------------
+#  job <- geoknife(stencil, fabric = 'prism', wait = FALSE)
+#  check(job)
 
 ## ---- eval=FALSE------------------------------------------
 #  running(job)
 #  error(job)
 #  successful(job)
 
+## ---- eval=FALSE------------------------------------------
+#  id(job)
+
+## ---- echo=FALSE------------------------------------------
+job <- geojob()
+
 ## ---------------------------------------------------------
-id(job)
 job <- cancel(job)
 id(job)
 

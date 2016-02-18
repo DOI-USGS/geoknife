@@ -71,7 +71,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="header">
 <h1 class="title">subset gridded data as geotiff and plot</h1>
 <h4 class="author"><em>Jordan Read, Alison Appling</em></h4>
-<h4 class="date"><em>12 February, 2016</em></h4>
+<h4 class="date"><em>18 February, 2016</em></h4>
 </div>
 
 <div id="TOC">
@@ -87,9 +87,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>see the <code>geoknife</code> getting started vignette for more details, but for the purposes of this vignette, we need to get some data first and then plot it up.<br />
 First things first, load up the <code>geoknife</code> package</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(geoknife)</code></pre></div>
-<p>For this example, I am going to use a dataset that is hosted by NASA, and includes a number of radiation estimates for various components. There is a lot of global data here, but I am just going to pluck a subset in time (one timepoint for the month of July of one year) and a spatial subset. I am going to use the <code>OUTPUT_TYPE='geotiff'</code> argument that was added in version 1.1.0 of <code>geoknife</code>.</p>
+<p>For this example, I am going to use a dataset that is hosted by NASA, and includes a number of radiation estimates for various components. There is a lot of global data here, but I am just going to pluck a subset in time (one timepoint for the month of July of one year) and a spatial subset. I am going to use the <code>OUTPUT_TYPE='geotiff'</code> argument that was added in version 1.1.0 of <code>geoknife</code>. We are relying on a NASA dataset here, so apologies if they change the url in the future and this doesn’t work…</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knife &lt;-<span class="st"> </span><span class="kw">webprocess</span>(<span class="dt">algorithm =</span> <span class="kw">list</span>(<span class="st">'OPeNDAP Subset'</span>=<span class="st">&quot;gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm&quot;</span>))
-fabric &lt;-<span class="st"> </span><span class="kw">webdata</span>(<span class="dt">url=</span><span class="st">'dods://opendap.larc.nasa.gov/opendap/SortByProduct/CERES/EBAF/Surface_Edition2.8/CERES_EBAF-Surface_Edition2.8_200003-201502.nc'</span>, 
+fabric &lt;-<span class="st"> </span><span class="kw">webdata</span>(<span class="dt">url=</span><span class="st">'dods://opendap.larc.nasa.gov/opendap/hyrax/SortByProduct/CERES/EBAF/Surface_Edition2.8/CERES_EBAF-Surface_Edition2.8_200003-201506.nc'</span>, 
                   <span class="dt">variable=</span><span class="st">&quot;sfc_sw_down_all_mon&quot;</span>, <span class="co">#Surface Shortwave Flux Down, Monthly Means, All-Sky conditions</span>
                   <span class="dt">times=</span><span class="kw">c</span>(<span class="st">'2014-07-15'</span>,<span class="st">'2014-07-15'</span>))
 stencil &lt;-<span class="st"> </span><span class="kw">simplegeom</span>(<span class="kw">data.frame</span>(<span class="st">'point1'</span> =<span class="st"> </span><span class="kw">c</span>(-<span class="dv">5</span>,<span class="dv">32</span>), <span class="st">'point2'</span> =<span class="st"> </span><span class="kw">c</span>(-<span class="dv">90</span>,-<span class="dv">78</span>))) <span class="co"># big 'ol chunk 'o data</span>
