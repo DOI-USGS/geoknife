@@ -9,16 +9,21 @@ library(geoknife)
 ## ---- warning=FALSE, message=FALSE------------------------
 library(geoknife)
 
-## ---------------------------------------------------------
-knife <- webprocess(algorithm = list('OPeNDAP Subset'="gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm"))
-fabric <- webdata(url='dods://opendap.larc.nasa.gov/opendap/SortByProduct/CERES/EBAF/Surface_Edition2.8/CERES_EBAF-Surface_Edition2.8_200003-201502.nc', 
-                  variable="sfc_sw_down_all_mon", #Surface Shortwave Flux Down, Monthly Means, All-Sky conditions
-                  times=c('2014-07-15','2014-07-15'))
-stencil <- simplegeom(data.frame('point1' = c(-5,32), 'point2' = c(-90,-78))) # big 'ol chunk 'o data
-job <- geoknife(stencil, fabric, knife, wait = TRUE, OUTPUT_TYPE = "geotiff")
+## ---- eval=FALSE------------------------------------------
+#  knife <- webprocess(algorithm = list('OPeNDAP Subset'="gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm"))
+#  fabric <- webdata(url='dods://opendap.larc.nasa.gov/opendap/hyrax/SortByProduct/CERES/EBAF/Surface_Edition2.8/CERES_EBAF-Surface_Edition2.8_200003-201506.nc',
+#                    variable="sfc_sw_down_all_mon", #Surface Shortwave Flux Down, Monthly Means, All-Sky conditions
+#                    times=c('2014-07-15','2014-07-15'))
+#  stencil <- simplegeom(data.frame('point1' = c(-5,32), 'point2' = c(-90,-78))) # big 'ol chunk 'o data
+#  job <- geoknife(stencil, fabric, knife, wait = TRUE, OUTPUT_TYPE = "geotiff")
 
-## ---- message=FALSE---------------------------------------
-file <- download(job, destination = file.path(tempdir(), 'nasa_data.zip'), overwrite=TRUE)
+## ---- eval=FALSE------------------------------------------
+#  file <- download(job, destination = file.path(tempdir(), 'nasa_data.zip'), overwrite=TRUE)
+#  unzip(file, exdir=file.path(tempdir(),'NASA'))
+#  tiff.dir <- file.path(tempdir(),'NASA')
+
+## ---- message=FALSE, echo=FALSE---------------------------
+file <- system.file('extdata','nasa_data.zip', package='geoknife')
 unzip(file, exdir=file.path(tempdir(),'NASA'))
 tiff.dir <- file.path(tempdir(),'NASA')
 
