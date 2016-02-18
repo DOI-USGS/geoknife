@@ -117,13 +117,11 @@ stencil
 #  attribute(stencil) <- "STATE"
 #  values(stencil) <- c("Wisconsin","Maine")
 
-## ---------------------------------------------------------
-stencil <- webgeom('state::Wisconsin')
-stencil
-query(stencil, 'values')
-webgeom('state::Wisconsin,Maine')
-webgeom('HUC8::09020306,14060009')
-webgeom('ecoregion::Colorado Plateaus,Driftless Area')
+## ---- eval=FALSE------------------------------------------
+#  stencil <- webgeom('state::Wisconsin')
+#  webgeom('state::Wisconsin,Maine')
+#  webgeom('HUC8::09020306,14060009')
+#  webgeom('ecoregion::Colorado Plateaus,Driftless Area')
 
 ## ---- eval=FALSE------------------------------------------
 #  query(stencil, 'geoms')

@@ -230,10 +230,8 @@ values(stencil) <- c("Wisconsin","Maine")
 
 ### quick access to web available data for webgeoms
 There are some built in `webgeom` templates that can be used to figure out the pattern, or to use these datasets for analysis. Currently, the package only supports US States, Level III Ecoregions, or HUC8s:
-```{r}
+```{r, eval=FALSE}
 stencil <- webgeom('state::Wisconsin')
-stencil
-query(stencil, 'values')
 webgeom('state::Wisconsin,Maine')
 webgeom('HUC8::09020306,14060009')
 webgeom('ecoregion::Colorado Plateaus,Driftless Area')

@@ -280,60 +280,9 @@ stencil &lt;-<span class="st"> </span><span class="kw">simplegeom</span>(<span c
 <h3>quick access to web available data for webgeoms</h3>
 <p>There are some built in <code>webgeom</code> templates that can be used to figure out the pattern, or to use these datasets for analysis. Currently, the package only supports US States, Level III Ecoregions, or HUC8s:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stencil &lt;-<span class="st"> </span><span class="kw">webgeom</span>(<span class="st">'state::Wisconsin'</span>)
-stencil</code></pre></div>
-<pre><code>## An object of class &quot;webgeom&quot;:
-## url: http://cida.usgs.gov/gdp/geoserver/wfs 
-## geom: derivative:CONUS_States 
-## attribute: STATE 
-## values: Wisconsin 
-## wfs version: 1.1.0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">query</span>(stencil, <span class="st">'values'</span>)</code></pre></div>
-<pre><code>##  [1] &quot;Alabama&quot;              &quot;Arizona&quot;             
-##  [3] &quot;Arkansas&quot;             &quot;California&quot;          
-##  [5] &quot;Colorado&quot;             &quot;Connecticut&quot;         
-##  [7] &quot;Delaware&quot;             &quot;District of Columbia&quot;
-##  [9] &quot;Florida&quot;              &quot;Georgia&quot;             
-## [11] &quot;Idaho&quot;                &quot;Illinois&quot;            
-## [13] &quot;Indiana&quot;              &quot;Iowa&quot;                
-## [15] &quot;Kansas&quot;               &quot;Kentucky&quot;            
-## [17] &quot;Louisiana&quot;            &quot;Maine&quot;               
-## [19] &quot;Maryland&quot;             &quot;Massachusetts&quot;       
-## [21] &quot;Michigan&quot;             &quot;Minnesota&quot;           
-## [23] &quot;Mississippi&quot;          &quot;Missouri&quot;            
-## [25] &quot;Montana&quot;              &quot;Nebraska&quot;            
-## [27] &quot;Nevada&quot;               &quot;New Hampshire&quot;       
-## [29] &quot;New Jersey&quot;           &quot;New Mexico&quot;          
-## [31] &quot;New York&quot;             &quot;North Carolina&quot;      
-## [33] &quot;North Dakota&quot;         &quot;Ohio&quot;                
-## [35] &quot;Oklahoma&quot;             &quot;Oregon&quot;              
-## [37] &quot;Pennsylvania&quot;         &quot;Rhode Island&quot;        
-## [39] &quot;South Carolina&quot;       &quot;South Dakota&quot;        
-## [41] &quot;Tennessee&quot;            &quot;Texas&quot;               
-## [43] &quot;Utah&quot;                 &quot;Vermont&quot;             
-## [45] &quot;Virginia&quot;             &quot;Washington&quot;          
-## [47] &quot;West Virginia&quot;        &quot;Wisconsin&quot;           
-## [49] &quot;Wyoming&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">webgeom</span>(<span class="st">'state::Wisconsin,Maine'</span>)</code></pre></div>
-<pre><code>## An object of class &quot;webgeom&quot;:
-## url: http://cida.usgs.gov/gdp/geoserver/wfs 
-## geom: derivative:CONUS_States 
-## attribute: STATE 
-## values: Wisconsin, Maine 
-## wfs version: 1.1.0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">webgeom</span>(<span class="st">'HUC8::09020306,14060009'</span>)</code></pre></div>
-<pre><code>## An object of class &quot;webgeom&quot;:
-## url: http://cida.usgs.gov/gdp/geoserver/wfs 
-## geom: derivative:wbdhu8_alb_simp 
-## attribute: HUC_8 
-## values: 09020306, 14060009 
-## wfs version: 1.1.0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">webgeom</span>(<span class="st">'ecoregion::Colorado Plateaus,Driftless Area'</span>)</code></pre></div>
-<pre><code>## An object of class &quot;webgeom&quot;:
-## url: http://cida.usgs.gov/gdp/geoserver/wfs 
-## geom: derivative:Level_III_Ecoregions 
-## attribute: LEVEL3_NAM 
-## values: Colorado Plateaus, Driftless Area 
-## wfs version: 1.1.0</code></pre>
+<span class="kw">webgeom</span>(<span class="st">'state::Wisconsin,Maine'</span>)
+<span class="kw">webgeom</span>(<span class="st">'HUC8::09020306,14060009'</span>)
+<span class="kw">webgeom</span>(<span class="st">'ecoregion::Colorado Plateaus,Driftless Area'</span>)</code></pre></div>
 </div>
 <div id="query-function-for-webgeom" class="section level3">
 <h3>query function for <code>webgeom</code></h3>
