@@ -106,7 +106,7 @@ setAs("character", "webdata", function(from){
   
   datasets <- list('prism' = 
                      list(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
-                          url = 'http://cida.usgs.gov/thredds/dodsC/prism',
+                          url = 'http://cida.usgs.gov/thredds/dodsC/prism_v2',
                           variables = 'ppt'),
                    'iclus' = 
                      list(url = 'http://cida.usgs.gov/thredds/dodsC/iclus/hc',
