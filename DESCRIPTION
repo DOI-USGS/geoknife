@@ -33,7 +33,7 @@ Depends:
 Imports:
     XML,
     methods,
-    httr,
+    httr (>= 1.0.0),
     curl,
     sp,
     utils
