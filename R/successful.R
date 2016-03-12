@@ -37,8 +37,8 @@ setGeneric(name="successful",def=function(.Object, retry){standardGeneric("succe
 setMethod(f = "successful",signature(.Object = "geojob"), definition = function(.Object, retry = FALSE){
 	
   process = check(.Object)
-  if (process$status == 'unknown' && !retry){
-    Sys.sleep(10)
+  if (process$status == 'unknown' && retry){
+    Sys.sleep(gconfig('sleep.time'))
     process = check(.Object)
   }
 	
@@ -55,8 +55,8 @@ setGeneric(name="running",def=function(.Object, retry){standardGeneric("running"
 setMethod(f = "running",signature(.Object = "geojob"), definition = function(.Object, retry = FALSE){
   
   process = check(.Object)
-  if (process$status == 'unknown' && !retry){
-    Sys.sleep(10)
+  if (process$status == 'unknown' && retry){
+    Sys.sleep(gconfig('sleep.time'))
     process = check(.Object)
   }
   
@@ -72,8 +72,8 @@ setGeneric(name="error",def=function(.Object, retry){standardGeneric("error")})
 setMethod(f = "error",signature = "geojob", definition = function(.Object, retry = FALSE){
   
   process = check(.Object)
-  if (process$status == 'unknown' && !retry){
-    Sys.sleep(10)
+  if (process$status == 'unknown' && retry){
+    Sys.sleep(gconfig('sleep.time'))
     process = check(.Object)
   }
   
