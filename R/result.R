@@ -44,7 +44,7 @@ outputParse = function(.Object, ...){
 }
 
 algorithmParseDetails <- function(job){
-  function_handlers <- list("FeatureWeightedGridStatisticsAlgorithm" = c('function_name'='parseTimeseries'),
+  function.handlers <- list("FeatureWeightedGridStatisticsAlgorithm" = c('function_name'='parseTimeseries'),
                             "FeatureGridStatisticsAlgorithm" = c('function_name'='parseTimeseries'),
                             "FeatureCategoricalGridCoverageAlgorithm" = c('function_name'='parseCategorical'))
   
@@ -53,7 +53,9 @@ algorithmParseDetails <- function(job){
   algorithm.name <- tail(strsplit(algorithm, '[.]')[[1]], 1)
   rm(doc) # is this necessary w/ XML package?
   
-  
+  if (!algorithm.name %in% names(function.handlers)){
+    stop('output ',algorithm.name, ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new', call. = FALSE)
+  }
   parse.details <- c(function_handlers[[algorithm.name]], 'delimiter'=outputDelimiter(job))
   return(parse.details)
 }
@@ -66,24 +68,11 @@ outputDelimiter <- function(job){
   doc <-  htmlParse(id(job), isURL=TRUE, useInternalNodes = TRUE)
   type <- xmlGetAttr(getNodeSet(doc,"//reference[@mimetype]")[[1]],'mimetype')
   if (!type %in% names(delimiters)){
-    stop('output ',type, ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new')
+    stop('output ',type, ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new', call. = FALSE)
   }
   return(delimiters[[type]])
 }
 
-getParseFunction <- function(processID){
-  delimiters <- c("text/tab-separated-values" = '\t',
-                            "text/csv" = ',',
-                            'text/plain' = ' ')
-  # find output type
-  doc <-  htmlParse(processID, isURL=TRUE, useInternalNodes = TRUE)
-  type <- xmlGetAttr(getNodeSet(doc,"//reference[@mimetype]")[[1]],'mimetype')
-  if (!type %in% names(function_handlers)){
-    stop('output ',type, ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new')
-  }
-  
-  return(function_handlers[[type]])
-}
 
 parseCategorical <- function(file, delim){
   stop("function 'parseCategorical' not implemented yet. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new", call. = FALSE)
