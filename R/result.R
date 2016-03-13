@@ -49,14 +49,14 @@ algorithmParseDetails <- function(job){
                             "FeatureCategoricalGridCoverageAlgorithm" = c('function_name'='parseCategorical'))
   
   doc <- xmlParse(xml(job))
-  algorithm <- xmlApply(getNodeSet(doc,"/wps:Execute/ows:Identifier"), xmlValue)[[1]]
+  algorithm <- xmlValue(getNodeSet(doc,"/wps:Execute/ows:Identifier")[[1]])
   algorithm.name <- tail(strsplit(algorithm, '[.]')[[1]], 1)
   rm(doc) # is this necessary w/ XML package?
   
   if (!algorithm.name %in% names(function.handlers)){
     stop('output ',algorithm.name, ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new', call. = FALSE)
   }
-  parse.details <- c(function_handlers[[algorithm.name]], 'delimiter'=outputDelimiter(job))
+  parse.details <- c(function.handlers[[algorithm.name]], 'delimiter'=outputDelimiter(job))
   return(parse.details)
 }
 
