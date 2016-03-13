@@ -17,7 +17,7 @@
 #' output <- parseTimeseries(local_file, delim = '\t')
 parseTimeseries <- function(file, delim, with.units = FALSE){
   
-  config = parseConfig(file, delim)
+  config = parseTimeseriesConfig(file, delim)
   
   if(!is.na(config[['features']][1]) && config[['features']][1]=="") {
     config[['features']]<-config[['features']][-1]
@@ -86,7 +86,7 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
   return(dataOut)
 }
 
-parseConfig = function(file, delim){
+parseTimeseriesConfig = function(file, delim){
     featureLine = 2 # Line containing unique IDs of features (stencil) that were processed
     skipHead = 1 # Number of lines to skip past the variable marker header?
     varMarker = '# ' # Symbol that denotes a variable identifier and a new block of output.

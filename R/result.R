@@ -39,14 +39,14 @@ setMethod(f = "result",signature="geojob",
 outputParse = function(.Object, ...){
   funcInfo <- algorithmParseDetails(.Object)
   fileLocation <- check(.Object)$URL
-  output <- do.call(funcInfo[['function_name']], args = list(file = fileLocation, 'delim' = funcInfo[['delimiter']], ...))
+  output <- do.call(funcInfo[['function.name']], args = list(file = fileLocation, 'delim' = funcInfo[['delimiter']], ...))
   return(output)
 }
 
 algorithmParseDetails <- function(job){
-  function.handlers <- list("FeatureWeightedGridStatisticsAlgorithm" = c('function_name'='parseTimeseries'),
-                            "FeatureGridStatisticsAlgorithm" = c('function_name'='parseTimeseries'),
-                            "FeatureCategoricalGridCoverageAlgorithm" = c('function_name'='parseCategorical'))
+  function.handlers <- list("FeatureWeightedGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
+                            "FeatureGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
+                            "FeatureCategoricalGridCoverageAlgorithm" = c('function.name'='parseCategorical'))
   
   doc <- xmlParse(xml(job))
   algorithm <- xmlValue(getNodeSet(doc,"/wps:Execute/ows:Identifier")[[1]])
