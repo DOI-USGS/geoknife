@@ -54,7 +54,8 @@ algorithmParseDetails <- function(job){
   rm(doc) # is this necessary w/ XML package?
   
   if (!algorithm.name %in% names(function.handlers)){
-    stop('output ',algorithm.name, ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new', call. = FALSE)
+    stop('parser for ',algorithm.name, 
+         ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new', call. = FALSE)
   }
   parse.details <- c(function.handlers[[algorithm.name]], 'delimiter'=outputDelimiter(job))
   return(parse.details)
@@ -73,7 +74,3 @@ outputDelimiter <- function(job){
   return(delimiters[[type]])
 }
 
-
-parseCategorical <- function(file, delim){
-  stop("function 'parseCategorical' not implemented yet. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new", call. = FALSE)
-}
