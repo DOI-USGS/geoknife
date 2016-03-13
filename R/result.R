@@ -37,26 +37,43 @@ setMethod(f = "result",signature="geojob",
   )
 
 outputParse = function(.Object, ...){
-  funcInfo <- getParseFunction(id(.Object))
+  funcInfo <- algorithmParseDetails(.Object)
   fileLocation <- check(.Object)$URL
-  output <- do.call(funcInfo$function_name, args = list(file = fileLocation, 'delim' = funcInfo$delim, ...))
+  output <- do.call(funcInfo[['function_name']], args = list(file = fileLocation, 'delim' = funcInfo[['delimiter']], ...))
   return(output)
 }
 
-getParseFunction <- function(processID){
-  function_handlers <- list("text/tab-separated-values" = list(function_name = 'parseTimeseries', delim='\t'),
-                            "text/csv" = list(function_name = 'parseTimeseries', delim=','),
-                            'text/plain' = list(function_name = 'parseTimeseries', delim=' '))
-  # find output type
-  doc <-  htmlParse(processID, isURL=TRUE, useInternalNodes = TRUE)
-  type <- xmlGetAttr(getNodeSet(doc,"//reference[@mimetype]")[[1]],'mimetype')
-  if (!type %in% names(function_handlers)){
-    stop('output ',type, ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new')
-  }
+algorithmParseDetails <- function(job){
+  function.handlers <- list("FeatureWeightedGridStatisticsAlgorithm" = c('function_name'='parseTimeseries'),
+                            "FeatureGridStatisticsAlgorithm" = c('function_name'='parseTimeseries'),
+                            "FeatureCategoricalGridCoverageAlgorithm" = c('function_name'='parseCategorical'))
   
-  return(function_handlers[[type]])
+  doc <- xmlParse(xml(job))
+  algorithm <- xmlValue(getNodeSet(doc,"/wps:Execute/ows:Identifier")[[1]])
+  algorithm.name <- tail(strsplit(algorithm, '[.]')[[1]], 1)
+  rm(doc) # is this necessary w/ XML package?
+  
+  if (!algorithm.name %in% names(function.handlers)){
+    stop('output ',algorithm.name, ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new', call. = FALSE)
+  }
+  parse.details <- c(function.handlers[[algorithm.name]], 'delimiter'=outputDelimiter(job))
+  return(parse.details)
 }
 
+outputDelimiter <- function(job){
+  delimiters <- c("text/tab-separated-values" = '\t',
+                  "text/csv" = ',',
+                  'text/plain' = ' ')
+  # find output type
+  doc <-  htmlParse(id(job), isURL=TRUE, useInternalNodes = TRUE)
+  type <- xmlGetAttr(getNodeSet(doc,"//reference[@mimetype]")[[1]],'mimetype')
+  if (!type %in% names(delimiters)){
+    stop('output ',type, ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new', call. = FALSE)
+  }
+  return(delimiters[[type]])
+}
+
+
 parseCategorical <- function(file, delim){
-  stop("function 'parseCategorical' not implemented yet. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new")
+  stop("function 'parseCategorical' not implemented yet. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new", call. = FALSE)
 }
