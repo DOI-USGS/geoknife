@@ -17,7 +17,7 @@
 #' output <- parseTimeseries(local_file, delim = '\t')
 parseTimeseries <- function(file, delim, with.units = FALSE){
   
-  config = parseConfig(file, delim)
+  config = parseTimeseriesConfig(file, delim)
   
   if(!is.na(config[['features']][1]) && config[['features']][1]=="") {
     config[['features']]<-config[['features']][-1]
@@ -35,6 +35,10 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
     #parse the date into POSIXct format
     blockData$TIMESTEP = as.POSIXct(blockData$TIMESTEP, "%Y-%m-%dT%H:%M:%S", tz="UTC")
     if(any(grepl("threshold",names(blockData)))){
+      replace.name <- names(blockData)[grepl("threshold",names(blockData))]
+      startCol<-3
+    } else if (any(grepl("time",names(blockData)))){
+      replace.name <- names(blockData)[grepl("time",names(blockData))]
       startCol<-3
     } else {
       startCol<-2
@@ -64,7 +68,7 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
         'statistic' = rep(cleanStat, length.out = nrow(statData)), stringsAsFactors = FALSE)
       )
       if (startCol==3) {
-      	names(blockData)[2]<-'threshold'
+      	names(blockData)[2] <- replace.name
         statData=cbind(statData,blockData[2])
       }
       if (with.units){
@@ -86,7 +90,7 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
   return(dataOut)
 }
 
-parseConfig = function(file, delim){
+parseTimeseriesConfig = function(file, delim){
     featureLine = 2 # Line containing unique IDs of features (stencil) that were processed
     skipHead = 1 # Number of lines to skip past the variable marker header?
     varMarker = '# ' # Symbol that denotes a variable identifier and a new block of output.
