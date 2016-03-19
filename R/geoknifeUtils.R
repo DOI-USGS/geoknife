@@ -17,19 +17,31 @@ gverbose <- function(){
     NULL
 }
 
-#'@importFrom httr GET add_headers verbose
-gGET <- function(url, ...){
-  retryVERB(httr::GET, url=url, ...)
+gheaders <- function(){
+  httr::add_headers(geoknifeUserAgent())
 }
 
-retryVERB <- function(VERB, ..., retries = gconfig('retries')){
+#'@importFrom httr GET add_headers verbose
+gGET <- function(url, ...){
+  retryVERB(httr::GET, url, ...)
+}
+
+#' simple retry for httr VERBs
+#' 
+#' Useful for intermittent server issues, when a retry will get the job done
+#' @param VERB \code{httr} function
+#' @param url a url
+#' @param \dots additional args passed into VERB
+#' @param retries number of times to try before failing
+#' @keywords internal
+retryVERB <- function(VERB, url, ..., retries = gconfig('retries')){
   response <- simpleError(" ")
   retry <- 1
   while (is(response, 'error') && retry <= retries){
     response <- tryCatch({
       # I don't like doing this, but the GDP response comes back as `content-type`="text/xml" instead of 
       # `content-type`="text/xml; charset=UTF-8" so we get a charset warning message
-      suppressWarnings(VERB(..., gverbose(),add_headers(geoknifeUserAgent())))
+      suppressWarnings(VERB(url=url, ..., gverbose(), gheaders()))
     }, error=function(e){
       Sys.sleep(gconfig('sleep.time'))
       if (gconfig('verbose'))
@@ -44,7 +56,7 @@ retryVERB <- function(VERB, ..., retries = gconfig('retries')){
 
 #'@importFrom httr POST add_headers
 gPOST <- function(url, config = list(), ...){
-  retryVERB(httr::POST, url=url, config=config, ...)
+  retryVERB(httr::POST, url, config=config, ...)
 }
 
 #' drop in replacement for httr switching to xml2 from XML
