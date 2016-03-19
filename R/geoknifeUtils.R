@@ -21,16 +21,16 @@ gverbose <- function(){
 gGET <- function(url, ...){
   # I don't like doing this, but the GDP response comes back as `content-type`="text/xml" instead of 
   # `content-type`="text/xml; charset=UTF-8" so we get a charset warning message
-  retryVERB(httr::GET(url=url, gverbose(), ..., add_headers(geoknifeUserAgent())))
+  retryVERB(httr::GET(url=url, ...))
   
 }
 
-retryVERB <- function(..., retries = 3){
+retryVERB <- function(url, ..., retries = 3){
   response <- simpleError(" ")
   retry <- 1
   while (is(response, 'error') && retry <= retries){
     response <- tryCatch({
-      suppressWarnings(...)
+      suppressWarnings(url=url, ..., gverbose(), add_headers(geoknifeUserAgent()))
     }, error=function(e){
       Sys.sleep(gconfig('sleep.time'))
       if (gconfig('verbose'))
@@ -45,7 +45,7 @@ retryVERB <- function(..., retries = 3){
 
 #'@importFrom httr POST add_headers
 gPOST <- function(url, config = list(), ...){
-  suppressWarnings(httr::POST(url=url, config=config, gverbose(), ..., add_headers(geoknifeUserAgent())))
+  retryVERB(httr::POST(url=url, config=config, ...))
 }
 
 #' drop in replacement for httr switching to xml2 from XML
