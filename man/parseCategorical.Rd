@@ -8,7 +8,7 @@ parseCategorical(file, delim)
 }
 \arguments{
 \item{file}{a \linkS4class{geojob} categorical processing result file location
-(See \code{\link{check}}).}
+(See \code{\link{download}}).}
 
 \item{delim}{the file delimiter}
 }
@@ -21,6 +21,9 @@ a function for loading data into R from a file (or URL) from a completed process
 \examples{
 local.file <- system.file('extdata','csv_categorical_multifeature.csv', package = 'geoknife')
 output <- parseCategorical(local.file, delim = ',')
+}
+\seealso{
+\code{\link{check}}, \code{\link{download}}, \code{\link{parseTimeseries}}
 }
 \keyword{methods}
 

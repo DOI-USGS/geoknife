@@ -4,12 +4,13 @@
 #' a function for loading data into R from a file (or URL) from a completed processing request
 #'
 #' @param file a \linkS4class{geojob} categorical processing result file location
-#' (See \code{\link{check}}).
+#' (See \code{\link{download}}).
 #' @param delim the file delimiter
 #' @return a data.frame of categorical fraction (and/or count) values.
 #' @keywords methods
 #' @export
 #' @importFrom utils read.table
+#' @seealso \code{\link{check}}, \code{\link{download}}, \code{\link{parseTimeseries}}
 #' @examples
 #' local.file <- system.file('extdata','csv_categorical_multifeature.csv', package = 'geoknife')
 #' output <- parseCategorical(local.file, delim = ',')
