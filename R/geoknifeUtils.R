@@ -19,18 +19,17 @@ gverbose <- function(){
 
 #'@importFrom httr GET add_headers verbose
 gGET <- function(url, ...){
-  # I don't like doing this, but the GDP response comes back as `content-type`="text/xml" instead of 
-  # `content-type`="text/xml; charset=UTF-8" so we get a charset warning message
-  retryVERB(httr::GET(url=url, ...))
-  
+  retryVERB(httr::GET, url=url, ...)
 }
 
-retryVERB <- function(url, ..., retries = 3){
+retryVERB <- function(VERB, ..., retries = gconfig('retries')){
   response <- simpleError(" ")
   retry <- 1
   while (is(response, 'error') && retry <= retries){
     response <- tryCatch({
-      suppressWarnings(url=url, ..., gverbose(), add_headers(geoknifeUserAgent()))
+      # I don't like doing this, but the GDP response comes back as `content-type`="text/xml" instead of 
+      # `content-type`="text/xml; charset=UTF-8" so we get a charset warning message
+      suppressWarnings(VERB(..., gverbose(),add_headers(geoknifeUserAgent())))
     }, error=function(e){
       Sys.sleep(gconfig('sleep.time'))
       if (gconfig('verbose'))
@@ -45,7 +44,7 @@ retryVERB <- function(url, ..., retries = 3){
 
 #'@importFrom httr POST add_headers
 gPOST <- function(url, config = list(), ...){
-  retryVERB(httr::POST(url=url, config=config, ...))
+  retryVERB(httr::POST, url=url, config=config, ...)
 }
 
 #' drop in replacement for httr switching to xml2 from XML
