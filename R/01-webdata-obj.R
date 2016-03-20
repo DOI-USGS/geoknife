@@ -106,7 +106,7 @@ setAs("character", "webdata", function(from){
   ## create new webdata object with a character input (for dataset matching)
   
   datasets <- list('prism' = 
-                     list(times = as.POSIXct(c('1995-01-01 00:00:00','1996-01-01 00:00:00')),
+                     list(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
                           url = 'http://cida.usgs.gov/thredds/dodsC/prism_v2',
                           variables = 'ppt'),
                    'iclus' = 
