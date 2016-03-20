@@ -36,6 +36,10 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
     #parse the date into POSIXct format
     blockData$TIMESTEP = as.POSIXct(blockData$TIMESTEP, "%Y-%m-%dT%H:%M:%S", tz="UTC")
     if(any(grepl("threshold",names(blockData)))){
+      replace.name <- names(blockData)[grepl("threshold",names(blockData))]
+      startCol<-3
+    } else if (any(grepl("time",names(blockData)))){
+      replace.name <- names(blockData)[grepl("time",names(blockData))]
       startCol<-3
     } else {
       startCol<-2
@@ -65,7 +69,7 @@ parseTimeseries <- function(file, delim, with.units = FALSE){
         'statistic' = rep(cleanStat, length.out = nrow(statData)), stringsAsFactors = FALSE)
       )
       if (startCol==3) {
-      	names(blockData)[2]<-'threshold'
+      	names(blockData)[2] <- replace.name
         statData=cbind(statData,blockData[2])
       }
       if (with.units){
