@@ -102,40 +102,44 @@ setMethod("webdata", signature("ANY"), function(.Object,...) {
   return(webdata)
 })
 
+getPkgData <- function(){
+  list('prism' = 
+         list(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
+              url = 'http://cida.usgs.gov/thredds/dodsC/prism_v2',
+              variables = 'ppt'),
+       'iclus' = 
+         list(url = 'http://cida.usgs.gov/thredds/dodsC/iclus/hc',
+              variables = 'housing_classes_iclus_a1_2010'),
+       'daymet' = 
+         list(times = as.POSIXct(c('2000-01-01 00:00:00','2001-01-01 00:00:00')),
+              url = 'http://thredds.daac.ornl.gov/thredds/dodsC/daymet-agg/daymet-agg.ncml',
+              variables = 'prcp'),
+       'gldas' = 
+         list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-01-02 00:00:00')),
+              url = 'dods://hydro1.sci.gsfc.nasa.gov/dods/GLDAS_NOAH10_3H.020',
+              variables = 'avgsurftsfc'),
+       'nldas' = 
+         list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-01-02 00:00:00')),
+              url = 'dods://hydro1.sci.gsfc.nasa.gov/dods/NLDAS_FORA0125_H.002',
+              variables = 'tmp2m'),
+       'topowx' = 
+         list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-02-01 00:00:00')),
+              url = 'http://cida.usgs.gov/thredds/dodsC/topowx',
+              variables = 'tmax'),
+       'solar' = 
+         list(times = as.POSIXct(c('1980-01-01 00:00:00','1980-12-01 00:00:00')),
+              url = 'http://cida.usgs.gov/thredds/dodsC/mows/sr',
+              variables = 'sr'),
+       'metobs' = 
+         list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-01-02 00:00:00')),
+              url = 'http://cida.usgs.gov/thredds/dodsC/new_gmo',
+              variables = 'tas'))
+}
+
 setAs("character", "webdata", function(from){
   ## create new webdata object with a character input (for dataset matching)
   
-  datasets <- list('prism' = 
-                     list(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
-                          url = 'http://cida.usgs.gov/thredds/dodsC/prism_v2',
-                          variables = 'ppt'),
-                   'iclus' = 
-                     list(url = 'http://cida.usgs.gov/thredds/dodsC/iclus/hc',
-                          variables = 'housing_classes_iclus_a1_2010'),
-                   'daymet' = 
-                     list(times = as.POSIXct(c('2000-01-01 00:00:00','2001-01-01 00:00:00')),
-                          url = 'http://thredds.daac.ornl.gov/thredds/dodsC/daymet-agg/daymet-agg.ncml',
-                          variables = 'prcp'),
-                   'gldas' = 
-                     list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-01-02 00:00:00')),
-                          url = 'dods://hydro1.sci.gsfc.nasa.gov/dods/GLDAS_NOAH10_3H.020',
-                          variables = 'avgsurftsfc'),
-                   'nldas' = 
-                     list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-01-02 00:00:00')),
-                          url = 'dods://hydro1.sci.gsfc.nasa.gov/dods/NLDAS_FORA0125_H.002',
-                          variables = 'tmp2m'),
-                   'topowx' = 
-                     list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-02-01 00:00:00')),
-                          url = 'http://cida.usgs.gov/thredds/dodsC/topowx',
-                          variables = 'tmax'),
-                   'solar' = 
-                     list(times = as.POSIXct(c('1980-01-01 00:00:00','1980-12-01 00:00:00')),
-                          url = 'http://cida.usgs.gov/thredds/dodsC/mows/sr',
-                          variables = 'sr'),
-                   'metobs' = 
-                     list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-01-02 00:00:00')),
-                          url = 'http://cida.usgs.gov/thredds/dodsC/new_gmo',
-                          variables = 'tas'))
+  datasets <- getPkgData()
   
   from <- match.arg(arg = from, names(datasets))
   
