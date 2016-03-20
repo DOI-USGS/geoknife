@@ -52,6 +52,7 @@ retryVERB <- function(VERB, url, ..., retries = gconfig('retries')){
   }
   if (is(response, 'error'))
     stop(response$message, call.=FALSE)
+  return(response)
 }
 
 #'@importFrom httr POST add_headers
