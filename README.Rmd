@@ -74,7 +74,7 @@ fabric <- webdata('prism')
 # explicitly define webdata from a list:
 fabric <- webdata(list(
             times = as.POSIXct(c('1895-01-01','1899-01-01')),
-            url = 'http://cida.usgs.gov/thredds/dodsC/prism',
+            url = 'http://cida.usgs.gov/thredds/dodsC/prism_v2',
             variables = 'ppt'))
 # modify the times field:
 times(fabric) <- as.POSIXct(c('2003-01-01','2005-01-01'))
