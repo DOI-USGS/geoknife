@@ -4,6 +4,7 @@
 \name{webdata}
 \alias{webdata}
 \alias{webdata,ANY-method}
+\alias{webdata,character-method}
 \alias{webdata,missing-method}
 \title{create webdata object}
 \usage{
@@ -11,10 +12,14 @@ webdata(.Object, ...)
 
 \S4method{webdata}{missing}(.Object, ...)
 
+\S4method{webdata}{character}(.Object = c("prism", "iclus", "daymet", "gldas",
+  "nldas", "topowx", "solar", "metobs"), ...)
+
 \S4method{webdata}{ANY}(.Object, ...)
 }
 \arguments{
-\item{.Object}{any object that can be coerced into \linkS4class{webdata}}
+\item{.Object}{any object that can be coerced into \linkS4class{webdata} 
+(currently \code{character}, \code{webdata}, and \code{list})}
 
 \item{...}{additional arguments passed initialize method (e.g., times, or any other 
 in the \linkS4class{webdata} object.}
