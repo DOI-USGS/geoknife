@@ -36,7 +36,7 @@ gGET <- function(url, ...){
 #' @keywords internal
 retryVERB <- function(VERB, url, ..., retries = gconfig('retries')){
   response <- simpleError(" ")
-  retry <- 1
+  retry <- 0
   while (is(response, 'error') && retry <= retries){
     response <- tryCatch({
       # I don't like doing this, but the GDP response comes back as `content-type`="text/xml" instead of 
@@ -44,8 +44,7 @@ retryVERB <- function(VERB, url, ..., retries = gconfig('retries')){
       suppressWarnings(VERB(url=url, ..., gverbose(), gheaders()))
     }, error=function(e){
       Sys.sleep(gconfig('sleep.time'))
-      if (gconfig('verbose'))
-          message('retrying...')
+      message('retrying...')
       return(e)
     })
     retry=retry+1

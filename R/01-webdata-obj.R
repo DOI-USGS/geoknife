@@ -75,7 +75,8 @@ setGeneric("webdata", function(.Object,...) {
   standardGeneric("webdata")
 })
 
-#'@param .Object any object that can be coerced into \linkS4class{webdata}
+#'@param .Object any object that can be coerced into \linkS4class{webdata} 
+#'  (currently \code{character}, \code{webdata}, and \code{list})
 #'@param ... additional arguments passed initialize method (e.g., times, or any other 
 #'in the \linkS4class{webdata} object. 
 #'@examples
@@ -93,7 +94,18 @@ setMethod("webdata", signature("missing"), function(.Object,...) {
 })
 #'@rdname webdata-methods
 #'@aliases webdata
-setMethod("webdata", signature("ANY"), function(.Object,...) {
+setMethod("webdata", signature("character"), function(.Object=c("prism",  "iclus",  "daymet", "gldas",  "nldas",  "topowx", "solar",  "metobs"),...) {
+  ## create new webdata object
+  webdata <- as(.Object, "webdata")
+  if (!missing(...)){
+    webdata <- initialize(webdata, ...)
+  }
+  return(webdata)
+})
+
+#'@rdname webdata-methods
+#'@aliases webdata
+setMethod("webdata", signature("ANY"), function(.Object, ...) {
   ## create new webdata object
   webdata <- as(.Object, "webdata")
   if (!missing(...)){

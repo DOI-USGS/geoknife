@@ -125,6 +125,17 @@ setMethod("webprocess", signature('missing'), function(.Object, ...) {
 
 #'@aliases webprocess
 #'@rdname webprocess-methods
+setMethod("webprocess", signature("chracter"), function(.Object=c("weighted stats","unweighted stats","coverage stats","subset","coverage subset" ), ...) {
+  ## create new webprocess object
+  webprocess <- as(.Object, "webprocess")
+  if (!missing(...)){
+    webprocess <- initialize(webprocess, ...)
+  }
+  return(webprocess)
+})
+
+#'@aliases webprocess
+#'@rdname webprocess-methods
 setMethod("webprocess", signature("ANY"), function(.Object,...) {
   ## create new webprocess object
   webprocess <- as(.Object, "webprocess")
