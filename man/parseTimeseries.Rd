@@ -8,11 +8,11 @@ parseTimeseries(file, delim, with.units = FALSE)
 }
 \arguments{
 \item{file}{a \linkS4class{geojob} timeseries processing result file location
-(See \code{\link{check}}).}
+(See \code{\link{download}}).}
 
 \item{delim}{the file delimiter}
 
-\item{with.units}{boolean for including a units column in returned data.frame}
+\item{with.units}{boolean for including a units column in returned data.frame (default = \code{FALSE})}
 }
 \value{
 a data.frame of timeseries values.
@@ -26,6 +26,9 @@ output <- parseTimeseries(local_file, delim = '\\t')
 }
 \author{
 Luke A. Winslow, Jordan S. Read
+}
+\seealso{
+\code{\link{check}}, \code{\link{download}}, \code{\link{parseCategorical}}
 }
 \keyword{methods}
 

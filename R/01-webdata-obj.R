@@ -6,6 +6,7 @@ pkg.env$gconfig <- list('wps.url'='http://cida.usgs.gov/gdp/process/WebProcessin
                         'algorithm' = list('Area Grid Statistics (weighted)' = 
                                              "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
                         'verbose' = FALSE,
+                        'retries' = 1,
                         'version' = '1.0.0')
 
 #' @importFrom utils lsf.str packageName

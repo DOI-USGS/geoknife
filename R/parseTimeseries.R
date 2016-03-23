@@ -4,13 +4,14 @@
 #' a function for loading data into R from a file (or URL) from a completed processing request
 #'
 #' @param file a \linkS4class{geojob} timeseries processing result file location
-#' (See \code{\link{check}}).
+#' (See \code{\link{download}}).
 #' @param delim the file delimiter
-#' @param with.units boolean for including a units column in returned data.frame
+#' @param with.units boolean for including a units column in returned data.frame (default = \code{FALSE})
 #' @return a data.frame of timeseries values.
 #' @keywords methods
 #' @author Luke A. Winslow, Jordan S. Read
 #' @export
+#' @seealso \code{\link{check}}, \code{\link{download}}, \code{\link{parseCategorical}}
 #' @importFrom utils read.table
 #' @examples
 #' local_file <- system.file('extdata','tsv_linear_ring.tsv', package = 'geoknife')
