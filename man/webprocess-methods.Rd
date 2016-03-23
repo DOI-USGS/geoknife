@@ -12,8 +12,8 @@ webprocess(.Object, ...)
 
 \S4method{webprocess}{missing}(.Object, ...)
 
-\S4method{webprocess}{chracter}(.Object = c("weighted stats",
-  "unweighted stats", "coverage stats", "subset", "coverage subset"), ...)
+\S4method{webprocess}{chracter}(.Object = c("summary", "unweighted summary",
+  "coverage summary", "subset", "coverage subset"), ...)
 
 \S4method{webprocess}{ANY}(.Object, ...)
 }

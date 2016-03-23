@@ -125,7 +125,7 @@ setMethod("webprocess", signature('missing'), function(.Object, ...) {
 
 #'@aliases webprocess
 #'@rdname webprocess-methods
-setMethod("webprocess", signature("chracter"), function(.Object=c("weighted stats","unweighted stats","coverage stats","subset","coverage subset" ), ...) {
+setMethod("webprocess", signature("chracter"), function(.Object=c("summary","unweighted summary","coverage summary","subset","coverage subset" ), ...) {
   ## create new webprocess object
   webprocess <- as(.Object, "webprocess")
   if (!missing(...)){
@@ -146,15 +146,15 @@ setMethod("webprocess", signature("ANY"), function(.Object,...) {
 })
 
 getKnives <- function(){
-  list('weighted stats' =
+  list('summary' =
          list(algorithm=
                 list('Area Grid Statistics (weighted)' =
                        "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")),
-       'unweighted stats' =
+       'unweighted summary' =
          list(algorithm=
                 list('Area Grid Statistics (unweighted)' =
                        "gov.usgs.cida.gdp.wps.algorithm.FeatureGridStatisticsAlgorithm")),
-       'coverage stats' = 
+       'coverage summary' = 
          list(algorithm=
                 list('Categorical Coverage Fraction'=
                        "gov.usgs.cida.gdp.wps.algorithm.FeatureCategoricalGridCoverageAlgorithm")),
