@@ -1,7 +1,9 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* removed most service calls from vignette (services are sometimes down, and were causing errors)
+* created a configurable retry for web service calls
 
-* Updated CITATION file. 
+* created short name links for web processing types
+
+* created a results parser for categorical coverage outputs
 
