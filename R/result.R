@@ -43,6 +43,7 @@ outputParse = function(.Object, ...){
   return(output)
 }
 
+#' @importFrom utils tail
 algorithmParseDetails <- function(job){
   function.handlers <- list("FeatureWeightedGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
                             "FeatureGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
