@@ -53,7 +53,7 @@ fetchGML_IDs <- function(.Object){
   url <- sprintf('%s?service=WFS&version=%s&request=GetFeature&typename=%s&MAXFEATURES=5000&propertyname=%s',
                  url(.Object), version(.Object), geom(.Object), .Object@attribute)
   ns_geom <- strsplit(geom(.Object), ":")[[1]][1]
-  response <- gGET(url)
+  response <- gGET(url=url)
   xml <- gcontent(response)
   value_path <- sprintf('//gml:featureMembers/%s/%s:%s', geom(.Object), ns_geom, .Object@attribute)
   value_names <- sapply(getNodeSet(xml,paste0(value_path, '/node()[1]')), 
