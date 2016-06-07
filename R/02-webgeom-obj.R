@@ -99,18 +99,33 @@ setMethod("initialize", signature = "webgeom",
 #' wg <- webgeom('HUC8::09020306,14060009')
 #' wg <- webgeom()
 #' 
-#' ## Steps to find information on a county in Texas:
+#' \dontrun{
+#' ## Steps to find data on Howard County in Texas:
 #' #1) locate the \code{geom} for counties by looking at the options for geoms
 #' query(webgeom(), 'geoms') # discover derivative:US_Counties
 #' #2) locate the \code{attribute} for county names by looking at the options for attributes
-#' query(webgeom(geom='derivative:US_Counties'), 'attributes')
-#' #3) look at the options for county names
-#' TX_counties <- data.frame(STCounty=query(webgeom(geom='derivative:US_Counties', attribute='STATE,COUNTY'), 'values'))
-#' TX_counties$State=substr(TX_counties$STCounty, 1, 2)
-#' TX_counties$County=substring(TX_counties$STCounty, 3)
-#' sort(unique(TX_counties[TX_counties$State=='TX', 'County']))
-#' #4) create a webgeom for just three counties
-#' TXgeom <- webgeom(geom='derivative:US_Counties', attribute='COUNTY', values="Red River County")
+#' query(webgeom(geom='derivative:US_Counties'), 'attributes') # discover COUNTY and FIPS
+#' #3) look at the options for county names and FIPS codes
+#' counties <- data.frame(STCountyFIPS=query(webgeom(geom='derivative:US_Counties', 
+#'   attribute='STATE,COUNTY,FIPS'), 'values'), stringsAsFactors=FALSE)
+#' counties$FIPS=substring(counties$STCountyFIPS, nchar(counties$STCountyFIPS)-4)
+#' counties$State=substr(counties$STCountyFIPS, 1, 2)
+#' counties$County=substring(counties$STCountyFIPS, 3, nchar(counties$STCountyFIPS)-5)
+#' howard_fips <- unique(counties[counties$State=='TX' & counties$County=='Howard County', 'FIPS'])
+#' #4a) create a webgeom for all of the Howard Counties in the US combined 
+#' # (this may not be the behavior you expected!)
+#' geom <- webgeom(geom='derivative:US_Counties', attribute='COUNTY', values="Howard County")
+#' #4b) create a webgeom for just the Howard County in Texas
+#' geom <- webgeom(geom='derivative:US_Counties', attribute='FIPS', values=howard_fips)
+#' #5) get data for all the Howard Counties combined
+#' fabric <- webdata(url = 'http://cida.usgs.gov/thredds/dodsC/stageiv_combined', 
+#' variables = "Total_precipitation_surface_1_Hour_Accumulation", 
+#' times = c(as.POSIXct("2016-06-06 05:00:00"), 
+#'           as.POSIXct("2016-06-07 05:00:00")))
+#' job <- geoknife(geom, fabric, wait = TRUE)
+#' precipData <- result(job)
+#' head(precipData)
+#' }
 #' @export
 setGeneric("webgeom", function(.Object, ...) {
   standardGeneric("webgeom")

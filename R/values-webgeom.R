@@ -56,9 +56,9 @@ fetchGML_IDs <- function(.Object){
   response <- gGET(url)
   xml <- gcontent(response)
   value_path <- sprintf('//gml:featureMembers/%s/%s:%s', geom(.Object), ns_geom, .Object@attribute)
-  value_names <- sapply(getNodeSet(xml,paste0(value_path, '/node()[1]')), 
-                        FUN = function(x) xmlValue(x)[1])
-  match_id <- which(value_names %in% values(.Object)) # CHECK ORDER!!!
-  gml_id = unlist(lapply(match_id, function(x) getNodeSet(xml,paste0(value_path,'/parent::node()[1]/@gml:id'))[[x]][['id']]))
+  node_sets <- getNodeSet(xml, paste0(value_path,'/parent::node()'))
+  node_df <- do.call(rbind, lapply(node_sets, function(x) data.frame(
+    value=xmlValue(x), id=xmlAttrs(x)[['id']], stringsAsFactors=FALSE)))
+  gml_id <- node_df[node_df$value %in% values(.Object), 'id']
   return(gml_id)  
 }
