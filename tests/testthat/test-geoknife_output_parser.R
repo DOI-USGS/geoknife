@@ -1,11 +1,6 @@
 context("Test output file parsing")
 
-test_that("result fails with no process", {
-#   gk <- geoknife()
-#   expect_error(result(gk))
-#   gk@processID = "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=31b0e0e4-5dbb-474a-9018-f251deGARBAGE"
-#   expect_error(loadOutput(gk))
-})
+
 
 test_that("timeseries parser works on multi feature, single variable", {
   local_file <- system.file('extdata','tsv_multi_feature.tsv', package = 'geoknife')
@@ -60,8 +55,13 @@ test_that("timeseries parser works on multi threshold output",{
   output <- parseTimeseries(local_file, delim = ',')
   expect_is(output, "data.frame")
   expect_equivalent(names(output)[1],'DateTime')
-  expect_equivalent(names(output)[length(output)],'threshold')
-  expect_equal(output$threshold[1],32)
+  expect_equivalent(names(output)[length(output)],'threshold(C)')
+  expect_equal(output[['threshold(C)']][1],32)
   expect_equivalent(output$variable[1],'MIROC-ESM-CHEM_rcp26_r1i1p1-longest_run_tmax_abv')
 })
 
+test_that("timeseries parser works on multi feature w/ second time dimension", {
+  local_file <- system.file('extdata','csv_time_dimension_parse.csv', package = 'geoknife')
+  output <- parseTimeseries(local_file, delim = ',')
+  expect_is(output, "data.frame")
+})

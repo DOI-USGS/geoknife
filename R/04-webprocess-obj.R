@@ -125,6 +125,17 @@ setMethod("webprocess", signature('missing'), function(.Object, ...) {
 
 #'@aliases webprocess
 #'@rdname webprocess-methods
+setMethod("webprocess", signature("chracter"), function(.Object=c("summary","unweighted summary","coverage summary","subset","coverage subset" ), ...) {
+  ## create new webprocess object
+  webprocess <- as(.Object, "webprocess")
+  if (!missing(...)){
+    webprocess <- initialize(webprocess, ...)
+  }
+  return(webprocess)
+})
+
+#'@aliases webprocess
+#'@rdname webprocess-methods
 setMethod("webprocess", signature("ANY"), function(.Object,...) {
   ## create new webprocess object
   webprocess <- as(.Object, "webprocess")
@@ -132,5 +143,37 @@ setMethod("webprocess", signature("ANY"), function(.Object,...) {
     webprocess <- initialize(webprocess, ...)
   }
   return(webprocess)
+})
+
+getKnives <- function(){
+  list('summary' =
+         list(algorithm=
+                list('Area Grid Statistics (weighted)' =
+                       "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")),
+       'unweighted summary' =
+         list(algorithm=
+                list('Area Grid Statistics (unweighted)' =
+                       "gov.usgs.cida.gdp.wps.algorithm.FeatureGridStatisticsAlgorithm")),
+       'coverage summary' = 
+         list(algorithm=
+                list('Categorical Coverage Fraction'=
+                       "gov.usgs.cida.gdp.wps.algorithm.FeatureCategoricalGridCoverageAlgorithm")),
+       'subset' = 
+         list(algorithm=
+                list('OPeNDAP Subset' =
+                       "gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm")),
+       'coverage subset' = 
+         list(algorithm=
+                list('WCS Subset' = 
+                       "gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageIntersectionAlgorithm")))
+}
+setAs("character", "webprocess", function(from){
+  ## create new webdata object with a character input (for dataset matching)
+  knives <- getKnives()
+                   
+  from <- match.arg(arg = from, names(knives))
+  
+  .Object<- do.call(webprocess, args = knives[[from]])
+  return(.Object)
 })
 

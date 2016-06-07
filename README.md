@@ -1,4 +1,4 @@
-`geoknife` package version 1.2.1
+`geoknife` package version 1.3.0
 ================================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)
@@ -68,7 +68,7 @@ fabric <- webdata('prism')
 # explicitly define webdata from a list:
 fabric <- webdata(list(
             times = as.POSIXct(c('1895-01-01','1899-01-01')),
-            url = 'http://cida.usgs.gov/thredds/dodsC/prism',
+            url = 'http://cida.usgs.gov/thredds/dodsC/prism_v2',
             variables = 'ppt'))
 # modify the times field:
 times(fabric) <- as.POSIXct(c('2003-01-01','2005-01-01'))
@@ -87,7 +87,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=e657f36d-4b2d-4f74-aa5d-5803dc2dc198OUTPUT"
+    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=ae2cf389-8245-4140-92b7-7240dd5a3228OUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -117,42 +117,153 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 
 ### `geoknife` Functions (as of v1.1.5)
 
-| Function     | Title                                                            |
-|--------------|:-----------------------------------------------------------------|
-| `geoknife`   | slice up gridded data according to overlap with feature(s)       |
-| `gconfig`    | set or query package settings for `geoknife` processing defaults |
-| `algorithm`  | the algorithm of a `webprocess`                                  |
-| `attribute`  | the attribute of an `webgeom`                                    |
-| `check`      | check status of `geojob`                                         |
-| `download`   | download the results of a `geojob`                               |
-| `error`      | convenience function for state of `geojob`                       |
-| `running`    | convenience function for state of `geojob`                       |
-| `successful` | convenience function for state of `geojob`                       |
-| `start`      | start a `geojob`                                                 |
-| `cancel`     | cancel a `geojob`                                                |
-| `geom`       | the geom of a `webgeom`                                          |
-| `inputs`     | the inputs of a `webprocess`                                     |
-| `id`         | the process id of a `geojob`                                     |
-| `values`     | the values of a `webgeom`                                        |
-| `result`     | load the output of a completed `geojob` into data.frame          |
-| `variables`  | the variables for a `webdata` object                             |
-| `wait`       | wait for a `geojob` to complete processing                       |
-| `times`      | the times of a `webdata` object                                  |
-| `url`        | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess`     |
-| `version`    | the version of a `webgeom` or `webdata`                          |
-| `xml`        | the xml of a `geojob`                                            |
-| `query`      | query datasets or variables                                      |
+<table style="width:40%;">
+<colgroup>
+<col width="19%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Title</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>geoknife</code></td>
+<td align="left">slice up gridded data according to overlap with feature(s)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>gconfig</code></td>
+<td align="left">set or query package settings for <code>geoknife</code> processing defaults</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>algorithm</code></td>
+<td align="left">the algorithm of a <code>webprocess</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>attribute</code></td>
+<td align="left">the attribute of an <code>webgeom</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>check</code></td>
+<td align="left">check status of <code>geojob</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>download</code></td>
+<td align="left">download the results of a <code>geojob</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>error</code></td>
+<td align="left">convenience function for state of <code>geojob</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>running</code></td>
+<td align="left">convenience function for state of <code>geojob</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>successful</code></td>
+<td align="left">convenience function for state of <code>geojob</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>start</code></td>
+<td align="left">start a <code>geojob</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>cancel</code></td>
+<td align="left">cancel a <code>geojob</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>geom</code></td>
+<td align="left">the geom of a <code>webgeom</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>inputs</code></td>
+<td align="left">the inputs of a <code>webprocess</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>id</code></td>
+<td align="left">the process id of a <code>geojob</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>values</code></td>
+<td align="left">the values of a <code>webgeom</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>result</code></td>
+<td align="left">load the output of a completed <code>geojob</code> into data.frame</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>variables</code></td>
+<td align="left">the variables for a <code>webdata</code> object</td>
+</tr>
+<tr class="even">
+<td align="left"><code>wait</code></td>
+<td align="left">wait for a <code>geojob</code> to complete processing</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>times</code></td>
+<td align="left">the times of a <code>webdata</code> object</td>
+</tr>
+<tr class="even">
+<td align="left"><code>url</code></td>
+<td align="left">the url of a <code>webdata</code>, <code>webgeom</code>, <code>geojob</code>, or <code>webprocess</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>version</code></td>
+<td align="left">the version of a <code>webgeom</code> or <code>webdata</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>xml</code></td>
+<td align="left">the xml of a <code>geojob</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>query</code></td>
+<td align="left">query datasets or variables</td>
+</tr>
+</tbody>
+</table>
 
 ### `geoknife` classes (as of v0.12.0)
 
-| Class        | Title                                                         |
-|--------------|:--------------------------------------------------------------|
-| `simplegeom` | a simple geometric class. Extends `sp::SpatialPolygons`       |
-| `webgeom`    | a web feature service geometry                                |
-| `webprocess` | a web processing service                                      |
-| `webdata`    | web data                                                      |
-| `geojob`     | a geo data portal processing job                              |
-| `datagroup`  | a simple class that contains data lists that can be `webdata` |
+<table style="width:40%;">
+<colgroup>
+<col width="19%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Class</th>
+<th align="left">Title</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>simplegeom</code></td>
+<td align="left">a simple geometric class. Extends <code>sp::SpatialPolygons</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>webgeom</code></td>
+<td align="left">a web feature service geometry</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>webprocess</code></td>
+<td align="left">a web processing service</td>
+</tr>
+<tr class="even">
+<td align="left"><code>webdata</code></td>
+<td align="left">web data</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>geojob</code></td>
+<td align="left">a geo data portal processing job</td>
+</tr>
+<tr class="even">
+<td align="left"><code>datagroup</code></td>
+<td align="left">a simple class that contains data lists that can be <code>webdata</code></td>
+</tr>
+</tbody>
+</table>
 
 What libraries does `geoknife` need?
 ------------------------------------
