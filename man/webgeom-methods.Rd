@@ -52,6 +52,21 @@ wg <- webgeom('ecoregion::Colorado Plateaus,Driftless Area')
 #-- use available simplified HUC8s:
 wg <- webgeom('HUC8::09020306,14060009')
 wg <- webgeom()
+
+## Steps to find information on a county in Florida:
+#1) locate the \\code{geom} for counties by looking at the options for geoms
+query(webgeom(), 'geoms') # discover derivative:US_Counties
+#2) locate the \\code{attribute} for county names by looking at the options for attributes
+query(webgeom(geom='derivative:US_Counties'), 'attributes')
+#3) look at the options for county names
+FL_counties <- 
+  dplyr::filter(
+    dplyr::mutate(
+      dplyr::data_frame(STCounty=query(webgeom(geom='derivative:US_Counties', attribute='STATE,COUNTY'), 'values')),
+        State=substr(STCounty, 1, 2), County=substring(STCounty, 3)),
+          State=='FL')
+#4) create a webgeom for just three counties
+FLgeom <- webgeom(geom='derivative:US_Counties', attribute='COUNTY', values=FL_counties$County[1])
 }
 \author{
 Jordan S Read
