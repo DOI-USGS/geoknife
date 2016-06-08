@@ -50,7 +50,7 @@ setMethod(f = "values",signature="webgeom",
 #' @param .Object a webgeom object
 #' @keywords internal 
 fetchGML_IDs <- function(.Object){
-  url <- sprintf('%s?service=WFS&version=%s&request=GetFeature&typename=%s&MAXFEATURES=5000&propertyname=%s',
+  url <- sprintf('%s?service=WFS&version=%s&request=GetFeature&typename=%s&MAXFEATURES=10000&propertyname=%s',
                  url(.Object), version(.Object), geom(.Object), .Object@attribute)
   ns_geom <- strsplit(geom(.Object), ":")[[1]][1]
   response <- gGET(url)
