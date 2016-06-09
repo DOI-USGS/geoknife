@@ -50,15 +50,15 @@ setMethod(f = "values",signature="webgeom",
 #' @param .Object a webgeom object
 #' @keywords internal 
 fetchGML_IDs <- function(.Object){
-  url <- sprintf('%s?service=WFS&version=%s&request=GetFeature&typename=%s&MAXFEATURES=5000&propertyname=%s',
+  url <- sprintf('%s?service=WFS&version=%s&request=GetFeature&typename=%s&MAXFEATURES=10000&propertyname=%s',
                  url(.Object), version(.Object), geom(.Object), .Object@attribute)
   ns_geom <- strsplit(geom(.Object), ":")[[1]][1]
   response <- gGET(url)
   xml <- gcontent(response)
   value_path <- sprintf('//gml:featureMembers/%s/%s:%s', geom(.Object), ns_geom, .Object@attribute)
-  value_names <- sapply(getNodeSet(xml,paste0(value_path, '/node()[1]')), 
-                        FUN = function(x) xmlValue(x)[1])
-  match_id <- which(value_names %in% values(.Object)) # CHECK ORDER!!!
-  gml_id = unlist(lapply(match_id, function(x) getNodeSet(xml,paste0(value_path,'/parent::node()[1]/@gml:id'))[[x]][['id']]))
+  node_sets <- getNodeSet(xml, paste0(value_path,'/parent::node()'))
+  node_df <- do.call(rbind, lapply(node_sets, function(x) data.frame(
+    value=xmlValue(x), id=xmlAttrs(x)[['id']], stringsAsFactors=FALSE)))
+  gml_id <- node_df[node_df$value %in% values(.Object), 'id']
   return(gml_id)  
 }
