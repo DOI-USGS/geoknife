@@ -45,8 +45,9 @@ setMethod(f = "values",signature="webgeom",
           }
 )
 filterXML = '<?xml version=\"1.0\"?>
-<wfs:GetFeature xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:gml=\"http://www.opengis.net/gml\" service=\"WFS\" version=\"1.1.0\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\">
-  <wfs:Query typeName=\"derivative:CONUS_States\" propertyName=\"STATE\">
+<wfs:GetFeature xmlns:ogc="http://www.opengis.net/ogc" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:gml=\"http://www.opengis.net/gml\" service=\"WFS\" version=\"1.1.0\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\">
+  <wfs:Query typeName=\"derivative:CONUS_States\">
+    <ogc:PropertyName>STATE</ogc:PropertyName>
     <ogc:Filter xmlns:ogc=\"http://www.opengis.net/ogc\">
       <ogc:Or>
         <ogc:PropertyIsEqualTo  matchCase=\"true\">
