@@ -44,6 +44,24 @@ setMethod(f = "values",signature="webgeom",
             return(.Object@values)
           }
 )
+filterXML = '<?xml version=\"1.0\"?>
+<wfs:GetFeature xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:gml=\"http://www.opengis.net/gml\" service=\"WFS\" version=\"1.1.0\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\">
+  <wfs:Query typeName=\"derivative:CONUS_States\" propertyName=\"STATE\">
+    <ogc:Filter xmlns:ogc=\"http://www.opengis.net/ogc\">
+      <ogc:Or>
+        <ogc:PropertyIsEqualTo  matchCase=\"true\">
+          <ogc:PropertyName>STATE</ogc:PropertyName>
+          <ogc:Literal>West Virginia</ogc:Literal>
+        </ogc:PropertyIsEqualTo>
+        <ogc:PropertyIsEqualTo  matchCase=\"true\">
+          <ogc:PropertyName>STATE</ogc:PropertyName>
+          <ogc:Literal>Wyoming</ogc:Literal>
+        </ogc:PropertyIsEqualTo>
+      </ogc:Or>
+    </ogc:Filter>
+  </wfs:Query>
+</wfs:GetFeature>'
+
 
 #' @title fetch GML_IDs from WFS
 #' @description fetch GML_IDs from WFS when geom, attribute, and values are specified
