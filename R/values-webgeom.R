@@ -45,20 +45,39 @@ setMethod(f = "values",signature="webgeom",
           }
 )
 
+wfsFilterFeatureXML <- function(.Object, knife=webprocess(), match.case = TRUE){
+  match.case.char <- ifelse(match.case, 'true','false')
+  top <- newXMLNode(name='wfs:GetFeature',
+                    attrs=c('service'="WFS",'version'= version(.Object),
+                            'xsi:schemaLocation' = paste(c(.Object@WFS_NAMESPACE,knife@WPS_SCHEMA_LOCATION),collapse=" ")),
+                    namespaceDefinitions=c('ogc' = knife@OGC_NAMESPACE,
+                                           'wfs' = .Object@WFS_NAMESPACE,
+                                           'xsi' = knife@XSI_NAMESPACE,
+                                           'gml' = .Object@GML_NAMESPACE,
+                                           'ows' = knife@OWS_NAMESPACE))
+  q <- newXMLNode('wfs:Query', parent = top, attrs = c(typeName=geom(.Object)))
+  newXMLNode('ogc:PropertyName', parent = q, newXMLTextNode(.Object@attribute))
+  f <- newXMLNode('ogc:Filter', parent = q) # skipping namespace
+  Or <- newXMLNode('ogc:Or', parent = f) 
+  for (val in values(.Object)){
+    p <- newXMLNode('ogc:PropertyIsEqualTo', parent=Or, attrs = c('matchCase'=match.case.char))
+    newXMLNode('ogc:PropertyName', parent = p, newXMLTextNode(.Object@attribute))
+    newXMLNode('ogc:Literal', parent = p, newXMLTextNode(val))
+  }
+  
+  return(suppressWarnings(toString.XMLNode(top)))
+}
+
 #' @title fetch GML_IDs from WFS
 #' @description fetch GML_IDs from WFS when geom, attribute, and values are specified
 #' @param .Object a webgeom object
 #' @keywords internal 
 fetchGML_IDs <- function(.Object){
-  url <- sprintf('%s?service=WFS&version=%s&request=GetFeature&typename=%s&MAXFEATURES=10000&propertyname=%s',
-                 url(.Object), version(.Object), geom(.Object), .Object@attribute)
-  ns_geom <- strsplit(geom(.Object), ":")[[1]][1]
-  response <- gGET(url=url)
+  response <- suppressWarnings(gPOST(url=url(.Object), body=wfsFilterFeatureXML(.Object)))
   xml <- gcontent(response)
+  ns_geom <- strsplit(geom(.Object), ":")[[1]][1]
   value_path <- sprintf('//gml:featureMembers/%s/%s:%s', geom(.Object), ns_geom, .Object@attribute)
   node_sets <- getNodeSet(xml, paste0(value_path,'/parent::node()'))
-  node_df <- do.call(rbind, lapply(node_sets, function(x) data.frame(
-    value=xmlValue(x), id=xmlAttrs(x)[['id']], stringsAsFactors=FALSE)))
-  gml_id <- node_df[node_df$value %in% values(.Object), 'id']
+  gml_id <- unname(unlist(lapply(node_sets, function(x) return(xmlAttrs(x)['id']))))
   return(gml_id)  
 }

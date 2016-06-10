@@ -23,7 +23,7 @@ test_that("setters work", {
   testthat::skip_on_cran()
   wd <- webdata('prism',times = as.POSIXct(c('2001-01-01','2002-02-05')))
   times(wd)[1] <- as.POSIXct('2000-01-01')
-  expect_equal(times(wd)[1],as.POSIXct('2000-01-01'))
+  expect_equal(as.numeric(times(wd)[1]-as.POSIXct('2000-01-01')), 0)
   url(wd) <- 'www.badurlppppp.com'
   expect_is(url(wd), "character")
 })
