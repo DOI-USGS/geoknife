@@ -31,6 +31,10 @@
 #'Several quick start methods for creating a \code{\link{webdata}} object (only \code{\link{webdata}} or 
 #'an type that can be coerced into \code{\link{webdata}} are valid arguments for \code{fabric}).
 #'
+#'Making concurrent requests to the Geo Data Portal will NOT result in faster overall execution times. 
+#'The data backing the system is on high performance storage, but that storage is not meant to support 
+#'parallelized random access and can be significantly slower under these conditions. Read more: 
+#'https://my.usgs.gov/confluence/display/GeoDataPortal/Geo+Data+Portal+Scalability+Guidelines
 #'@docType methods
 #'@aliases
 #'geoknife
