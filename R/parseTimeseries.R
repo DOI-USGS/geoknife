@@ -105,6 +105,7 @@ parseTimeseriesConfig = function(file, delim){
     nrows = blockEnd - skips - 1 # Number of ros per block.
     features = unique(strsplit(fileLines[featureLine], split = delim)[[1]][-1]) # Parsing out feature identifiers
     vars = sub(varMarker,"",fileLines[blockStart]) # Getting the variable names from the block starts.
+    vars = gsub(delim,'',vars)
     config = list(vars = vars, features = features, skip = skips, nrows = nrows) # Return all the good stuff!
   return(config)
 }

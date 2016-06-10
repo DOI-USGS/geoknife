@@ -29,7 +29,7 @@ setMethod(f = "result",signature="geojob",
               output <- outputParse(.Object, ...)
               return(output)
             } else {
-              stop('processing is incomplete or has failed. See checkProcess(). Processing status: ',
+              stop('processing is incomplete or has failed. See check(). Processing status: ',
                    check(.Object)$statusType)
             }
             
