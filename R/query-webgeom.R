@@ -21,7 +21,7 @@ setMethod(f = "query",signature("webgeom",'character'),
               }
               url <- sprintf('%s?service=WFS&version=%s&request=GetFeature&typename=%s&propertyname=%s',
                              url(.Object), version(.Object), geom(.Object), .Object@attribute)
-              input_list[['key']] = geom(.Object)
+              input_list[['key']] <- sprintf("%s/*[local-name()='%s']", geom(.Object), .Object@attribute)
             } else {
               stop('field ', field, ' not supported.')
             }
