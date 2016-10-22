@@ -1,4 +1,4 @@
-`geoknife` package version 1.3.0
+`geoknife` package version 1.3.5
 ================================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)
@@ -87,7 +87,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=ae2cf389-8245-4140-92b7-7240dd5a3228OUTPUT"
+    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=8555f1c0-1f13-4e1f-96aa-910f5e8026adOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -107,7 +107,7 @@ data <- result(job)
 plot(data[,1:2], ylab = variables(fabric))
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
 ##### use an email to listen for process completion
 
