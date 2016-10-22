@@ -153,7 +153,7 @@ setMethod("webgeom", signature('ANY'), function(.Object, ...) {
 setAs("character", "webgeom", function(from){
   
   datasets <- list('state' = 
-                     list(geom = "derivative:CONUS_States",
+                     list(geom = "sample:CONUS_states",
                           attribute = "STATE"),
                    'ecoregion' = 
                      list(geom = "derivative:Level_III_Ecoregions",
