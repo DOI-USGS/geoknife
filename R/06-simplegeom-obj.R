@@ -105,6 +105,15 @@ setAs("data.frame", "simplegeom", function(from) {
     Srl[[i]] <- Polygons(list(Polygon(matrix(ring[, i], ncol=2, byrow=TRUE))), names(from)[i])
   }
   
-  simplegeom <- new("simplegeom", Srl, proj4string = CRS("+proj=longlat +datum=WGS84"))
+  sp <- SpatialPolygons(Srl, proj4string = CRS("+proj=longlat +datum=WGS84"))
+  return(as(sp, "simplegeom"))
+})
+
+#'@importFrom sp Polygons Polygon CRS
+setAs("SpatialPolygons", "simplegeom", function(from) {
+  
+  stopifnot(grepl('datum=WGS84', proj4string(from)))
+  
+  simplegeom <- new("simplegeom", from@polygons, proj4string = CRS("+proj=longlat +datum=WGS84"))
   return(simplegeom)
 })
