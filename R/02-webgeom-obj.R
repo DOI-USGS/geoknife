@@ -156,10 +156,10 @@ setAs("character", "webgeom", function(from){
                      list(geom = "sample:CONUS_states",
                           attribute = "STATE"),
                    'ecoregion' = 
-                     list(geom = "derivative:Level_III_Ecoregions",
+                     list(geom = "sample:Level_III_Ecoregions",
                           attribute = "LEVEL3_NAM"),
                    'HUC8' = 
-                     list(geom = "derivative:wbdhu8_alb_simp",
+                     list(geom = "sample:wbdhu8_alb_simp",
                           attribute = "HUC_8"))
                    
   pieces <- strsplit(from, split = '::')[[1]]
