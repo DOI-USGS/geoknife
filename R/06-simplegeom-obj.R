@@ -45,6 +45,7 @@ setMethod("initialize", signature = "simplegeom",
 #' @examples 
 #' simplegeom(c(-88.6, 45.2))
 #' \dontrun{
+#' library(sp)
 #' simplegeom(Srl, proj4string = CRS("+proj=longlat +datum=WGS84"))
 #' }
 #' simplegeom(data.frame('point1'=c(-89, 46), 'point2'=c(-88.6, 45.2)))
