@@ -46,12 +46,7 @@ setMethod("initialize", signature = "simplegeom",
 #' simplegeom(c(-88.6, 45.2))
 #' \dontrun{
 #' library(sp)
-#' Sr1 <- Polygon(cbind(c(-89.0001,-89,-88.9999,-89,-89.0001),c(46,46.0001,46,45.9999,46)))
-#' Sr2 <- Polygon(cbind(c(-88.6,-88.5999,-88.5999,-88.6,-88.6),c(45.2,45.2,45.1999,45.1999,45.2)))
-#' Srs1 <- Polygons(list(Sr1), "s1")
-#' Srs2 <- Polygons(list(Sr2), "s2")
-#' SP <- SpatialPolygons(list(Srs1,Srs2), proj4string = CRS("+proj=longlat +datum=WGS84"))
-#' result(geoknife(simplegeom(SP), 'prism', wait=TRUE))
+#' simplegeom(Srl, proj4string = CRS("+proj=longlat +datum=WGS84"))
 #' }
 #' simplegeom(data.frame('point1'=c(-89, 46), 'point2'=c(-88.6, 45.2)))
 #' @author Jordan S Read
@@ -112,14 +107,5 @@ setAs("data.frame", "simplegeom", function(from) {
   }
   
   simplegeom <- new("simplegeom", Srl, proj4string = CRS("+proj=longlat +datum=WGS84"))
-  return(simplegeom)
-})
-
-#'@importFrom sp Polygons Polygon CRS proj4string
-setAs("SpatialPolygons", "simplegeom", function(from) {
-  
-  stopifnot(grepl('datum=WGS84', proj4string(from)))
-  
-  simplegeom <- new("simplegeom", from@polygons, proj4string = CRS("+proj=longlat +datum=WGS84"))
   return(simplegeom)
 })
