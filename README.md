@@ -87,7 +87,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=8555f1c0-1f13-4e1f-96aa-910f5e8026adOUTPUT"
+    ## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=83a0706d-b6a3-48ee-871c-bca4e10e454aOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"

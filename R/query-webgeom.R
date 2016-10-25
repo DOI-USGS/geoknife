@@ -26,6 +26,6 @@ setMethod(f = "query",signature("webgeom",'character'),
               stop('field ', field, ' not supported.')
             }
             input_list[['xml']] <- gcontent(gGET(url))
-            values <- do.call(paste0('parseXML',field), input_list)
+            values <- unique(do.call(paste0('parseXML',field), input_list))
             return(values)
           })
