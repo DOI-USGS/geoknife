@@ -175,7 +175,7 @@ stencil &lt;-<span class="st"> </span><span class="kw">webgeom</span>(<span clas
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stencil</code></pre></div>
 <pre><code>## An object of class &quot;webgeom&quot;:
 ## url: http://cida.usgs.gov/gdp/geoserver/wfs 
-## geom: derivative:wbdhu8_alb_simp 
+## geom: sample:simplified_huc8 
 ## attribute: HUC_8 
 ## values: 09020306, 14060009 
 ## wfs version: 1.1.0</code></pre>
@@ -272,7 +272,7 @@ stencil &lt;-<span class="st"> </span><span class="kw">simplegeom</span>(<span c
 ## values: NA 
 ## wfs version: 1.1.0</code></pre>
 <p>The public fields can be accessed in by using the field name:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">geom</span>(stencil) &lt;-<span class="st"> &quot;derivative:CONUS_States&quot;</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">geom</span>(stencil) &lt;-<span class="st"> &quot;sample:CONUS_states&quot;</span>
 <span class="kw">attribute</span>(stencil) &lt;-<span class="st"> &quot;STATE&quot;</span>
 <span class="kw">values</span>(stencil) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Wisconsin&quot;</span>,<span class="st">&quot;Maine&quot;</span>)</code></pre></div>
 </div>
@@ -291,15 +291,14 @@ stencil &lt;-<span class="st"> </span><span class="kw">simplegeom</span>(<span c
 <pre><code>##  [1] &quot;sample:Alaska&quot;                  
 ##  [2] &quot;upload:CIDA_TEST_&quot;              
 ##  [3] &quot;sample:CONUS_Climate_Divisions&quot; 
-##  [4] &quot;derivative:CONUS_States&quot;        
+##  [4] &quot;sample:CONUS_states&quot;        
 ##  [5] &quot;sample:CONUS_states&quot;            
 ##  [6] &quot;sample:CSC_Boundaries&quot;          
-##  [7] &quot;derivative:FWS_LCC&quot;             
+##  [7] &quot;sample:Landscape_Conservation_Cooperatives&quot;             
 ##  [8] &quot;sample:FWS_LCC&quot;                 
-##  [9] &quot;derivative:wbdhu8_alb_simp&quot;     
-## [10] &quot;derivative:Level_III_Ecoregions&quot;
-## [11] &quot;derivative:NCA_Regions&quot;         
-## [12] &quot;derivative:US_Counties&quot;         
+##  [9] &quot;sample:simplified_huc8&quot;     
+## [10] &quot;sample:Ecoregions_Level_III&quot;
+## [12] &quot;sample:Counties&quot;         
 ## [13] &quot;sample:nps_boundary_2013&quot;       
 ## [14] &quot;upload:nrhu_selection&quot;          
 ## [15] &quot;upload:nrhu_selection_Gallatin&quot; 
