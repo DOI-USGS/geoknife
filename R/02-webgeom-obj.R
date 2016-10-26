@@ -156,7 +156,7 @@ setAs("character", "webgeom", function(from){
                      list(geom = "sample:CONUS_states",
                           attribute = "STATE"),
                    'ecoregion' = 
-                     list(geom = "sample:Level_III_Ecoregions",
+                     list(geom = "sample:Ecoregions_Level_III",
                           attribute = "LEVEL3_NAM"),
                    'HUC8' = 
                      list(geom = "sample:simplified_huc8",
