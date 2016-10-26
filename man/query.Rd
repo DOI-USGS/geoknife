@@ -43,7 +43,7 @@ fabric <- webdata('prism')
 query(fabric, 'variables')
 wg <- webgeom()
 query(wg, 'geoms')
-geom(wg) <- "derivative:CONUS_States"
+geom(wg) <- "sample:CONUS_states"
 query(wg, 'attributes')
 attribute(wg) <- 'STATE'
 query(wg, 'values', rm.duplicates = TRUE)

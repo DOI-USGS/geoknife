@@ -113,7 +113,7 @@ stencil <- webgeom()
 stencil
 
 ## ---- eval=FALSE------------------------------------------
-#  geom(stencil) <- "derivative:CONUS_States"
+#  geom(stencil) <- "sample:CONUS_states"
 #  attribute(stencil) <- "STATE"
 #  values(stencil) <- c("Wisconsin","Maine")
 

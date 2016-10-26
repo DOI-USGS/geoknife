@@ -223,7 +223,7 @@ stencil
 ```
 The public fields can be accessed in by using the field name:
 ```{r, eval=FALSE}
-geom(stencil) <- "derivative:CONUS_States"
+geom(stencil) <- "sample:CONUS_states"
 attribute(stencil) <- "STATE"
 values(stencil) <- c("Wisconsin","Maine")
 ```
@@ -246,15 +246,14 @@ query(stencil, 'geoms')
 ##  [1] "sample:Alaska"                  
 ##  [2] "upload:CIDA_TEST_"              
 ##  [3] "sample:CONUS_Climate_Divisions" 
-##  [4] "derivative:CONUS_States"        
+##  [4] "sample:CONUS_states"        
 ##  [5] "sample:CONUS_states"            
 ##  [6] "sample:CSC_Boundaries"          
-##  [7] "derivative:FWS_LCC"             
+##  [7] "sample:Landscape_Conservation_Cooperatives"             
 ##  [8] "sample:FWS_LCC"                 
-##  [9] "derivative:wbdhu8_alb_simp"     
-## [10] "derivative:Level_III_Ecoregions"
-## [11] "derivative:NCA_Regions"         
-## [12] "derivative:US_Counties"         
+##  [9] "sample:simplified_huc8"     
+## [10] "sample:Ecoregions_Level_III"
+## [12] "sample:Counties"         
 ## [13] "sample:nps_boundary_2013"       
 ## [14] "upload:nrhu_selection"          
 ## [15] "upload:nrhu_selection_Gallatin" 

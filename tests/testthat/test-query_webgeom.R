@@ -31,7 +31,7 @@ test_that("query values", {
 test_that("query values returns only unique", {
   expect_false(any(
     duplicated(
-      query(webgeom(geom="sample:US_Counties" , attribute = "STATE_FIPS"), 'values'))
+      query(webgeom(geom="sample:Counties" , attribute = "STATE_FIPS"), 'values'))
     )
   )
 })
