@@ -34,7 +34,8 @@ setMethod(f = "values<-",signature(.Object = "webgeom"), definition = function(.
   } else {
     gmlID <- fetchGML_IDs(.Object)
     if(is.null(gmlID)){
-      stop('fetchGML_IDs returned a NULL; the value name you supplied is likely invalid for this feature')
+      stop('fetchGML_IDs returned a NULL; the value name you supplied is likely invalid for this feature',
+            call. = FALSE)
     }
     .Object@GML_IDs <- fetchGML_IDs(.Object)
   }
