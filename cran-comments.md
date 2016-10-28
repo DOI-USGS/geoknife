@@ -1,9 +1,13 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* created a configurable retry for web service calls
+* switched a get to a post that fixed issues with large webgeom objects
 
-* created short name links for web processing types
+* fixed a bug where query responses returned duplicates
 
-* created a results parser for categorical coverage outputs
+* updated quickstart datasets for radar indicated rain
+
+* updated quickstart webgeom sources
+
+* added scalability guidelines link to documentation and vignette
 
