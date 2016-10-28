@@ -41,3 +41,10 @@ test_that("geoknife sets knife correctly", {
   expect_true(geoknife:::canStart())
 })
 
+context("setting webgeom values")
+test_that("NULL results in error", {
+  testthat::skip_on_cran()
+  wg_c <- webgeom(geom = 'derivative:US_Counties', attribute = 'COUNTY')
+  expect_silent(values(wg_c) <- "Belmont County")
+  expect_error(values(wg_c) <- "foo")
+})
