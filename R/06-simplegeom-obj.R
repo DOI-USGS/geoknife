@@ -118,8 +118,12 @@ setAs("data.frame", "simplegeom", function(from) {
 #'@importFrom sp Polygons Polygon CRS proj4string
 setAs("SpatialPolygons", "simplegeom", function(from) {
   
-  stopifnot(grepl('datum=WGS84', proj4string(from)))
+  supported.CRS <- c("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0", "+proj=longlat +datum=WGS84")
   
-  simplegeom <- new("simplegeom", from@polygons, proj4string = CRS("+proj=longlat +datum=WGS84"))
+  if (!proj4string(from) %in% supported.CRS){
+    stop('"',proj4string(from), '" not supported for "simplegeom", use "+proj=longlat +datum=WGS84"')
+  }
+  
+  simplegeom <- new("simplegeom", from@polygons, proj4string = CRS(proj4string(from)))
   return(simplegeom)
 })
