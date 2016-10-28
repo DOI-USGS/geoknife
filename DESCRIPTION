@@ -16,7 +16,9 @@ Authors@R: c( person("Jordan", "Read", role = c("aut","cre"),
     person("Luke", "Winslow", role = c("aut"),
     email = "lwinslow@usgs.gov"),
     person("Lindsay", "Carr", role = c("aut"),
-    email = "lcarr@usgs.gov"))
+    email = "lcarr@usgs.gov"),
+    person("David", "Watkins", role = c("aut"),
+    email = "wwatkins@usgs.gov"))
 Description: Processes gridded datasets found on the U.S. Geological Survey
     Geo Data Portal web application or elsewhere, using a web-enabled workflow
     that eliminates the need to download and store large datasets that are reliably

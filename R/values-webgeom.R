@@ -32,9 +32,13 @@ setMethod(f = "values<-",signature(.Object = "webgeom"), definition = function(.
   if(is.na(value[1])){
     .Object@GML_IDs <- as.character(NA)
   } else {
+    gmlID <- fetchGML_IDs(.Object)
+    if(is.null(gmlID)){
+      stop('fetchGML_IDs returned a NULL; the value name you supplied is likely invalid for this feature',
+            call. = FALSE)
+    }
     .Object@GML_IDs <- fetchGML_IDs(.Object)
   }
-  
   return(.Object)})
 
 #'@aliases values
