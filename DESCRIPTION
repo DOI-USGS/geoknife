@@ -1,8 +1,8 @@
 Package: geoknife
 Type: Package
 Title: Web-Processing of Large Gridded Datasets
-Version: 1.4.0
-Date: 2016-10-26
+Version: 1.4.1
+Date: 2016-10-28
 Authors@R: c( person("Jordan", "Read", role = c("aut","cre"),
     email = "jread@usgs.gov"),
     person("Jordan", "Walker", role = c("aut"),
@@ -31,7 +31,7 @@ Copyright: This software is in the public domain because it contains materials
     that originally came from the United States Geological Survey, an agency of
     the United States Department of Interior. For more information, see the
     official USGS copyright policy at
-    http://www.usgs.gov/visual-id/credit_usgs.html#copyright
+    https://www2.usgs.gov/visual-id/credit_usgs.html#copyright
 Depends:
     R (>= 3.0)
 Imports:
