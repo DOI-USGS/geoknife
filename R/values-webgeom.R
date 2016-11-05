@@ -64,9 +64,11 @@ wfsFilterFeatureXML <- function(.Object, knife=webprocess(), match.case = TRUE){
   f <- newXMLNode('ogc:Filter', parent = q) # skipping namespace
   Or <- newXMLNode('ogc:Or', parent = f) 
   for (val in values(.Object)){
-    p <- newXMLNode('ogc:PropertyIsEqualTo', parent=Or, attrs = c('matchCase'=match.case.char))
-    newXMLNode('ogc:PropertyName', parent = p, newXMLTextNode(.Object@attribute))
-    newXMLNode('ogc:Literal', parent = p, newXMLTextNode(val))
+    newXMLNode('ogc:PropertyIsEqualTo', parent=Or, attrs = c('matchCase'=match.case.char), 
+               .children = list(
+                 newXMLNode('ogc:PropertyName', newXMLTextNode(.Object@attribute)),
+                 newXMLNode('ogc:Literal', newXMLTextNode(val))
+               ))
   }
   
   return(suppressWarnings(toString.XMLNode(top)))
