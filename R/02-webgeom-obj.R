@@ -104,25 +104,18 @@ setMethod("initialize", signature = "webgeom",
 #' #1) locate the \code{geom} for counties by looking at the options for geoms
 #' query(webgeom(), 'geoms') # discover sample:Counties
 #' #2) locate the \code{attribute} for county names by looking at the options for attributes
-#' query(webgeom(geom='sample:Counties'), 'attributes') # discover COUNTY and FIPS
-#' #3) look at the options for county names and FIPS codes
-#' counties <- data.frame(STCountyFIPS=query(webgeom(geom='sample:Counties', 
-#'   attribute='STATE,COUNTY,FIPS'), 'values'), stringsAsFactors=FALSE)
-#' counties$FIPS=substring(counties$STCountyFIPS, nchar(counties$STCountyFIPS)-4)
-#' counties$State=substr(counties$STCountyFIPS, 1, 2)
-#' counties$County=substring(counties$STCountyFIPS, 3, nchar(counties$STCountyFIPS)-5)
-#' howard_fips <- unique(counties[counties$State=='TX' & counties$County=='Howard County', 'FIPS'])
-#' #4a) create a webgeom for all of the Howard Counties in the US combined 
-#' # (this may not be the behavior you expected!)
-#' geom <- webgeom(geom='sample:Counties', attribute='COUNTY', values="Howard County")
-#' #4b) create a webgeom for just the Howard County in Texas
-#' geom <- webgeom(geom='sample:Counties', attribute='FIPS', values=howard_fips)
-#' #5) get data for all the Howard Counties combined
+#' query(webgeom(geom='sample:Counties'), 'attributes') # discover FIPS
+#' #3) find the appropriate fip code for the county:
+#' howard.fips <- maps::county.fips %>% 
+#'    dplyr::filter(polyname == 'texas,howard') %>% .$fips %>% as.character
+#' #4) create a webgeom for the Howard County in Texas
+#' stencil <- webgeom(geom='sample:Counties', attribute='FIPS', values=howard.fips)
+#' #5) get data for Howard County
 #' fabric <- webdata(url = 'http://cida.usgs.gov/thredds/dodsC/stageiv_combined', 
 #' variables = "Total_precipitation_surface_1_Hour_Accumulation", 
 #' times = c(as.POSIXct("2016-06-06 05:00:00"), 
 #'           as.POSIXct("2016-06-07 05:00:00")))
-#' job <- geoknife(geom, fabric, wait = TRUE)
+#' job <- geoknife(stencil, fabric, wait = TRUE)
 #' precipData <- result(job)
 #' head(precipData)
 #' }
