@@ -6,5 +6,5 @@ test_that("prism is replaced", {
 })
 
 test_that("nldas is replaced", {
-  expect_equal(geoknife:::dodsReplace('https://hydro1.sci.gsfc.nasa.gov/dods/NLDAS_FORA0125_M.002'),'dods://hydro1.sci.gsfc.nasa.gov/dods/NLDAS_FORA0125_M.002')
+  expect_equal(geoknife:::dodsReplace('http://hydro1.sci.gsfc.nasa.gov/dods/NLDAS_FORA0125_M.002'),'dods://hydro1.sci.gsfc.nasa.gov/dods/NLDAS_FORA0125_M.002')
 })
