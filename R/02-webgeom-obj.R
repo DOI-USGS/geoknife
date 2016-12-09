@@ -25,7 +25,7 @@
 setClass(
   Class = "webgeom",
   prototype = prototype(
-    url = "http://cida.usgs.gov/gdp/geoserver/wfs",
+    url = "https://cida.usgs.gov/gdp/geoserver/wfs",
     geom = as.character(NA), 
     attribute = as.character(NA),
     values = as.character(NA), 
@@ -111,7 +111,7 @@ setMethod("initialize", signature = "webgeom",
 #' #4) create a webgeom for the Howard County in Texas
 #' stencil <- webgeom(geom='sample:Counties', attribute='FIPS', values=howard.fips)
 #' #5) get data for Howard County
-#' fabric <- webdata(url = 'http://cida.usgs.gov/thredds/dodsC/stageiv_combined', 
+#' fabric <- webdata(url = 'https://cida.usgs.gov/thredds/dodsC/stageiv_combined', 
 #' variables = "Total_precipitation_surface_1_Hour_Accumulation", 
 #' times = c(as.POSIXct("2016-06-06 05:00:00"), 
 #'           as.POSIXct("2016-06-07 05:00:00")))
