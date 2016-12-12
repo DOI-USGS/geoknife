@@ -11,7 +11,7 @@ id <- geoknife::id
 
 ## ---- eval=FALSE------------------------------------------
 #  install.packages("geoknife",
-#      repos = c("http://owi.usgs.gov/R","http://cran.rstudio.com/"),
+#      repos = c("https://owi.usgs.gov/R","https://cran.rstudio.com/"),
 #      dependencies = TRUE)
 
 ## ---- eval=FALSE------------------------------------------
@@ -137,7 +137,7 @@ fabric
 
 ## ---------------------------------------------------------
 times(fabric)
-url(fabric) <- 'http://cida.usgs.gov/thredds/dodsC/prism'
+url(fabric) <- 'https://cida.usgs.gov/thredds/dodsC/prism'
 variables(fabric) <- 'tmx'
 
 times(fabric)[1] <- as.POSIXct('1990-01-01')
@@ -209,7 +209,7 @@ variables(fabric) <- NA
 #  query(knife, 'algorithms')
 
 ## ----eval=FALSE-------------------------------------------
-#  url(knife) <- 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
+#  url(knife) <- 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
 #  query(knife, 'algorithms')
 
 ## ---- eval=FALSE------------------------------------------
@@ -220,7 +220,7 @@ variables(fabric) <- NA
 #                             "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
 
 ## ---- eval=FALSE------------------------------------------
-#  url(knife) <- 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
+#  url(knife) <- 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
 
 ## ---- eval=FALSE------------------------------------------
 #  knife <- webprocess(wait = TRUE)

@@ -39,7 +39,7 @@ The main elements of setting up and carrying out a geoknife 'job' (geojob) inclu
 To install the stable version of **geoknife** package with dependencies:
 ```{r, eval=FALSE}
 install.packages("geoknife", 
-    repos = c("http://owi.usgs.gov/R","http://cran.rstudio.com/"),
+    repos = c("https://owi.usgs.gov/R","https://cran.rstudio.com/"),
     dependencies = TRUE)
 ```
 Or to install the current development version of the package:
@@ -289,7 +289,7 @@ fabric
 The public fields can be accessed in by using the field name:
 ```{r}
 times(fabric)
-url(fabric) <- 'http://cida.usgs.gov/thredds/dodsC/prism'
+url(fabric) <- 'https://cida.usgs.gov/thredds/dodsC/prism'
 variables(fabric) <- 'tmx'
 
 times(fabric)[1] <- as.POSIXct('1990-01-01')
@@ -428,7 +428,7 @@ query(knife, 'algorithms')
 ```
 Changing the `webprocess` url will modify the endpoint for the query, and different algorithms may be available:
 ```{r,eval=FALSE}
-url(knife) <- 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
+url(knife) <- 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
 query(knife, 'algorithms')
 ```
 ```
@@ -463,7 +463,7 @@ getting and setting `processInputs` for `geoknife` is currently in. Check back l
 ### url
 The `url` field in `webprocess` can be accessed and set as expected:
 ```{r, eval=FALSE}
-url(knife) <- 'http://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
+url(knife) <- 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
 ```
 
 ### `wait`
@@ -474,7 +474,7 @@ knife
 ```
 ```
 ## An object of class "webprocess":
-## url: http://cida.usgs.gov/gdp/process/WebProcessingService 
+## url: https://cida.usgs.gov/gdp/process/WebProcessingService 
 ## algorithm: Area Grid Statistics (weighted) 
 ## web processing service version: 1.0.0 
 ## process inputs: 
@@ -496,7 +496,7 @@ knife
 ```
 ```
 ## An object of class "webprocess":
-## url: http://cida.usgs.gov/gdp/process/WebProcessingService 
+## url: https://cida.usgs.gov/gdp/process/WebProcessingService 
 ## algorithm: Area Grid Statistics (weighted) 
 ## web processing service version: 1.0.0 
 ## process inputs: 
@@ -553,7 +553,7 @@ Cancel a running job but retain the details:
 id(job)
 ```
 ```
-## [1] "http://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=a264a88c-9672-4029-915b-a09b1403d26a"
+## [1] "https://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=a264a88c-9672-4029-915b-a09b1403d26a"
 ```
 ```{r, echo=FALSE}
 job <- geojob()
@@ -572,5 +572,5 @@ cancel()
 geoknife outsources all major geospatial processing tasks to a remote server. Because of this, users must have an active internet connection. Problems with connections to datasets or the processing resources are rare, but they do happen. When experiencing a connectivity problem, the best approach is often to try again later or email gdp@usgs.gov with any questions. The various web dependencies are described below. 
 
 ### Geo Data Portal
-The U.S. Geological Survey's "Geo Data Portal" (GDP) provides the data access and processing services that are leveraged by the `geoknife` package. See [cida.usgs.gov/gdp](http://cida.usgs.gov/gdp) for the GDP user interface.  
+The U.S. Geological Survey's "Geo Data Portal" (GDP) provides the data access and processing services that are leveraged by the `geoknife` package. See [cida.usgs.gov/gdp](https://cida.usgs.gov/gdp) for the GDP user interface.  
 
