@@ -1,6 +1,6 @@
 library(geoknife)
 
-fabric <- webdata(url = 'http://cida.usgs.gov/thredds/dodsC/prism')
+fabric <- webdata(url = 'https://cida.usgs.gov/thredds/dodsC/prism')
 fabric
 query(fabric, 'variables')
 variables(fabric) <- 'ppt'

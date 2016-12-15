@@ -11,7 +11,7 @@ test_that("character to knife", {
 test_that("built in knifes are algorithms", {
   testthat::skip_on_cran()
   wps.url <- gconfig('wps.url')
-  gconfig('wps.url'="http://cida.usgs.gov/gdp/process/WebProcessingService")
+  gconfig('wps.url'="https://cida.usgs.gov/gdp/process/WebProcessingService")
   web.knives <- unname(unlist(query(webprocess(),'algorithms')))
   pkg.knives <- unlist(unname(lapply(geoknife:::getKnives(),function(x) x[[1]][[1]])))
   

@@ -11,6 +11,7 @@
 #' @docType methods
 #' @keywords methods
 #' @importFrom XML xmlGetAttr getNodeSet xmlParse xmlChildren xmlName xpathApply
+#' @importFrom httr GET
 #' @author Jordan S. Read
 #' @export
 #' @examples
@@ -48,7 +49,6 @@ algorithmParseDetails <- function(job){
   function.handlers <- list("FeatureWeightedGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
                             "FeatureGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
                             "FeatureCategoricalGridCoverageAlgorithm" = c('function.name'='parseCategorical'))
-  
   doc <- xmlParse(xml(job))
   algorithm <- xmlValue(getNodeSet(doc,"/wps:Execute/ows:Identifier")[[1]])
   algorithm.name <- tail(strsplit(algorithm, '[.]')[[1]], 1)
@@ -67,7 +67,8 @@ outputDelimiter <- function(job){
                   "text/csv" = ',',
                   'text/plain' = ' ')
   # find output type
-  doc <-  htmlParse(id(job), isURL=TRUE, useInternalNodes = TRUE)
+  resp <- rawToChar(GET(id(job))$content)
+  doc <-  htmlParse(resp, useInternalNodes = TRUE)
   type <- xmlGetAttr(getNodeSet(doc,"//reference[@mimetype]")[[1]],'mimetype')
   if (!type %in% names(delimiters)){
     stop('output ',type, ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new', call. = FALSE)

@@ -1,4 +1,4 @@
-<wfs:WFS_Capabilities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wfs" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ows="http://www.opengis.net/ows" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sb="http://sciencebase.gov/catalog" version="1.1.0" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd" updateSequence="74">
+<wfs:WFS_Capabilities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wfs" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ows="http://www.opengis.net/ows" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sb="https://sciencebase.gov/catalog" version="1.1.0" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd" updateSequence="74">
 <ows:ServiceIdentification>
 <ows:Title>ScienceBase Catalog WFS Service</ows:Title>
 <ows:Abstract/>
@@ -97,7 +97,7 @@
 <Operations>
 <Operation>Query</Operation>
 </Operations>
-<FeatureType xmlns:sb="http://sciencebase.gov/catalog">
+<FeatureType xmlns:sb="https://sciencebase.gov/catalog">
 <Name>sb:footprint</Name>
 <Title>Item footprint</Title>
 <Abstract/>
@@ -111,7 +111,7 @@
 <ows:UpperCorner>-88.78909623745292 45.496117990963675</ows:UpperCorner>
 </ows:WGS84BoundingBox>
 </FeatureType>
-<FeatureType xmlns:sb="http://sciencebase.gov/catalog">
+<FeatureType xmlns:sb="https://sciencebase.gov/catalog">
 <Name>sb:WBIC_190900</Name>
 <Title>WBIC_190900</Title>
 <Abstract/>

@@ -37,7 +37,7 @@ test_that("reseting algorithm sets inputs back to defaults",{
 
 test_that("can use multiple dataset variables",{
   testthat::skip_on_cran()
-  fabric <- webdata(url = 'http://cida.usgs.gov/thredds/dodsC/iclus/hc')
+  fabric <- webdata(url = 'https://cida.usgs.gov/thredds/dodsC/iclus/hc')
   variables(fabric) <- c('housing_classes_iclus_a1_2010', 'housing_classes_iclus_a1_2100')
   cancel()
   knife <- webprocess(algorithm = list('Categorical Coverage Fraction'="gov.usgs.cida.gdp.wps.algorithm.FeatureCategoricalGridCoverageAlgorithm"))

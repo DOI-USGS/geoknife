@@ -1,5 +1,5 @@
 pkg.env <- new.env()
-pkg.env$gconfig <- list('wps.url'='http://cida.usgs.gov/gdp/process/WebProcessingService',
+pkg.env$gconfig <- list('wps.url'='https://cida.usgs.gov/gdp/process/WebProcessingService',
                         'sleep.time' = 5, 
                         'wait' = FALSE,
                         'email' = as.character(NA),
@@ -83,7 +83,7 @@ setGeneric("webdata", function(.Object,...) {
 #'webdata('prism')
 #'webdata('prism', times=as.POSIXct(c('1990-01-01', '1995-01-01')))
 #'webdata(list(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
-#'  url = 'http://cida.usgs.gov/thredds/dodsC/prism',
+#'  url = 'https://cida.usgs.gov/thredds/dodsC/prism',
 #'  variables = 'ppt'))
 #'@rdname webdata-methods
 #'@aliases webdata
@@ -117,10 +117,10 @@ setMethod("webdata", signature("ANY"), function(.Object, ...) {
 getPkgData <- function(){
   list('prism' = 
          list(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
-              url = 'http://cida.usgs.gov/thredds/dodsC/prism_v2',
+              url = 'https://cida.usgs.gov/thredds/dodsC/prism_v2',
               variables = 'ppt'),
        'iclus' = 
-         list(url = 'http://cida.usgs.gov/thredds/dodsC/iclus/hc',
+         list(url = 'https://cida.usgs.gov/thredds/dodsC/iclus/hc',
               variables = 'housing_classes_iclus_a1_2010'),
        'daymet' = 
          list(times = as.POSIXct(c('2000-01-01 00:00:00','2001-01-01 00:00:00')),
@@ -132,15 +132,15 @@ getPkgData <- function(){
               variables = "Total_precipitation_surface_1_Hour_Accumulation"),
        'topowx' = 
          list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-02-01 00:00:00')),
-              url = 'http://cida.usgs.gov/thredds/dodsC/topowx',
+              url = 'https://cida.usgs.gov/thredds/dodsC/topowx',
               variables = 'tmax'),
        'solar' = 
          list(times = as.POSIXct(c('1980-01-01 00:00:00','1980-12-01 00:00:00')),
-              url = 'http://cida.usgs.gov/thredds/dodsC/mows/sr',
+              url = 'https://cida.usgs.gov/thredds/dodsC/mows/sr',
               variables = 'sr'),
        'metobs' = 
          list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-01-02 00:00:00')),
-              url = 'http://cida.usgs.gov/thredds/dodsC/new_gmo',
+              url = 'https://cida.usgs.gov/thredds/dodsC/new_gmo',
               variables = 'tas'))
 }
 

@@ -43,7 +43,7 @@ A class representing a web dataset.
 webdata('prism')
 webdata('prism', times=as.POSIXct(c('1990-01-01', '1995-01-01')))
 webdata(list(times = as.POSIXct(c('1895-01-01 00:00:00','1899-01-01 00:00:00')),
- url = 'http://cida.usgs.gov/thredds/dodsC/prism',
+ url = 'https://cida.usgs.gov/thredds/dodsC/prism',
  variables = 'ppt'))
 }
 \author{
