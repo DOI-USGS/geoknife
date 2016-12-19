@@ -1,13 +1,7 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* switched a get to a post that fixed issues with large webgeom objects
+* updated the services that this package uses to https (Errors on CRAN checks were the result of these service changes)
 
-* fixed a bug where query responses returned duplicates
-
-* updated quickstart datasets for radar indicated rain
-
-* updated quickstart webgeom sources
-
-* added scalability guidelines link to documentation and vignette
+* added a method for coercing Spatial objects into geoknife::simplegeom objects
 
