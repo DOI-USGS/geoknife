@@ -1,0 +1,102 @@
+<wps:ExecuteResponse xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" statusLocation="https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=e0577fe5-2690-4140-8e95-7be4fa7ebec7">
+<wps:Process>
+<ows:Identifier>
+gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm
+</ows:Identifier>
+<ows:Title>Area Grid Statistics (weighted)</ows:Title>
+</wps:Process>
+<wps:Status creationTime="2017-03-03T07:51:54.155-06:00">
+<wps:ProcessSucceeded>Process successful</wps:ProcessSucceeded>
+</wps:Status>
+<wps:DataInputs>
+<wps:Input xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink">
+<ows:Identifier>TIME_START</ows:Identifier>
+<wps:Data>
+<wps:LiteralData>1895-01-01T00:00:00.000Z</wps:LiteralData>
+</wps:Data>
+</wps:Input>
+<wps:Input xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink">
+<ows:Identifier>TIME_END</ows:Identifier>
+<wps:Data>
+<wps:LiteralData>1899-01-01T00:00:00.000Z</wps:LiteralData>
+</wps:Data>
+</wps:Input>
+<wps:Input xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink">
+<ows:Identifier>SUMMARIZE_TIMESTEP</ows:Identifier>
+<wps:Data>
+<wps:LiteralData>false</wps:LiteralData>
+</wps:Data>
+</wps:Input>
+<wps:Input xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink">
+<ows:Identifier>SUMMARIZE_FEATURE_ATTRIBUTE</ows:Identifier>
+<wps:Data>
+<wps:LiteralData>false</wps:LiteralData>
+</wps:Data>
+</wps:Input>
+<wps:Input xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink">
+<ows:Identifier>DATASET_URI</ows:Identifier>
+<wps:Data>
+<wps:LiteralData>dods://cida.usgs.gov/thredds/dodsC/prism_v2</wps:LiteralData>
+</wps:Data>
+</wps:Input>
+<wps:Input xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink">
+<ows:Identifier>REQUIRE_FULL_COVERAGE</ows:Identifier>
+<wps:Data>
+<wps:LiteralData>true</wps:LiteralData>
+</wps:Data>
+</wps:Input>
+<wps:Input xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink">
+<ows:Identifier>STATISTICS</ows:Identifier>
+<wps:Data>
+<wps:LiteralData>MEAN</wps:LiteralData>
+</wps:Data>
+</wps:Input>
+<wps:Input xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink">
+<ows:Identifier>GROUP_BY</ows:Identifier>
+<wps:Data>
+<wps:LiteralData>STATISTIC</wps:LiteralData>
+</wps:Data>
+</wps:Input>
+<wps:Input xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink">
+<ows:Identifier>FEATURE_ATTRIBUTE_NAME</ows:Identifier>
+<wps:Data>
+<wps:LiteralData>STATE</wps:LiteralData>
+</wps:Data>
+</wps:Input>
+<wps:Input xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink">
+<ows:Identifier>DELIMITER</ows:Identifier>
+<wps:Data>
+<wps:LiteralData>COMMA</wps:LiteralData>
+</wps:Data>
+</wps:Input>
+<wps:Input xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink">
+<ows:Identifier>DATASET_ID</ows:Identifier>
+<wps:Data>
+<wps:LiteralData>ppt</wps:LiteralData>
+</wps:Data>
+</wps:Input>
+<wps:Input xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink">
+<ows:Identifier>FEATURE_COLLECTION</ows:Identifier>
+<wps:Reference xlink:href="https://cida.usgs.gov/gdp/geoserver/wfs">
+<wps:Body>
+<wfs:GetFeature xmlns:gml="http://www.opengis.net/gml" xmlns:wfs="http://www.opengis.net/wfs" outputFormat="text/xml; subtype=gml/3.1.1" service="WFS" version="1.1.0">
+<wfs:Query typeName="sample:CONUS_states">
+<wfs:PropertyName>the_geom</wfs:PropertyName>
+<wfs:PropertyName>STATE</wfs:PropertyName>
+<ogc:Filter>
+<ogc:GmlObjectId gml:id="CONUS_states.48"/>
+</ogc:Filter>
+</wfs:Query>
+</wfs:GetFeature>
+</wps:Body>
+</wps:Reference>
+</wps:Input>
+</wps:DataInputs>
+<wps:ProcessOutputs>
+<wps:Output>
+<ows:Identifier>OUTPUT</ows:Identifier>
+<ows:Title>Output File</ows:Title>
+<wps:Reference mimeType="text/csv" href="https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=e0577fe5-2690-4140-8e95-7be4fa7ebec7OUTPUT"/>
+</wps:Output>
+</wps:ProcessOutputs>
+</wps:ExecuteResponse>
