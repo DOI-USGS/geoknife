@@ -27,7 +27,7 @@ download(.Object, destination, ...)
 \item{...}{additional arguments passed to \code{\link[httr]{write_disk}}, such as overwrite = TRUE}
 }
 \value{
-the destination of the downloaded file
+the location of the downloaded file
 }
 \description{
 download the result of a processing job to a local destination.

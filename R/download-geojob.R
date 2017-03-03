@@ -5,7 +5,7 @@
 #'@param .Object a \code{\link{geojob}} or job id that has completed 
 #'@param destination a file destination. If missing, a temp directory will be used
 #'@param ... additional arguments passed to \code{\link[httr]{write_disk}}, such as overwrite = TRUE
-#'@return the destination of the downloaded file
+#'@return the location of the downloaded file
 #'@author Jordan S Read
 #'@rdname download
 #'@importFrom httr write_disk progress

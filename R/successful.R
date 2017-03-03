@@ -31,15 +31,27 @@
 #'@export
 setGeneric(name="successful",def=function(.Object, retry){standardGeneric("successful")})
 
+#'@rdname successful-methods
+#'@aliases successful
+setMethod(f = "successful", signature(.Object = "geojob", retry = "logical"), definition = function(.Object, retry){
+  successful(id(.Object), retry = retry)
+})
 
 #'@rdname successful-methods
 #'@aliases successful
-setMethod(f = "successful",signature(.Object = "geojob"), definition = function(.Object, retry = FALSE){
-  successful(id(.Object))
+setMethod(f = "successful", signature(.Object = "geojob", retry = "missing"), definition = function(.Object, retry){
+  successful(id(.Object), retry = FALSE)
 })
+
 #'@rdname successful-methods
 #'@aliases successful
-setMethod(f = "successful",signature(.Object = "character"), definition = function(.Object, retry = FALSE){
+setMethod(f = "successful", signature(.Object = "character", retry = "missing"), definition = function(.Object, retry){
+  successful(.Object, retry = FALSE)
+})
+
+#'@rdname successful-methods
+#'@aliases successful
+setMethod(f = "successful", signature(.Object = "character", retry = "logical"), definition = function(.Object, retry){
   process = check(.Object)
   if (process$status == 'unknown' && retry){
     Sys.sleep(gconfig('sleep.time'))
@@ -50,29 +62,29 @@ setMethod(f = "successful",signature(.Object = "character"), definition = functi
 })
 
 #'@export
-setGeneric(name="running",def=function(.Object, retry){standardGeneric("running")})
+setGeneric(name="running", def = function(.Object, retry){standardGeneric("running")})
 
 #'@rdname successful-methods
 #'@aliases running
-setMethod(f = "running",signature(.Object = "geojob", retry = "logical"), definition = function(.Object, retry){
+setMethod(f = "running", signature(.Object = "geojob", retry = "logical"), definition = function(.Object, retry){
   running(id(.Object), retry = retry)
 })
 
 #'@rdname successful-methods
 #'@aliases running
-setMethod(f = "running",signature(.Object = "geojob", retry = "missing"), definition = function(.Object, retry){
+setMethod(f = "running", signature(.Object = "geojob", retry = "missing"), definition = function(.Object, retry){
   running(id(.Object), retry = FALSE)
 })
 
 #'@rdname successful-methods
 #'@aliases running
-setMethod(f = "running",signature(.Object = "character", retry = "missing"), definition = function(.Object, retry){
+setMethod(f = "running", signature(.Object = "character", retry = "missing"), definition = function(.Object, retry){
   running(.Object, retry = FALSE)
 })
 
 #'@rdname successful-methods
 #'@aliases running
-setMethod(f = "running",signature(.Object = "character", retry = "logical"), definition = function(.Object, retry){
+setMethod(f = "running", signature(.Object = "character", retry = "logical"), definition = function(.Object, retry){
   
   process = check(.Object)
   if (process$status == 'unknown' && retry){
@@ -83,17 +95,29 @@ setMethod(f = "running",signature(.Object = "character", retry = "logical"), def
 })
 
 #'@export
-setGeneric(name="error",def=function(.Object, retry){standardGeneric("error")})
+setGeneric(name="error", def=function(.Object, retry){standardGeneric("error")})
 
 #'@rdname successful-methods
 #'@aliases error
-setMethod(f = "error",signature = "geojob", definition = function(.Object, retry = FALSE){
-  error(id(.Object))
+setMethod(f = "error", signature(.Object = "geojob", retry = "missing"), definition = function(.Object, retry){
+  error(id(.Object), retry = FALSE)
 })
 
 #'@rdname successful-methods
 #'@aliases error
-setMethod(f = "error",signature = "character", definition = function(.Object, retry = FALSE){
+setMethod(f = "error", signature(.Object = "geojob", retry = "missing"), definition = function(.Object, retry){
+  error(id(.Object), retry = retry)
+})
+
+#'@rdname successful-methods
+#'@aliases error
+setMethod(f = "error", signature(.Object = "character", retry = "missing"), definition = function(.Object, retry){
+  error(.Object, retry = retry)
+})
+
+#'@rdname successful-methods
+#'@aliases error
+setMethod(f = "error", signature(.Object = "character", retry = "logical"), definition = function(.Object, retry){
   
   process = check(.Object)
   if (process$status == 'unknown' && retry){
