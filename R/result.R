@@ -47,8 +47,6 @@ setMethod(f = "result",signature="geojob",
 setMethod(f = "result",signature="character",
           definition = function(.Object, ...){
             job <- geojob(id = .Object)
-            xmlPost <- gcontent(gGET(.Object))
-            xml(job) <- XML::toString.XMLNode(xmlPost)
             result(job, ...)
 })
 outputParse = function(.Object, ...){
@@ -63,11 +61,17 @@ algorithmParseDetails <- function(job){
   function.handlers <- list("FeatureWeightedGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
                             "FeatureGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
                             "FeatureCategoricalGridCoverageAlgorithm" = c('function.name'='parseCategorical'))
-  doc <- xmlParse(xml(job))
-  browser()
-  algorithm <- xmlValue(getNodeSet(doc,"/wps:Execute/ows:Identifier")[[1]])
+  if (is.na(xml(job))){
+    xmlProcess <- gcontent(gGET(id(job)))
+    
+    algorithm <- xmlValue(getNodeSet(xmlProcess,"/wps:Process/ows:Identifier")[[1]])
+  } else {
+    doc <- xmlParse(xml(job))
+    algorithm <- xmlValue(getNodeSet(doc,"/wps:Execute/ows:Identifier")[[1]])
+    rm(doc) # is this necessary w/ XML package?
+  }
+  
   algorithm.name <- tail(strsplit(algorithm, '[.]')[[1]], 1)
-  rm(doc) # is this necessary w/ XML package?
   
   if (!algorithm.name %in% names(function.handlers)){
     stop('parser for ',algorithm.name, 
