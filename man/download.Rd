@@ -3,6 +3,8 @@
 \docType{methods}
 \name{download}
 \alias{download}
+\alias{download,character,character-method}
+\alias{download,character,missing-method}
 \alias{download,geojob,character-method}
 \alias{download,geojob,missing-method}
 \title{download output from geojob}
@@ -11,17 +13,21 @@ download(.Object, destination, ...)
 
 \S4method{download}{geojob,missing}(.Object, destination, ...)
 
+\S4method{download}{character,missing}(.Object, destination, ...)
+
 \S4method{download}{geojob,character}(.Object, destination, ...)
+
+\S4method{download}{character,character}(.Object, destination, ...)
 }
 \arguments{
-\item{.Object}{a \code{\link{geojob}} that has completed}
+\item{.Object}{a \code{\link{geojob}} or job id that has completed}
 
 \item{destination}{a file destination. If missing, a temp directory will be used}
 
 \item{...}{additional arguments passed to \code{\link[httr]{write_disk}}, such as overwrite = TRUE}
 }
 \value{
-the file handle
+the destination of the downloaded file
 }
 \description{
 download the result of a processing job to a local destination.
