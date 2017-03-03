@@ -3,10 +3,13 @@
 \docType{methods}
 \name{successful}
 \alias{error}
+\alias{error,character-method}
 \alias{error,geojob-method}
 \alias{running}
+\alias{running,character-method}
 \alias{running,geojob-method}
 \alias{successful}
+\alias{successful,character-method}
 \alias{successful,geojob-method}
 \title{Convenience function for GDP process state}
 \usage{
@@ -16,9 +19,15 @@ running(.Object, retry)
 
 \S4method{successful}{geojob}(.Object, retry = FALSE)
 
+\S4method{successful}{character}(.Object, retry = FALSE)
+
 \S4method{running}{geojob}(.Object, retry = FALSE)
 
+\S4method{running}{character}(.Object, retry = FALSE)
+
 \S4method{error}{geojob}(.Object, retry = FALSE)
+
+\S4method{error}{character}(.Object, retry = FALSE)
 }
 \arguments{
 \item{.Object}{a \linkS4class{geojob} object}
