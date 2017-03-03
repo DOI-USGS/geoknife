@@ -35,17 +35,19 @@ setGeneric(name="successful",def=function(.Object, retry){standardGeneric("succe
 #'@rdname successful-methods
 #'@aliases successful
 setMethod(f = "successful",signature(.Object = "geojob"), definition = function(.Object, retry = FALSE){
-	
+  successful(id(.Object))
+})
+#'@rdname successful-methods
+#'@aliases successful
+setMethod(f = "successful",signature(.Object = "character"), definition = function(.Object, retry = FALSE){
   process = check(.Object)
   if (process$status == 'unknown' && retry){
     Sys.sleep(gconfig('sleep.time'))
     process = check(.Object)
   }
-	
-	return(process$statusType == "ProcessSucceeded")
-	
+  
+  return(process$statusType == "ProcessSucceeded")
 })
-
 
 #'@export
 setGeneric(name="running",def=function(.Object, retry){standardGeneric("running")})
@@ -53,16 +55,19 @@ setGeneric(name="running",def=function(.Object, retry){standardGeneric("running"
 #'@rdname successful-methods
 #'@aliases running
 setMethod(f = "running",signature(.Object = "geojob"), definition = function(.Object, retry = FALSE){
+  running(id(.Object))
+})
+#'@rdname successful-methods
+#'@aliases running
+setMethod(f = "running",signature(.Object = "character"), definition = function(.Object, retry = FALSE){
   
   process = check(.Object)
   if (process$status == 'unknown' && retry){
     Sys.sleep(gconfig('sleep.time'))
     process = check(.Object)
   }
-  
   return(process$statusType == "ProcessStarted" | process$statusType == "ProcessAccepted")
 })
-
 
 #'@export
 setGeneric(name="error",def=function(.Object, retry){standardGeneric("error")})
@@ -70,13 +75,17 @@ setGeneric(name="error",def=function(.Object, retry){standardGeneric("error")})
 #'@rdname successful-methods
 #'@aliases error
 setMethod(f = "error",signature = "geojob", definition = function(.Object, retry = FALSE){
+  error(id(.Object))
+})
+
+#'@rdname successful-methods
+#'@aliases error
+setMethod(f = "error",signature = "character", definition = function(.Object, retry = FALSE){
   
   process = check(.Object)
   if (process$status == 'unknown' && retry){
     Sys.sleep(gconfig('sleep.time'))
     process = check(.Object)
   }
-  
-  
   return(process$statusType == "ProcessFailed")
 })
