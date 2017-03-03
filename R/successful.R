@@ -54,12 +54,25 @@ setGeneric(name="running",def=function(.Object, retry){standardGeneric("running"
 
 #'@rdname successful-methods
 #'@aliases running
-setMethod(f = "running",signature(.Object = "geojob"), definition = function(.Object, retry = FALSE){
-  running(id(.Object))
+setMethod(f = "running",signature(.Object = "geojob", retry = "logical"), definition = function(.Object, retry){
+  running(id(.Object), retry = retry)
 })
+
 #'@rdname successful-methods
 #'@aliases running
-setMethod(f = "running",signature(.Object = "character"), definition = function(.Object, retry = FALSE){
+setMethod(f = "running",signature(.Object = "geojob", retry = "missing"), definition = function(.Object, retry){
+  running(id(.Object), retry = FALSE)
+})
+
+#'@rdname successful-methods
+#'@aliases running
+setMethod(f = "running",signature(.Object = "character", retry = "missing"), definition = function(.Object, retry){
+  running(.Object, retry = FALSE)
+})
+
+#'@rdname successful-methods
+#'@aliases running
+setMethod(f = "running",signature(.Object = "character", retry = "logical"), definition = function(.Object, retry){
   
   process = check(.Object)
   if (process$status == 'unknown' && retry){
