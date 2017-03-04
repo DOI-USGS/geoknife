@@ -26,8 +26,8 @@ setGeneric(name="check",def=function(.Object){standardGeneric("check")})
 setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Object){
 
 	process	<-	list(status=NULL,URL=NULL)
-	if (id(.Object)=="<no active job>"){
-		process$status	<-	'none'
+	if (id(.Object) == "<no active job>"){
+		process$status <- 'none'
 		process$statusType <- 'none'
     return(process)
 	}

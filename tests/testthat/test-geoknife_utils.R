@@ -14,3 +14,11 @@ test_that("error on url", {
   testthat::skip_on_cran()
   expect_error(geoknife:::retryVERB(httr::GET('bad.url.html')), "Couldn't resolve host name")
 })
+
+context("geoknife convienence functions for job state")
+
+test_that("check status of empty job", {
+  testthat::skip_on_cran()
+  expect_equal(check(geojob())$status, 'none')
+  expect_equal(check(geojob())$statusType, 'none')
+})
