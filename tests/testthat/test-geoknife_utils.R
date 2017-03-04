@@ -54,6 +54,6 @@ test_that("check status of an ID that failed", {
 })
 
 test_that("result fails with failed job",{
-  expect_error(result(failed.id), ' processing is incomplete or has failed. See check(). Processing status: ProcessFailed')
+  expect_error(result(failed.id), 'processing is incomplete or has failed. See check(). Processing status: ProcessFailed')
   rm(failed.id)
 })
