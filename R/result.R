@@ -2,9 +2,10 @@
 #'
 #' a \code{geojob} method for loading data into R from a completed processing request
 #'
-#' @param .Object a \code{\link{geojob}} object with a successful processID. 
+#' @param .Object a \code{\link{geojob}} object with a successful processID,
+#' or a \code{character} URL of a completed job.
 #' (See \code{\link{check}}).
-#' @param ... additional arguments passed to parsers (e.g., keep.units = TRUE)
+#' @param ... additional arguments passed to parsers (e.g., with.units = TRUE)
 #' @return data.frame of timeseries values. 
 #' @rdname result-methods
 #' @aliases result
@@ -18,6 +19,10 @@
 #' \dontrun{
 #' job <- geoknife(stencil = c(-89,42), fabric = 'prism', wait = TRUE)
 #' result(job, with.units = TRUE) # load and print output
+#' 
+#' # or use the job id:
+#' id <- id(job)
+#' result(id, with.units = TRUE) # load and print output
 #' }
 #'
 setGeneric(name="result",def=function(.Object, ...){standardGeneric("result")})
@@ -26,48 +31,52 @@ setGeneric(name="result",def=function(.Object, ...){standardGeneric("result")})
 #' @aliases result
 setMethod(f = "result",signature="geojob",
   definition = function(.Object, ...){
+    result(id(.Object), ...)
+})
+
+#' @rdname result-methods
+#' @aliases result
+setMethod(f = "result",signature="character",
+          definition = function(.Object, ...){
             if (successful(.Object)){
-              output <- outputParse(.Object, ...)
+              output <- outputParse(job.id = .Object, ...)
               return(output)
             } else {
               stop('processing is incomplete or has failed. See check(). Processing status: ',
                    check(.Object)$statusType)
             }
-            
-          }
-  )
-
-outputParse = function(.Object, ...){
-  funcInfo <- algorithmParseDetails(.Object)
-  fileLocation <- check(.Object)$URL
+})
+outputParse = function(job.id, ...){
+  funcInfo <- algorithmParseDetails(job.id)
+  fileLocation <- check(job.id)$URL
   output <- do.call(funcInfo[['function.name']], args = list(file = fileLocation, 'delim' = funcInfo[['delimiter']], ...))
   return(output)
 }
 
 #' @importFrom utils tail
-algorithmParseDetails <- function(job){
+algorithmParseDetails <- function(job.id){
   function.handlers <- list("FeatureWeightedGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
                             "FeatureGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
                             "FeatureCategoricalGridCoverageAlgorithm" = c('function.name'='parseCategorical'))
-  doc <- xmlParse(xml(job))
-  algorithm <- xmlValue(getNodeSet(doc,"/wps:Execute/ows:Identifier")[[1]])
+  xmlProcess <- gcontent(gGET(job.id))
+  algorithm <- xmlValue(getNodeSet(xmlProcess,"/wps:ExecuteResponse/wps:Process/ows:Identifier")[[1]])
+
   algorithm.name <- tail(strsplit(algorithm, '[.]')[[1]], 1)
-  rm(doc) # is this necessary w/ XML package?
   
   if (!algorithm.name %in% names(function.handlers)){
     stop('parser for ',algorithm.name, 
          ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new', call. = FALSE)
   }
-  parse.details <- c(function.handlers[[algorithm.name]], 'delimiter'=outputDelimiter(job))
+  parse.details <- c(function.handlers[[algorithm.name]], 'delimiter'=outputDelimiter(job.id))
   return(parse.details)
 }
 
-outputDelimiter <- function(job){
+outputDelimiter <- function(job.id){
   delimiters <- c("text/tab-separated-values" = '\t',
                   "text/csv" = ',',
                   'text/plain' = ' ')
   # find output type
-  resp <- rawToChar(GET(id(job))$content)
+  resp <- rawToChar(GET(job.id)$content)
   doc <-  htmlParse(resp, useInternalNodes = TRUE)
   type <- xmlGetAttr(getNodeSet(doc,"//reference[@mimetype]")[[1]],'mimetype')
   if (!type %in% names(delimiters)){

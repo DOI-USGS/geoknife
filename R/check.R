@@ -3,7 +3,8 @@
 #' two fields: \code{status} and \code{URL}. If the \linkS4class{geojob} object has not been executed
 #' (see \code{\link{start}}), this method returns \code{status}='none' and \code{URL}=NULL.
 #'
-#'@param .Object a \linkS4class{geojob} object with an active GDP process request.
+#'@param .Object a \linkS4class{geojob} object with an active GDP process request, 
+#' or a \code{character} URL of an existing job
 #'@return \code{process}, a list containing
 #' \code{status} and \code{URL}. 
 #'
@@ -61,4 +62,10 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
   
   setJobState(process$status)
 	return(process)
+})
+
+#'@rdname check-geojob
+#'@aliases check
+setMethod(f = "check",signature(.Object = "character"), definition = function(.Object){
+  check(geojob(id = .Object))
 })

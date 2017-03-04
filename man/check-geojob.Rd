@@ -3,15 +3,19 @@
 \docType{methods}
 \name{check}
 \alias{check}
+\alias{check,character-method}
 \alias{check,geojob-method}
 \title{Check status of processing request}
 \usage{
 check(.Object)
 
 \S4method{check}{geojob}(.Object)
+
+\S4method{check}{character}(.Object)
 }
 \arguments{
-\item{.Object}{a \linkS4class{geojob} object with an active GDP process request.}
+\item{.Object}{a \linkS4class{geojob} object with an active GDP process request, 
+or a \code{character} URL of an existing job}
 }
 \value{
 \code{process}, a list containing

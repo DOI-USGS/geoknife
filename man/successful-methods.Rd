@@ -3,22 +3,49 @@
 \docType{methods}
 \name{successful}
 \alias{error}
-\alias{error,geojob-method}
+\alias{error,character,logical-method}
+\alias{error,character,missing-method}
+\alias{error,geojob,logical-method}
+\alias{error,geojob,missing-method}
 \alias{running}
-\alias{running,geojob-method}
+\alias{running,character,logical-method}
+\alias{running,character,missing-method}
+\alias{running,geojob,logical-method}
+\alias{running,geojob,missing-method}
 \alias{successful}
-\alias{successful,geojob-method}
+\alias{successful,character,logical-method}
+\alias{successful,character,missing-method}
+\alias{successful,geojob,logical-method}
+\alias{successful,geojob,missing-method}
 \title{Convenience function for GDP process state}
 \usage{
 successful(.Object, retry)
 error(.Object, retry)
 running(.Object, retry)
 
-\S4method{successful}{geojob}(.Object, retry = FALSE)
+\S4method{successful}{geojob,logical}(.Object, retry)
 
-\S4method{running}{geojob}(.Object, retry = FALSE)
+\S4method{successful}{geojob,missing}(.Object, retry)
 
-\S4method{error}{geojob}(.Object, retry = FALSE)
+\S4method{successful}{character,missing}(.Object, retry)
+
+\S4method{successful}{character,logical}(.Object, retry)
+
+\S4method{running}{geojob,logical}(.Object, retry)
+
+\S4method{running}{geojob,missing}(.Object, retry)
+
+\S4method{running}{character,missing}(.Object, retry)
+
+\S4method{running}{character,logical}(.Object, retry)
+
+\S4method{error}{geojob,missing}(.Object, retry)
+
+\S4method{error}{geojob,logical}(.Object, retry)
+
+\S4method{error}{character,missing}(.Object, retry)
+
+\S4method{error}{character,logical}(.Object, retry)
 }
 \arguments{
 \item{.Object}{a \linkS4class{geojob} object}
@@ -33,8 +60,7 @@ Simple wrapper to check process status
 }
 \examples{
 \dontrun{
-wp <- quick_wp()
-job <- geoknife(stencil = c(-89,42), fabric = 'prism', knife = wp)
+job <- geoknife(stencil = c(-89,42), fabric = 'prism')
 check(job)
 
 running(job)
