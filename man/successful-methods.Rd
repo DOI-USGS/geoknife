@@ -5,6 +5,7 @@
 \alias{error}
 \alias{error,character,logical-method}
 \alias{error,character,missing-method}
+\alias{error,geojob,logical-method}
 \alias{error,geojob,missing-method}
 \alias{running}
 \alias{running,character,logical-method}
@@ -40,7 +41,7 @@ running(.Object, retry)
 
 \S4method{error}{geojob,missing}(.Object, retry)
 
-\S4method{error}{geojob,missing}(.Object, retry)
+\S4method{error}{geojob,logical}(.Object, retry)
 
 \S4method{error}{character,missing}(.Object, retry)
 
@@ -59,8 +60,7 @@ Simple wrapper to check process status
 }
 \examples{
 \dontrun{
-wp <- quick_wp()
-job <- geoknife(stencil = c(-89,42), fabric = 'prism', knife = wp)
+job <- geoknife(stencil = c(-89,42), fabric = 'prism')
 check(job)
 
 running(job)
