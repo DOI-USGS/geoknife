@@ -14,6 +14,7 @@
 #'@author Jordan S. Read
 #'@seealso \code{\link{start}}
 #'@importFrom XML xmlTreeParse xmlNamespaceDefinitions xmlRoot
+#' @importFrom httr http_error
 #'@rdname check-geojob
 #'@examples 
 #'gj <- geojob() # create geojob object
@@ -30,10 +31,16 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
 		process$status <- 'none'
 		process$statusType <- 'none'
     return(process)
+	} else if (!is.geojobID(id(.Object))) {
+	  stop(id(.Object), ' is not a valid geojob ID. Status cannot be checked', call. = FALSE)
 	}
 
 	checkForComplete = tryCatch({
-    gGET(url = id(.Object))
+    resp <- gGET(url = id(.Object))
+    if (httr::http_error(resp)) {
+      stop('bad response from server', call. = FALSE)
+    }
+    resp
     },error = function(e) {
       return(NULL)
       }
