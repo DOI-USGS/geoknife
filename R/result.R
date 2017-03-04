@@ -39,26 +39,26 @@ setMethod(f = "result",signature="geojob",
 setMethod(f = "result",signature="character",
           definition = function(.Object, ...){
             if (successful(.Object)){
-              output <- outputParse(job.id = .Object, ...)
+              output <- outputParse(jobID = .Object, ...)
               return(output)
             } else {
               stop('processing is incomplete or has failed. See check(). Processing status: ',
                    check(.Object)$statusType)
             }
 })
-outputParse = function(job.id, ...){
-  funcInfo <- algorithmParseDetails(job.id)
-  fileLocation <- check(job.id)$URL
+outputParse = function(jobID, ...){
+  funcInfo <- algorithmParseDetails(jobID)
+  fileLocation <- check(jobID)$URL
   output <- do.call(funcInfo[['function.name']], args = list(file = fileLocation, 'delim' = funcInfo[['delimiter']], ...))
   return(output)
 }
 
 #' @importFrom utils tail
-algorithmParseDetails <- function(job.id){
+algorithmParseDetails <- function(jobID){
   function.handlers <- list("FeatureWeightedGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
                             "FeatureGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
                             "FeatureCategoricalGridCoverageAlgorithm" = c('function.name'='parseCategorical'))
-  xmlProcess <- gcontent(gGET(job.id))
+  xmlProcess <- gcontent(gGET(jobID))
   algorithm <- xmlValue(getNodeSet(xmlProcess,"/wps:ExecuteResponse/wps:Process/ows:Identifier")[[1]])
 
   algorithm.name <- tail(strsplit(algorithm, '[.]')[[1]], 1)
@@ -67,16 +67,16 @@ algorithmParseDetails <- function(job.id){
     stop('parser for ',algorithm.name, 
          ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new', call. = FALSE)
   }
-  parse.details <- c(function.handlers[[algorithm.name]], 'delimiter'=outputDelimiter(job.id))
+  parse.details <- c(function.handlers[[algorithm.name]], 'delimiter'=outputDelimiter(jobID))
   return(parse.details)
 }
 
-outputDelimiter <- function(job.id){
+outputDelimiter <- function(jobID){
   delimiters <- c("text/tab-separated-values" = '\t',
                   "text/csv" = ',',
                   'text/plain' = ' ')
   # find output type
-  resp <- rawToChar(GET(job.id)$content)
+  resp <- rawToChar(GET(jobID)$content)
   doc <-  htmlParse(resp, useInternalNodes = TRUE)
   type <- xmlGetAttr(getNodeSet(doc,"//reference[@mimetype]")[[1]],'mimetype')
   if (!type %in% names(delimiters)){
