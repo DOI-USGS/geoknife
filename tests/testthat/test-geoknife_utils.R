@@ -36,3 +36,18 @@ test_that("check status of an ID that is incorrect", {
   expect_equal(status$statusType, "unknown")
 })
 
+test_that("check status of an ID that doesn't exist", {
+  testthat::skip_on_cran()
+  fake.id <- "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=bad"
+  status <- check(geojob(id=fake.id))
+  expect_equal(status$status, "unknown")
+  expect_equal(status$statusType, "unknown")
+})
+
+test_that("check status of an ID that failed", {
+  testthat::skip_on_cran()
+  fabric <- webdata('prism', variables = 'wrong')
+  job <- geoknife(c(-89,43), fabric, wait = TRUE)
+  status <- check(job)
+  expect_equal(status$statusType, "ProcessFailed")
+})
