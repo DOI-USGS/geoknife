@@ -9,8 +9,8 @@
 #' error(.Object, retry)
 #' running(.Object, retry)
 #'
-#' @param .Object a \linkS4class{geojob} object
-#' @param retry attempt to retry again if communication failed with the server
+#' @param .Object a \linkS4class{geojob} object or geojob ID (character)
+#' @param retry logical, attempt to retry again if communication failed with the server
 #' @return TRUE/FALSE indicating if process is in the given state (error, processing, successful)
 #' @description Simple wrapper to check process status
 #'
@@ -28,100 +28,34 @@
 #' }
 #'
 #' @export
-setGeneric(name="successful",def=function(.Object, retry){standardGeneric("successful")})
+successful <- function(.Object, retry = FALSE){
+  status_is(id(.Object), status = 'successful', retry = retry)
+}
 
 #' @rdname successful-methods
-#' @aliases successful
-setMethod(f = "successful", signature(.Object = "geojob", retry = "logical"), definition = function(.Object, retry){
-  successful(id(.Object), retry = retry)
-})
-
-#' @rdname successful-methods
-#' @aliases successful
-setMethod(f = "successful", signature(.Object = "geojob", retry = "missing"), definition = function(.Object, retry){
-  successful(id(.Object), retry = FALSE)
-})
-
-#' @rdname successful-methods
-#' @aliases successful
-setMethod(f = "successful", signature(.Object = "character", retry = "missing"), definition = function(.Object, retry){
-  successful(.Object, retry = FALSE)
-})
-
-#' @rdname successful-methods
-#' @aliases successful
-setMethod(f = "successful", signature(.Object = "character", retry = "logical"), definition = function(.Object, retry){
-  process = check(.Object)
-  if (process$status == 'unknown' && retry){
-    Sys.sleep(gconfig('sleep.time'))
-    process = check(.Object)
-  }
-  
-  return(process$statusType == "ProcessSucceeded")
-})
-
+#' @aliases running
 #' @export
-setGeneric(name="running", def = function(.Object, retry){standardGeneric("running")})
+running <- function(.Object, retry = FALSE){
+  status_is(id(.Object), status = 'running', retry = retry)
+}
 
 #' @rdname successful-methods
-#' @aliases running
-setMethod(f = "running", signature(.Object = "geojob", retry = "logical"), definition = function(.Object, retry){
-  running(id(.Object), retry = retry)
-})
-
-#' @rdname successful-methods
-#' @aliases running
-setMethod(f = "running", signature(.Object = "geojob", retry = "missing"), definition = function(.Object, retry){
-  running(id(.Object), retry = FALSE)
-})
-
-#' @rdname successful-methods
-#' @aliases running
-setMethod(f = "running", signature(.Object = "character", retry = "missing"), definition = function(.Object, retry){
-  running(.Object, retry = FALSE)
-})
-
-#' @rdname successful-methods
-#' @aliases running
-setMethod(f = "running", signature(.Object = "character", retry = "logical"), definition = function(.Object, retry){
-  
-  process = check(.Object)
-  if (process$status == 'unknown' && retry){
-    Sys.sleep(gconfig('sleep.time'))
-    process = check(.Object)
-  }
-  return(process$statusType == "ProcessStarted" | process$statusType == "ProcessAccepted")
-})
-
+#' @aliases error
 #' @export
-setGeneric(name="error", def=function(.Object, retry){standardGeneric("error")})
+error <- function(.Object, retry = FALSE){
+  status_is(id(.Object), status = 'error', retry = retry)
+}
 
-#' @rdname successful-methods
-#' @aliases error
-setMethod(f = "error", signature(.Object = "geojob", retry = "missing"), definition = function(.Object, retry){
-  error(id(.Object), retry = FALSE)
-})
-
-#' @rdname successful-methods
-#' @aliases error
-setMethod(f = "error", signature(.Object = "geojob", retry = "logical"), definition = function(.Object, retry){
-  error(id(.Object), retry = retry)
-})
-
-#' @rdname successful-methods
-#' @aliases error
-setMethod(f = "error", signature(.Object = "character", retry = "missing"), definition = function(.Object, retry){
-  error(.Object, retry = retry)
-})
-
-#' @rdname successful-methods
-#' @aliases error
-setMethod(f = "error", signature(.Object = "character", retry = "logical"), definition = function(.Object, retry){
+status_is <- function(jobID, status, retry){
   
-  process = check(.Object)
+  process = check(jobID)
   if (process$status == 'unknown' && retry){
     Sys.sleep(gconfig('sleep.time'))
-    process = check(.Object)
+    process = check(jobID)
   }
-  return(process$statusType == "ProcessFailed")
-})
+  state <- process$statusType
+  switch(status, 
+         error = state == "ProcessFailed",
+         running = state == "ProcessStarted" | state == "ProcessAccepted",
+         successful = state == "ProcessSucceeded")
+}

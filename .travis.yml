@@ -1,40 +1,33 @@
-# Sample .travis.yml for R projects.
-#
-# See README.md for instructions, or for more configuration options,
-# see the wiki:
-#   https://github.com/craigcitro/r-travis/wiki
+# Defines the options for building the project on linux with Travis-CI
+# For more configuration options, see the wiki:
+# https://github.com/craigcitro/r-travis/wiki/Porting-to-native-R-support-in-Travis
 
-language: c
+language: r
 sudo: required
 dist: trusty
-script: ./travis-tool.sh run_tests
+warnings_are_errors: true
 
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install -y gdal-bin libgdal-dev libgdal1-dev netcdf-bin libproj-dev
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
-  - ./travis-tool.sh install_deps
+r_build_args: --no-build-vignettes --no-manual
+r_check_args: --no-build-vignettes --no-manual --as-cran
 
-install:
-  - ./travis-tool.sh install_deps
-  - ./travis-tool.sh github_package jimhester/covr
+repos:
+  CRAN: https://cran.rstudio.com
   
-env:
-   global:
-     - R_LIBS="http://cran.rstudio.com"
-     - R_BUILD_ARGS="--no-build-vignettes --no-manual"
-     - R_CHECK_ARGS="--no-build-vignettes --no-manual --as-cran"
-     - BOOTSTRAP_LATEX=""
-     - NOT_CRAN="true"
+before_install:
+  - sudo apt-get install -y libgdal-dev libproj-dev
+
+before_script:
+  - Rscript -e "install.packages('knitr')"
+  - Rscript -e "install.packages('rmarkdown')"
 
 r_github_packages:
  - jimhester/covr
-script: ./travis-tool.sh run_tests
 
 after_success:
   - Rscript -e 'covr::coveralls()'
+
+after_failure:
+  - ./travis-tool.sh dump_logs
 
 notifications:
   email:
