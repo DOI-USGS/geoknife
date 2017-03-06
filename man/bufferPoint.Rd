@@ -22,12 +22,11 @@ a buffered ring (i.e., a feature with non-zero area) centered.
 \examples{
 linearRing = bufferPoint(c(-111.48, 36.95))
 }
-\author{
-Jordan S. Read
-}
 \seealso{
 \linkS4class{simplegeom}
 }
+\author{
+Jordan S. Read
+}
 \keyword{internal}
 \keyword{methods,}
-

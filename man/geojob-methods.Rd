@@ -5,15 +5,19 @@
 \alias{geojob}
 \alias{geojob,ANY-method}
 \alias{geojob,geojob-method}
-\alias{id}
-\alias{id,character-method}
-\alias{id,geojob-method}
-\alias{id<-}
-\alias{id<-,geojob-method}
-\alias{xml}
-\alias{xml,geojob-method}
 \alias{xml<-}
 \alias{xml<-,geojob-method}
+\alias{xml}
+\alias{xml,geojob-method}
+\alias{id<-}
+\alias{id,geojob-method}
+\alias{id}
+\alias{id,geojob-method}
+\alias{id<-,geojob-method}
+\alias{id,geojob-method}
+\alias{id,geojob-method}
+\alias{id,character-method}
+\alias{id,geojob-method}
 \title{create geojob object}
 \usage{
 geojob(...)
@@ -61,4 +65,3 @@ id(gj)
 \author{
 Jordan S Read
 }
-

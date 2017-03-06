@@ -2,12 +2,16 @@
 % Please edit documentation in R/inputs-webprocess.R
 \docType{methods}
 \name{inputs<-}
+\alias{inputs<-}
 \alias{inputs}
 \alias{inputs,webprocess-method}
+\alias{inputs}
+\alias{inputs<-,webprocess,missing-method}
 \alias{inputs<-}
 \alias{inputs<-,webprocess,character-method}
+\alias{inputs<-}
 \alias{inputs<-,webprocess,list-method}
-\alias{inputs<-,webprocess,missing-method}
+\alias{inputs<-}
 \title{inputs of webprocess}
 \usage{
 inputs(.Object, ...) <- value
@@ -25,13 +29,13 @@ inputs(.Object, ..., value)
 \arguments{
 \item{.Object}{a webprocessing object}
 
-\item{...}{arguments matching fields in .Object's processInputs slot}
+\item{\dots}{arguments matching fields in .Object's processInputs slot}
 
 \item{value}{a field pair for .Object processInputs}
 
-\item{\dots}{arguments matching fields in .Object's processInputs slot}
-
 \item{.Object}{a webprocessing object}
+
+\item{...}{arguments matching fields in .Object's processInputs slot}
 }
 \description{
 The webprocess inputs are a list of parameter names and their associated values.  
@@ -54,4 +58,3 @@ inputs(wp, "DELIMITER")
 inputs(wp, "DELIMITER") <- "TAB"
 }
 \keyword{internal}
-

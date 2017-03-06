@@ -3,8 +3,10 @@
 \docType{methods}
 \name{webgeom}
 \alias{webgeom}
-\alias{webgeom,ANY-method}
 \alias{webgeom,missing-method}
+\alias{webgeom}
+\alias{webgeom,ANY-method}
+\alias{webgeom}
 \title{create webgeom object}
 \usage{
 webgeom(.Object, ...)
@@ -40,6 +42,7 @@ slots can be accessed or set with methods of the same names
 
 \item{\code{values}}{the values of the attribute, (e.g., "Wisconsin") or NA (all)}
 }}
+
 \examples{
 wg <- webgeom(geom = "sample:CONUS_states", 
  attribute = "STATE",
@@ -74,10 +77,9 @@ precipData <- result(job)
 head(precipData)
 }
 }
-\author{
-Jordan S Read
-}
 \seealso{
 \code{\link{url}}, \code{\link{geom}}, \code{\link{attribute}}, \code{\link{values}}
 }
-
+\author{
+Jordan S Read
+}

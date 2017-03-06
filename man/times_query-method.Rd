@@ -3,7 +3,9 @@
 \docType{methods}
 \name{times_query}
 \alias{times_query}
+\alias{times_query,webdata-method}
 \alias{times_query,webdata,missing-method}
+\alias{times_query,webdata-method}
 \alias{times_query,webdata,webprocess-method}
 \alias{times_query,webdata-method}
 \title{times query}
@@ -18,4 +20,3 @@ times_query(fabric, knife)
 query a webdata object for the time range
 }
 \keyword{internal}
-

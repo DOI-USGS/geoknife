@@ -3,9 +3,14 @@
 \docType{methods}
 \name{abstract}
 \alias{abstract}
-\alias{abstract,datagroup-method}
 \alias{title}
+\alias{abstract,datagroup-method}
+\alias{abstract}
+\alias{title}
+\alias{abstract}
 \alias{title,datagroup-method}
+\alias{abstract}
+\alias{title}
 \title{get abstract from a datagroup}
 \usage{
 abstract(.Object)
@@ -22,4 +27,3 @@ title(.Object)
 \description{
 extracts the abstract information from a datagroup object
 }
-

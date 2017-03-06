@@ -13,4 +13,3 @@ gcontent(response)
 reverts to old parsing pre v1.1.0 for httr
 }
 \keyword{internal}
-

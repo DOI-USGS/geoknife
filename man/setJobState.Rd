@@ -19,4 +19,3 @@ direct calls to this private function, or as part of any \code{status} type
 method for geojob
 }
 \keyword{internal}
-

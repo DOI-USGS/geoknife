@@ -3,9 +3,13 @@
 \docType{methods}
 \name{algorithm}
 \alias{algorithm}
-\alias{algorithm,webprocess-method}
 \alias{algorithm<-}
+\alias{algorithm<-}
+\alias{algorithm}
+\alias{algorithm,webprocess-method}
+\alias{algorithm}
 \alias{algorithm<-,webprocess-method}
+\alias{algorithm}
 \title{the algorithm of a webprocess object}
 \usage{
 algorithm(.Object)
@@ -30,4 +34,3 @@ or modified using the algorithm method.
 wp <- webprocess()
 algorithm(wp)
 }
-

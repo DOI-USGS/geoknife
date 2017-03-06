@@ -13,4 +13,3 @@ fetchGML_IDs(.Object)
 fetch GML_IDs from WFS when geom, attribute, and values are specified
 }
 \keyword{internal}
-

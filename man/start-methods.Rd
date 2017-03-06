@@ -38,4 +38,3 @@ gj <- start(gj)
 \seealso{
 \code{\link{check}}
 }
-

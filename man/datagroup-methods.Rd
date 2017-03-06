@@ -2,12 +2,15 @@
 % Please edit documentation in R/07-datagroup-obj.R
 \docType{methods}
 \name{datagroup}
-\alias{[,datagroup-method}
-\alias{[[,datagroup,ANY,ANY-method}
 \alias{datagroup}
 \alias{datagroup,ANY-method}
 \alias{datagroup,datagroup-methods}
 \alias{length,datagroup-method}
+\alias{datagroup,datagroup-methods}
+\alias{[,datagroup-method}
+\alias{datagroup,datagroup-methods}
+\alias{[[,datagroup,ANY,ANY-method}
+\alias{datagroup,datagroup-methods}
 \title{create datagroup object}
 \usage{
 datagroup(...)
@@ -40,4 +43,3 @@ A class representing a geoknife job (\code{datagroup}).
 \author{
 Jordan S Read
 }
-

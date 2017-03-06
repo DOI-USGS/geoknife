@@ -3,6 +3,7 @@
 \docType{methods}
 \name{email}
 \alias{email}
+\alias{email,geojob-method}
 \alias{email,geojob,webprocess-method}
 \alias{email,geojob-method}
 \title{email user when processing job is complete}
@@ -18,4 +19,3 @@ email(geojob, knife)
 configure job to send an email when complete (success or failure)
 }
 \keyword{internal}
-
