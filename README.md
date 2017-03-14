@@ -16,7 +16,7 @@ install.packages("geoknife")
 
 ``` r
   library(knitr)
-  opts_chunk$set(fig.path = "vignettes/figure/", dev='png') 
+  opts_chunk$set(fig.path = "inst/", dev='png') 
 ```
 
 To install the stable version of `geoknife` package with dependencies:
@@ -92,7 +92,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=d85ecb51-1957-44a9-8f85-6002c05f8c8dOUTPUT"
+    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=4ee0f066-54de-45c0-b37c-0a2bc30b0ad9OUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -112,7 +112,7 @@ data <- result(job)
 plot(data[,1:2], ylab = variables(fabric))
 ```
 
-![](vignettes/figure/unnamed-chunk-7-1.png)
+![](inst/unnamed-chunk-7-1.png)
 
 ##### use an email to listen for process completion
 

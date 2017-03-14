@@ -29,7 +29,7 @@ install.packages("geoknife")
 
 ```{r setup}
   library(knitr)
-  opts_chunk$set(fig.path = "vignettes/figure/", dev='png') 
+  opts_chunk$set(fig.path = "inst/", dev='png') 
 ```
 
 To install the stable version of `geoknife` package with dependencies:  
