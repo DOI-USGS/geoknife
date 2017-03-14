@@ -1,4 +1,4 @@
-`geoknife` package version 1.5.2
+`geoknife` package version 1.5.4
 ================================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)
@@ -12,6 +12,11 @@ To install the `geoknife` from CRAN:
 
 ``` r
 install.packages("geoknife")
+```
+
+``` r
+  library(knitr)
+  opts_chunk$set(fig.path = "vignettes/figure/", dev='png') 
 ```
 
 To install the stable version of `geoknife` package with dependencies:
@@ -87,7 +92,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=289eb8f9-858a-4234-b19c-cf0d6a6ba505OUTPUT"
+    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=d85ecb51-1957-44a9-8f85-6002c05f8c8dOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -107,7 +112,7 @@ data <- result(job)
 plot(data[,1:2], ylab = variables(fabric))
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](vignettes/figure/unnamed-chunk-7-1.png)
 
 ##### use an email to listen for process completion
 
