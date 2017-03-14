@@ -1,7 +1,7 @@
 `geoknife` package version 1.5.4
 ================================
 
-[![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/USGS-R/geoknife/badge.svg)](https://coveralls.io/r/USGS-R/geoknife) [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)
+[![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/github/USGS-R/geoknife/badge.svg?branch=master)](https://coveralls.io/github/USGS-R/geoknife?branch=master) [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)
 Tools for geo-web processing of gridded data via the [Geo Data Portal](https://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
 <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
@@ -92,7 +92,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=4ee0f066-54de-45c0-b37c-0a2bc30b0ad9OUTPUT"
+    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=7a6dcf4f-5a74-4a99-833d-587d9f875caaOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
