@@ -64,3 +64,16 @@ test_that("error is thrown on job start for read only vars", {
   expect_error(job <- geoknife(stencil = c(-89,42), fabric = 'prism', TIME_START='1990-01-01T00:00:000Z', wait=TRUE))
   expect_error(job <- geoknife(stencil = c(-89,42), fabric = 'prism', TIME_START='1990-01-01T00:00:000Z'))
 })
+
+context("create webprocess from geojob")
+
+test_that("given a geojob, we can create a webprocess", {
+  xml <- readLines(system.file("extdata/state_webgeom_post.xml", 
+                               package = packageName()), warn = FALSE)
+  geojob <- geojob(xml=xml)
+  webprocess <- webprocess(geojob)
+  expect_equal(algorithm(webprocess), "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm")
+  expect_equal(version(webprocess), "1.0.0")
+  expect_equal(url(webprocess), "https://cida.usgs.gov/gdp/process/WebProcessingService")
+  expect_equal(length(inputs(webprocess)), 11)
+})
