@@ -39,4 +39,20 @@ setMethod(f = "algorithm<-",signature = "webprocess",
           definition = function(.Object,value){
             .Object <- initialize(.Object, algorithm = value)
             return(.Object)
-          })
+          }
+)
+
+#'@rdname algorithm-webprocess
+#'@aliases algorithm
+setMethod(f = "algorithm",signature="XMLAbstractDocument",
+          definition = function(.Object){
+            xpath <- "//wps:Execute/ows:Identifier" # worried about namespaces?
+            
+            algo <- getNodeSet(.Object, xpath)
+            if (length(algo) != 1) {
+              stop("Invalid XML, algorithm must be defined (or only once)")
+            }
+            algo <- xmlValue(algo[[1]])
+            return(algo)
+          }
+)
