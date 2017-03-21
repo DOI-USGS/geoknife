@@ -182,8 +182,7 @@ setAs("geojob", "webprocess", function(from) {
   
   xmlDoc <- XML::xmlParse(xml(from))
   algorithm(.Object) <- list(algorithm(xmlDoc))
-  # needs implementing
-  # inputs(.Object) <- inputs(xmlDoc)
+  inputs(.Object) <- inputs(xmlDoc)
   
   return(.Object)
 })

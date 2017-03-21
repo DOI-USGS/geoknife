@@ -50,6 +50,27 @@ setMethod(f = "inputs",signature = "webprocess",
             }
           })
 
+#'@rdname inputs-webprocess
+#'@aliases inputs
+setMethod(f = "inputs",signature = "XMLAbstractDocument",
+          definition = function(.Object, ...){
+            inputXpath <- "//wps:Execute/wps:DataInputs/wps:Input"
+            
+            inputs <- XML::getNodeSet(.Object, inputXpath)
+            results <- list()
+            names <- c()
+            for (i in 1:length(inputs)) {
+              xmlList <- XML::xmlToList(inputs[[i]], addAttributes = FALSE)
+              # only extract literal data
+              if (!is.null(xmlList$Data) && !is.null(xmlList$Data$LiteralData)) {
+                results <- c(results, xmlList$Data$LiteralData)
+                names <- c(names, xmlList$Identifier)
+              }
+            }
+            names(results) <- names
+            
+            return(results)
+          })
 
 #'@rdname inputs-webprocess
 #'@aliases inputs<-
