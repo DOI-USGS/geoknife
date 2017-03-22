@@ -66,7 +66,7 @@ test_that("error is thrown on job start for read only vars", {
 })
 
 context("create webprocess from geojob")
-
+gconfig(wps.url = "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
 test_that("given a geojob, we can create a webprocess", {
   xml <- readLines(system.file("extdata/state_webgeom_post.xml", 
                                package = "geoknife"), warn = FALSE)
