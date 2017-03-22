@@ -5,6 +5,8 @@
 \alias{geojob}
 \alias{geojob,ANY-method}
 \alias{geojob,geojob-method}
+\alias{geojob,ANY-method}
+\alias{geojob,geojob-method}
 \alias{xml<-}
 \alias{xml<-,geojob-method}
 \alias{xml}
@@ -22,7 +24,9 @@
 \usage{
 geojob(...)
 
-\S4method{geojob}{ANY}(...)
+\S4method{geojob}{ANY}(xml, urlSlot = NULL)
+
+\S4method{geojob}{ANY}(xml, urlSlot = NULL)
 
 xml(.Object) <- value
 
@@ -41,6 +45,8 @@ id(.Object)
 }
 \arguments{
 \item{...}{additional arguments passed to initialize method}
+
+\item{xml}{location of xml}
 
 \item{.Object}{a \code{\link{geojob}} object}
 

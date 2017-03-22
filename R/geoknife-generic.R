@@ -82,7 +82,6 @@ geoknife <- function(stencil, fabric, knife = webprocess(...), ...){
   return(geojob)
 }
 
-
 #'@importFrom httr content_type_xml
 genericExecute	<-	function(url,requestXML){
 

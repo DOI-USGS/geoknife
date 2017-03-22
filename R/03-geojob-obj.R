@@ -56,6 +56,31 @@ setMethod("geojob", signature(), function(...) {
   return(geojob)
 })
 
+#'@param xml location of xml 
+#'@rdname geojob-methods
+#'@importFrom httr GET 
+#'@importFrom RCurl url.exists
+#'@importFrom XML xmlTreeParse xmlAttrs xmlRoot
+#'@aliases geojob,geojob-method
+setMethod("geojob", signature("ANY"), function(xml, urlSlot = NULL) {
+  ## create new geojob object
+  job <- new("geojob")
+  #parse based on xml class
+  if(is.character(xml)) {
+    if(url.exists(xml)){
+      doc <- GET(xmlLocation)
+    } 
+    doc <- xmlTreeParse(doc)
+  } 
+  #fill slots
+  xml(job) <- toString.XMLNode(doc$doc$children[[1]])
+  job@algorithm.version <- xmlAttrs(xmlRoot(doc))[['version']] #TODO: with XML not xml2
+  if(!is.null(urlSlot)){
+    url(job) <- urlSlot
+  }
+  return(job)
+})
+
 #'@rdname geojob-methods
 #'@aliases xml<-,geojob-method
 #'@param .Object a \code{\link{geojob}} object
