@@ -12,6 +12,7 @@
 #'@aliases 
 #'algorithm
 #'algorithm<-
+#'@importFrom XML getNodeSet xmlValue
 #'@rdname algorithm-webprocess
 #'@export
 setGeneric(name="algorithm",def=function(.Object){
@@ -46,7 +47,7 @@ setMethod(f = "algorithm<-",signature = "webprocess",
 #'@aliases algorithm
 setMethod(f = "algorithm",signature="XMLAbstractDocument",
           definition = function(.Object){
-            xpath <- "//wps:Execute/ows:Identifier" # worried about namespaces?
+            xpath <- "//wps:Execute/ows:Identifier"
             
             algo <- getNodeSet(.Object, xpath)
             if (length(algo) != 1) {
