@@ -72,7 +72,7 @@ test_that("given a geojob, we can create a webprocess", {
                                package = packageName()), warn = FALSE)
   geojob <- geojob(xml=xml)
   webprocess <- webprocess(geojob)
-  expect_equal(algorithm(webprocess), list("gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"))
+  expect_equal(algorithm(webprocess), list("Area Grid Statistics (weighted)"="gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"))
   expect_equal(version(webprocess), "1.0.0")
   expect_equal(url(webprocess), "https://cida.usgs.gov/gdp/process/WebProcessingService")
   expect_equal(length(inputs(webprocess)), 11)

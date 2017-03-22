@@ -53,6 +53,13 @@ setMethod(f = "algorithm",signature="XMLAbstractDocument",
               stop("Invalid XML, algorithm must be defined (or only once)")
             }
             algo <- xmlValue(algo[[1]])
-            return(algo)
+            
+            # want friendly names for algorithms
+            if (sum(grepl(algo, getKnives())) == 1) {
+              result <- getKnives()[[grep(algo, getKnives())]][[1]]
+            } else {
+              result <- list(algo)
+            }
+            return(result)
           }
 )
