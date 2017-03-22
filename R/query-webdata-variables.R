@@ -28,7 +28,9 @@ setMethod(f = "variables_query",signature = c("webdata","missing"),
 #'@export
 setMethod(f = "variables_query",signature = c("webdata","webprocess"), 
           definition = function(fabric, knife){
-            
+            if (is.na(url(fabric))){
+              stop('url cannot be NA for fabric argument when querying for available variables', call. = FALSE)
+            } 
             root <- newXMLNode(name='wps:Execute',
                               attrs=c('service'="WPS",'version'= version(knife),
                                       'xsi:schemaLocation' = paste(c(knife@WPS_NAMESPACE,knife@WPS_SCHEMA_LOCATION),collapse=" ")),

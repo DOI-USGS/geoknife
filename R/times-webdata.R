@@ -26,7 +26,7 @@ setGeneric(name="times<-",def=function(.Object, value){standardGeneric("times<-"
 setMethod(f = "times<-",signature(.Object = "webdata"),
           definition = function(.Object, value){
             if (length(value) != 2){
-              stop('times input must be a POSIXct vector of length 2')
+              stop('times input must be a POSIXct vector of length 2', call. = FALSE)
             }
             
             if (!any(is.na(value)) && value[1] > value[2]){

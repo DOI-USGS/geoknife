@@ -3,7 +3,8 @@
 #' two fields: \code{status} and \code{URL}. If the \linkS4class{geojob} object has not been executed
 #' (see \code{\link{start}}), this method returns \code{status}='none' and \code{URL}=NULL.
 #'
-#'@param .Object a \linkS4class{geojob} object with an active GDP process request.
+#'@param .Object a \linkS4class{geojob} object with an active GDP process request, 
+#' or a \code{character} URL of an existing job
 #'@return \code{process}, a list containing
 #' \code{status} and \code{URL}. 
 #'
@@ -13,6 +14,7 @@
 #'@author Jordan S. Read
 #'@seealso \code{\link{start}}
 #'@importFrom XML xmlTreeParse xmlNamespaceDefinitions xmlRoot
+#' @importFrom httr http_error
 #'@rdname check-geojob
 #'@examples 
 #'gj <- geojob() # create geojob object
@@ -25,14 +27,20 @@ setGeneric(name="check",def=function(.Object){standardGeneric("check")})
 setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Object){
 
 	process	<-	list(status=NULL,URL=NULL)
-	if (id(.Object)=="<no active job>"){
-		process$status	<-	'none'
+	if (id(.Object) == "<no active job>"){
+		process$status <- 'none'
 		process$statusType <- 'none'
     return(process)
+	} else if (!is.geojobID(id(.Object))) {
+	  stop(id(.Object), ' is not a valid geojob ID. Status cannot be checked', call. = FALSE)
 	}
 
 	checkForComplete = tryCatch({
-    gGET(url = id(.Object))
+    resp <- gGET(url = id(.Object))
+    if (httr::http_error(resp)) {
+      stop('bad response from server', call. = FALSE)
+    }
+    resp
     },error = function(e) {
       return(NULL)
       }
@@ -61,4 +69,10 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
   
   setJobState(process$status)
 	return(process)
+})
+
+#'@rdname check-geojob
+#'@aliases check
+setMethod(f = "check",signature(.Object = "character"), definition = function(.Object){
+  check(geojob(id = .Object))
 })

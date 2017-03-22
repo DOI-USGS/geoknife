@@ -3,18 +3,22 @@
 \docType{methods}
 \name{result}
 \alias{result}
+\alias{result,character-method}
 \alias{result,geojob-method}
 \title{parse process output into R environment}
 \usage{
 result(.Object, ...)
 
 \S4method{result}{geojob}(.Object, ...)
+
+\S4method{result}{character}(.Object, ...)
 }
 \arguments{
-\item{.Object}{a \code{\link{geojob}} object with a successful processID. 
+\item{.Object}{a \code{\link{geojob}} object with a successful processID,
+or a \code{character} URL of a completed job.
 (See \code{\link{check}}).}
 
-\item{...}{additional arguments passed to parsers (e.g., keep.units = TRUE)}
+\item{...}{additional arguments passed to parsers (e.g., with.units = TRUE)}
 }
 \value{
 data.frame of timeseries values.
@@ -26,6 +30,10 @@ a \code{geojob} method for loading data into R from a completed processing reque
 \dontrun{
 job <- geoknife(stencil = c(-89,42), fabric = 'prism', wait = TRUE)
 result(job, with.units = TRUE) # load and print output
+
+# or use the job id:
+id <- id(job)
+result(id, with.units = TRUE) # load and print output
 }
 
 }

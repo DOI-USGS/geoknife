@@ -117,6 +117,19 @@ setMethod(f = "id<-",signature = "geojob", definition = function(.Object, value)
 setMethod(f = "id",signature = "geojob", definition = function(.Object){
   value <- .Object@id
   return(value)
-}
-)
+})
+
+#'@rdname geojob-methods
+#'@aliases id,geojob-method
+setMethod(f = "id",signature = "character", definition = function(.Object){
+  if (is.geojobID(.Object)){
+    return(.Object)  
+  } else {
+    stop(.Object, ' is not a valid geojob id')
+  }
   
+})
+
+is.geojobID <- function(id){
+  grepl('?id=', id)
+}

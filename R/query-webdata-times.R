@@ -26,8 +26,13 @@ setMethod(f = "times_query",signature = c("webdata","missing"),
 setMethod(f = "times_query",signature = c("webdata","webprocess"), 
           definition = function(fabric, knife){
             
-            if (is.na(variables(fabric)[1])) stop('variables cannot be NA for fabric argument')
-            if (length(variables(fabric)) > 1) warning('variables is > 1, using ', variables(fabric)[1], ' only')    
+            if (any(is.na(variables(fabric)))){
+              stop('variables cannot be NA for fabric argument when querying for available time range', call. = FALSE)
+            } 
+            if (length(variables(fabric)) > 1) {
+              warning('variables is > 1, using ', variables(fabric)[1], 
+                      ' only when querying for available time range', call. = FALSE)    
+            }
             
             root <- newXMLNode(name='wps:Execute',
                                attrs=c('service'="WPS",'version'= version(knife),

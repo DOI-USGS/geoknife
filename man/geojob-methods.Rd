@@ -6,6 +6,7 @@
 \alias{geojob,ANY-method}
 \alias{geojob,geojob-method}
 \alias{id}
+\alias{id,character-method}
 \alias{id,geojob-method}
 \alias{id<-}
 \alias{id<-,geojob-method}
@@ -31,6 +32,8 @@ id(.Object)
 \S4method{id}{geojob}(.Object) <- value
 
 \S4method{id}{geojob}(.Object)
+
+\S4method{id}{character}(.Object)
 }
 \arguments{
 \item{...}{additional arguments passed to initialize method}
