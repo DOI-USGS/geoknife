@@ -27,10 +27,12 @@ setMethod(f="initialize",signature="geojob",
             id = '<no active job>',
             url = as.character(NA),
             algorithm.version = as.character(NULL),
-            xml = as.character(NA)){
+            xml = as.character(NA)
+            ){
             
             .Object@xml <- xml
             .Object@id	<- id
+            .Object@url <- url
             .Object@package.version = as.character(package_version(packageVersion(getPackageName())))
             .Object@algorithm.version = algorithm.version
             return(.Object)
@@ -43,43 +45,52 @@ setMethod(f="initialize",signature="geojob",
 #' @author Jordan S Read
 #' @rdname geojob-methods
 #' @export
-setGeneric("geojob", function(...) {
+setGeneric("geojob", function(xml, ...) {
   standardGeneric("geojob")
 })
 
 #'@param ... additional arguments passed to initialize method
 #'@rdname geojob-methods
 #'@aliases geojob,geojob-method
-setMethod("geojob", signature(), function(...) {
+setMethod("geojob", signature("missing"), function(xml, ...) {
   ## create new geojob object
   geojob <- new("geojob",...)
   return(geojob)
 })
 
-#'@param xml location of xml 
-#'@rdname geojob-methods
-#'@importFrom httr GET 
-#'@importFrom RCurl url.exists
-#'@importFrom XML xmlTreeParse xmlAttrs xmlRoot
-#'@aliases geojob,geojob-method
-setMethod("geojob", signature("ANY"), function(xml, urlSlot = NULL) {
-  ## create new geojob object
-  job <- new("geojob")
-  #parse based on xml class
-  if(is.character(xml)) {
-    if(url.exists(xml)){
-      doc <- GET(xmlLocation)
-    } 
-    doc <- xmlTreeParse(doc)
-  } 
-  #fill slots
-  xml(job) <- toString.XMLNode(doc$doc$children[[1]])
-  job@algorithm.version <- xmlAttrs(xmlRoot(doc))[['version']] #TODO: with XML not xml2
-  if(!is.null(urlSlot)){
-    url(job) <- urlSlot
-  }
+#' @importFrom XML toString.XMLNode xmlAttrs xmlRoot
+#' @rdname geojob-methods
+#' @aliases geojob,geojob-method
+setMethod("geojob", signature("XMLDocument"), function(xml, ...) {
+  #slots
+  browser()
+  xmlText <- toString.XMLNode(xml$doc$children[[1]])
+  algorithm.version <- xmlAttrs(xmlRoot(xml))[['version']] #TODO: with XML not xml2
+  
+  job <- new("geojob", xml = xmlText, 
+             algorithm.version = algorithm.version, ...)
   return(job)
 })
+
+
+#'@param xml location of xml (URL or local path) 
+#'@rdname geojob-methods
+#'@importFrom RCurl url.exists
+#'@importFrom XML xmlTreeParse 
+#'@aliases geojob,geojob-method
+setMethod("geojob", signature("character"), function(xml, ...) {
+  #parse based on xml class
+  if(url.exists(xml)){
+    xml <- gGET(xml)
+  } 
+  doc <- xmlTreeParse(xml)
+  job <- geojob(xml = doc, ...) 
+  return(job)
+})
+
+
+
+
 
 #'@rdname geojob-methods
 #'@aliases xml<-,geojob-method

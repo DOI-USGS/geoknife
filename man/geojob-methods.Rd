@@ -3,9 +3,11 @@
 \docType{methods}
 \name{geojob}
 \alias{geojob}
-\alias{geojob,ANY-method}
+\alias{geojob,missing-method}
 \alias{geojob,geojob-method}
-\alias{geojob,ANY-method}
+\alias{geojob,XMLDocument-method}
+\alias{geojob,geojob-method}
+\alias{geojob,character-method}
 \alias{geojob,geojob-method}
 \alias{xml<-}
 \alias{xml<-,geojob-method}
@@ -22,11 +24,13 @@
 \alias{id,geojob-method}
 \title{create geojob object}
 \usage{
-geojob(...)
+geojob(xml, ...)
 
-\S4method{geojob}{ANY}(xml, urlSlot = NULL)
+\S4method{geojob}{missing}(xml, ...)
 
-\S4method{geojob}{ANY}(xml, urlSlot = NULL)
+\S4method{geojob}{XMLDocument}(xml, ...)
+
+\S4method{geojob}{character}(xml, ...)
 
 xml(.Object) <- value
 
@@ -44,9 +48,9 @@ id(.Object)
 \S4method{id}{character}(.Object)
 }
 \arguments{
-\item{...}{additional arguments passed to initialize method}
+\item{xml}{location of xml (URL or local path)}
 
-\item{xml}{location of xml}
+\item{...}{additional arguments passed to initialize method}
 
 \item{.Object}{a \code{\link{geojob}} object}
 
