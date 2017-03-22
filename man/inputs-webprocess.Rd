@@ -6,6 +6,8 @@
 \alias{inputs}
 \alias{inputs,webprocess-method}
 \alias{inputs}
+\alias{inputs,XMLAbstractDocument-method}
+\alias{inputs}
 \alias{inputs<-,webprocess,missing-method}
 \alias{inputs<-}
 \alias{inputs<-,webprocess,character-method}
@@ -19,6 +21,8 @@ inputs(.Object, ...) <- value
 inputs(.Object, ..., value)
 
 \S4method{inputs}{webprocess}(.Object, ..., value)
+
+\S4method{inputs}{XMLAbstractDocument}(.Object, ..., value)
 
 \S4method{inputs}{webprocess,missing}(.Object, ...) <- value
 
