@@ -3,9 +3,13 @@
 \docType{methods}
 \name{times}
 \alias{times}
-\alias{times,webdata-method}
 \alias{times<-}
+\alias{times<-}
+\alias{times}
 \alias{times<-,webdata-method}
+\alias{times}
+\alias{times,webdata-method}
+\alias{times}
 \title{the times of an webdata object}
 \usage{
 times(.Object)
@@ -30,4 +34,3 @@ times(wd) <- as.POSIXct(c("2012-11-04", "2012-11-12"))
 times(wd)[1] <- as.POSIXct("2012-11-04")
 times(wd)
 }
-

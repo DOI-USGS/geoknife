@@ -3,8 +3,9 @@
 \docType{methods}
 \name{variables}
 \alias{variables}
-\alias{variables,webdata-method}
 \alias{variables<-}
+\alias{variables<-}
+\alias{variables,webdata-method}
 \alias{variables<-,webdata-method}
 \title{the variables of a webdata object}
 \usage{
@@ -25,4 +26,3 @@ variables(.Object) <- value
 \description{
 access or set the variables of a webdata object
 }
-

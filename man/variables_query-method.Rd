@@ -3,7 +3,9 @@
 \docType{methods}
 \name{variables_query}
 \alias{variables_query}
+\alias{variables_query,webdata-method}
 \alias{variables_query,webdata,missing-method}
+\alias{variables_query,webdata-method}
 \alias{variables_query,webdata,webprocess-method}
 \alias{variables_query,webdata-method}
 \title{variables query}
@@ -21,4 +23,3 @@ variables_query(fabric, knife)
 find possible variables in a webdata datset
 }
 \keyword{internal}
-

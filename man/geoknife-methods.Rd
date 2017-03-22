@@ -60,4 +60,3 @@ job <- geoknife(webgeom("state::Wisconsin"), fabric = 'prism', email = 'fake.ema
 
 }
 }
-

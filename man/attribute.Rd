@@ -2,9 +2,11 @@
 % Please edit documentation in R/attribute-webgeom.R
 \docType{methods}
 \name{attribute<-}
-\alias{attribute}
 \alias{attribute<-}
+\alias{attribute}
+\alias{attribute}
 \alias{attribute<-,webgeom-method}
+\alias{attribute}
 \title{the attribute of an webgeom object}
 \usage{
 attribute(.Object) <- value
@@ -21,4 +23,3 @@ attribute(.Object)
 \description{
 get or set the attribute of a webgeom object.
 }
-

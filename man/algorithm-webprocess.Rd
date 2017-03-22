@@ -3,9 +3,15 @@
 \docType{methods}
 \name{algorithm}
 \alias{algorithm}
-\alias{algorithm,webprocess-method}
 \alias{algorithm<-}
+\alias{algorithm<-}
+\alias{algorithm}
+\alias{algorithm,webprocess-method}
+\alias{algorithm}
 \alias{algorithm<-,webprocess-method}
+\alias{algorithm}
+\alias{algorithm,XMLAbstractDocument-method}
+\alias{algorithm}
 \title{the algorithm of a webprocess object}
 \usage{
 algorithm(.Object)
@@ -15,6 +21,8 @@ algorithm(.Object) <- value
 \S4method{algorithm}{webprocess}(.Object)
 
 \S4method{algorithm}{webprocess}(.Object) <- value
+
+\S4method{algorithm}{XMLAbstractDocument}(.Object)
 }
 \arguments{
 \item{.Object}{a \linkS4class{webprocess} object}
@@ -30,4 +38,3 @@ or modified using the algorithm method.
 wp <- webprocess()
 algorithm(wp)
 }
-

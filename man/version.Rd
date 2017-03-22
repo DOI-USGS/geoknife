@@ -2,10 +2,13 @@
 % Please edit documentation in R/version-generic.R
 \docType{methods}
 \name{version<-}
+\alias{version<-}
+\alias{version}
+\alias{version}
+\alias{version<-,ANY-method}
 \alias{version}
 \alias{version,ANY-method}
-\alias{version<-}
-\alias{version<-,ANY-method}
+\alias{version}
 \title{the version of an object}
 \usage{
 version(.Object) <- value
@@ -24,4 +27,3 @@ version(.Object)
 \description{
 get the version of webgeom or webprocess
 }
-

@@ -3,8 +3,8 @@
 \docType{methods}
 \name{XML}
 \alias{XML}
-\alias{XML,ANY,webdata,webprocess-method}
 \alias{XML,webgeom-method}
+\alias{XML,ANY,webdata,webprocess-method}
 \title{XML from set of objects}
 \usage{
 XML(stencil, fabric, knife)
@@ -33,4 +33,3 @@ sg <- simplegeom(c(-89,45))
 XML(sg, wd, webprocess())
 }
 }
-

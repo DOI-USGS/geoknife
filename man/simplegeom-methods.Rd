@@ -3,8 +3,10 @@
 \docType{methods}
 \name{simplegeom}
 \alias{simplegeom}
-\alias{simplegeom,ANY-method}
 \alias{simplegeom,missing-method}
+\alias{simplegeom}
+\alias{simplegeom,ANY-method}
+\alias{simplegeom}
 \title{Create simplegeom object}
 \usage{
 simplegeom(.Object, ...)
@@ -41,4 +43,3 @@ simplegeom(data.frame('point1'=c(-89, 46), 'point2'=c(-88.6, 45.2)))
 \author{
 Jordan S Read
 }
-

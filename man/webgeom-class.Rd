@@ -35,8 +35,8 @@ Can be set or accessed using \code{\link[geoknife]{version}}}
 
 \item{\code{GML_SCHEMA_LOCATION}}{(_private) web location of GML schema location}
 }}
+
 \seealso{
 \code{\link{webgeom}}, \code{\link[geoknife]{url}}, \code{\link[geoknife]{geom}}, 
 \code{\link[geoknife]{attribute}}, \code{\link[geoknife]{values}}, \code{\link[geoknife]{version}}
 }
-
