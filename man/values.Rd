@@ -2,10 +2,13 @@
 % Please edit documentation in R/values-webgeom.R
 \docType{methods}
 \name{values<-}
+\alias{values<-}
+\alias{values}
+\alias{values}
+\alias{values<-,webgeom-method}
 \alias{values}
 \alias{values,webgeom-method}
-\alias{values<-}
-\alias{values<-,webgeom-method}
+\alias{values}
 \title{the values of a webgeom}
 \usage{
 values(.Object) <- value
@@ -32,4 +35,3 @@ wg <- webgeom('state::Wisconsin')
 values(wg)
 values(wg) <- c('Wisconsin','New Hampshire')
 }
-

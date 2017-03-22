@@ -24,11 +24,10 @@ a function for loading data into R from a file (or URL) from a completed process
 local_file <- system.file('extdata','tsv_linear_ring.tsv', package = 'geoknife')
 output <- parseTimeseries(local_file, delim = '\\t')
 }
-\author{
-Luke A. Winslow, Jordan S. Read
-}
 \seealso{
 \code{\link{check}}, \code{\link{download}}, \code{\link{parseCategorical}}
 }
+\author{
+Luke A. Winslow, Jordan S. Read
+}
 \keyword{methods}
-

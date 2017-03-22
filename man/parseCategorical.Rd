@@ -26,4 +26,3 @@ output <- parseCategorical(local.file, delim = ',')
 \code{\link{check}}, \code{\link{download}}, \code{\link{parseTimeseries}}
 }
 \keyword{methods}
-

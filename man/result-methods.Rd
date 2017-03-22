@@ -3,8 +3,10 @@
 \docType{methods}
 \name{result}
 \alias{result}
-\alias{result,character-method}
 \alias{result,geojob-method}
+\alias{result}
+\alias{result,character-method}
+\alias{result}
 \title{parse process output into R environment}
 \usage{
 result(.Object, ...)
@@ -41,4 +43,3 @@ result(id, with.units = TRUE) # load and print output
 Jordan S. Read
 }
 \keyword{methods}
-

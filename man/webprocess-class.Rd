@@ -47,8 +47,8 @@ public slot \code{url}}
 
 \item{\code{emailK}}{(_private) relative url for email when complete utility.}
 }}
+
 \seealso{
 \code{\link{webprocess}}, \code{\link[geoknife]{url}}, 
 \code{\link[geoknife]{algorithm}}, \code{\link[geoknife]{version}}
 }
-

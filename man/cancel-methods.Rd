@@ -41,4 +41,3 @@ gj <- cancel(gj)
 \code{check}, \code{start}
 }
 \keyword{methods}
-

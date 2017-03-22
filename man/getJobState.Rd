@@ -13,4 +13,3 @@ getJobState()
 convienence function for retrieving package-level \code{jobState}
 }
 \keyword{internal}
-

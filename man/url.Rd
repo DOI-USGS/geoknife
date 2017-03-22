@@ -2,14 +2,21 @@
 % Please edit documentation in R/url-generic.R
 \docType{methods}
 \name{url<-}
+\alias{url<-}
+\alias{url}
+\alias{url}
+\alias{url<-,ANY-method}
+\alias{url}
+\alias{url<-,webprocess-method}
+\alias{url}
+\alias{url,character-method}
+\alias{url}
+\alias{url,missing-method}
+\alias{url}
+\alias{url,datagroup-method}
 \alias{url}
 \alias{url,ANY-method}
-\alias{url,character-method}
-\alias{url,datagroup-method}
-\alias{url,missing-method}
-\alias{url<-}
-\alias{url<-,ANY-method}
-\alias{url<-,webprocess-method}
+\alias{url}
 \title{the url of an object}
 \usage{
 url(.Object) <- value
@@ -40,4 +47,3 @@ These are only used when the .Object argument is character or missing
 \description{
 get or set the url of an object
 }
-

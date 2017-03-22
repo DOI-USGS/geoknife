@@ -7,9 +7,9 @@
 gconfig(..., no.readonly = FALSE)
 }
 \arguments{
-\item{no.readonly}{currently not implemented for \code{TRUE}}
-
 \item{\dots}{values for gconfig}
+
+\item{no.readonly}{currently not implemented for \code{TRUE}}
 }
 \value{
 Borrowed text and functionality from \code{\link[graphics]{par}}. 
@@ -29,4 +29,3 @@ gconfig('wait')
 gconfig('sleep.time' = 10)
 gconfig('sleep.time' = 8, wait=TRUE)
 }
-

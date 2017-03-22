@@ -13,4 +13,3 @@ TRUE or FALSE
 checks package job state and returns a boolean for whether a new job can be started
 }
 \keyword{internal}
-

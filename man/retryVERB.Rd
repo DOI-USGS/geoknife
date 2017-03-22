@@ -11,12 +11,11 @@ retryVERB(VERB, url, ..., retries = gconfig("retries"))
 
 \item{url}{a url}
 
-\item{retries}{number of times to try before failing}
-
 \item{\dots}{additional args passed into VERB}
+
+\item{retries}{number of times to try before failing}
 }
 \description{
 Useful for intermittent server issues, when a retry will get the job done
 }
 \keyword{internal}
-

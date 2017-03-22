@@ -177,3 +177,12 @@ setAs("character", "webprocess", function(from){
   return(.Object)
 })
 
+setAs("geojob", "webprocess", function(from) {
+  .Object <- webprocess(url = from@url, version = from@version)
+  
+  xmlDoc <- XML::xmlParse(xml(from))
+  algorithm(.Object) <- algorithm(xmlDoc)
+  inputs(.Object) <- inputs(xmlDoc)
+  
+  return(.Object)
+})

@@ -3,8 +3,10 @@
 \docType{methods}
 \name{check}
 \alias{check}
-\alias{check,character-method}
 \alias{check,geojob-method}
+\alias{check}
+\alias{check,character-method}
+\alias{check}
 \title{Check status of processing request}
 \usage{
 check(.Object)
@@ -34,10 +36,9 @@ two fields: \code{status} and \code{URL}. If the \linkS4class{geojob} object has
 gj <- geojob() # create geojob object
 check(gj) # no process for empty geojob object
 }
-\author{
-Jordan S. Read
-}
 \seealso{
 \code{\link{start}}
 }
-
+\author{
+Jordan S. Read
+}

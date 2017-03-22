@@ -3,10 +3,14 @@
 \docType{methods}
 \name{download}
 \alias{download}
-\alias{download,character,character-method}
-\alias{download,character,missing-method}
-\alias{download,geojob,character-method}
 \alias{download,geojob,missing-method}
+\alias{download}
+\alias{download,character,missing-method}
+\alias{download}
+\alias{download,geojob,character-method}
+\alias{download}
+\alias{download,character,character-method}
+\alias{download}
 \title{download output from geojob}
 \usage{
 download(.Object, destination, ...)
@@ -35,4 +39,3 @@ download the result of a processing job to a local destination.
 \author{
 Jordan S Read
 }
-
