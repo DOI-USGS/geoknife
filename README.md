@@ -6,6 +6,7 @@ Tools for geo-web processing of gridded data via the [Geo Data Portal](https://c
 <p align="center">
 <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
 </p>
+
 ### Installing `geoknife`
 
 To install the `geoknife` from CRAN:
