@@ -67,7 +67,7 @@ xml <- "<foo> <bar> text <baz/> </bar> </foo>"
 gj <- geojob()
 xml(gj) <- xml
 xml(gj)
-xml <- "<foo> <bar> text <baz/> </bar> </foo>"
+xml <- "<foo version=\\"1.0.0\\"> <bar> text <baz/> </bar> </foo>"
 gj <- geojob(xml = xml)
 xml(gj)
 id(gj)
