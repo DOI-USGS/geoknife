@@ -64,7 +64,7 @@ setMethod("geojob", signature("missing"), function(xml, ...) {
 setMethod("geojob", signature("XMLDocument"), function(xml, ...) {
   #slots
   xmlText <- toString.XMLNode(xml$doc$children[[1]])
-  algorithm.version <- xmlAttrs(xmlRoot(xml))[['version']] #TODO: with XML not xml2
+  algorithm.version <- xmlAttrs(xmlRoot(xml))[['version']] 
   
   job <- new("geojob", xml = xmlText, 
              algorithm.version = algorithm.version, ...)
