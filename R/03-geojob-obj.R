@@ -110,7 +110,7 @@ setMethod(f = "xml<-",signature = "geojob", definition = function(.Object, value
 #'@rdname geojob-methods
 #'@aliases xml,geojob-method
 #'@examples
-#'xml <- "<foo> <bar> text <baz/> </bar> </foo>"
+#'xml <- "<foo version=\"1.0.0\"> <bar> text <baz/> </bar> </foo>"
 #'gj <- geojob(xml = xml)
 #'xml(gj)
 #'@export
