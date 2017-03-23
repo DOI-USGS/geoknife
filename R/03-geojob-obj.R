@@ -25,7 +25,7 @@ setMethod(f="initialize",signature="geojob",
           definition=function(
             .Object, 
             id = '<no active job>',
-            url = as.character(NA),
+            url = character(0),
             algorithm.version = as.character(NULL),
             xml = as.character(NA)
             ){
@@ -63,7 +63,6 @@ setMethod("geojob", signature("missing"), function(xml, ...) {
 #' @aliases geojob,geojob-method
 setMethod("geojob", signature("XMLDocument"), function(xml, ...) {
   #slots
-  browser()
   xmlText <- toString.XMLNode(xml$doc$children[[1]])
   algorithm.version <- xmlAttrs(xmlRoot(xml))[['version']] #TODO: with XML not xml2
   
