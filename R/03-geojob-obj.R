@@ -75,12 +75,10 @@ setMethod("geojob", signature("XMLDocument"), function(xml, ...) {
 
 #'@param xml location of xml (URL or local path) 
 #'@rdname geojob-methods
-#'@importFrom RCurl url.exists
-#'@importFrom XML xmlTreeParse 
 #'@aliases geojob,geojob-method
 setMethod("geojob", signature("character"), function(xml, ...) {
   #parse based on xml class
-  if(url.exists(xml)){
+  if(startsWith(xml, "http")){
     xml <- gGET(xml)
   } 
   doc <- xmlTreeParse(xml)
