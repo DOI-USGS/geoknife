@@ -56,3 +56,13 @@ test_that("check status of an ID that failed", {
 test_that("result fails with failed job",{
   expect_error(result(failed.id), "processing is incomplete or has failed. See check()")
 })
+
+test_that("can create geojob from xml", {
+  xmlLoc <- system.file("extdata", "testjob.xml",
+                        package = "geoknife")
+  job <- geojob(xml = xmlLoc)
+  expect_equal(length(job@url), 0)
+  expect_gt(length(job@xml), 0)
+  jobWithURL <- geojob(xml = xmlLoc, url = "foo")
+  expect_equal(jobWithURL@url, "foo")
+})

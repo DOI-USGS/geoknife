@@ -25,12 +25,14 @@ setMethod(f="initialize",signature="geojob",
           definition=function(
             .Object, 
             id = '<no active job>',
-            url = as.character(NA),
+            url = character(0),
             algorithm.version = as.character(NULL),
-            xml = as.character(NA)){
+            xml = as.character(NA)
+            ){
             
             .Object@xml <- xml
             .Object@id	<- id
+            .Object@url <- url
             .Object@package.version = as.character(package_version(packageVersion(getPackageName())))
             .Object@algorithm.version = algorithm.version
             return(.Object)
@@ -43,18 +45,49 @@ setMethod(f="initialize",signature="geojob",
 #' @author Jordan S Read
 #' @rdname geojob-methods
 #' @export
-setGeneric("geojob", function(...) {
+setGeneric("geojob", function(xml, ...) {
   standardGeneric("geojob")
 })
 
 #'@param ... additional arguments passed to initialize method
 #'@rdname geojob-methods
 #'@aliases geojob,geojob-method
-setMethod("geojob", signature(), function(...) {
+setMethod("geojob", signature("missing"), function(xml, ...) {
   ## create new geojob object
   geojob <- new("geojob",...)
   return(geojob)
 })
+
+#' @importFrom XML toString.XMLNode xmlAttrs xmlRoot
+#' @rdname geojob-methods
+#' @aliases geojob,geojob-method
+setMethod("geojob", signature("XMLDocument"), function(xml, ...) {
+  #slots
+  xmlText <- toString.XMLNode(xml$doc$children[[1]])
+  algorithm.version <- xmlAttrs(xmlRoot(xml))[['version']] 
+  
+  job <- new("geojob", xml = xmlText, 
+             algorithm.version = algorithm.version, ...)
+  return(job)
+})
+
+
+#'@param xml location of xml (URL or local path) 
+#'@rdname geojob-methods
+#'@aliases geojob,geojob-method
+setMethod("geojob", signature("character"), function(xml, ...) {
+  #parse based on xml class
+  if(startsWith(xml, "http")){
+    xml <- gGET(xml)
+  } 
+  doc <- xmlTreeParse(xml)
+  job <- geojob(xml = doc, ...) 
+  return(job)
+})
+
+
+
+
 
 #'@rdname geojob-methods
 #'@aliases xml<-,geojob-method
@@ -77,7 +110,7 @@ setMethod(f = "xml<-",signature = "geojob", definition = function(.Object, value
 #'@rdname geojob-methods
 #'@aliases xml,geojob-method
 #'@examples
-#'xml <- "<foo> <bar> text <baz/> </bar> </foo>"
+#'xml <- "<foo version=\"1.0.0\"> <bar> text <baz/> </bar> </foo>"
 #'gj <- geojob(xml = xml)
 #'xml(gj)
 #'@export
