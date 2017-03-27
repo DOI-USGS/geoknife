@@ -106,12 +106,12 @@ setMethod("webdata", signature("character"), function(.Object=c("prism",  "iclus
 #' @rdname webdata-methods
 #' @aliases webdata
 setMethod("webdata", signature("geojob"), function(.Object, ...) {
-  xmlDF <- readGeojobXML(.Object@xml)
-  url <- xmlDF$val[xmlDF$id == "DATASET_URI"]
-  times <- xmlDF$val[xmlDF$id == "TIME_START" | xmlDF$id == "TIME_END"]
-  variables <- xmlDF$val[xmlDF$id == "OBSERVED_PROPERTY" | xmlDF$id == "DATASET_ID"]
+  xmlVals <- inputs(xmlParse(xml(.Object)))
+  url <- xmlVals[["DATASET_URI"]]
+  times <- c(xmlVals[["TIME_START"]], xmlVals[["TIME_END"]])
+  variables <- xmlVals[names(xmlVals) %in% c("OBSERVED_PROPERTY", "DATASET_ID")]
   webdata <- webdata(url = url, times = times, 
-                        variables = variables, ...)
+                        variables = unlist(variables), ...)
   return(webdata) 
 })
 
@@ -172,20 +172,3 @@ setAs('list', 'webdata', function(from){
   .Object <- do.call(what = "webdata", args = from)
   return(.Object)
 })
-
-#' @param xml a GDP xml document
-#' @importFrom XML xmlRoot getNodeSet xmlValue xmlParse
-readGeojobXML <- function(xml) {
-  litDataNodes <-  getNodeSet(xmlRoot(xmlParse(xml)), 
-                             "//wps:DataInputs/wps:Input/wps:Data/wps:LiteralData")
-  identifierNodes <-  getNodeSet(xmlRoot(xmlParse(xml)), 
-                                 "//wps:DataInputs/wps:Input/ows:Identifier")
-  litDataVals <- unlist(lapply(litDataNodes, xmlValue))
-  identifierVals <- unlist(lapply(identifierNodes, xmlValue))
-  identifierVals <- identifierVals[!grepl(pattern = "FEATURE_COLLECTION", identifierVals)] 
-  
-  stopifnot(length(identifierVals) == length(litDataVals))
-  df <- data.frame(id = identifierVals, val = litDataVals,
-                   stringsAsFactors = FALSE)
-  return(df)
-}

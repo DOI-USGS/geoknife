@@ -77,7 +77,7 @@ setMethod("geojob", signature("XMLDocument"), function(xml, ...) {
 #'@aliases geojob,geojob-method
 setMethod("geojob", signature("character"), function(xml, ...) {
   #parse based on xml class
-  if(length(xml == 1) && any(startsWith(x = xml, prefix= c("http", "www")))){
+  if(length(xml == 1) && startsWith(x = xml, prefix= "http")){
     xml <- gGET(xml)
   } 
   doc <- xmlTreeParse(xml)
