@@ -103,6 +103,18 @@ setMethod("webdata", signature("character"), function(.Object=c("prism",  "iclus
   return(webdata)
 })
 
+#' @rdname webdata-methods
+#' @aliases webdata
+setMethod("webdata", signature("geojob"), function(.Object, ...) {
+  xmlVals <- inputs(xmlParse(xml(.Object)))
+  url <- xmlVals[["DATASET_URI"]]
+  times <- c(xmlVals[["TIME_START"]], xmlVals[["TIME_END"]])
+  variables <- xmlVals[names(xmlVals) %in% c("OBSERVED_PROPERTY", "DATASET_ID")]
+  webdata <- webdata(url = url, times = times, 
+                        variables = unlist(variables), ...)
+  return(webdata) 
+})
+
 #'@rdname webdata-methods
 #'@aliases webdata
 setMethod("webdata", signature("ANY"), function(.Object, ...) {
@@ -160,4 +172,3 @@ setAs('list', 'webdata', function(from){
   .Object <- do.call(what = "webdata", args = from)
   return(.Object)
 })
-

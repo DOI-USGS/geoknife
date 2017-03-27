@@ -9,11 +9,21 @@ test_that("creation of webdata object", {
   expect_is(wd, "webdata")
 })
 
+test_that("create webdata from geojob", {
+  xml <- readLines(system.file("extdata/state_webgeom_post.xml", 
+                               package = "geoknife"), warn = FALSE)
+  geojob <- geojob(xml=xml)
+  wd <- webdata(geojob)
+  expect_equal(length(times(wd)), 2)
+  expect_is(url(wd), "character")
+  expect_is(variables(wd), "character")
+  expect_gt(length(variables(wd)), 0)
+})
+
 context("Test getting fields of webdata object")
 test_that("getters work", {
   testthat::skip_on_cran()
   wd <- webdata('prism',times = as.POSIXct(c('2001-01-01','2002-02-05')))
-  
   expect_is(times(wd), "POSIXct")
   expect_is(url(wd), "character")
 })
@@ -27,3 +37,4 @@ test_that("setters work", {
   url(wd) <- 'www.badurlppppp.com'
   expect_is(url(wd), "character")
 })
+
