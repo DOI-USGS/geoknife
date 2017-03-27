@@ -61,7 +61,7 @@ setMethod("geojob", signature("missing"), function(xml, ...) {
 #' @importFrom XML toString.XMLNode xmlAttrs xmlRoot
 #' @rdname geojob-methods
 #' @aliases geojob,geojob-method
-setMethod("geojob", signature("XMLDocument"), function(xml, ...) {
+setMethod("geojob", signature("XMLInternalDocument"), function(xml, ...) {
   #slots
   xmlText <- toString.XMLNode(xml$doc$children[[1]])
   algorithm.version <- xmlAttrs(xmlRoot(xml))[['version']] 
@@ -78,9 +78,10 @@ setMethod("geojob", signature("XMLDocument"), function(xml, ...) {
 setMethod("geojob", signature("character"), function(xml, ...) {
   #parse based on xml class
   if(length(xml == 1) && startsWith(x = xml, prefix= "http")){
-    xml <- gGET(xml)
+    response <- gGET(xml)
   } 
-  doc <- xmlTreeParse(xml)
+  
+  doc <- gcontent(response)
   job <- geojob(xml = doc, ...) 
   return(job)
 })
