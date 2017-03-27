@@ -17,7 +17,7 @@ setGeneric(name="email",def=function(geojob, knife){standardGeneric("email")})
 setMethod(f = "email",signature = c("geojob",'webprocess'), 
           definition = function(geojob, knife){
             
-            doc <- xmlTreeParse(xml(geojob), useInternalNodes = TRUE)
+            doc <- xmlParse(xml(geojob))
             root <- xmlRoot(doc)
             removeNodes(root[names(root) == "DataInputs"])
             removeNodes(root[names(root) == "ResponseForm"])

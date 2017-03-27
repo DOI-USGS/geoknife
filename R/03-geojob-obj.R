@@ -78,9 +78,12 @@ setMethod("geojob", signature("XMLDocument"), function(xml, ...) {
 setMethod("geojob", signature("character"), function(xml, ...) {
   #parse based on xml class
   if(length(xml == 1) && startsWith(x = xml, prefix= "http")){
-    xml <- gGET(xml)
-  } 
-  doc <- xmlTreeParse(xml)
+    response <- gGET(xml)
+    doc <- gcontent(response, useInternalNodes = FALSE)
+  } else {
+    doc <- xmlParse(xml, useInternalNodes = FALSE)
+  }
+  
   job <- geojob(xml = doc, ...) 
   return(job)
 })

@@ -13,7 +13,7 @@
 #'@aliases check
 #'@author Jordan S. Read
 #'@seealso \code{\link{start}}
-#'@importFrom XML xmlTreeParse xmlNamespaceDefinitions xmlRoot
+#'@importFrom XML xmlNamespaceDefinitions xmlRoot
 #' @importFrom httr http_error
 #'@rdname check-geojob
 #'@examples 

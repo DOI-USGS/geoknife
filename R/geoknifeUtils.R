@@ -66,6 +66,6 @@ gPOST <- function(url, config = list(), ...){
 #' @param response the result of httr::GET(url)
 #' @keywords internal
 #' @importFrom XML xmlParse
-gcontent <- function(response){
-  XML::xmlParse(iconv(readBin(response$content, character()), from = "UTF-8", to = "UTF-8"))
+gcontent <- function(response, useInternalNodes = TRUE){
+  XML::xmlParse(iconv(readBin(response$content, character()), from = "UTF-8", to = "UTF-8"), useInternalNodes = useInternalNodes)
 }
