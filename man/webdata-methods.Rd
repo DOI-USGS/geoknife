@@ -7,6 +7,8 @@
 \alias{webdata}
 \alias{webdata,character-method}
 \alias{webdata}
+\alias{webdata,geojob-method}
+\alias{webdata}
 \alias{webdata,ANY-method}
 \alias{webdata}
 \title{create webdata object}
@@ -17,6 +19,8 @@ webdata(.Object, ...)
 
 \S4method{webdata}{character}(.Object = c("prism", "iclus", "daymet", "gldas",
   "nldas", "topowx", "solar", "metobs"), ...)
+
+\S4method{webdata}{geojob}(.Object, ...)
 
 \S4method{webdata}{ANY}(.Object, ...)
 }
