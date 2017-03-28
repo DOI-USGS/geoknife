@@ -8,6 +8,13 @@ pkg.env$gconfig <- list('wps.url'='https://cida.usgs.gov/gdp/process/WebProcessi
                         'verbose' = FALSE,
                         'retries' = 1,
                         'version' = '1.0.0')
+pkg.env$NAMESPACES <- c(wps = 'http://www.opengis.net/wps/1.0.0',
+                        xsi = 'http://www.w3.org/2001/XMLSchema-instance',
+                        xlink = 'http://www.w3.org/1999/xlink',
+                        ogc = 'http://www.opengis.net/ogc',
+                        ows = 'http://www.opengis.net/ows/1.1',
+                        gml = 'http://www.opengis.net/gml',
+                        wfs = 'http://www.opengis.net/wfs')
 
 #' @importFrom utils lsf.str packageName
 .onLoad <- function(libname, pkgname){

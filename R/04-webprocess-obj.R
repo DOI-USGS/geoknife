@@ -32,12 +32,12 @@ setClass(
   prototype = prototype(
     version = gconfig('version'),
     WPS_SCHEMA_LOCATION = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd',
-    WPS_NAMESPACE = 'http://www.opengis.net/wps/1.0.0',
+    WPS_NAMESPACE = pkg.env$NAMESPACES[['wps']],
     XSI_SCHEMA_LOCATION = 'http://www.opengis.net/wfs ../wfs/1.1.0/WFS.xsd',
-    XSI_NAMESPACE = 'http://www.w3.org/2001/XMLSchema-instance',
-    OGC_NAMESPACE = 'http://www.opengis.net/ogc',
-    XLINK_NAMESPACE = 'http://www.w3.org/1999/xlink',
-    OWS_NAMESPACE = 'http://www.opengis.net/ows/1.1',
+    XSI_NAMESPACE = pkg.env$NAMESPACES[['xsi']],
+    OGC_NAMESPACE = pkg.env$NAMESPACES[['ogc']],
+    XLINK_NAMESPACE = pkg.env$NAMESPACES[['xlink']],
+    OWS_NAMESPACE = pkg.env$NAMESPACES[['ows']],
     emailK = 'gov.usgs.cida.gdp.wps.algorithm.communication.EmailWhenFinishedAlgorithm'
   ),
   representation = representation(
