@@ -57,7 +57,7 @@ setMethod(f = "inputs",signature = "XMLAbstractDocument",
           definition = function(.Object, ...){
             inputXpath <- "//wps:Execute/wps:DataInputs/wps:Input"
             
-            inputs <- getNodeSet(.Object, inputXpath)
+            inputs <- getNodeSet(.Object, inputXpath, namespaces = pkg.env$NAMESPACES)
             results <- list()
             names <- c()
             for (i in 1:length(inputs)) {
