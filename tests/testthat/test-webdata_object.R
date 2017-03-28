@@ -18,6 +18,13 @@ test_that("create webdata from geojob", {
   expect_is(url(wd), "character")
   expect_is(variables(wd), "character")
   expect_gt(length(variables(wd)), 0)
+  
+  #test XML missing time slots
+  testthat::skip_on_cran()
+  noTimesJob <- geojob('https://cida.usgs.gov/gdp/process/request?id=b327be82-8bd5-4a7e-8fda-4288c1a6ef3d')
+  wd <- webdata(noTimesJob)
+  expect_equal(length(times(wd)), 2)
+  expect_is(times(wd), "POSIXct")
 })
 
 context("Test getting fields of webdata object")
