@@ -4,8 +4,7 @@
 
 language: r
 sudo: required
-os: osx
-osx_image: xcode8
+dist: trusty
 warnings_are_errors: true
 
 r_build_args: --no-build-vignettes --no-manual
