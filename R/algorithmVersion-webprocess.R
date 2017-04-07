@@ -4,6 +4,7 @@ algorithmVersion <- function(knife){
     'service' = 'WPS', 'version' = version(knife),'request' = 'DescribeProcess', 'identifier'=algorithm(knife)[[1]]))
   doc <- gcontent(getCaps)
   
-  version <- xmlAttrs(getNodeSet(doc,'//ProcessDescription')[[1]])[['processVersion']]
+  version <- xmlAttrs(getNodeSet(doc,'//ProcessDescription', 
+                                 namespaces = pkg.env$NAMESPACES)[[1]])[['processVersion']]
   return(version)
 }

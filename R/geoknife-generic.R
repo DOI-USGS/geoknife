@@ -99,10 +99,12 @@ parseXMLalgorithms  <-  function(xml){
   childKey <- "ows:Identifier"
   titleKey <- "ows:Title"
   
-  nodes <- getNodeSet(xml, sprintf("//%s/%s",parentKey,childKey))
+  nodes <- getNodeSet(xml, sprintf("//%s/%s",parentKey,childKey), 
+                      namespaces = pkg.env$NAMESPACES)
   values  <-  lapply(nodes,xmlValue)
   
-  nodes <- getNodeSet(xml, sprintf("//%s/%s",parentKey,titleKey))
+  nodes <- getNodeSet(xml, sprintf("//%s/%s",parentKey,titleKey),
+                      namespaces = pkg.env$NAMESPACES)
   names(values) <- sapply(nodes,xmlValue)
   
   return(values)
@@ -116,7 +118,7 @@ parseXMLgeoms	<-	function(xml){
   key="Name"
   # ignore namespaces
   xpath <- sprintf("//*[local-name()='%s']/*[local-name()='%s']/*[local-name()='%s']",parentKey,childKey,key)
-  nodes <- getNodeSet(xml, xpath)
+  nodes <- getNodeSet(xml, xpath, namespaces = pkg.env$NAMESPACES)
 	values	<-	sapply(nodes,xmlValue)
 	return(values)
 }
