@@ -115,11 +115,11 @@ setMethod("webdata", signature("character"), function(.Object=c("prism",  "iclus
 setMethod("webdata", signature("geojob"), function(.Object, ...) {
   xmlVals <- inputs(xmlParse(xml(.Object)))
   url <- xmlVals[["DATASET_URI"]]
-  if(any(grepl(pattern = "TIME_",  x = names(xmlVals)))){ #underscore is important
-    times <- c(xmlVals[["TIME_START"]], xmlVals[["TIME_END"]])
-  } else {
-    times <- as.POSIXct(c(NA, NA))
-  }
+  times <- c(start = xmlVals[["TIME_START"]], end = xmlVals[["TIME_END"]])
+  if(is.null(times[['start']])) {times[['start']] <- NA}
+  if(length(times) == 1) {times[['end']] <- NA}
+  times <- as.POSIXct(c(times[['start']], times[['end']])) #could get out of order with one missing
+
   variables <- xmlVals[names(xmlVals) %in% c("OBSERVED_PROPERTY", "DATASET_ID")]
   webdata <- webdata(url = url, times = times, 
                         variables = unlist(variables), ...)
