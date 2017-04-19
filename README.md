@@ -6,6 +6,7 @@ Tools for geo-web processing of gridded data via the [Geo Data Portal](https://c
 <p align="center">
 <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
 </p>
+<br />
 
 ### Installing `geoknife`
 
@@ -13,11 +14,6 @@ To install the `geoknife` from CRAN:
 
 ``` r
 install.packages("geoknife")
-```
-
-``` r
-  library(knitr)
-  opts_chunk$set(fig.path = "inst/", dev='png') 
 ```
 
 To install the stable version of `geoknife` package with dependencies:
@@ -93,7 +89,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=7a6dcf4f-5a74-4a99-833d-587d9f875caaOUTPUT"
+    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=2c3ddc08-58cd-40cd-aa7a-4aa0b31e8730OUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
