@@ -49,7 +49,7 @@ setMethod(f = "algorithm",signature="XMLAbstractDocument",
           definition = function(.Object){
             xpath <- "//wps:Execute/ows:Identifier"
             
-            algo <- getNodeSet(.Object, xpath)
+            algo <- getNodeSet(.Object, xpath, namespaces = pkg.env$NAMESPACES)
             if (length(algo) != 1) {
               stop("Invalid XML, algorithm must be defined (or only once)")
             }

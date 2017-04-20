@@ -8,6 +8,13 @@ pkg.env$gconfig <- list('wps.url'='https://cida.usgs.gov/gdp/process/WebProcessi
                         'verbose' = FALSE,
                         'retries' = 1,
                         'version' = '1.0.0')
+pkg.env$NAMESPACES <- c(wps = 'http://www.opengis.net/wps/1.0.0',
+                        xsi = 'http://www.w3.org/2001/XMLSchema-instance',
+                        xlink = 'http://www.w3.org/1999/xlink',
+                        ogc = 'http://www.opengis.net/ogc',
+                        ows = 'http://www.opengis.net/ows/1.1',
+                        gml = 'http://www.opengis.net/gml',
+                        wfs = 'http://www.opengis.net/wfs')
 
 #' @importFrom utils lsf.str packageName
 .onLoad <- function(libname, pkgname){
@@ -108,7 +115,11 @@ setMethod("webdata", signature("character"), function(.Object=c("prism",  "iclus
 setMethod("webdata", signature("geojob"), function(.Object, ...) {
   xmlVals <- inputs(xmlParse(xml(.Object)))
   url <- xmlVals[["DATASET_URI"]]
-  times <- c(xmlVals[["TIME_START"]], xmlVals[["TIME_END"]])
+  times <- c(start = xmlVals[["TIME_START"]], end = xmlVals[["TIME_END"]])
+  if(is.null(times[['start']])) {times[['start']] <- NA}
+  if(length(times) == 1) {times[['end']] <- NA}
+  times <- as.POSIXct(c(times[['start']], times[['end']])) #could get out of order with one missing
+
   variables <- xmlVals[names(xmlVals) %in% c("OBSERVED_PROPERTY", "DATASET_ID")]
   webdata <- webdata(url = url, times = times, 
                         variables = unlist(variables), ...)
