@@ -114,15 +114,12 @@ setMethod("webdata", signature("character"), function(.Object=c("prism",  "iclus
 #' @aliases webdata
 setMethod("webdata", signature("geojob"), function(.Object, ...) {
   xmlVals <- inputs(xmlParse(xml(.Object)))
-  browser()
   url <- xmlVals[["DATASET_URI"]]
   times <- c(start = xmlVals[["TIME_START"]], end = xmlVals[["TIME_END"]])
   if(is.null(times[['start']])) {times[['start']] <- NA}
   if(length(times) == 1) {times[['end']] <- NA}
   times <- c(times[['start']], times[['end']])#could get out of order with one missing
-  times <- gsub(pattern = "T", replacement = " ", x = times)
-  times <- as.POSIXct(strftime(times, 
-                               format = '%Y-%m-%d %H:%M:%S')) 
+  times <- as.POSIXct(times, format = '%Y-%m-%dT%H:%M:%S')
   
   variables <- xmlVals[names(xmlVals) %in% c("OBSERVED_PROPERTY", "DATASET_ID")]
   webdata <- webdata(url = url, times = times, 
