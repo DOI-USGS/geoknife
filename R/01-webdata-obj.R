@@ -118,8 +118,9 @@ setMethod("webdata", signature("geojob"), function(.Object, ...) {
   times <- c(start = xmlVals[["TIME_START"]], end = xmlVals[["TIME_END"]])
   if(is.null(times[['start']])) {times[['start']] <- NA}
   if(length(times) == 1) {times[['end']] <- NA}
-  times <- as.POSIXct(c(times[['start']], times[['end']])) #could get out of order with one missing
-
+  times <- c(times[['start']], times[['end']])#could get out of order with one missing
+  times <- as.POSIXct(times, format = '%Y-%m-%dT%H:%M:%S')
+  
   variables <- xmlVals[names(xmlVals) %in% c("OBSERVED_PROPERTY", "DATASET_ID")]
   webdata <- webdata(url = url, times = times, 
                         variables = unlist(variables), ...)

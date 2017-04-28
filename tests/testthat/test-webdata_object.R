@@ -25,6 +25,11 @@ test_that("create webdata from geojob", {
   wd <- webdata(noTimesJob)
   expect_equal(length(times(wd)), 2)
   expect_is(times(wd), "POSIXct")
+  
+  #make sure times aren't dropped
+  wd <- webdata(geojob(xml = 'https://cida.usgs.gov:443/gdp/process/request?id=dded6ef9-1e52-4fec-b14d-6a93606e7b1f'))
+  n <- nchar(as.character(times(wd)))
+  expect_true(all(n > 10))
 })
 
 context("Test getting fields of webdata object")
