@@ -20,6 +20,7 @@ test_that("show simplegeom", {
 context("show datagroup")
 
 test_that("show datagroup", {
+  testthat::skip_on_cran()
   expect_output(show(query('webdata')))
 })
 

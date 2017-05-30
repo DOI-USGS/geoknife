@@ -43,6 +43,7 @@ a character vector of values corresponding to the query field specified
 a method for finding possible values for a given field
 }
 \examples{
+\dontrun{
 fabric <- webdata('prism')
 query(fabric, 'variables')
 wg <- webgeom()
@@ -51,6 +52,7 @@ geom(wg) <- "sample:CONUS_states"
 query(wg, 'attributes')
 attribute(wg) <- 'STATE'
 query(wg, 'values', rm.duplicates = TRUE)
+}
 }
 \author{
 Jordan S. Read
