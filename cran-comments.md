@@ -1,7 +1,5 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* added the ability to download, check, and load results based on job id (in addition to the geojob object)
-* added 'local' images used in README.md to the package source
-
+* We have modfified tests to avoid web service calls which caused errors noted by CRAN maintainers.
 
