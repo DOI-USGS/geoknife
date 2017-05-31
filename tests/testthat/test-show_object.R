@@ -20,6 +20,7 @@ test_that("show simplegeom", {
 context("show datagroup")
 
 test_that("show datagroup", {
+  testthat::skip_on_cran()
   expect_output(show(query('webdata')))
 })
 
@@ -32,5 +33,6 @@ test_that("show geojob", {
 context("show webprocess")
 
 test_that("show webprocess", {
+  testthat::skip_on_cran()
   expect_output(show(webprocess()))
 })

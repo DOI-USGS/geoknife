@@ -17,6 +17,7 @@ setGeneric(name="query",def=function(.Object, field, ...){standardGeneric("query
 #' @aliases query,webdata-method  
 #' @keywords methods
 #' @examples
+#' \dontrun{
 #' fabric <- webdata('prism')
 #' query(fabric, 'variables')
 #' wg <- webgeom()
@@ -25,6 +26,7 @@ setGeneric(name="query",def=function(.Object, field, ...){standardGeneric("query
 #' query(wg, 'attributes')
 #' attribute(wg) <- 'STATE'
 #' query(wg, 'values', rm.duplicates = TRUE)
+#' }
 #' @rdname query
 #' @aliases query,webdata-method  
 setMethod(f = "query",signature("webdata",'character'),
