@@ -1,5 +1,5 @@
 
-#' congfigure geoknife settings
+#' configure geoknife settings
 #' 
 #' access and set defaults for geoknife configuration
 #' 

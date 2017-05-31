@@ -10,6 +10,6 @@ getJobState()
 \code{jobState} package variable
 }
 \description{
-convienence function for retrieving package-level \code{jobState}
+convenience function for retrieving package-level \code{jobState}
 }
 \keyword{internal}

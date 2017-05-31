@@ -2,7 +2,7 @@
 #' the geom of an object
 #' 
 #' The "feature" of a webgeom. This is the key mapping to the web resource 
-#' that is used as the spatial feature of refernce. Other details specified in 
+#' that is used as the spatial feature of reference. Other details specified in 
 #' \code{\link{attribute}} and \code{\link{values}}.
 #' 
 #' @param .Object a \linkS4class{webgeom} object

@@ -36,7 +36,7 @@ library(methods)
 #' 
 #' @slot times vector of POSIXct dates (specifying start and end time of processing)
 #' @slot url URL of web data
-#' @slot variables variable(s) used for processin from dataset
+#' @slot variables variable(s) used for processing from dataset
 #' @rdname webdata-class
 #' @import methods
 setClass(
