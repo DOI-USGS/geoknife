@@ -5,7 +5,7 @@ setGeneric(name="variables_query",def=function(fabric, knife){standardGeneric("v
 
 #' variables query
 #' 
-#' find possible variables in a webdata datset
+#' find possible variables in a webdata dataset
 #' 
 #' 
 #'@param variables

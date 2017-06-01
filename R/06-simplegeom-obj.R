@@ -6,7 +6,7 @@
 #' @slot DRAW_NAMESPACE (_private) web location of draw namespace
 #' @slot DRAW_SCHEMA (_private) web location of draw schema
 #' @details The difference between \linkS4class{webgeom} and \linkS4class{simplegeom} 
-#' is both in the permenance and the location of the data. \linkS4class{webgeom} is 
+#' is both in the permanence and the location of the data. \linkS4class{webgeom} is 
 #' located on a web server that offers geometries using the web feature service (WFS) 
 #' specification. \linkS4class{simplegeom} are typically local data that can be accessed 
 #' within an R session. Within reason, anything that can be represented as a 

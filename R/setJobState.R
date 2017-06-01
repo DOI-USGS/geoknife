@@ -16,7 +16,7 @@ setJobState <- function(state = 'none'){
 }
 
 #' @title get job state 
-#' @description convienence function for retrieving package-level \code{jobState}
+#' @description convenience function for retrieving package-level \code{jobState}
 #' @keywords internal
 #' @return \code{jobState} package variable
 getJobState <- function(){

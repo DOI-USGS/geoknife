@@ -15,6 +15,6 @@ accessible through the OPeNDAP protocol or as WCS (web coverage services).
 
 \item{\code{url}}{URL of web data}
 
-\item{\code{variables}}{variable(s) used for processin from dataset}
+\item{\code{variables}}{variable(s) used for processing from dataset}
 }}
 

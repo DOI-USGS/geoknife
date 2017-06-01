@@ -2,7 +2,7 @@
 % Please edit documentation in R/00-gconfig.R
 \name{gconfig}
 \alias{gconfig}
-\title{congfigure geoknife settings}
+\title{configure geoknife settings}
 \usage{
 gconfig(..., no.readonly = FALSE)
 }

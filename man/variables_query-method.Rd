@@ -20,6 +20,6 @@ variables_query(fabric, knife)
 \item{variables}{}
 }
 \description{
-find possible variables in a webdata datset
+find possible variables in a webdata dataset
 }
 \keyword{internal}

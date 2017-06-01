@@ -11,6 +11,6 @@ contains collections of webdata that can be processed with
 \section{Slots}{
 
 \describe{
-\item{\code{group}}{a list of webdata compatable elements}
+\item{\code{group}}{a list of webdata compatible elements}
 }}
 

@@ -3,7 +3,7 @@
 #' contains collections of webdata that can be processed with 
 #' \code{\link{geoknife}}
 #' 
-#' @slot group a list of webdata compatable elements
+#' @slot group a list of webdata compatible elements
 #' @rdname datagroup-class
 setClass(
   Class = "datagroup",
