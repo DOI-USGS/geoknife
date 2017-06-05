@@ -1,4 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-.travis.yaml
+.travis.yml
 appveyor.yml
+cran-comments.md
+README.Rmd
