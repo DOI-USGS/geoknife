@@ -25,7 +25,6 @@ setGeneric(name="check",def=function(.Object){standardGeneric("check")})
 #'@rdname check-geojob
 #'@aliases check
 setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Object){
-  #browser()
 	process	<-	list(status=NULL,URL=NULL)
 	if (id(.Object) == "<no active job>"){
 		process$status <- 'none'
