@@ -13,7 +13,7 @@
 #'@aliases check
 #'@author Jordan S. Read
 #'@seealso \code{\link{start}}
-#'@importFrom XML xmlNamespaceDefinitions xmlRoot
+#'@importFrom XML xmlNamespaceDefinitions xmlRoot xmlGetAttr
 #' @importFrom httr http_error
 #'@rdname check-geojob
 #'@examples 
@@ -25,11 +25,12 @@ setGeneric(name="check",def=function(.Object){standardGeneric("check")})
 #'@rdname check-geojob
 #'@aliases check
 setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Object){
-
+  #browser()
 	process	<-	list(status=NULL,URL=NULL)
 	if (id(.Object) == "<no active job>"){
 		process$status <- 'none'
 		process$statusType <- 'none'
+		process$percentComplete <- 'none'
     return(process)
 	} else if (!is.geojobID(id(.Object))) {
 	  stop(id(.Object), ' is not a valid geojob ID. Status cannot be checked', call. = FALSE)
@@ -48,6 +49,7 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
   if (is.null(checkForComplete)){
     process$status <- 'unknown'
     process$statusType <- 'unknown'
+    process$percentComplete <- 'unknown'
   }
 	if (is.null(process$status)){
 		checkForCompleteResponse <- gcontent(checkForComplete)
@@ -56,14 +58,17 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
 		status <- sapply(xmlChildren(root[["Status"]]),xmlValue)
 		process$status	<-	status[[1]]
 		process$statusType <- sapply(xmlChildren(root[["Status"]]),xmlName)[[1]]
-		
 		if (process$status == "Process successful"){
 			root <- xmlRoot(checkForCompleteResponse)
+			process$percentComplete <- "100"
 			process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
 		} else if (process$status == ""){
 		  process$status <- "ProcessStarted"
 		} else if (substr(process$status, 1, 34) == "org.n52.wps.server.ExceptionReport"){
 		  process$status <- "ProcessFailed"
+		} else if (process$status == "Process Started") {
+		  process$percentCompleted <- as.character(xpathApply(root, "//wps:ProcessStarted", 
+		                                                      xmlGetAttr, "percentCompleted"))
 		}
 	}
   
