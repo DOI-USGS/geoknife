@@ -21,6 +21,7 @@ test_that("check status of empty job", {
   testthat::skip_on_cran()
   expect_equal(check(geojob())$status, 'none')
   expect_equal(check(geojob())$statusType, 'none')
+  expect_equal(check(geojob())$percentComplete, 'none')
 })
 
 test_that("check status of an ID that is not valid", {
