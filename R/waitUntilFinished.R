@@ -9,6 +9,7 @@
 #' @param .Object a geojob
 #' @param sleep.time a number of seconds to wait in between checking the process
 #' @return invisible return of .Object, unaltered
+#' @importFrom progress progress_bar
 #' @examples
 #' \dontrun{
 #' job <- geoknife(stencil = c(-89,42), fabric = 'prism')
@@ -35,9 +36,18 @@ setMethod(f = "wait",signature(.Object = "geojob", sleep.time = "missing"), defi
 #' @aliases wait
 setMethod(f = "wait",signature(.Object = "character", sleep.time = "numeric"), definition = function(.Object, sleep.time){
   running <- running(.Object, retry = TRUE)
+  pb <- progress_bar$new(total = 100, clear = FALSE)
+  currentStatus <- 'NA'
   while(running){
     Sys.sleep(sleep.time)
     running <- running(.Object, retry = TRUE)
+    checkResult <- check(.Object)
+    if(!is.null(checkResult$percentComplete)) {
+      pb$update(as.numeric(checkResult$percentComplete)/100)
+    } else if(checkResult$status != currentStatus) {
+      message(checkResult$status)
+    }
+    currentStatus <- checkResult$status
   }
   invisible(.Object)
 })
