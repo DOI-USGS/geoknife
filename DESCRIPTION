@@ -39,7 +39,7 @@ Imports:
     curl,
     sp,
     utils,
-    progress
+    progress (>= 1.1.2)
 Suggests:
     testthat,
     xtable,

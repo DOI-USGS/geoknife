@@ -37,7 +37,7 @@ setMethod(f = "wait",signature(.Object = "geojob", sleep.time = "missing"), defi
 setMethod(f = "wait",signature(.Object = "character", sleep.time = "numeric"), definition = function(.Object, sleep.time){
   running <- running(.Object, retry = TRUE)
   pb <- progress_bar$new(total = 100, clear = FALSE)
-  currentStatus <- 'NA'
+  currentStatus <- 'unknown'
   while(running){
     Sys.sleep(sleep.time)
     running <- running(.Object, retry = TRUE)

@@ -68,7 +68,7 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
 		} else if (process$status == "Process Started") {
 		  process$percentCompleted <- as.character(xpathApply(root, "//wps:ProcessStarted", 
 		                                                      xmlGetAttr, "percentCompleted"))
-		} 
+		}
 	}
   
   setJobState(process$status)
