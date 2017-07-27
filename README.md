@@ -1,8 +1,8 @@
-`geoknife` package version 1.5.4
+`geoknife` package version 1.5.5
 ================================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master) [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife) [![Coverage Status](https://coveralls.io/repos/github/USGS-R/geoknife/badge.svg?branch=master)](https://coveralls.io/github/USGS-R/geoknife?branch=master) [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)
-Tools for geo-web processing of gridded data via the [Geo Data Portal](https://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
+[![status](https://img.shields.io/badge/USGS-Core-green.svg)](https://owi.usgs.gov/R/packages.html#core) Tools for geo-web processing of gridded data via the [Geo Data Portal](https://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
 <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
 </p>
@@ -30,6 +30,18 @@ Or to install the current development version of the package:
 install.packages("devtools")
 devtools::install_github('USGS-R/geoknife')
 ```
+
+### Reporting bugs
+
+Please consider reporting bugs and asking questions on the Issues page: <https://github.com/USGS-R/geoknife/issues>
+
+Follow `@USGS_R` on Twitter for updates on USGS R packages:
+
+[![Twitter Follow](https://img.shields.io/twitter/follow/USGS_R.svg?style=social&label=Follow%20USGS_R)](https://twitter.com/USGS_R)
+
+### Code of Conduct
+
+We want to encourage a warm, welcoming, and safe environment for contributing to this project. See the [code of conduct](https://github.com/USGS-R/geoknife/blob/master/CONDUCT.md) for more information.
 
 ### `geoknife` overview
 
@@ -89,7 +101,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=2c3ddc08-58cd-40cd-aa7a-4aa0b31e8730OUTPUT"
+    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=85f1df8a-da08-4b85-96f0-a796c8bf3d4aOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
