@@ -13,6 +13,7 @@ output:
 [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife)
 [![Coverage Status](https://coveralls.io/repos/github/USGS-R/geoknife/badge.svg?branch=master)](https://coveralls.io/github/USGS-R/geoknife?branch=master)
 [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)  
+[![status](https://img.shields.io/badge/USGS-Core-green.svg)](https://owi.usgs.gov/R/packages.html#core)
 Tools for geo-web processing of gridded data via the [Geo Data Portal](https://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
   <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
@@ -44,6 +45,19 @@ Or to install the current development version of the package:
 install.packages("devtools")
 devtools::install_github('USGS-R/geoknife')
 ```
+
+### Reporting bugs
+
+Please consider reporting bugs and asking questions on the Issues page:
+[https://github.com/USGS-R/geoknife/issues](https://github.com/USGS-R/geoknife/issues)
+
+Follow `@USGS_R` on Twitter for updates on USGS R packages:
+
+[![Twitter Follow](https://img.shields.io/twitter/follow/USGS_R.svg?style=social&label=Follow%20USGS_R)](https://twitter.com/USGS_R)
+
+### Code of Conduct
+
+We want to encourage a warm, welcoming, and safe environment for contributing to this project. See the [code of conduct](https://github.com/USGS-R/geoknife/blob/master/CONDUCT.md) for more information.
 
 ###`geoknife` overview
 The `geoknife` package was created to support web-based geoprocessing of large gridded datasets according to their overlap with landscape (or aquatic/ocean) features that are often irregularly shaped. `geoknife` creates data access and subsequent geoprocessing requests for the USGS's Geo Data Portal to carry out on a web server. The results of these requests are available for download after the processes have been completed. This type of workflow has three main advantages: 1) it allows the user to avoid downloading large datasets, 2) it avoids reinventing the wheel for the creation and optimization of complex geoprocessing algorithms, and 3) computing resources are dedicated elsewhere, so `geoknife` operations do not have much of an impact on a local computer. 
