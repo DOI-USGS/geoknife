@@ -43,7 +43,11 @@ Follow `@USGS_R` on Twitter for updates on USGS R packages:
 
 We want to encourage a warm, welcoming, and safe environment for contributing to this project. See the [code of conduct](https://github.com/USGS-R/geoknife/blob/master/CONDUCT.md) for more information.
 
-### `geoknife` overview
+### Package Support
+
+The Water Mission Area of the USGS supports the development and maintenance of `geoknife` through FY18, and most likely further into the future. Resources are available primarily for maintenance and responding to user questions. Priorities on the development of new features are determined by the `geoknife` development team.
+
+## `geoknife` overview
 
 The `geoknife` package was created to support web-based geoprocessing of large gridded datasets according to their overlap with landscape (or aquatic/ocean) features that are often irregularly shaped. `geoknife` creates data access and subsequent geoprocessing requests for the USGS's Geo Data Portal to carry out on a web server. The results of these requests are available for download after the processes have been completed. This type of workflow has three main advantages: 1) it allows the user to avoid downloading large datasets, 2) it avoids reinventing the wheel for the creation and optimization of complex geoprocessing algorithms, and 3) computing resources are dedicated elsewhere, so `geoknife` operations do not have much of an impact on a local computer.
 
