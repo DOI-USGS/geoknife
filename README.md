@@ -47,9 +47,10 @@ We want to encourage a warm, welcoming, and safe environment for contributing to
 
 The Water Mission Area of the USGS supports the development and maintenance of `geoknife` through September 2018, and most likely further into the future. Resources are available primarily for maintenance and responding to user questions. Priorities on the development of new features are determined by the `geoknife` development team.
 
-![USGS](http://usgs-r.github.io/images/usgs.png)
+[![USGS](http://usgs-r.github.io/images/usgs.png)](https://www.usgs.gov/)
 
-## `geoknife` overview
+`geoknife` overview
+-------------------
 
 The `geoknife` package was created to support web-based geoprocessing of large gridded datasets according to their overlap with landscape (or aquatic/ocean) features that are often irregularly shaped. `geoknife` creates data access and subsequent geoprocessing requests for the USGS's Geo Data Portal to carry out on a web server. The results of these requests are available for download after the processes have been completed. This type of workflow has three main advantages: 1) it allows the user to avoid downloading large datasets, 2) it avoids reinventing the wheel for the creation and optimization of complex geoprocessing algorithms, and 3) computing resources are dedicated elsewhere, so `geoknife` operations do not have much of an impact on a local computer.
 
@@ -107,7 +108,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=85f1df8a-da08-4b85-96f0-a796c8bf3d4aOUTPUT"
+    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=53fa3060-5e18-4278-b713-7409b3a9aaddOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
