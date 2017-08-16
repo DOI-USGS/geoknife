@@ -12,7 +12,7 @@ test_that("verbose", {
 
 test_that("error on url", {
   testthat::skip_on_cran()
-  expect_error(geoknife:::retryVERB(httr::GET('bad.url.html')), "Couldn't resolve host name")
+  expect_error(geoknife:::retryVERB(httr::GET('bad.url.html')), ".*bad.url.html.*")
 })
 
 context("geoknife convienence functions for job state")
@@ -46,7 +46,7 @@ test_that("check status of an ID that doesn't exist", {
 })
 
 fabric <- webdata('prism', variables = 'wrong')
-job <- geoknife(c(-89,43), fabric, wait = TRUE)
+suppressWarnings(job <- geoknife(c(-89,43), fabric, wait = TRUE))
 failed.id <- id(job)
 test_that("check status of an ID that failed", {
   testthat::skip_on_cran()
