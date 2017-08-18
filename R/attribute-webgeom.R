@@ -22,3 +22,10 @@ setGeneric(name="attribute",def=function(.Object){standardGeneric("attribute")})
 setMethod(f = "attribute<-",signature(.Object = "webgeom"), definition = function(.Object, value){
   .Object <- initialize(.Object, attribute = value)
   return(.Object)})
+
+#'@aliases attribute
+#'@rdname attribute
+setMethod(f = "attribute",signature(.Object = "webgeom"), 
+          definition = function(.Object){
+            return(.Object@attribute)
+            })

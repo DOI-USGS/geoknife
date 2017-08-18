@@ -61,3 +61,13 @@ test_that("NULL results in error", {
   expect_error(values(wg_c) <- "foo")
 })
 
+test_that("we can set attributes on a webgeom", {
+  testthat::skip_on_cran()
+  stencil <- webgeom()
+  geom(stencil) <- "sample:CONUS_states"
+  attribute(stencil) <- "STATE"
+  expect_equal(stencil@attribute, "STATE")
+  stencil_attribute <- attribute(stencil)
+  expect_equal(stencil_attribute, "STATE")
+})
+
