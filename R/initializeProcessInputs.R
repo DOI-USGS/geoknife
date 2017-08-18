@@ -1,4 +1,9 @@
 #'@importFrom XML htmlParse getNodeSet xmlValue
+#'@param algorithm the WPS algorithm to get process inputs for
+#'@param wps_url the service base URL for the WPS
+#'@param wps_version the service version to use
+#'@return list of default, optional, and required process inputs for use in the webprocess object.
+#'@description parses DescribeProcess request
 defaultProcessInputs <- function(algorithm, wps_url, wps_version){
   getCaps <- gGET(wps_url, query = list(
     'service' = 'WPS', 'version' = wps_version,'request' = 'DescribeProcess', 'identifier'=algorithm))

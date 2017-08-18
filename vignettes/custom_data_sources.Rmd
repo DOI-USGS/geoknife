@@ -16,7 +16,7 @@ This vignette shows how to use a custom Web Feature Service with `geoknife`. In 
 e.g. this: `https://www.sciencebase.gov/catalogMaps/mapping/ows/54296bf0e4b0ad29004c2fbb`  
 not this: `https://www.sciencebase.gov/catalogMaps/mapping/ows/54296bf0e4b0ad29004c2fbb?service=wfs&request=getcapabilities&version=1.0.0`
 
-Since this is an advanced feature, it may be interesting to see what `geoknife` is doing, swith `verbose=FALSE` to `verbose=TRUE` in the following code to see the web service request being made when you execute this vignette.
+For advanced users, it may be interesting to see what `geoknife` is doing behind the scences. Switch `verbose=FALSE` to `verbose=TRUE` to see the web service request being made when you execute this vignette.
 
 ```{r stencil, echo=T, eval=T}
 gconfig(verbose=FALSE)
@@ -41,7 +41,7 @@ attribute(stencil) <- stencil_attributes[2]
 print(query(stencil, 'values'))
 ```
 
-Now we'll set up our webdata with an OPeNDAP service as it's url. Note that this can be any OPeNDAP service compatible with `geoknife` and the Geo Data Portal. What datasets are compatible is beyond the scope of this vignette, but is documented [here](https://my.usgs.gov/confluence/display/GeoDataPortal/Custom+Dataset+Use+Guidlines). The OPeNDAP dataset used here is from the [main USGS THREDDS archive](https://cida.usgs.gov/thredds) but many other OPeNDAP datasets can be used in the same way.
+Now we'll set up our webdata with an OPeNDAP service as its url. Note that this can be any OPeNDAP service compatible with `geoknife` and the Geo Data Portal. What datasets are compatible is beyond the scope of this vignette, but is documented [here](https://my.usgs.gov/confluence/display/GeoDataPortal/Custom+Dataset+Use+Guidlines). The OPeNDAP dataset used here is from the [main USGS THREDDS archive](https://cida.usgs.gov/thredds) and is one included in `geoknife` but many other OPeNDAP datasets could be used by entering their OPeNDAP service base URL in the same way. 
 
 ```{r fabric, echo=T, eval=T}
 fabric <- webdata(url = 'https://cida.usgs.gov/thredds/dodsC/prism_v2', 
@@ -61,10 +61,13 @@ print(paste(fabric@url, "has",
             "to", fabric_times[2]))
 ```
 
-Now we can execute the `geoknife` job for the specified fabric and stencil. Note that we set `wait = TRUE` here so we can just wait for the result of the process. For this vignette, we'll just print out the names and size of the returned data.
+Now we can execute the `geoknife` job for the specified fabric and stencil. Note that we set `wait = TRUE` here so we can just wait for the result of the process.
 
 ```{r execute, echo=T, eval=T}
 prism_yahara_result <- result(geoknife(stencil, fabric, wait = TRUE))
+```
+
+```{r print_execute, echo=F, eval=T}
 print(paste0("The returned dataframe has ", 
              ncol(prism_yahara_result), 
              " columns with names '", 

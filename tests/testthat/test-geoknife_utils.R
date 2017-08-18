@@ -46,7 +46,7 @@ test_that("check status of an ID that doesn't exist", {
 })
 
 fabric <- webdata('prism', variables = 'wrong')
-suppressWarnings(job <- geoknife(c(-89,43), fabric, wait = TRUE))
+job <- geoknife(c(-89,43), fabric, wait = TRUE)
 failed.id <- id(job)
 test_that("check status of an ID that failed", {
   testthat::skip_on_cran()

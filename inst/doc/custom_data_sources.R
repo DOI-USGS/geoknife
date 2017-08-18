@@ -36,6 +36,8 @@ print(paste(fabric@url, "has",
 
 ## ----execute, echo=T, eval=T---------------------------------------------
 prism_yahara_result <- result(geoknife(stencil, fabric, wait = TRUE))
+
+## ----print_execute, echo=F, eval=T---------------------------------------
 print(paste0("The returned dataframe has ", 
              ncol(prism_yahara_result), 
              " columns with names '", 
