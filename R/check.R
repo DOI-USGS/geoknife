@@ -13,7 +13,6 @@
 #'@aliases check
 #'@author Jordan S. Read
 #'@seealso \code{\link{start}}
-#'@import xml2
 #'@importFrom httr http_error
 #'@rdname check-geojob
 #'@examples 
@@ -52,22 +51,22 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
   }
 	if (is.null(process$status)){
 		checkForCompleteResponse <- gcontent_xml2(checkForComplete)
-		checkResponseNS <- xml_ns(checkForCompleteResponse) 
-		root <- xml_root(checkForCompleteResponse)
-		status <- xml_find_all(root,xpath = "//wps:Status", ns = checkResponseNS)
-		process$status <- xml_text(status)
-		process$statusType <- xml_name(xml_child(status))
+		checkResponseNS <- xml2::xml_ns(checkForCompleteResponse) 
+		root <- xml2::xml_root(checkForCompleteResponse)
+		status <- xml2::xml_find_all(root,xpath = "//wps:Status", ns = checkResponseNS)
+		process$status <- xml2::xml_text(status)
+		process$statusType <- xml2::xml_name(xml2::xml_child(status))
 		
 		if (process$status == "Process successful"){
-			root <- xml_root(checkForCompleteResponse)
+			root <- xml2::xml_root(checkForCompleteResponse)
 			process$percentComplete <- "100"
-			process$URL <- xml_text(xml_find_all(root, "//@href", ns = checkResponseNS)[[1]])
+			process$URL <- xml2::xml_text(xml2::xml_find_all(root, "//@href", ns = checkResponseNS)[[1]])
 		} else if (process$status == ""){
 		  process$status <- "ProcessStarted"
 		} else if (substr(process$status, 1, 34) == "org.n52.wps.server.ExceptionReport"){
 		  process$status <- "ProcessFailed"
 		} else if (process$status == "Process Started") {
-		  process$percentCompleted <- xml_attr(xml_find_all(root, "//wps:ProcessStarted"), "percentCompleted", ns = checkResponseNS)
+		  process$percentCompleted <- xml2::xml_attr(xml2::xml_find_all(root, "//wps:ProcessStarted"), "percentCompleted", ns = checkResponseNS)
 		}
 	}
   

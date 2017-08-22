@@ -10,7 +10,7 @@
 \alias{algorithm}
 \alias{algorithm<-,webprocess-method}
 \alias{algorithm}
-\alias{algorithm,XMLAbstractDocument-method}
+\alias{algorithm,xml_document-method}
 \alias{algorithm}
 \title{the algorithm of a webprocess object}
 \usage{
@@ -22,7 +22,7 @@ algorithm(.Object) <- value
 
 \S4method{algorithm}{webprocess}(.Object) <- value
 
-\S4method{algorithm}{XMLAbstractDocument}(.Object)
+\S4method{algorithm}{xml_document}(.Object)
 }
 \arguments{
 \item{.Object}{a \linkS4class{webprocess} object}

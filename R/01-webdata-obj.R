@@ -113,7 +113,7 @@ setMethod("webdata", signature("character"), function(.Object=c("prism",  "iclus
 #' @rdname webdata-methods
 #' @aliases webdata
 setMethod("webdata", signature("geojob"), function(.Object, ...) {
-  xmlVals <- inputs(xmlParse(xml(.Object)))
+  xmlVals <- inputs(xml2::read_xml(xml(.Object)))
   url <- xmlVals[["DATASET_URI"]]
   times <- c(start = xmlVals[["TIME_START"]], end = xmlVals[["TIME_END"]])
   if(is.null(times[['start']])) {times[['start']] <- NA}
