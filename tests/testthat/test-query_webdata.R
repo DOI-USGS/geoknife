@@ -33,7 +33,7 @@ test_that("query works for times with base dataset", {
 test_that("bad url query returns NAs", {
   testthat::skip_on_cran()
   wd <- webdata('prism', url='https://cida.usgs.gov/')
-  times.out <- query(wd, 'times')
+  suppressWarnings(times.out <- query(wd, 'times'))
   expect_true(all(is.na(times.out)))
 })
 

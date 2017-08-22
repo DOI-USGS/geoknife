@@ -7,6 +7,8 @@
 \alias{attribute}
 \alias{attribute<-,webgeom-method}
 \alias{attribute}
+\alias{attribute,webgeom-method}
+\alias{attribute}
 \title{the attribute of an webgeom object}
 \usage{
 attribute(.Object) <- value
@@ -14,6 +16,8 @@ attribute(.Object) <- value
 attribute(.Object)
 
 \S4method{attribute}{webgeom}(.Object) <- value
+
+\S4method{attribute}{webgeom}(.Object)
 }
 \arguments{
 \item{.Object}{a \linkS4class{webgeom} object}

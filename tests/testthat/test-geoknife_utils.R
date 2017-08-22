@@ -12,7 +12,7 @@ test_that("verbose", {
 
 test_that("error on url", {
   testthat::skip_on_cran()
-  expect_error(geoknife:::retryVERB(httr::GET('bad.url.html')), "Couldn't resolve host name")
+  expect_error(geoknife:::retryVERB(httr::GET('bad.url.html')), ".*bad.url.html.*")
 })
 
 context("geoknife convienence functions for job state")
