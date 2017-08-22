@@ -11,7 +11,7 @@
 #' @aliases result
 #' @docType methods
 #' @keywords methods
-#' @importFrom XML xmlGetAttr getNodeSet xmlParse xmlChildren xmlName xpathApply
+#' @importFrom XML xmlGetAttr getNodeSet xmlParse xmlChildren xmlName
 #' @importFrom httr GET
 #' @author Jordan S. Read
 #' @export

@@ -13,8 +13,8 @@
 #'@aliases check
 #'@author Jordan S. Read
 #'@seealso \code{\link{start}}
-#'@importFrom XML xmlNamespaceDefinitions xmlRoot xmlGetAttr
-#' @importFrom httr http_error
+#'@import xml2
+#'@importFrom httr http_error
 #'@rdname check-geojob
 #'@examples 
 #'gj <- geojob() # create geojob object
@@ -51,23 +51,23 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
     process$percentComplete <- 'unknown'
   }
 	if (is.null(process$status)){
-		checkForCompleteResponse <- gcontent(checkForComplete)
-		checkResponseNS <- xmlNamespaceDefinitions(checkForCompleteResponse, simplify = TRUE) 
-		root <- xmlRoot(checkForCompleteResponse)
-		status <- sapply(xmlChildren(root[["Status"]]),xmlValue)
-		process$status	<-	status[[1]]
-		process$statusType <- sapply(xmlChildren(root[["Status"]]),xmlName)[[1]]
+		checkForCompleteResponse <- gcontent_xml2(checkForComplete)
+		checkResponseNS <- xml_ns(checkForCompleteResponse) 
+		root <- xml_root(checkForCompleteResponse)
+		status <- xml_find_all(root,xpath = "//wps:Status", ns = checkResponseNS)
+		process$status <- xml_text(status)
+		process$statusType <- xml_name(xml_child(status))
+		
 		if (process$status == "Process successful"){
-			root <- xmlRoot(checkForCompleteResponse)
+			root <- xml_root(checkForCompleteResponse)
 			process$percentComplete <- "100"
-			process$URL <- as.character(xpathApply(root, "//@href", namespaces = checkResponseNS)[[1]])
+			process$URL <- xml_text(xml_find_all(root, "//@href", ns = checkResponseNS)[[1]])
 		} else if (process$status == ""){
 		  process$status <- "ProcessStarted"
 		} else if (substr(process$status, 1, 34) == "org.n52.wps.server.ExceptionReport"){
 		  process$status <- "ProcessFailed"
 		} else if (process$status == "Process Started") {
-		  process$percentCompleted <- as.character(xpathApply(root, "//wps:ProcessStarted", 
-		                                                      xmlGetAttr, "percentCompleted"))
+		  process$percentCompleted <- xml_attr(xml_find_all(root, "//wps:ProcessStarted"), "percentCompleted", ns = checkResponseNS)
 		}
 	}
   
