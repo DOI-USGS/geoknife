@@ -64,7 +64,7 @@ webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54
   xpath <- '//srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL'
   parentxpath <- paste0(xpath,paste(rep('/parent::node()[1]',6), collapse='')) #/parent::node()[1]
 
-  response <- gcontent_xml2(gPOST(url = csw_url, body = request, content_type_xml()))
+  response <- gcontent(gPOST(url = csw_url, body = request, content_type_xml()))
   namespaces = xml2::xml_ns(response)
   urls <- lapply(xml2::xml_find_all(response, xpath, ns = namespaces), 
                  xml2::xml_text)

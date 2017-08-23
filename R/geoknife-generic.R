@@ -98,13 +98,13 @@ parseXMLalgorithms  <-  function(xml){
   childKey <- "ows:Identifier"
   titleKey <- "ows:Title"
   
-  nodes <- XML::getNodeSet(xml, sprintf("//%s/%s",parentKey,childKey), 
-                      namespaces = pkg.env$NAMESPACES)
-  values  <-  lapply(nodes,XML::xmlValue)
+  nodes <- xml2::xml_find_all(xml, sprintf("//%s/%s",parentKey,childKey), 
+                      ns = pkg.env$NAMESPACES)
+  values  <-  lapply(nodes,xml2::xml_text)
   
-  nodes <- XML::getNodeSet(xml, sprintf("//%s/%s",parentKey,titleKey),
-                      namespaces = pkg.env$NAMESPACES)
-  names(values) <- sapply(nodes,XML::xmlValue)
+  nodes <- xml2::xml_find_all(xml, sprintf("//%s/%s",parentKey,titleKey),
+                      ns = pkg.env$NAMESPACES)
+  names(values) <- sapply(nodes,xml2::xml_text)
   
   return(values)
 }
@@ -116,8 +116,8 @@ parseXMLgeoms	<-	function(xml){
   key="Name"
   # ignore namespaces
   xpath <- sprintf("//*[local-name()='%s']/*[local-name()='%s']/*[local-name()='%s']",parentKey,childKey,key)
-  nodes <- XML::getNodeSet(xml, xpath, namespaces = pkg.env$NAMESPACES)
-	values	<-	sapply(nodes,XML::xmlValue)
+  nodes <- xml2::xml_find_all(xml, xpath, ns = pkg.env$NAMESPACES)
+	values	<-	sapply(nodes,xml2::xml_text)
 	return(values)
 }
 
@@ -127,11 +127,11 @@ parseXMLattributes	<-	function(xml,rm.duplicates = FALSE){
   childKey	<-	"maxOccurs"
   key="name"
   
-	nodes	<-	XML::getNodeSet(xml,paste(c("//",parentKey,"[@",childKey,"]"),collapse=""))
+	nodes	<-	xml2::xml_find_all(xml,paste(c("//",parentKey,"[@",childKey,"]"),collapse=""))
 	# will error if none found
 	values	<-	list()
 	for (i in 1:length(nodes)){
-		values[[i]]	<-	XML::xmlGetAttr(nodes[[i]],key)
+		values[[i]]	<-	xml2::xml_attr(nodes[[i]],key)
 	}
 	values	<-	unlist(values[values != "the_geom" & values != ""])
   if (rm.duplicates){
@@ -141,9 +141,9 @@ parseXMLattributes	<-	function(xml,rm.duplicates = FALSE){
 }
 
 parseXMLvalues	<-	function(xml, key, rm.duplicates = FALSE){
-	nodes	<-	XML::getNodeSet(xml,paste0("//",key))
+	nodes	<-	xml2::xml_find_all(xml,paste0("//",key))
 	# will error if none found
-	values	<-	sapply(nodes,XML::xmlValue)
+	values	<-	sapply(nodes,xml2::xml_text)
   if (rm.duplicates){
     values = unique(values)
   }

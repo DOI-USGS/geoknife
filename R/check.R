@@ -50,7 +50,7 @@ setMethod(f = "check",signature(.Object = "geojob"), definition = function(.Obje
     process$percentComplete <- 'unknown'
   }
 	if (is.null(process$status)){
-		checkForCompleteResponse <- gcontent_xml2(checkForComplete)
+		checkForCompleteResponse <- gcontent(checkForComplete)
 		checkResponseNS <- xml2::xml_ns(checkForCompleteResponse) 
 		root <- xml2::xml_root(checkForCompleteResponse)
 		status <- xml2::xml_find_all(root,xpath = "//wps:Status", ns = checkResponseNS)

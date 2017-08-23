@@ -59,7 +59,7 @@ setMethod(f = "variables_query",signature = c("webdata","webprocess"),
 
             # will error if none found
             values	<-	sapply(
-              xml2::xml_find_all(gcontent_xml2(response),'//gdp:shortname'),
+              xml2::xml_find_all(gcontent(response),'//gdp:shortname'),
               xml2::xml_text)
             return(values)
           })

@@ -57,7 +57,7 @@ algorithmParseDetails <- function(jobID){
   function.handlers <- list("FeatureWeightedGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
                             "FeatureGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
                             "FeatureCategoricalGridCoverageAlgorithm" = c('function.name'='parseCategorical'))
-  xmlProcess <- gcontent_xml2(gGET(jobID))
+  xmlProcess <- gcontent(gGET(jobID))
   algorithm <- xml2::xml_text(xml2::xml_find_all(xmlProcess,
     "/wps:ExecuteResponse/wps:Process/ows:Identifier")[[1]])
 

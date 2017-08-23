@@ -35,7 +35,7 @@ setMethod(f = "start",signature(.Object = "geojob"),definition = function(.Objec
   }
 	requestXML <- xml(.Object)
 	data <- genericExecute(url = url(.Object), requestXML)
-	xmltext <- gcontent_xml2(data)
+	xmltext <- gcontent(data)
 	response <- xml2::xml_root(xmltext)
 	processID <- xml2::xml_attr(response,"statusLocation")
 	

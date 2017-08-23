@@ -80,7 +80,7 @@ setMethod("geojob", signature("character"), function(xml, ...) {
   #parse based on xml class
   if(length(xml == 1) && startsWith(x = xml, prefix= "http")){
     response <- gGET(xml)
-    doc <- gcontent_xml2(response)
+    doc <- gcontent(response)
   } else {
     doc <- xml2::read_xml(xml)
   }

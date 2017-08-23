@@ -10,7 +10,6 @@ setMethod(f = "query",signature("webprocess",'character'),
             } else {
               stop('field ', field, ' not supported.')
             }
-            # Need to investigate this.
             input_list[['xml']] <- gcontent(gGET(url))
             values <- do.call(paste0('parseXML',field), input_list)
             return(values)

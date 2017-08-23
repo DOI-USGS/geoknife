@@ -11,7 +11,7 @@ defaultProcessInputs <- function(algorithm, wps_url, wps_version){
 
   
   doc = tryCatch({
-    gcontent_xml2(getCaps)
+    gcontent(getCaps)
   }, error = function(e) {
     stop(wps_url, ' does not seem to be a valid Web Processing Service url.', call. = FALSE)
   })

@@ -80,7 +80,7 @@ wfsFilterFeatureXML <- function(.Object, knife=webprocess(), match.case = TRUE){
 #' @keywords internal 
 fetchGML_IDs <- function(.Object){
   response <- suppressWarnings(gPOST(url=url(.Object), body=wfsFilterFeatureXML(.Object)))
-  xml <- gcontent_xml2(response)
+  xml <- gcontent(response)
   ns_geom <- strsplit(geom(.Object), ":")[[1]][1]
   value_path <- sprintf('//gml:featureMembers/%s/%s:%s', geom(.Object), ns_geom, .Object@attribute)
   node_sets <- xml2::xml_find_all(xml, paste0(value_path,'/parent::node()'))

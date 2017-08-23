@@ -25,7 +25,6 @@ setMethod(f = "query",signature("webgeom",'character'),
             } else {
               stop('field ', field, ' not supported.')
             }
-            # Note sure what this is doing. Need to investigate.
             input_list[['xml']] <- gcontent(gGET(url))
             values <- unique(do.call(paste0('parseXML',field), input_list))
             return(values)
