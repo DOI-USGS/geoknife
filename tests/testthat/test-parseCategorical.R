@@ -22,4 +22,5 @@ test_that('result works for categorical', {
   
   job <- geoknife(stencil, 'iclus', knife)
   expect_is(result(job), 'data.frame')
+  cancel(job)
 })

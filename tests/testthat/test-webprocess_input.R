@@ -42,6 +42,7 @@ test_that("can use multiple dataset variables",{
   cancel()
   knife <- webprocess(algorithm = list('Categorical Coverage Fraction'="gov.usgs.cida.gdp.wps.algorithm.FeatureCategoricalGridCoverageAlgorithm"))
   expect_is(geoknife(stencil = 'state::Wisconsin', fabric, knife),'geojob')
+  cancel()
 })
 
 test_that("you can set booleans and they will be lowercase strings for post",{
