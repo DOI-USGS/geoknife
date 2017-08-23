@@ -92,25 +92,23 @@ genericExecute	<-	function(url,requestXML){
 
 }
 
-#'@importFrom XML htmlParse getNodeSet
 parseXMLalgorithms  <-  function(xml){
   
   parentKey <- "wps:Process"
   childKey <- "ows:Identifier"
   titleKey <- "ows:Title"
   
-  nodes <- getNodeSet(xml, sprintf("//%s/%s",parentKey,childKey), 
+  nodes <- XML::getNodeSet(xml, sprintf("//%s/%s",parentKey,childKey), 
                       namespaces = pkg.env$NAMESPACES)
-  values  <-  lapply(nodes,xmlValue)
+  values  <-  lapply(nodes,XML::xmlValue)
   
-  nodes <- getNodeSet(xml, sprintf("//%s/%s",parentKey,titleKey),
+  nodes <- XML::getNodeSet(xml, sprintf("//%s/%s",parentKey,titleKey),
                       namespaces = pkg.env$NAMESPACES)
-  names(values) <- sapply(nodes,xmlValue)
+  names(values) <- sapply(nodes,XML::xmlValue)
   
   return(values)
 }
 
-#'@importFrom XML htmlParse getNodeSet
 parseXMLgeoms	<-	function(xml){
   
   parentKey <- "FeatureTypeList"
@@ -118,23 +116,22 @@ parseXMLgeoms	<-	function(xml){
   key="Name"
   # ignore namespaces
   xpath <- sprintf("//*[local-name()='%s']/*[local-name()='%s']/*[local-name()='%s']",parentKey,childKey,key)
-  nodes <- getNodeSet(xml, xpath, namespaces = pkg.env$NAMESPACES)
-	values	<-	sapply(nodes,xmlValue)
+  nodes <- XML::getNodeSet(xml, xpath, namespaces = pkg.env$NAMESPACES)
+	values	<-	sapply(nodes,XML::xmlValue)
 	return(values)
 }
 
 
-#'@importFrom XML htmlParse getNodeSet
 parseXMLattributes	<-	function(xml,rm.duplicates = FALSE){
   parentKey  <-  "xsd:element"
   childKey	<-	"maxOccurs"
   key="name"
   
-	nodes	<-	getNodeSet(xml,paste(c("//",parentKey,"[@",childKey,"]"),collapse=""))
+	nodes	<-	XML::getNodeSet(xml,paste(c("//",parentKey,"[@",childKey,"]"),collapse=""))
 	# will error if none found
 	values	<-	list()
 	for (i in 1:length(nodes)){
-		values[[i]]	<-	xmlGetAttr(nodes[[i]],key)
+		values[[i]]	<-	XML::xmlGetAttr(nodes[[i]],key)
 	}
 	values	<-	unlist(values[values != "the_geom" & values != ""])
   if (rm.duplicates){
@@ -142,11 +139,11 @@ parseXMLattributes	<-	function(xml,rm.duplicates = FALSE){
   }
 	return(values)
 }
-#'@importFrom XML htmlParse getNodeSet
+
 parseXMLvalues	<-	function(xml, key, rm.duplicates = FALSE){
-	nodes	<-	getNodeSet(xml,paste0("//",key))
+	nodes	<-	XML::getNodeSet(xml,paste0("//",key))
 	# will error if none found
-	values	<-	sapply(nodes,xmlValue)
+	values	<-	sapply(nodes,XML::xmlValue)
   if (rm.duplicates){
     values = unique(values)
   }

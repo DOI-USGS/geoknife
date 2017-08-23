@@ -63,12 +63,23 @@ webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54
     </csw:GetRecords>'
   xpath <- '//srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL'
   parentxpath <- paste0(xpath,paste(rep('/parent::node()[1]',6), collapse='')) #/parent::node()[1]
-  namespaces = c('srv','gmd','gco')
- 
-  response <- gcontent(gPOST(url = csw_url, body = request, content_type_xml()))
-  urls <- lapply(getNodeSet(response, xpath, namespaces = namespaces), xmlValue)
-  abstracts = sapply(getNodeSet(response, paste0(parentxpath,'/gmd:abstract'), namespaces = namespaces), xmlValue)
-  titles = sapply(getNodeSet(response, paste0(parentxpath,'/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString'), namespaces = namespaces), xmlValue)
+
+  response <- gcontent_xml2(gPOST(url = csw_url, body = request, content_type_xml()))
+  namespaces = xml2::xml_ns(response)
+  urls <- lapply(xml2::xml_find_all(response, xpath, ns = namespaces), 
+                 xml2::xml_text)
+  
+  abstracts = sapply(xml2::xml_find_all(response, 
+                                         paste0(parentxpath,'/gmd:abstract'), 
+                                         ns = namespaces), 
+                     xml2::xml_text)
+  
+  titles = sapply(xml2::xml_find_all(response,
+                                      paste0(parentxpath,
+    '/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString'), 
+                                      ns = namespaces), 
+                  xml2::xml_text)
+  
   group = list()
   sort.ix <- sort(titles, index.return = TRUE)$ix
   
@@ -76,7 +87,10 @@ webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54
     group[[i]] <- list(title = titles[sort.ix[i]], url=urls[[sort.ix[i]]], abstract = abstracts[sort.ix[i]])
   }
   
-  types = unname(sapply(getNodeSet(response, parentxpath, namespaces = namespaces), xmlAttrs))
+  types = unname(sapply(xml2::xml_find_all(response, 
+                                           parentxpath, 
+                                           ns = namespaces), 
+                        xml2::xml_attrs))
   
   # removing all non-OPeNDAP endpoints
   group[which(substr(types[sort.ix],1,7) != "OPeNDAP")] <- NULL

@@ -11,7 +11,6 @@
 #' @aliases result
 #' @docType methods
 #' @keywords methods
-#' @importFrom XML xmlGetAttr getNodeSet xmlParse xmlChildren xmlName
 #' @importFrom httr GET
 #' @author Jordan S. Read
 #' @export
@@ -58,8 +57,9 @@ algorithmParseDetails <- function(jobID){
   function.handlers <- list("FeatureWeightedGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
                             "FeatureGridStatisticsAlgorithm" = c('function.name'='parseTimeseries'),
                             "FeatureCategoricalGridCoverageAlgorithm" = c('function.name'='parseCategorical'))
-  xmlProcess <- gcontent(gGET(jobID))
-  algorithm <- xmlValue(getNodeSet(xmlProcess,"/wps:ExecuteResponse/wps:Process/ows:Identifier")[[1]])
+  xmlProcess <- gcontent_xml2(gGET(jobID))
+  algorithm <- xml2::xml_text(xml2::xml_find_all(xmlProcess,
+    "/wps:ExecuteResponse/wps:Process/ows:Identifier")[[1]])
 
   algorithm.name <- tail(strsplit(algorithm, '[.]')[[1]], 1)
   
@@ -77,8 +77,8 @@ outputDelimiter <- function(jobID){
                   'text/plain' = ' ')
   # find output type
   resp <- rawToChar(GET(jobID)$content)
-  doc <-  htmlParse(resp, useInternalNodes = TRUE)
-  type <- xmlGetAttr(getNodeSet(doc,"//reference[@mimetype]")[[1]],'mimetype')
+  doc <-  xml2::read_html(resp)
+  type <- xml2::xml_attr(xml2::xml_find_all(doc,"//reference[@mimetype]")[[1]],'mimetype')
   if (!type %in% names(delimiters)){
     stop('output ',type, ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new', call. = FALSE)
   }

@@ -68,8 +68,8 @@ test_that("error is thrown on job start for read only vars", {
 context("create webprocess from geojob")
 gconfig(wps.url = "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
 test_that("given a geojob, we can create a webprocess", {
-  xml <- readLines(system.file("extdata/state_webgeom_post.xml", 
-                               package = "geoknife"), warn = FALSE)
+  xml <- system.file("extdata/state_webgeom_post.xml", 
+                               package = "geoknife")
   geojob <- geojob(xml=xml)
   webprocess <- webprocess(geojob)
   expect_equal(algorithm(webprocess), list("Area Grid Statistics (weighted)"="gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"))

@@ -34,7 +34,6 @@ setGeneric(name="inputs<-",def=function(.Object, ..., value){
 #'@param ... arguments matching fields in .Object's processInputs slot
 #'@rdname inputs-webprocess
 #'@aliases inputs
-#'@importFrom XML getNodeSet xmlToList
 #'@export
 #'@keywords internal
 setGeneric(name="inputs",def=function(.Object, ..., value){standardGeneric("inputs")})

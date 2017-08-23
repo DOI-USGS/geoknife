@@ -5,7 +5,7 @@
 \alias{geojob}
 \alias{geojob,missing-method}
 \alias{geojob,geojob-method}
-\alias{geojob,XMLDocument-method}
+\alias{geojob,xml_document-method}
 \alias{geojob,geojob-method}
 \alias{geojob,character-method}
 \alias{geojob,geojob-method}
@@ -28,7 +28,7 @@ geojob(xml, ...)
 
 \S4method{geojob}{missing}(xml, ...)
 
-\S4method{geojob}{XMLDocument}(xml, ...)
+\S4method{geojob}{xml_document}(xml, ...)
 
 \S4method{geojob}{character}(xml, ...)
 

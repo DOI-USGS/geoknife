@@ -12,13 +12,13 @@ setGeneric(name="email",def=function(geojob, knife){standardGeneric("email")})
 #'@rdname email-method
 #'@aliases email,geojob-method
 #'@keywords internal
-#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- xmlParseString removeNodes
+#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- removeNodes
 #'@export
 setMethod(f = "email",signature = c("geojob",'webprocess'), 
           definition = function(geojob, knife){
             
-            doc <- xmlParse(xml(geojob))
-            root <- xmlRoot(doc)
+            doc <- XML::xmlParse(xml(geojob))
+            root <- XML::xmlRoot(doc)
             removeNodes(root[names(root) == "DataInputs"])
             removeNodes(root[names(root) == "ResponseForm"])
             removeNodes(root[names(root) == "Identifier"])

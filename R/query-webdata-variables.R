@@ -13,7 +13,7 @@ setGeneric(name="variables_query",def=function(fabric, knife){standardGeneric("v
 #'@rdname variables_query-method
 #'@aliases variables_query,webdata-method
 #'@keywords internal
-#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- xmlParseString
+#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
 #'@export
 setMethod(f = "variables_query",signature = c("webdata","missing"), 
           definition = function(fabric, knife){
@@ -24,7 +24,7 @@ setMethod(f = "variables_query",signature = c("webdata","missing"),
 #'@rdname variables_query-method
 #'@aliases variables_query,webdata-method
 #'@keywords internal
-#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- xmlParseString
+#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
 #'@export
 setMethod(f = "variables_query",signature = c("webdata","webprocess"), 
           definition = function(fabric, knife){
@@ -56,8 +56,10 @@ setMethod(f = "variables_query",signature = c("webdata","webprocess"),
             rd <- newXMLNode("wps:RawDataOutput", parent = rf)
             newXMLNode("ows:Identifier", newXMLTextNode('result_as_xml'), parent = rd)
             response <- genericExecute(knife@UTILITY_URL,toString.XMLNode(root))
-        
+
             # will error if none found
-            values	<-	sapply(getNodeSet(gcontent(response),'//gdp:shortname'),xmlValue)
+            values	<-	sapply(
+              xml2::xml_find_all(gcontent_xml2(response),'//gdp:shortname'),
+              xml2::xml_text)
             return(values)
           })
