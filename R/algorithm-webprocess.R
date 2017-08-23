@@ -42,6 +42,8 @@ setMethod(f = "algorithm<-",signature = "webprocess",
           }
 )
 
+setOldClass("xml_document")
+
 #'@rdname algorithm-webprocess
 #'@aliases algorithm
 setMethod(f = "algorithm",signature="xml_document",

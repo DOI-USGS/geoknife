@@ -51,6 +51,8 @@ setMethod(f = "inputs",signature = "webprocess",
             }
           })
 
+setOldClass("xml_document")
+
 #'@rdname inputs-webprocess
 #'@aliases inputs
 setMethod(f = "inputs",signature = "xml_document",

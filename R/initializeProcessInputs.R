@@ -1,4 +1,6 @@
 #'@importFrom XML htmlParse getNodeSet xmlValue
+#'@name defaultProcessInputs
+#'@title Default Process Inputs
 #'@param algorithm the WPS algorithm to get process inputs for
 #'@param wps_url the service base URL for the WPS
 #'@param wps_version the service version to use
