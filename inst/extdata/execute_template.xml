@@ -13,15 +13,19 @@
     {{/inputs}}
     <wps:Input>
       <ows:Identifier>FEATURE_COLLECTION</ows:Identifier>
-      <wps:Reference xlink:href="https://cida.usgs.gov/gdp/geoserver/wfs">
+      <wps:Reference xlink:href="{{wps_reference_href}}">
         <wps:Body>
-          <wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" xmlns:gml="http://www.opengis.net/gml" service="WFS" version="1.1.0" outputFormat="text/xml; subtype=gml/3.1.1">
-            <wfs:Query typeName="sample:CONUS_states">
-              <wfs:PropertyName>the_geom</wfs:PropertyName>
-              <wfs:PropertyName>STATE</wfs:PropertyName>
+          <wfs:GetFeature xmlns:wfs="{{wfs_namespace}}" xmlns:gml="{{gml_namespace}}" service="{{wfs_service}}" version="{{wfs_version}}" outputFormat="{{wfs_outputformat}}">
+            <wfs:Query typeName="{{wfs_typename}}">
+              <wfs:PropertyName>{{wfs_geom_property}}</wfs:PropertyName>
+              <wfs:PropertyName>{{wfs_attribute_property}}</wfs:PropertyName>
+              {{#filter_gmlid}}
               <ogc:Filter>
-                <ogc:GmlObjectId gml:id="CONUS_states.48"/>
+                {{#gmlids}}
+                <ogc:GmlObjectId gml:id="{{gmlid}}"/>
+                {{/gmlids}}
               </ogc:Filter>
+              {{/filter_gmlid}}
             </wfs:Query>
           </wfs:GetFeature>
         </wps:Body>
@@ -29,9 +33,9 @@
     </wps:Input>
   </wps:DataInputs>
   <wps:ResponseForm>
-    <wps:ResponseDocument storeExecuteResponse="true" status="true">
-      <wps:Output asReference="true">
-        <ows:Identifier>OUTPUT</ows:Identifier>
+    <wps:ResponseDocument storeExecuteResponse="{{storeExecuteResponse}}" status="{{status}}">
+      <wps:Output asReference="{{asReference}}">
+        <ows:Identifier>{{output_identifier}}</ows:Identifier>
       </wps:Output>
     </wps:ResponseDocument>
   </wps:ResponseForm>

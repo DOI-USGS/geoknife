@@ -29,8 +29,6 @@ setMethod(f = "XML",signature = c("ANY","webdata","webprocess"),
             
   knife <- .setProcessInputs(webprocess = knife, stencil = stencil, fabric = fabric)
   
-  browser()
-  
   whisker_list <- list(identifier = knife@algorithm)
   
   input_list <- list() # unnamed list for {{#inputs}}
@@ -61,41 +59,40 @@ setMethod(f = "XML",signature = c("ANY","webdata","webprocess"),
   
   whisker_list["inputs"] <- list(input_list)
   
+  
+  whisker_list <- c(whisker_list, suppressWarnings(addGeom(stencil)))
+  
+  whisker_list <- c(whisker_list, addResponse(knife))
+  
   return(whisker::whisker.render(readLines(system.file("extdata/execute_template.xml", package = "geoknife")), whisker_list))
   
-  # # complex data
-  # inEL	<-	newXMLNode("wps:Input")
-  # addChildren(di,inEL)
-  # 
-  # inIdEL   <- newXMLNode('ows:Identifier',newXMLTextNode('FEATURE_COLLECTION'))
-  # addChildren(inEL,inIdEL)
-  # top <- addResponse(knife, top)
-  # top <- suppressWarnings(addGeom(stencil, xmlNodes = top))
-  # return(suppressWarnings(toString.XMLNode(top)))
 })
 
-addResponse <- function(.Object, xmlNodes){
-  top <- xmlNodes
-  resForm  <-	newXMLNode('wps:ResponseForm')
-  addChildren(top,resForm)
+addResponse <- function(.Object){
   
-  resDoc	<-	newXMLNode('wps:ResponseDocument',attrs=c('storeExecuteResponse'='true','status'='true'))
-  addChildren(resForm,resDoc)
+  response_list <- list()
+  
+  # Store the response document on the server to download later?
+  response_list["storeExecuteResponse"] <- "true"
+  
+  # Return a status document or just return the result?
+  response_list["status"] <- "true"
 
+  # include the response as a url reference or in line?
+  response_list["asReference"] <- "true"
+  
   #if text/tab-separated-values" or output_type
   if (!is.null(.Object@processInputs$DELIMITER) && .Object@processInputs$DELIMITER=="TAB"){
-    resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='text/tab-separated-values'))
+    # resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='text/tab-separated-values'))
+    browser()
   } else if (!is.null(.Object@processInputs$OUTPUT_TYPE) && .Object@processInputs$OUTPUT_TYPE=="geotiff") {
-    resOut  <-  newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='application/zip'))
-  } else {
-    resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true'))
+    # resOut  <-  newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='application/zip'))
+    browser()
   }
+
+  response_list["output_identifier"] <- "OUTPUT"
   
-  addChildren(resDoc,resOut)
-  
-  outID	<-	newXMLNode('ows:Identifier',newXMLTextNode('OUTPUT'))
-  addChildren(resOut,outID)
-  requestXML <-	top
+  return(response_list)
 }
 
 findIdentifierNode <- function(xmlNodes, name){
@@ -109,40 +106,43 @@ findIdentifierNode <- function(xmlNodes, name){
 
 setGeneric(name="addGeom",def=function(stencil, xmlNodes){standardGeneric("addGeom")})
 
-#'@importFrom XML newXMLNode addChildren
 setMethod(f = "addGeom",signature = c("webgeom","ANY"), 
-          definition = function(stencil, xmlNodes){
+          definition = function(stencil){
             
+  browser()
+  geom_list <- list()
+  
+  # This is the WFS service base URL
+  geom_list["wps_reference_href"]  <- url(stencil)
+  
+  # These could / should be hard coded in the template.
+  geom_list["wfs_namespace"] <- stencil@WFS_NAMESPACE
+  geom_list["gml_namespace"] <- stencil@GML_NAMESPACE
+  geom_list["wfs_version"] <- version(stencil)
+  geom_list["wfs_service"] <- "WFS"
+  
+  # This is the format required by the GDP.
+  geom_list["wfs_outputformat"] <- "text/xml; subtype=gml/3.1.1"
 
-  inEL <- findIdentifierNode(xmlNodes, 'FEATURE_COLLECTION')
-  # reference is a sibling of the FEATURE_COLLECTION ID
-  inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=url(stencil)))
-  addChildren(inEL,inDatEL) # see if we can do this as a method to webgeom
+  # This is the WFS layer/typename
+  geom_list["wfs_typename"] <- as.character(stencil@geom)
   
-  bodyEL   <-	newXMLNode('wps:Body')
-  addChildren(inDatEL,bodyEL)
+  # This is what the WFS layer calls its geometry property
+  geom_list["wfs_geom_property"] <- "the_geom" # this is only valid for geoserver
   
-  featEL   <-	newXMLNode('wfs:GetFeature',attrs=c("service"="WFS",
-                                                  "version"=version(stencil),
-                                                  "outputFormat"="text/xml; subtype=gml/3.1.1"),
-                         namespaceDefinitions=c("wfs"=stencil@WFS_NAMESPACE,
-                                                "gml"=stencil@GML_NAMESPACE))
-  addChildren(bodyEL,featEL)
-  queryEL  <-	newXMLNode('wfs:Query',attrs=c("typeName"=as.character(stencil@geom)))
-  addChildren(featEL,queryEL)
-  propNmEL <-	newXMLNode('wfs:PropertyName',newXMLTextNode('the_geom'))
-  addChildren(queryEL,propNmEL)
-  propNmEL<-	newXMLNode('wfs:PropertyName',newXMLTextNode(stencil@attribute))
-  addChildren(queryEL,propNmEL)
+  # This is the attribute property that the GDP will use to label output
+  geom_list["wfs_attribute_property"] <- stencil@attribute
+  
   if (!is.na(stencil@GML_IDs[1])){
-    filterEL	<-	newXMLNode('ogc:Filter')
-    addChildren(queryEL,filterEL)
+    gmlid_list <- list()
     for (i in 1:length(stencil@GML_IDs)){
-      newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=stencil@GML_IDs[i]), parent = filterEL)  
+      gmlid_list <- c(gmlid_list, list(gmlid = stencil@GML_IDs[i]))
     }
   }
   
-  return(xmlNodes)
+  geom_list["filter_gmlid"] <- list(list(gmlids = gmlid_list))
+  
+  return(geom_list)
 })
 
 setMethod(f = "addGeom",signature = c("ANY","ANY"),
