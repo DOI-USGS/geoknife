@@ -31,9 +31,9 @@ setClass(
   Class = "webprocess",
   prototype = prototype(
     version = gconfig('version'),
-    WPS_SCHEMA_LOCATION = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd',
+    WPS_SCHEMA_LOCATION = pkg.env$SCHEMA_LOCATIONS[['WPS_SCHEMA_LOCATION']],
     WPS_NAMESPACE = pkg.env$NAMESPACES[['wps']],
-    XSI_SCHEMA_LOCATION = 'http://www.opengis.net/wfs ../wfs/1.1.0/WFS.xsd',
+    XSI_SCHEMA_LOCATION = pkg.env$SCHEMA_LOCATIONS[['XSI_SCHEMA_LOCATION']],
     XSI_NAMESPACE = pkg.env$NAMESPACES[['xsi']],
     OGC_NAMESPACE = pkg.env$NAMESPACES[['ogc']],
     XLINK_NAMESPACE = pkg.env$NAMESPACES[['xlink']],

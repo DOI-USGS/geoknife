@@ -58,7 +58,7 @@ setMethod("initialize", signature = "webgeom",
             .Object@version = version
             .Object@GML_NAMESPACE = pkg.env$NAMESPACES[['gml']]
             .Object@WFS_NAMESPACE   = pkg.env$NAMESPACES[['wfs']]
-            .Object@GML_SCHEMA_LOCATION = 'http://schemas.opengis.net/gml/3.1.1/base/feature.xsd'
+            .Object@GML_SCHEMA_LOCATION = pkg.env$SCHEMA_LOCATIONS[['GML_SCHEMA_LOCATION']]
             
             values(.Object) = values
             

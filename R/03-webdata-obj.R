@@ -16,6 +16,10 @@ pkg.env$NAMESPACES <- c(wps = 'http://www.opengis.net/wps/1.0.0',
                         gml = 'http://www.opengis.net/gml',
                         wfs = 'http://www.opengis.net/wfs')
 
+pkg.env$SCHEMA_LOCATIONS <- c(WPS_SCHEMA_LOCATION = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd',
+                              XSI_SCHEMA_LOCATION = 'http://www.opengis.net/wfs ../wfs/1.1.0/WFS.xsd',
+                              GML_SCHEMA_LOCATION = 'http://schemas.opengis.net/gml/3.1.1/base/feature.xsd')
+
 #' @importFrom utils lsf.str packageName
 .onLoad <- function(libname, pkgname){
   setJobState()

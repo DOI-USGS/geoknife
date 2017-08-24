@@ -41,7 +41,6 @@ setMethod(f = "values<-",signature(.Object = "webgeom"), definition = function(.
   }
   return(.Object)})
 
-#' @import XML
 #'@aliases values
 #'@rdname values
 setMethod(f = "values",signature="webgeom",
@@ -50,29 +49,40 @@ setMethod(f = "values",signature="webgeom",
           }
 )
 
-wfsFilterFeatureXML <- function(.Object, knife=webprocess(), match.case = TRUE){
+# knife = NULL for backward compatibility
+wfsFilterFeatureXML <- function(.Object, knife=NULL, match.case = TRUE){
   match.case.char <- ifelse(match.case, 'true','false')
-  top <- newXMLNode(name='wfs:GetFeature',
-                    attrs=c('service'="WFS",'version'= version(.Object),
-                            'xsi:schemaLocation' = paste(c(.Object@WFS_NAMESPACE,knife@WPS_SCHEMA_LOCATION),collapse=" ")),
-                    namespaceDefinitions=c('ogc' = knife@OGC_NAMESPACE,
-                                           'wfs' = .Object@WFS_NAMESPACE,
-                                           'xsi' = knife@XSI_NAMESPACE,
-                                           'gml' = .Object@GML_NAMESPACE,
-                                           'ows' = knife@OWS_NAMESPACE))
-  q <- newXMLNode('wfs:Query', parent = top, attrs = c(typeName=geom(.Object)))
-  newXMLNode('ogc:PropertyName', parent = q, newXMLTextNode(.Object@attribute))
-  f <- newXMLNode('ogc:Filter', parent = q) # skipping namespace
-  Or <- newXMLNode('ogc:Or', parent = f) 
+  
+  wfs_list <- list()
+  
+  wfs_list["service"] <- "WFS"
+  wfs_list["version"] <- version(.Object)
+  wfs_list["schema_location"] <- paste(c(.Object@WFS_NAMESPACE,
+                                         pkg.env$SCHEMA_LOCATIONS[['WPS_SCHEMA_LOCATION']]),
+                                       collapse=" ")
+  wfs_list["wfs"] <- .Object@WFS_NAMESPACE
+  wfs_list["gml"] <- .Object@GML_NAMESPACE
+  wfs_list["ows"] <- pkg.env$NAMESPACES[['ows']]
+  wfs_list["ogc"] <- pkg.env$NAMESPACES[['ogc']]
+  wfs_list["xsi"] <- pkg.env$NAMESPACES[['xsi']]
+  
+  wfs_list["query_typename"] <- geom(.Object)
+  
+  wfs_list["attribute_property"] <- .Object@attribute
+  
+  properties <- list()
   for (val in values(.Object)){
-    newXMLNode('ogc:PropertyIsEqualTo', parent=Or, attrs = c('matchCase'=match.case.char), 
-               .children = list(
-                 newXMLNode('ogc:PropertyName', newXMLTextNode(.Object@attribute)),
-                 newXMLNode('ogc:Literal', newXMLTextNode(val))
-               ))
+    properties <- c(properties,
+                    list(list(match_case = match.case.char,
+                              property_name = .Object@attribute,
+                              property_literal = val)))
   }
   
-  return(suppressWarnings(toString.XMLNode(top)))
+  wfs_list["properties"] <- list(properties)
+  
+  return(whisker::whisker.render(readLines(system.file(
+    "templates/getfeature_template.xml", package = "geoknife")), 
+    wfs_list))
 }
 
 #' @title fetch GML_IDs from WFS

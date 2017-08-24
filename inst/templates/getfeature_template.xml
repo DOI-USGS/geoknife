@@ -1,0 +1,15 @@
+<wfs:GetFeature xmlns:ogc="{{ogc}}" xmlns:wfs="{{wfs}}" xmlns:xsi="{{xsi}}" xmlns:gml="{{gml}}" xmlns:ows="{{ows}}" service="{{service}}" version="{{version}}" xsi:schemaLocation="{{schema_location}}">
+  <wfs:Query typeName="{{query_typename}}">
+    <ogc:PropertyName>{{attribute_property}}</ogc:PropertyName>
+    <ogc:Filter>
+      <ogc:Or>
+        {{#properties}}
+        <ogc:PropertyIsEqualTo matchCase="{{match_case}}">
+          <ogc:PropertyName>{{property_name}}</ogc:PropertyName>
+          <ogc:Literal>{{property_literal}}</ogc:Literal>
+        </ogc:PropertyIsEqualTo>
+        {{/properties}}
+      </ogc:Or>
+    </ogc:Filter>
+  </wfs:Query>
+</wfs:GetFeature>
