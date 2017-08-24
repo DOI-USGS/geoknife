@@ -58,7 +58,7 @@
   </wps:DataInputs>
   <wps:ResponseForm>
     <wps:ResponseDocument storeExecuteResponse="{{storeExecuteResponse}}" status="{{status}}">
-      <wps:Output asReference="{{asReference}}">
+      <wps:Output asReference="{{asReference}}"{{{output_mimetype}}}>
         <ows:Identifier>{{output_identifier}}</ows:Identifier>
       </wps:Output>
     </wps:ResponseDocument>

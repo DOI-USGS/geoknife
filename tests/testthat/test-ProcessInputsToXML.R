@@ -31,3 +31,24 @@ test_that("Execute XML works with no gmlids and multiple variables", {
     fn <- "data/test_XML_no_gmlid_xml.xml"
     expect_equal(xml,readChar(fn, file.info(fn)$size))
   })
+
+test_that("you can set TAB delimited and get back the right XML", {
+  wp <- readRDS("data/test_XML_wp.rds")
+  inputs(wp, "DELIMITER") <- "TAB"
+  xml <- XML(stencil = readRDS("data/test_XML_wg.rds"),
+             fabric = readRDS("data/test_XML_wd.rds"), 
+             knife = wp)
+  expect_true(grepl('mimeType="text/tab-separated-values"', xml))
+})
+
+test_that("you can set output_type geotiff and get back the right XML", {
+  # Generated rds with this code.
+  # wp <- webprocess(algorithm = list('OPeNDAP Subset'="gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm"))
+  # inputs(wp, "OUTPUT_TYPE") <- "geotiff"
+  # saveRDS(wp, "data/test_XML_wp_opendapsubset.rds")
+  wp <- readRDS("data/test_XML_wp_opendapsubset.rds")
+  xml <- XML(stencil = readRDS("data/test_XML_wg.rds"),
+             fabric = readRDS("data/test_XML_wd.rds"), 
+             knife = wp)
+  expect_true(grepl('mimeType="application/zip"', xml))
+})

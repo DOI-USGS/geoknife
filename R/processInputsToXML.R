@@ -88,12 +88,10 @@ addResponse <- function(.Object){
   #if text/tab-separated-values" or output_type
   if (!is.null(.Object@processInputs$DELIMITER) && 
       .Object@processInputs$DELIMITER=="TAB"){
-    # resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='text/tab-separated-values'))
-    browser()
+    response_list["output_mimetype"] <- ' mimeType="text/tab-separated-values"'
   } else if (!is.null(.Object@processInputs$OUTPUT_TYPE) && 
              .Object@processInputs$OUTPUT_TYPE=="geotiff") {
-    # resOut  <-  newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='application/zip'))
-    browser()
+    response_list["output_mimetype"] <- ' mimeType="application/zip"'
   }
 
   response_list["output_identifier"] <- "OUTPUT"
