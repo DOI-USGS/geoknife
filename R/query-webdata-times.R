@@ -21,7 +21,7 @@ setMethod(f = "times_query",signature = c("webdata","missing"),
 #'@rdname times_query-method
 #'@aliases times_query,webdata-method
 #'@keywords internal
-#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
+#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- newXMLTextNode
 #'@export
 setMethod(f = "times_query",signature = c("webdata","webprocess"), 
           definition = function(fabric, knife){

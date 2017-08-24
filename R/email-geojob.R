@@ -12,38 +12,28 @@ setGeneric(name="email",def=function(geojob, knife){standardGeneric("email")})
 #'@rdname email-method
 #'@aliases email,geojob-method
 #'@keywords internal
-#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- removeNodes
 #'@export
 setMethod(f = "email",signature = c("geojob",'webprocess'), 
           definition = function(geojob, knife){
-            
-            doc <- XML::xmlParse(xml(geojob))
-            root <- XML::xmlRoot(doc)
-            removeNodes(root[names(root) == "DataInputs"])
-            removeNodes(root[names(root) == "ResponseForm"])
-            removeNodes(root[names(root) == "Identifier"])
-            
-            newXMLNode("ows:Identifier", newXMLTextNode(knife@emailK), parent=root)
-            di <- newXMLNode("wps:DataInputs",parent=root)
-            wps_in <- newXMLNode("wps:Input",parent=di)
-            newXMLNode("ows:Identifier", newXMLTextNode('wps-checkpoint'), parent = wps_in)
-            wps_data <- newXMLNode("wps:Data",parent=wps_in)
-            newXMLNode("wps:LiteralData", newXMLTextNode(id(geojob)), parent = wps_data)
-            
-            wps_in <- newXMLNode("wps:Input",parent=di)
-            newXMLNode("ows:Identifier", newXMLTextNode('email'), parent = wps_in)
-            wps_data <- newXMLNode("wps:Data",parent=wps_in)
-            newXMLNode("wps:LiteralData", newXMLTextNode(knife@email), parent = wps_data)
-            
-            wps_in <- newXMLNode("wps:Input",parent=di)
-            newXMLNode("ows:Identifier", newXMLTextNode('filename'), parent = wps_in)
-            wps_data <- newXMLNode("wps:Data",parent=wps_in)
-            newXMLNode("wps:LiteralData", newXMLTextNode('geoknife_output'), parent = wps_data)
-            
-            rf <- newXMLNode("wps:ResponseForm", parent = root)
-            rd <- newXMLNode("wps:ResponseDocument", parent = rf)
-            out <- newXMLNode("wps:Output", parent = rd)
-            newXMLNode("ows:Identifier", newXMLTextNode('result'), parent = out)
-            response <- genericExecute(knife@UTILITY_URL,toString.XMLNode(root))
+
+            response <- genericExecute(knife@UTILITY_URL,
+                                       make_email_execute_xml(geojob, knife))
             #return boolean?
           })
+
+make_email_execute_xml <- function(geojob, knife) {
+  email_list <- get_wps_execute_attributes(knife)
+  email_list["identifier"] <- knife@emailK
+  input_list <- list()
+  input_list <- list(list(input_identifier = "wps-checkpoint",
+                          input_literal_data_element = id(geojob)),
+                     list(input_identifier = "email",
+                          input_literal_data_element = knife@email),
+                     list(input_identifier = "filename",
+                          input_literal_data_element = "geoknife_output"))
+  email_list <- c(email_list, inputs = list(input_list))
+  email_list["result_name"] <- "result"
+  return(whisker::whisker.render(readLines(system.file(
+    "templates/utility_execute_template.xml", package = "geoknife")), 
+                                 email_list))
+}

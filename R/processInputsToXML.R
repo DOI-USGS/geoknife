@@ -29,7 +29,7 @@ setMethod(f = "XML",signature = c("ANY","webdata","webprocess"),
   knife <- .setProcessInputs(webprocess = knife, 
                              stencil = stencil, 
                              fabric = fabric)
-  browser()
+  
   whisker_list <- get_wps_execute_attributes(knife)
   
   whisker_list["identifier"] <- knife@algorithm[[1]]
