@@ -138,9 +138,8 @@ setMethod(f = "addGeom",signature = c("webgeom","ANY"),
     for (i in 1:length(stencil@GML_IDs)){
       gmlid_list <- c(gmlid_list, list(gmlid = stencil@GML_IDs[i]))
     }
+    geom_list["filter_gmlid"] <- list(list(gmlids = gmlid_list))
   }
-  
-  geom_list["filter_gmlid"] <- list(list(gmlids = gmlid_list))
   
   return(list(wfs_reference = list(geom_list)))
 })
