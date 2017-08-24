@@ -4,11 +4,9 @@
 {{#inputs}}
     <wps:Input>
       <ows:Identifier>{{input_identifier}}</ows:Identifier>
-      {{#data_elements}}
       <wps:Data>
         <wps:LiteralData>{{input_literal_data_element}}</wps:LiteralData>
       </wps:Data>
-      {{/data_elements}}
     </wps:Input>
 {{/inputs}}
     <wps:Input>

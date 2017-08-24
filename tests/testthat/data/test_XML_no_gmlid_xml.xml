@@ -60,9 +60,15 @@
       <wps:Data>
         <wps:LiteralData>tmx</wps:LiteralData>
       </wps:Data>
+    </wps:Input>
+    <wps:Input>
+      <ows:Identifier>DATASET_ID</ows:Identifier>
       <wps:Data>
         <wps:LiteralData>tmn</wps:LiteralData>
       </wps:Data>
+    </wps:Input>
+    <wps:Input>
+      <ows:Identifier>DATASET_ID</ows:Identifier>
       <wps:Data>
         <wps:LiteralData>ppt</wps:LiteralData>
       </wps:Data>

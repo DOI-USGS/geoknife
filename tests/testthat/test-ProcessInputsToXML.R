@@ -22,7 +22,7 @@ test_that("Execute XML creation with two points works", {
   expect_equal(xml,readChar(fn, file.info(fn)$size))
 })
 
-test_that("Execute XML works with no gmlids", {
+test_that("Execute XML works with no gmlids and multiple variables", {
   # This examples was grabbed from the custom dataset vignette.
     wd <- readRDS("data/test_XML_no_gmlid_wd.rds") 
     wg <- readRDS("data/test_XML_no_gmlid_wg.rds") 
@@ -31,4 +31,3 @@ test_that("Execute XML works with no gmlids", {
     fn <- "data/test_XML_no_gmlid_xml.xml"
     expect_equal(xml,readChar(fn, file.info(fn)$size))
   })
-})

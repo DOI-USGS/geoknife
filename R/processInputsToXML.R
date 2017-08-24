@@ -51,15 +51,11 @@ setMethod(f = "XML",signature = c("ANY","webdata","webprocess"),
         if (is.null(input_literal_data_element)) {
           stop(input_identifier, ' cannot be NULL. it is required') }
         
-        data_element_list <- c(data_element_list,
-                               list(list(input_literal_data_element = 
-                                           input_literal_data_element)))
+        input_list <- c(input_list,
+                        list(list(input_identifier = input_identifier,
+                                  input_literal_data_element = input_literal_data_element)))
       }
     }
-    
-    input_list <- c(input_list,
-                    list(list(input_identifier = input_identifier,
-                              data_elements = data_element_list)))
     
   }
   
