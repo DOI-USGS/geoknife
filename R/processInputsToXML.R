@@ -28,52 +28,50 @@ setMethod(f = "XML",signature = c("ANY","webdata","webprocess"),
             #stencil can be webgeom OR simplegeom 
             
   knife <- .setProcessInputs(webprocess = knife, stencil = stencil, fabric = fabric)
-  top <- newXMLNode(name='wps:Execute',
-                    attrs=c('service'="WPS",'version'= version(knife),
-                            'xsi:schemaLocation' = paste(c(knife@WPS_NAMESPACE,knife@WPS_SCHEMA_LOCATION),collapse=" ")),
-                    namespaceDefinitions=c('wps' = knife@WPS_NAMESPACE,
-                                           'ows' = knife@OWS_NAMESPACE,
-                                           'ogc' = knife@OGC_NAMESPACE,
-                                           'xlink' = knife@XLINK_NAMESPACE,
-                                           'xsi' = knife@XSI_NAMESPACE))
   
-  id	<-	newXMLNode("ows:Identifier",newXMLTextNode(knife@algorithm),parent=top)
-  di	<-	newXMLNode("wps:DataInputs",parent=top)
+  browser()
+  
+  whisker_list <- list(identifier = knife@algorithm)
+  
+  input_list <- list() # unnamed list for {{#inputs}}
   
   for (i in 1:length(knife@processInputs)){
-    postNm	<-	names(knife@processInputs[i])
-    postVl	<-	knife@processInputs[postNm]
-    if (!is.na(postVl)){
+    input_identifier	<-	names(knife@processInputs[i])
+    input_literal_data <- knife@processInputs[input_identifier]
+    
+    if (!is.na(input_literal_data)){
       
-      num.vl	<-	length(unlist(postVl))
-      for (j in 1:num.vl){
-        postVl <- unlist(knife@processInputs[postNm])[[j]]
+      data_element_list <- list() # unnamed list for {{#data_elements}}
+      
+      for (j in 1:length(unlist(input_literal_data))){
+        input_literal_data_element <- unlist(knife@processInputs[input_identifier])[[j]]
         
-        if (is.null(postVl)) stop(postNm, ' cannot be NULL. it is required')
-        inEL	<-	newXMLNode("wps:Input",parent=di)
-        addChildren(di,inEL)
+        if (is.null(input_literal_data_element)) stop(input_identifier, ' cannot be NULL. it is required')
         
-        inIdEL   <- newXMLNode("ows:Identifier",newXMLTextNode(postNm),parent=inEL)
-        addChildren(inEL,inIdEL)
-        
-        inDatEL  <- newXMLNode("wps:Data")
-        addChildren(inEL,inDatEL);
-        
-        litDatEL	<-	newXMLNode('wps:LiteralData',newXMLTextNode(postVl))
-        addChildren(inDatEL,litDatEL)
+        data_element_list <- c(data_element_list,
+                               list(list(input_literal_data_element = input_literal_data_element)))
       }
     }
+    
+    input_list <- c(input_list,
+                    list(list(input_identifier = input_identifier,
+                              data_elements = data_element_list)))
+    
   }
   
-  # complex data
-  inEL	<-	newXMLNode("wps:Input")
-  addChildren(di,inEL)
+  whisker_list["inputs"] <- list(input_list)
   
-  inIdEL   <- newXMLNode('ows:Identifier',newXMLTextNode('FEATURE_COLLECTION'))
-  addChildren(inEL,inIdEL)
-  top <- addResponse(knife, top)
-  top <- suppressWarnings(addGeom(stencil, xmlNodes = top))
-  return(suppressWarnings(toString.XMLNode(top)))
+  return(whisker::whisker.render(readLines(system.file("extdata/execute_template.xml", package = "geoknife")), whisker_list))
+  
+  # # complex data
+  # inEL	<-	newXMLNode("wps:Input")
+  # addChildren(di,inEL)
+  # 
+  # inIdEL   <- newXMLNode('ows:Identifier',newXMLTextNode('FEATURE_COLLECTION'))
+  # addChildren(inEL,inIdEL)
+  # top <- addResponse(knife, top)
+  # top <- suppressWarnings(addGeom(stencil, xmlNodes = top))
+  # return(suppressWarnings(toString.XMLNode(top)))
 })
 
 addResponse <- function(.Object, xmlNodes){
