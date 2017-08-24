@@ -4,13 +4,13 @@
     <wps:Input>
       <ows:Identifier>TIME_START</ows:Identifier>
       <wps:Data>
-        <wps:LiteralData>2001-01-01T00:00:00.000Z</wps:LiteralData>
+        <wps:LiteralData>1895-01-01T00:00:00.000Z</wps:LiteralData>
       </wps:Data>
     </wps:Input>
     <wps:Input>
       <ows:Identifier>TIME_END</ows:Identifier>
       <wps:Data>
-        <wps:LiteralData>2002-02-05T00:00:00.000Z</wps:LiteralData>
+        <wps:LiteralData>1895-01-01T00:00:00.000Z</wps:LiteralData>
       </wps:Data>
     </wps:Input>
     <wps:Input>
@@ -79,14 +79,30 @@
                     <gml:Polygon srsDimension="2">
                       <gml:exterior>
                         <gml:LinearRing srsDimension="2">
-                          <gml:posList>45 -89.0001 45.0001 -89 45 -88.9999 44.9999 -89 45 -89.0001</gml:posList>
+                          <gml:posList>45.2 -48.6001 45.2001 -48.6 45.2 -48.5999 45.1999 -48.6 45.2 -48.6001</gml:posList>
                         </gml:LinearRing>
                       </gml:exterior>
                     </gml:Polygon>
                   </gml:surfaceMember>
                 </gml:MultiSurface>
               </draw:the_geom>
-              <draw:ID>bufferedPoint</draw:ID>
+              <draw:ID>point1</draw:ID>
+            </draw:poly>
+            <draw:poly gml:id="poly.2">
+              <draw:the_geom>
+                <gml:MultiSurface srsDimension="2" srsName="urn:x-ogc:def:crs:EPSG:4326">
+                  <gml:surfaceMember>
+                    <gml:Polygon srsDimension="2">
+                      <gml:exterior>
+                        <gml:LinearRing srsDimension="2">
+                          <gml:posList>45.2 -88.6001 45.2001 -88.6 45.2 -88.5999 45.1999 -88.6 45.2 -88.6001</gml:posList>
+                        </gml:LinearRing>
+                      </gml:exterior>
+                    </gml:Polygon>
+                  </gml:surfaceMember>
+                </gml:MultiSurface>
+              </draw:the_geom>
+              <draw:ID>point2</draw:ID>
             </draw:poly>
           </gml:featureMembers>
         </wps:ComplexData>

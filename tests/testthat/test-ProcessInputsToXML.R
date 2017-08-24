@@ -12,3 +12,12 @@ test_that("basic XML creation works", {
   fn <-"data/test_XML_sg_xml.xml"
   expect_equal(xml,readChar(fn, file.info(fn)$size))
 }) 
+
+test_that("Execute XML creation with two points works", {
+  wd <- readRDS("data/test_XML_two_points_wd.rds") # wd <- webdata('prism'); times(wd)[2] <- times(wd)[1]
+  wg <- readRDS("data/test_XML_two_points_wg.rds") # wg <-simplegeom(data.frame(point1 = c(-48.6, 45.2), point2=c(-88.6, 45.2)))
+  wp <- readRDS("data/test_XML_two_points_wp.rds") # wp <- webprocess() 
+  xml <- XML(wg, wd, wp)
+  fn <- "data/test_XML_two_points_xml.xml"
+  expect_equal(xml,readChar(fn, file.info(fn)$size))
+})
