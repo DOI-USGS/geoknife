@@ -32,7 +32,7 @@ make_email_execute_xml <- function(geojob, knife) {
                      list(input_identifier = "filename",
                           input_literal_data_element = "geoknife_output"))
   email_list <- c(email_list, inputs = list(input_list))
-  email_list["result_name"] <- "result"
+  email_list["responsedocument"] <- list(list(result_name = "result"))
   return(whisker::whisker.render(readLines(system.file(
     "templates/utility_execute_template.xml", package = "geoknife")), 
                                  email_list))

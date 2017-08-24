@@ -41,6 +41,7 @@ setMethod(f = "values<-",signature(.Object = "webgeom"), definition = function(.
   }
   return(.Object)})
 
+#' @import XML
 #'@aliases values
 #'@rdname values
 setMethod(f = "values",signature="webgeom",

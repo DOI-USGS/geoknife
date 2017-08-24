@@ -30,6 +30,24 @@ test_that("query works for times with base dataset", {
   expect_false(any(is.na(times.out)))
 })
 
+test_that("execute XML for getgridtimerange works", {
+  wd <- readRDS("data/test_XML_wd.rds")
+  wp <- readRDS("data/test_XML_wp.rds")
+  xml <- geoknife:::make_getgridtimerange_execute_xml(wd, wp)
+  
+  fn <- "data/test_getgridtimerange.xml"
+  expect_equal(xml,readChar(fn, file.info(fn)$size))
+})
+
+test_that("execute XML for getgridtimerange works", {
+  wd <- readRDS("data/test_XML_wd.rds")
+  wp <- readRDS("data/test_XML_wp.rds")
+  xml <- geoknife:::make_listopendapgrids_execute_xml(wd, wp)
+  
+  fn <- "data/test_listopendapgrids.xml"
+  expect_equal(xml,readChar(fn, file.info(fn)$size))
+})
+
 test_that("bad url query returns NAs", {
   testthat::skip_on_cran()
   wd <- webdata('prism', url='https://cida.usgs.gov/')

@@ -10,11 +10,14 @@
     </wps:Input>
 {{/inputs}}
   </wps:DataInputs>
-  <wps:ResponseForm>
+  <wps:ResponseForm>{{#responsedocument}}
     <wps:ResponseDocument>
       <wps:Output>
         <ows:Identifier>{{result_name}}</ows:Identifier>
       </wps:Output>
-    </wps:ResponseDocument>
+    </wps:ResponseDocument>{{/responsedocument}}{{#rawoutput}}
+    <wps:RawDataOutput>
+      <ows:Identifier>{{result_name}}</ows:Identifier>
+    </wps:RawDataOutput>{{/rawoutput}}
   </wps:ResponseForm>
 </wps:Execute> 

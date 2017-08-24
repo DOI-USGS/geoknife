@@ -10,7 +10,7 @@ test_that("basic XML creation works", {
   sg <- simplegeom(c(-89,45))
   xml <- XML(sg, wd, webprocess())
   fn <-"data/test_XML_sg_xml.xml"
-  expect_equal(xml,readChar(fn, file.info(fn)$size))
+  expect_equal(nchar(xml),nchar(readChar(fn, file.info(fn)$size)))
 }) 
 
 test_that("Execute XML creation with two points works", {
