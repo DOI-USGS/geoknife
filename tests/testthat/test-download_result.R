@@ -1,32 +1,33 @@
 context("download and load")
 
 gconfig(wps.url = "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
-test_that("download works", {
+
+test_that("download from geojob works", {
   testthat::skip_on_cran()
   cancel()
-  fabric <- webdata('prism')
-  times(fabric)[2] <- "1895-01-01"
+  fabric <- readRDS("data/test_webdata_fabric.rds")
   job <<- geoknife(stencil = c(-89,42), fabric = fabric, wait=TRUE)
   file = download(job)
   expect_true(file.exists(file))
 })
 
-test_that("load result works", {
+test_that("load result works from geojob object.", {
   testthat::skip_on_cran()
-  expect_is(result(job),'data.frame')
+  expect_is(result(job),'data.frame') 
 })
 
-test_that("load result works from job id URL", {
+test_that("load result works from job id only", {
   testthat::skip_on_cran()
   expect_is(result(id(job)),'data.frame')
 })
 
-test_that("download result works from job id URL", {
-  testthat::skip_on_cran()
-  expect_true(file.exists(download(id(job), overwrite = TRUE)))
-})
+# this test is duplicative and just takes extra time.
+# test_that("download result works from job id URL", {
+#   testthat::skip_on_cran()
+#   expect_true(file.exists(download(id(job), overwrite = TRUE)))
+# }) 
 
-test_that("download result works from job", {
+test_that("download result overwrite works", {
   testthat::skip_on_cran()
   expect_true(file.exists(download(job, overwrite = TRUE)))
 })

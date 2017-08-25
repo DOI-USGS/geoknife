@@ -1,19 +1,11 @@
-context("Test create webprocess object")
-test_that("creation of webprocess object", {
-  testthat::skip_on_cran()
-  expect_is(webprocess(), "webprocess")
-  wp <- webprocess(url = 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
-  expect_is(wp, "webprocess")
-})
-
 context('test modifying webprocess object')
 
 test_that("webprocess object is modified correctly", {
   testthat::skip_on_cran()
-  wp <- webprocess(url = 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService')
+  wp <- readRDS("data/test_webprocess_knife.rds")
   # test setting url also changes util
   expect_equal(slot(wp, 'UTILITY_URL'), 'https://cida-test.er.usgs.gov/gdp/utility/WebProcessingService')
-  url(wp) = 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
+  url(wp) <- 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
   expect_equal(url(wp), url(wp <- webprocess(url = 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService')))
 
 })
@@ -21,7 +13,7 @@ test_that("webprocess object is modified correctly", {
 context('test get and set webprocess object')
 test_that("webprocess object get and set", {
   testthat::skip_on_cran()
-  wp <- webprocess()
+  wp <- readRDS("data/test_webprocess_knife.rds")
   expect_is(url(wp),'character')
   expect_is(version(wp), 'character')
   expect_is(slot(wp, "processInputs"), 'list')

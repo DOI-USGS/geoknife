@@ -3,8 +3,8 @@ context("Test setting of geoknife algorithms and process inputs")
 
 test_that("webprocess can set algorithms", {
   testthat::skip_on_cran()
-  wp <- webprocess()
-  algs <- query(wp, 'algorithms')
+  wp <- readRDS("data/test_webprocess_knife.rds")
+  algs <- readRDS("data/test_webprocess_algorithms.rds")
   expect_error(algorithm(wp)<-'bad.char')
   expect_error(algorithm(wp)<-NULL)
   expect_error(algorithm(wp)<-list('junk'='will break process'))
