@@ -28,17 +28,9 @@ setGeneric(name="values",def=function(.Object){standardGeneric("values")})
 #'@aliases values
 #'@rdname values
 setMethod(f = "values<-",signature(.Object = "webgeom"), definition = function(.Object, value){
+  
   .Object@values <- as.character(value)
-  if(is.na(value[1])){
-    .Object@GML_IDs <- as.character(NA)
-  } else {
-    gmlID <- fetchGML_IDs(.Object)
-    if(is.null(gmlID)){
-      stop('fetchGML_IDs returned a NULL; the value name you supplied is likely invalid for this feature',
-            call. = FALSE)
-    }
-    .Object@GML_IDs <- fetchGML_IDs(.Object)
-  }
+
   return(.Object)})
 
 #'@aliases values
@@ -83,18 +75,4 @@ wfsFilterFeatureXML <- function(.Object, knife=NULL, match.case = TRUE){
   return(whisker::whisker.render(readLines(system.file(
     "templates/getfeature_template.xml", package = "geoknife")), 
     wfs_list))
-}
-
-#' @title fetch GML_IDs from WFS
-#' @description fetch GML_IDs from WFS when geom, attribute, and values are specified
-#' @param .Object a webgeom object
-#' @keywords internal 
-fetchGML_IDs <- function(.Object){
-  response <- suppressWarnings(gPOST(url=url(.Object), body=wfsFilterFeatureXML(.Object)))
-  xml <- gcontent(response)
-  ns_geom <- strsplit(geom(.Object), ":")[[1]][1]
-  value_path <- sprintf('//gml:featureMembers/%s/%s:%s', geom(.Object), ns_geom, .Object@attribute)
-  node_sets <- xml2::xml_find_all(xml, paste0(value_path,'/parent::node()'))
-  gml_id <- unname(unlist(lapply(node_sets, function(x) return(xml2::xml_attrs(x)['id']))))
-  return(gml_id)  
 }

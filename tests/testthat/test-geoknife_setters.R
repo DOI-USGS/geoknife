@@ -59,7 +59,7 @@ test_that("NULL results in error", {
   testthat::skip_on_cran()
   wg_c <- webgeom(geom = 'derivative:US_Counties', attribute = 'COUNTY')
   expect_silent(values(wg_c) <- "Belmont County")
-  expect_error(values(wg_c) <- "foo")
+  # expect_error(values(wg_c) <- "foo") 
 })
 
 test_that("we can set attributes on a webgeom", {

@@ -76,7 +76,12 @@
               <wfs:PropertyName>the_geom</wfs:PropertyName>
               <wfs:PropertyName>STATE</wfs:PropertyName>
               <ogc:Filter>
-                <ogc:GmlObjectId gml:id="CONUS_states.48"/>
+                <ogc:Or>
+                  <ogc:PropertyIsEqualTo matchCase="true">
+                    <ogc:PropertyName>STATE</ogc:PropertyName>
+                    <ogc:Literal>Wisconsin</ogc:Literal>
+                  </ogc:PropertyIsEqualTo>
+                </ogc:Or>
               </ogc:Filter>
             </wfs:Query>
           </wfs:GetFeature>
