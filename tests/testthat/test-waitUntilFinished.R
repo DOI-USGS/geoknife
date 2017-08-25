@@ -1,10 +1,12 @@
 context("Test wait until finished")
 
+default.sleep <- geoknife:::gconfig('sleep.time')
+geoknife:::gconfig(sleep.time=0.1)
 
 test_that("creating simple job", {
   testthat::skip_on_cran()
-  stencil <- webgeom('state::Wisconsin')
-  fabric <- webdata('prism')
+  stencil <- readRDS("data/test_webgeom_WI.rds")
+  fabric <- readRDS("data/test_webdata_fabric.rds")
   geoknife:::setJobState('none')
   geoknife(stencil, fabric, wait = TRUE)
   
@@ -18,7 +20,7 @@ test_that("creating simple job", {
 context("Test re-enter wait loop")
 test_that("creation of webprocess object", {
   testthat::skip_on_cran()
-  fabric <- webdata('prism',times <- c('1895-01-01T00:00:00Z', '1999-01-01T00:00:00Z')) # should take longer than a re-check
+  fabric <- webdata('prism',times <- c('1895-01-01T00:00:00Z', '1895-01-01T00:00:00Z')) # should take longer than a re-check
   cancel()
   job <- geoknife(stencil = c(-89,42), fabric, wait=FALSE)
   expect_equal(2+2, 4)
@@ -26,3 +28,5 @@ test_that("creation of webprocess object", {
   wait(job)
   expect_false(running(job))
 })
+
+geoknife:::gconfig(sleep.time=default.sleep)
