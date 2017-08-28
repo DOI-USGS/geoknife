@@ -4,7 +4,9 @@ gconfig(wps.url = "https://cida-test.er.usgs.gov/gdp/process/WebProcessingServic
 test_that("download works", {
   testthat::skip_on_cran()
   cancel()
-  job <<- geoknife(stencil = c(-89,42), fabric = 'prism', wait=TRUE)
+  fabric <- webdata('prism')
+  times(fabric)[2] <- "1895-01-01"
+  job <<- geoknife(stencil = c(-89,42), fabric = fabric, wait=TRUE)
   file = download(job)
   expect_true(file.exists(file))
 })

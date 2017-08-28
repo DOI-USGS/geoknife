@@ -34,6 +34,7 @@ Depends:
     R (>= 3.0)
 Imports:
     XML,
+    xml2,
     methods,
     httr (>= 1.0.0),
     curl,

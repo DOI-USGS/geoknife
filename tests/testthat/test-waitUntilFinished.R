@@ -12,6 +12,7 @@ test_that("creating simple job", {
   expect_true(geoknife:::canStart())
   geoknife(stencil, fabric, wait = FALSE)
   expect_false(geoknife:::getJobState() == "Process successful")
+  cancel()
 })
 
 context("Test re-enter wait loop")

@@ -59,13 +59,10 @@ gPOST <- function(url, config = list(), ...){
   retryVERB(httr::POST, url, config=config, ...)
 }
 
-#' drop in replacement for httr switching to xml2 from XML
-#' 
-#' reverts to old parsing pre v1.1.0 for httr
+#' xml2 version of gcontent
 #' 
 #' @param response the result of httr::GET(url)
 #' @keywords internal
-#' @importFrom XML xmlParse
-gcontent <- function(response, useInternalNodes = TRUE){
-  XML::xmlParse(iconv(readBin(response$content, character()), from = "UTF-8", to = "UTF-8"), useInternalNodes = useInternalNodes)
+gcontent <- function(response){
+  xml2::read_xml(iconv(readBin(response$content, character()), from = "UTF-8", to = "UTF-8"))
 }

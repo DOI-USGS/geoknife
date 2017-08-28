@@ -51,6 +51,7 @@ test_that("geoknife sets knife correctly", {
   testthat::skip_on_cran()
   job <- geoknife('HUC8::09020306', 'prism', wait=TRUE)
   expect_true(geoknife:::canStart())
+  cancel(job)
 })
 
 context("setting webgeom values")
@@ -71,3 +72,12 @@ test_that("we can set attributes on a webgeom", {
   expect_equal(stencil_attribute, "STATE")
 })
 
+context("basics of geoknife processing job are as expected")
+
+test_that("algorithm version works", {
+  fabric <- webdata('prism')
+  times(fabric)[2] <- '1895-01-01'
+  job <- geoknife(stencil = c(-89,42), fabric = fabric)
+  expect_equal(job@algorithm.version, "1.0.0")
+  cancel(job)
+})

@@ -4,7 +4,9 @@ setMethod(f = "query",signature("webprocess",'character'),
           definition = function(.Object, field, ...){
             input_list <- list(...)
             if (field == 'algorithms'){
-              url <- sprintf('%s?service=WPS&version=%s&request=GetCapabilities',url(.Object), version(.Object))
+              url <- sprintf('%s?service=WPS&version=%s&request=GetCapabilities',
+                             url(.Object), 
+                             version(.Object))
             } else {
               stop('field ', field, ' not supported.')
             }

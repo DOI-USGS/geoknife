@@ -12,7 +12,6 @@
 #'@aliases 
 #'algorithm
 #'algorithm<-
-#'@importFrom XML getNodeSet xmlValue
 #'@rdname algorithm-webprocess
 #'@export
 setGeneric(name="algorithm",def=function(.Object){
@@ -45,15 +44,14 @@ setMethod(f = "algorithm<-",signature = "webprocess",
 
 #'@rdname algorithm-webprocess
 #'@aliases algorithm
-setMethod(f = "algorithm",signature="XMLAbstractDocument",
+setMethod(f = "algorithm",signature="xml_document",
           definition = function(.Object){
             xpath <- "//wps:Execute/ows:Identifier"
-            
-            algo <- getNodeSet(.Object, xpath, namespaces = pkg.env$NAMESPACES)
+            algo <- xml2::xml_find_all(.Object, xpath, ns = pkg.env$NAMESPACES)
             if (length(algo) != 1) {
               stop("Invalid XML, algorithm must be defined (or only once)")
             }
-            algo <- xmlValue(algo[[1]])
+            algo <- xml2::xml_text(algo[[1]])
             
             # want friendly names for algorithms
             if (sum(grepl(algo, getKnives())) == 1) {

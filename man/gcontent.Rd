@@ -2,14 +2,14 @@
 % Please edit documentation in R/geoknifeUtils.R
 \name{gcontent}
 \alias{gcontent}
-\title{drop in replacement for httr switching to xml2 from XML}
+\title{xml2 version of gcontent}
 \usage{
-gcontent(response, useInternalNodes = TRUE)
+gcontent(response)
 }
 \arguments{
 \item{response}{the result of httr::GET(url)}
 }
 \description{
-reverts to old parsing pre v1.1.0 for httr
+xml2 version of gcontent
 }
 \keyword{internal}

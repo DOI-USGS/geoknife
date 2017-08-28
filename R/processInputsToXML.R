@@ -102,8 +102,10 @@ addResponse <- function(.Object, xmlNodes){
 
 findIdentifierNode <- function(xmlNodes, name){
   featureXpath <- '//wps:DataInputs/wps:Input/ows:Identifier'
-  dataElementIndx <- which(sapply(getNodeSet(xmlNodes,featureXpath),xmlValue) == name)
-  geomNode <- getNodeSet(xmlNodes,paste0(featureXpath,'/parent::node()[1]') )[[dataElementIndx]] 
+  # We are passing XML package objects around while reading/writing so keeping 
+  # the readers that depend on a parsed object for now.
+  dataElementIndx <- which(sapply(XML::getNodeSet(xmlNodes,featureXpath),XML::xmlValue) == name)
+  geomNode <- XML::getNodeSet(xmlNodes,paste0(featureXpath,'/parent::node()[1]') )[[dataElementIndx]] 
   return(geomNode)
 }
 

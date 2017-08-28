@@ -10,8 +10,8 @@ test_that("creation of webdata object", {
 })
 
 test_that("create webdata from geojob", {
-  xml <- readLines(system.file("extdata/state_webgeom_post.xml", 
-                               package = "geoknife"), warn = FALSE)
+  xml <- system.file("extdata/state_webgeom_post.xml", 
+                               package = "geoknife")
   geojob <- geojob(xml=xml)
   wd <- webdata(geojob)
   expect_equal(length(times(wd)), 2)

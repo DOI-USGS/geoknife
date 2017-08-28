@@ -83,7 +83,7 @@ fetchGML_IDs <- function(.Object){
   xml <- gcontent(response)
   ns_geom <- strsplit(geom(.Object), ":")[[1]][1]
   value_path <- sprintf('//gml:featureMembers/%s/%s:%s', geom(.Object), ns_geom, .Object@attribute)
-  node_sets <- getNodeSet(xml, paste0(value_path,'/parent::node()'))
-  gml_id <- unname(unlist(lapply(node_sets, function(x) return(xmlAttrs(x)['id']))))
+  node_sets <- xml2::xml_find_all(xml, paste0(value_path,'/parent::node()'))
+  gml_id <- unname(unlist(lapply(node_sets, function(x) return(xml2::xml_attrs(x)['id']))))
   return(gml_id)  
 }

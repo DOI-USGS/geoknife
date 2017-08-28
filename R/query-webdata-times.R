@@ -10,7 +10,7 @@ setGeneric(name="times_query",def=function(fabric, knife){standardGeneric("times
 #' @rdname times_query-method
 #' @aliases times_query,webdata-method
 #' @keywords internal
-#' @importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- xmlParseString
+#' @importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
 #' @export
 setMethod(f = "times_query",signature = c("webdata","missing"), 
           definition = function(fabric, knife){
@@ -21,7 +21,7 @@ setMethod(f = "times_query",signature = c("webdata","missing"),
 #'@rdname times_query-method
 #'@aliases times_query,webdata-method
 #'@keywords internal
-#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<- xmlParseString
+#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
 #'@export
 setMethod(f = "times_query",signature = c("webdata","webprocess"), 
           definition = function(fabric, knife){
@@ -65,8 +65,8 @@ setMethod(f = "times_query",signature = c("webdata","webprocess"),
             newXMLNode("ows:Identifier", newXMLTextNode('result_as_xml'), parent = rd)
             response <- genericExecute(knife@UTILITY_URL,toString.XMLNode(root))
             values <- tryCatch({
-              nodes <- getNodeSet(gcontent(response),'//gdp:availabletimes/gdp:time')
-              as.POSIXct(sapply(nodes,xmlValue), tz = 'UTC')
+              nodes <- xml2::xml_find_all(gcontent(response),'//gdp:availabletimes/gdp:time')
+              as.POSIXct(sapply(nodes,xml2::xml_text), tz = 'UTC')
             }, error = function(err) {
               return(as.POSIXct(c(NA,NA)))
             })
