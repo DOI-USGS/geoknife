@@ -178,7 +178,7 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 What libraries does `geoknife` need?
 ------------------------------------
 
-This version requires `httr`, `sp`, and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
+This version requires `httr`, `sp`, `whisker`, `progress`, and `xml2`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
 
 Disclaimer
 ----------
