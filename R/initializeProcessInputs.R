@@ -19,44 +19,42 @@ defaultProcessInputs <- function(algorithm, wps_url, wps_version){
   checkException(doc)
   
   # -- get optional arguments --
-  optionNd	<-	xml2::xml_find_all(doc,'//DataInputs/Input[@minOccurs=0]/ows:Identifier')
-  optionLs	<-	vector("list",length(optionNd))
-  optionLs[]	<-	NA # "NA" is the equivalent of "optional" as an input
-  names(optionLs)	<-	sapply(optionNd,xml2::xml_text)
+  optionNd <- xml2::xml_find_all(doc,'//DataInputs/Input[@minOccurs=0]/ows:Identifier')
+  optionLs <- vector("list",length(optionNd))
+  optionLs[] <- NA # "NA" is the equivalent of "optional" as an input
+  names(optionLs) <- xml2::xml_text(optionNd)
   
   # -- get required arguments -- (minOccurs > 0 means required)
-  requirNd	<-	xml2::xml_find_all(doc,'//DataInputs/Input[@minOccurs>0]/ows:Identifier')
-  requirLs	<-	vector("list",length(requirNd))	
-  names(requirLs)	<-	sapply(requirNd,xml2::xml_text)
+  requirNd <- xml2::xml_find_all(doc,'//DataInputs/Input[@minOccurs>0]/ows:Identifier')
+  requirLs <- vector("list",length(requirNd)) 
+  names(requirLs) <- xml2::xml_text(requirNd)
   
   # -- get and set default values --
   defaultTag <- '//DataInputs/Input/LiteralData/DefaultValue'
-  defaultNd	<-	xml2::xml_find_all(doc,paste0(defaultTag, '/parent::node()[1]/DefaultValue'))
-  defaultLs	<-	vector("list",length(sapply(defaultNd,xml2::xml_text)))
-  defaultLs[]	<-	sapply(defaultNd,xml2::xml_text)
-  names(defaultLs)	<-	sapply(
-    xml2::xml_find_all(doc,paste0(defaultTag, 
-                                  '/parent::node()[1]/preceding-sibling::node()[3]')),
-    xml2::xml_text)	
+  defaultNd <- xml2::xml_find_all(doc,paste0(defaultTag, '/parent::node()[1]/DefaultValue'))
+  defaultLs <- vector("list",length(xml2::xml_text(defaultNd)))
+  defaultLs[] <- xml2::xml_text(defaultNd)
+  names(defaultLs) <- xml2::xml_text(xml2::xml_find_all(doc,
+                                                        paste0(defaultTag, 
+                                  '/parent::node()[1]/preceding-sibling::node()[3]'))) 
   
   
   # -- get and set allowed values -- ?? why isn't this set up like defaults??
-  allowNd    <-	xml2::xml_find_all(doc,
+  allowNd    <- xml2::xml_find_all(doc,
    '//DataInputs/Input/LiteralData//parent::node()/ows:AllowedValues/ows:Value[1]')
-  allowLs	<-	vector("list",length(sapply(allowNd,xml2::xml_text)))
-  allowLs[]	<-	sapply(allowNd,xml2::xml_text)
-  names(allowLs)	<-	sapply(
+  allowLs <- vector("list",length(xml2::xml_text(allowNd)))
+  allowLs[] <- xml2::xml_text(allowNd)
+  names(allowLs) <- xml2::xml_text(
     xml2::xml_find_all(doc,
     '//DataInputs/Input/LiteralData/ows:AllowedValues/
-    parent::node()[1]/preceding-sibling::node()[3]'),
-    xml2::xml_text)
+    parent::node()[1]/preceding-sibling::node()[3]'))
   
   # add fields for optionLs and requirLs
-  processInputs	<-	append(optionLs,requirLs)
+  processInputs <- append(optionLs,requirLs)
   processInputs[names(defaultLs)] <- defaultLs
   
   # remove Feature, as it is handled elsewhere
-  processInputs$FEATURE_COLLECTION	<-	NULL 
+  processInputs$FEATURE_COLLECTION <- NULL 
   return(processInputs)
 }
 

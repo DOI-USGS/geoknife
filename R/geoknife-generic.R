@@ -104,7 +104,7 @@ parseXMLalgorithms  <-  function(xml){
   
   nodes <- xml2::xml_find_all(xml, sprintf("//%s/%s",parentKey,titleKey),
                       ns = pkg.env$NAMESPACES)
-  names(values) <- sapply(nodes,xml2::xml_text)
+  names(values) <- xml2::xml_text(nodes)
   
   return(values)
 }
@@ -117,7 +117,7 @@ parseXMLgeoms	<-	function(xml){
   # ignore namespaces
   xpath <- sprintf("//*[local-name()='%s']/*[local-name()='%s']/*[local-name()='%s']",parentKey,childKey,key)
   nodes <- xml2::xml_find_all(xml, xpath, ns = pkg.env$NAMESPACES)
-	values	<-	sapply(nodes,xml2::xml_text)
+	values	<-	xml2::xml_text(nodes)
 	return(values)
 }
 
@@ -143,7 +143,7 @@ parseXMLattributes	<-	function(xml,rm.duplicates = FALSE){
 parseXMLvalues	<-	function(xml, key, rm.duplicates = FALSE){
 	nodes	<-	xml2::xml_find_all(xml,paste0("//",key))
 	# will error if none found
-	values	<-	sapply(nodes,xml2::xml_text)
+	values	<-	xml2::xml_text(nodes)
   if (rm.duplicates){
     values = unique(values)
   }

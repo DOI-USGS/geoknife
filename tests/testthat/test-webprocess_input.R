@@ -32,7 +32,7 @@ test_that("reseting algorithm sets inputs back to defaults",{
   expect_equal(inputs(wp, 'DELIMITER')[[1]], 'TAB')
   algorithm(wp) <- query(wp, 'algorithms')[1]
   algorithm(wp) <- list('Area Grid Statistics (unweighted)'="gov.usgs.cida.gdp.wps.algorithm.FeatureGridStatisticsAlgorithm")
-  expect_equal(inputs(wp), inputs(readRDS("data/test_webprocess_knife.rds")))
+  expect_equal(inputs(wp), inputs(readRDS("data/test_webprocess_knife.rds"))[names(inputs(wp))])
 })
 
 test_that("can use multiple dataset variables",{
