@@ -81,3 +81,9 @@ test_that("algorithm version works", {
   expect_equal(job@algorithm.version, "1.0.0")
   cancel(job)
 })
+
+test_that("version method works", {
+  stencil <- webgeom()
+  version(stencil) <- "2.0.0"
+  expect_equal(version(stencil), "2.0.0")
+})

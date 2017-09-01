@@ -1,0 +1,66 @@
+<wps:Execute xmlns:wps="{{wps}}" xmlns:ows="{{ows}}" xmlns:ogc="{{ogc}}" xmlns:xlink="{{xlink}}" xmlns:xsi="{{xsi}}" service="{{service}}" version="{{version}}" xsi:schemaLocation="{{schema_location}}">
+  <ows:Identifier>{{identifier}}</ows:Identifier>
+  <wps:DataInputs>
+{{#inputs}}
+    <wps:Input>
+      <ows:Identifier>{{input_identifier}}</ows:Identifier>
+      <wps:Data>
+        <wps:LiteralData>{{input_literal_data_element}}</wps:LiteralData>
+      </wps:Data>
+    </wps:Input>
+{{/inputs}}
+    <wps:Input>
+      <ows:Identifier>{{feature_collection}}</ows:Identifier>{{#wfs_reference}}
+      <wps:Reference xlink:href="{{wps_reference_href}}">
+        <wps:Body>
+          <wfs:GetFeature xmlns:wfs="{{wfs_namespace}}" xmlns:gml="{{gml_namespace}}" service="{{wfs_service}}" version="{{wfs_version}}" outputFormat="{{wfs_outputformat}}">
+            <wfs:Query typeName="{{wfs_typename}}">
+              <wfs:PropertyName>{{wfs_geom_property}}</wfs:PropertyName>
+              <wfs:PropertyName>{{wfs_attribute_property}}</wfs:PropertyName>
+              {{#filter_gmlid}}
+              <ogc:Filter>
+                {{#gmlids}}
+                <ogc:GmlObjectId gml:id="{{gmlid}}"/>
+                {{/gmlids}}
+              </ogc:Filter>
+              {{/filter_gmlid}}
+            </wfs:Query>
+          </wfs:GetFeature>
+        </wps:Body>
+      </wps:Reference>
+{{/wfs_reference}}{{#simple_geometry}}
+      <wps:Data>
+        <wps:ComplexData mimeType="{{simplegeo_mimetype}}" schema="{{simplegeo_schema}}">
+          <gml:featureMembers xmlns:gml="{{gml_namespace}}" xmlns:draw="{{draw_namespace}}" xsi:schemaLocation="{{draw_schema_location}}">
+            {{#polys}}
+            <draw:poly gml:id="{{poly_id}}">
+              <draw:{{geom_property}}>
+                <gml:MultiSurface srsDimension="{{srsDimension}}" srsName="{{srsName}}">
+                  <gml:surfaceMember>
+                    <gml:Polygon srsDimension="{{srsDimension}}">
+                      <gml:exterior>
+                        <gml:LinearRing srsDimension="{{srsDimension}}">
+                          <gml:posList>{{poslist}}</gml:posList>
+                        </gml:LinearRing>
+                      </gml:exterior>
+                    </gml:Polygon>
+                  </gml:surfaceMember>
+                </gml:MultiSurface>
+              </draw:the_geom>
+              <draw:{{filter_id}}>{{ID_property}}</draw:{{filter_id}}>
+            </draw:poly>
+            {{/polys}}
+          </gml:featureMembers>
+        </wps:ComplexData>
+      </wps:Data>
+{{/simple_geometry}}
+    </wps:Input>
+  </wps:DataInputs>
+  <wps:ResponseForm>
+    <wps:ResponseDocument storeExecuteResponse="{{storeExecuteResponse}}" status="{{status}}">
+      <wps:Output asReference="{{asReference}}"{{{output_mimetype}}}>
+        <ows:Identifier>{{output_identifier}}</ows:Identifier>
+      </wps:Output>
+    </wps:ResponseDocument>
+  </wps:ResponseForm>
+</wps:Execute>

@@ -13,7 +13,6 @@ setGeneric(name="variables_query",def=function(fabric, knife){standardGeneric("v
 #'@rdname variables_query-method
 #'@aliases variables_query,webdata-method
 #'@keywords internal
-#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
 #'@export
 setMethod(f = "variables_query",signature = c("webdata","missing"), 
           definition = function(fabric, knife){
@@ -24,38 +23,15 @@ setMethod(f = "variables_query",signature = c("webdata","missing"),
 #'@rdname variables_query-method
 #'@aliases variables_query,webdata-method
 #'@keywords internal
-#'@importFrom XML newXMLNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
 #'@export
 setMethod(f = "variables_query",signature = c("webdata","webprocess"), 
           definition = function(fabric, knife){
             if (is.na(url(fabric))){
               stop('url cannot be NA for fabric argument when querying for available variables', call. = FALSE)
             } 
-            root <- newXMLNode(name='wps:Execute',
-                              attrs=c('service'="WPS",'version'= version(knife),
-                                      'xsi:schemaLocation' = paste(c(knife@WPS_NAMESPACE,knife@WPS_SCHEMA_LOCATION),collapse=" ")),
-                              namespaceDefinitions=c('wps' = knife@WPS_NAMESPACE,
-                                                     'ows' = knife@OWS_NAMESPACE,
-                                                     'ogc' = knife@OGC_NAMESPACE,
-                                                     'xlink' = knife@XLINK_NAMESPACE,
-                                                     'xsi' = knife@XSI_NAMESPACE))
-            
-            newXMLNode("ows:Identifier",newXMLTextNode(fabric@dataList),parent=root)
-            di <- newXMLNode("wps:DataInputs",parent=root)
-            wps_in <- newXMLNode("wps:Input",parent=di)
-            newXMLNode("ows:Identifier", newXMLTextNode('catalog-url'), parent = wps_in)
-            wps_data <- newXMLNode("wps:Data",parent=wps_in)
-            newXMLNode("wps:LiteralData", newXMLTextNode(url(fabric)), parent = wps_data)
-            
-            wps_in <- newXMLNode("wps:Input",parent=di)
-            newXMLNode("ows:Identifier", newXMLTextNode('allow-cached-response'), parent = wps_in)
-            wps_data <- newXMLNode("wps:Data",parent=wps_in)
-            newXMLNode("wps:LiteralData", newXMLTextNode('false'), parent = wps_data)
-            
-            rf <- newXMLNode("wps:ResponseForm", parent = root)
-            rd <- newXMLNode("wps:RawDataOutput", parent = rf)
-            newXMLNode("ows:Identifier", newXMLTextNode('result_as_xml'), parent = rd)
-            response <- genericExecute(knife@UTILITY_URL,toString.XMLNode(root))
+
+            response <- genericExecute(knife@UTILITY_URL,
+                                       make_listopendapgrids_execute_xml(fabric, knife))
 
             # will error if none found
             values	<-	sapply(
@@ -63,3 +39,18 @@ setMethod(f = "variables_query",signature = c("webdata","webprocess"),
               xml2::xml_text)
             return(values)
           })
+
+make_listopendapgrids_execute_xml <- function(fabric, knife) {
+  getgtr_list <- get_wps_execute_attributes(knife)
+  getgtr_list["identifier"] <- fabric@dataList
+  input_list <- list()
+  input_list <- list(list(input_identifier = "catalog-url",
+                          input_literal_data_element = url(fabric)),
+                     list(input_identifier = "allow-cached-response",
+                          input_literal_data_element = "false"))
+  getgtr_list <- c(getgtr_list, inputs = list(input_list))
+  getgtr_list["rawoutput"] <- list(list(result_name = "result_as_xml"))
+  return(whisker::whisker.render(readLines(system.file(
+    "templates/utility_execute_template.xml", package = "geoknife")), 
+    getgtr_list))
+}

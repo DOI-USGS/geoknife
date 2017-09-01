@@ -35,3 +35,12 @@ test_that("query values returns only unique", {
     )
   )
 })
+
+context("Create WFS post XML works")
+test_that("two states", {
+  wg <- readRDS("data/test_wfsgetfeature_wg.rds")
+  xml <- geoknife:::wfsFilterFeatureXML(wg)
+
+  fn <- "data/test_wfsgetfeature.xml"
+  expect_equal(xml,readChar(fn, file.info(fn)$size))
+})

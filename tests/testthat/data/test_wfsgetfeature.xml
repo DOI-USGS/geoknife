@@ -1,0 +1,21 @@
+<wfs:GetFeature xmlns:ogc="http://www.opengis.net/ogc" xmlns:wfs="http://www.opengis.net/wfs" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml" xmlns:ows="http://www.opengis.net/ows/1.1" service="WFS" version="1.1.0" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd">
+  <wfs:Query typeName="sample:CONUS_states">
+    <ogc:PropertyName>STATE</ogc:PropertyName>
+    <ogc:Filter>
+      <ogc:Or>
+        <ogc:PropertyIsEqualTo matchCase="true">
+          <ogc:PropertyName>STATE</ogc:PropertyName>
+          <ogc:Literal>Oregon</ogc:Literal>
+        </ogc:PropertyIsEqualTo>
+        <ogc:PropertyIsEqualTo matchCase="true">
+          <ogc:PropertyName>STATE</ogc:PropertyName>
+          <ogc:Literal>Colorado</ogc:Literal>
+        </ogc:PropertyIsEqualTo>
+        <ogc:PropertyIsEqualTo matchCase="true">
+          <ogc:PropertyName>STATE</ogc:PropertyName>
+          <ogc:Literal>Connecticut</ogc:Literal>
+        </ogc:PropertyIsEqualTo>
+      </ogc:Or>
+    </ogc:Filter>
+  </wfs:Query>
+</wfs:GetFeature>

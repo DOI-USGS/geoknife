@@ -1,0 +1,30 @@
+<wps:Execute xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" service="WPS" version="1.0.0" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd">
+  <ows:Identifier>gov.usgs.cida.gdp.wps.algorithm.communication.EmailWhenFinishedAlgorithm</ows:Identifier>
+  <wps:DataInputs>
+    <wps:Input>
+      <ows:Identifier>wps-checkpoint</ows:Identifier>
+      <wps:Data>
+        <wps:LiteralData>test_wps_checkpoint</wps:LiteralData>
+      </wps:Data>
+    </wps:Input>
+    <wps:Input>
+      <ows:Identifier>email</ows:Identifier>
+      <wps:Data>
+        <wps:LiteralData>test@test.com</wps:LiteralData>
+      </wps:Data>
+    </wps:Input>
+    <wps:Input>
+      <ows:Identifier>filename</ows:Identifier>
+      <wps:Data>
+        <wps:LiteralData>geoknife_output</wps:LiteralData>
+      </wps:Data>
+    </wps:Input>
+  </wps:DataInputs>
+  <wps:ResponseForm>
+    <wps:ResponseDocument>
+      <wps:Output>
+        <ows:Identifier>result</ows:Identifier>
+      </wps:Output>
+    </wps:ResponseDocument>
+  </wps:ResponseForm>
+</wps:Execute> 

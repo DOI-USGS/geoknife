@@ -66,3 +66,19 @@ gPOST <- function(url, config = list(), ...){
 gcontent <- function(response){
   xml2::read_xml(iconv(readBin(response$content, character()), from = "UTF-8", to = "UTF-8"))
 }
+
+# takes a web process (knife) and returns a list for use in whisker 
+# templating the root element of an execute request.
+get_wps_execute_attributes <- function(wp) {
+  attribute_list <- list()
+  attribute_list["service"] <- "WPS"
+  attribute_list["version"] <- version(wp)
+  attribute_list["schema_location"] <- paste(c(wp@WPS_NAMESPACE,wp@WPS_SCHEMA_LOCATION),collapse=" ")
+  attribute_list["wps"] <- wp@WPS_NAMESPACE
+  attribute_list["ows"] <- wp@OWS_NAMESPACE
+  attribute_list["ogc"] <- wp@OGC_NAMESPACE
+  attribute_list["xlink"] <- wp@XLINK_NAMESPACE
+  attribute_list["xsi"] <- wp@XSI_NAMESPACE
+  return(attribute_list)
+}
+  

@@ -53,9 +53,11 @@ test_that("you can set booleans and they will be lowercase strings for post",{
 test_that("you can set booleans as pass through",{
   testthat::skip_on_cran()
   cancel()
-  job = geoknife(simplegeom(data.frame(point1 = c(-48.6, 45.2), point2=c(-88.6, 45.2))), 'prism', REQUIRE_FULL_COVERAGE = FALSE, wait=TRUE)
+  fabric <- webdata('prism')
+  times(fabric)[2] <- times(fabric)[1]
+  job = geoknife(simplegeom(data.frame(point1 = c(-48.6, 45.2), point2=c(-88.6, 45.2))), fabric, REQUIRE_FULL_COVERAGE = FALSE, wait=TRUE)
   expect_true(all(is.na(result(job)$point1)))
-  job = geoknife(simplegeom(data.frame(point1 = c(-48.6, 45.2), point2=c(-88.6, 45.2))), 'prism', REQUIRE_FULL_COVERAGE = TRUE, wait=TRUE)
+  job = geoknife(simplegeom(data.frame(point1 = c(-48.6, 45.2), point2=c(-88.6, 45.2))), fabric, REQUIRE_FULL_COVERAGE = TRUE, wait=TRUE)
   
   expect_true(error(job))
 })

@@ -21,130 +21,121 @@ setGeneric(name="XML",def=function(stencil, fabric, knife){standardGeneric("XML"
 #'XML(sg, wd, webprocess())
 #'}
 #'@rdname XML-method
-#'@importFrom XML newXMLNode newXMLTextNode addChildren toString.XMLNode xmlChildren<- xmlValue<-
 #'@export
 setMethod(f = "XML",signature = c("ANY","webdata","webprocess"), 
           definition = function(stencil, fabric, knife){
             #stencil can be webgeom OR simplegeom 
             
-  knife <- .setProcessInputs(webprocess = knife, stencil = stencil, fabric = fabric)
-  top <- newXMLNode(name='wps:Execute',
-                    attrs=c('service'="WPS",'version'= version(knife),
-                            'xsi:schemaLocation' = paste(c(knife@WPS_NAMESPACE,knife@WPS_SCHEMA_LOCATION),collapse=" ")),
-                    namespaceDefinitions=c('wps' = knife@WPS_NAMESPACE,
-                                           'ows' = knife@OWS_NAMESPACE,
-                                           'ogc' = knife@OGC_NAMESPACE,
-                                           'xlink' = knife@XLINK_NAMESPACE,
-                                           'xsi' = knife@XSI_NAMESPACE))
+  knife <- .setProcessInputs(webprocess = knife, 
+                             stencil = stencil, 
+                             fabric = fabric)
   
-  id	<-	newXMLNode("ows:Identifier",newXMLTextNode(knife@algorithm),parent=top)
-  di	<-	newXMLNode("wps:DataInputs",parent=top)
+  whisker_list <- get_wps_execute_attributes(knife)
+  
+  whisker_list["identifier"] <- knife@algorithm[[1]]
+  
+  input_list <- list() # unnamed list for {{#inputs}}
   
   for (i in 1:length(knife@processInputs)){
-    postNm	<-	names(knife@processInputs[i])
-    postVl	<-	knife@processInputs[postNm]
-    if (!is.na(postVl)){
+    input_identifier	<-	names(knife@processInputs[i])
+    input_literal_data <- knife@processInputs[input_identifier]
+    
+    if (!is.na(input_literal_data)){
       
-      num.vl	<-	length(unlist(postVl))
-      for (j in 1:num.vl){
-        postVl <- unlist(knife@processInputs[postNm])[[j]]
+      data_element_list <- list() # unnamed list for {{#data_elements}}
+      
+      for (j in 1:length(unlist(input_literal_data))){
+        input_literal_data_element <- 
+          unlist(knife@processInputs[input_identifier])[[j]]
         
-        if (is.null(postVl)) stop(postNm, ' cannot be NULL. it is required')
-        inEL	<-	newXMLNode("wps:Input",parent=di)
-        addChildren(di,inEL)
+        if (is.null(input_literal_data_element)) {
+          stop(input_identifier, ' cannot be NULL. it is required') }
         
-        inIdEL   <- newXMLNode("ows:Identifier",newXMLTextNode(postNm),parent=inEL)
-        addChildren(inEL,inIdEL)
-        
-        inDatEL  <- newXMLNode("wps:Data")
-        addChildren(inEL,inDatEL);
-        
-        litDatEL	<-	newXMLNode('wps:LiteralData',newXMLTextNode(postVl))
-        addChildren(inDatEL,litDatEL)
+        input_list <- c(input_list,
+                        list(list(input_identifier = input_identifier,
+                                  input_literal_data_element = input_literal_data_element)))
       }
     }
+    
   }
   
-  # complex data
-  inEL	<-	newXMLNode("wps:Input")
-  addChildren(di,inEL)
+  whisker_list["inputs"] <- list(input_list)
   
-  inIdEL   <- newXMLNode('ows:Identifier',newXMLTextNode('FEATURE_COLLECTION'))
-  addChildren(inEL,inIdEL)
-  top <- addResponse(knife, top)
-  top <- suppressWarnings(addGeom(stencil, xmlNodes = top))
-  return(suppressWarnings(toString.XMLNode(top)))
+  whisker_list["feature_collection"] <- "FEATURE_COLLECTION"
+
+  whisker_list <- c(whisker_list, suppressWarnings(addGeom(stencil)))
+  
+  whisker_list <- c(whisker_list, addResponse(knife))
+  
+  return(whisker::whisker.render(readLines(system.file(
+    "templates/execute_template.xml", package = "geoknife")), whisker_list))
+  
 })
 
-addResponse <- function(.Object, xmlNodes){
-  top <- xmlNodes
-  resForm  <-	newXMLNode('wps:ResponseForm')
-  addChildren(top,resForm)
+addResponse <- function(.Object){
   
-  resDoc	<-	newXMLNode('wps:ResponseDocument',attrs=c('storeExecuteResponse'='true','status'='true'))
-  addChildren(resForm,resDoc)
+  response_list <- list()
+  
+  # Store the response document on the server to download later?
+  response_list["storeExecuteResponse"] <- "true"
+  
+  # Return a status document or just return the result?
+  response_list["status"] <- "true"
 
+  # include the response as a url reference or in line?
+  response_list["asReference"] <- "true"
+  
   #if text/tab-separated-values" or output_type
-  if (!is.null(.Object@processInputs$DELIMITER) && .Object@processInputs$DELIMITER=="TAB"){
-    resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='text/tab-separated-values'))
-  } else if (!is.null(.Object@processInputs$OUTPUT_TYPE) && .Object@processInputs$OUTPUT_TYPE=="geotiff") {
-    resOut  <-  newXMLNode('wps:Output',attrs=c('asReference'='true','mimeType'='application/zip'))
-  } else {
-    resOut  <-	newXMLNode('wps:Output',attrs=c('asReference'='true'))
+  if (!is.null(.Object@processInputs$DELIMITER) && 
+      .Object@processInputs$DELIMITER=="TAB"){
+    response_list["output_mimetype"] <- ' mimeType="text/tab-separated-values"'
+  } else if (!is.null(.Object@processInputs$OUTPUT_TYPE) && 
+             .Object@processInputs$OUTPUT_TYPE=="geotiff") {
+    response_list["output_mimetype"] <- ' mimeType="application/zip"'
   }
-  
-  addChildren(resDoc,resOut)
-  
-  outID	<-	newXMLNode('ows:Identifier',newXMLTextNode('OUTPUT'))
-  addChildren(resOut,outID)
-  requestXML <-	top
-}
 
-findIdentifierNode <- function(xmlNodes, name){
-  featureXpath <- '//wps:DataInputs/wps:Input/ows:Identifier'
-  # We are passing XML package objects around while reading/writing so keeping 
-  # the readers that depend on a parsed object for now.
-  dataElementIndx <- which(sapply(XML::getNodeSet(xmlNodes,featureXpath),XML::xmlValue) == name)
-  geomNode <- XML::getNodeSet(xmlNodes,paste0(featureXpath,'/parent::node()[1]') )[[dataElementIndx]] 
-  return(geomNode)
+  response_list["output_identifier"] <- "OUTPUT"
+  
+  return(response_list)
 }
 
 setGeneric(name="addGeom",def=function(stencil, xmlNodes){standardGeneric("addGeom")})
 
-#'@importFrom XML newXMLNode addChildren
 setMethod(f = "addGeom",signature = c("webgeom","ANY"), 
-          definition = function(stencil, xmlNodes){
+          definition = function(stencil){
             
+  geom_list <- list()
+  
+  # This is the WFS service base URL
+  geom_list["wps_reference_href"]  <- url(stencil)
+  
+  # These could / should be hard coded in the template.
+  geom_list["wfs_namespace"] <- stencil@WFS_NAMESPACE
+  geom_list["gml_namespace"] <- stencil@GML_NAMESPACE
+  geom_list["wfs_version"] <- version(stencil)
+  geom_list["wfs_service"] <- "WFS"
+  
+  # This is the format required by the GDP.
+  geom_list["wfs_outputformat"] <- "text/xml; subtype=gml/3.1.1"
 
-  inEL <- findIdentifierNode(xmlNodes, 'FEATURE_COLLECTION')
-  # reference is a sibling of the FEATURE_COLLECTION ID
-  inDatEL  <- newXMLNode('wps:Reference',attrs=c("xlink:href"=url(stencil)))
-  addChildren(inEL,inDatEL) # see if we can do this as a method to webgeom
+  # This is the WFS layer/typename
+  geom_list["wfs_typename"] <- as.character(stencil@geom)
   
-  bodyEL   <-	newXMLNode('wps:Body')
-  addChildren(inDatEL,bodyEL)
+  # This is what the WFS layer calls its geometry property
+  geom_list["wfs_geom_property"] <- "the_geom" # this is only valid for geoserver
   
-  featEL   <-	newXMLNode('wfs:GetFeature',attrs=c("service"="WFS",
-                                                  "version"=version(stencil),
-                                                  "outputFormat"="text/xml; subtype=gml/3.1.1"),
-                         namespaceDefinitions=c("wfs"=stencil@WFS_NAMESPACE,
-                                                "gml"=stencil@GML_NAMESPACE))
-  addChildren(bodyEL,featEL)
-  queryEL  <-	newXMLNode('wfs:Query',attrs=c("typeName"=as.character(stencil@geom)))
-  addChildren(featEL,queryEL)
-  propNmEL <-	newXMLNode('wfs:PropertyName',newXMLTextNode('the_geom'))
-  addChildren(queryEL,propNmEL)
-  propNmEL<-	newXMLNode('wfs:PropertyName',newXMLTextNode(stencil@attribute))
-  addChildren(queryEL,propNmEL)
+  # This is the attribute property that the GDP will use to label output
+  geom_list["wfs_attribute_property"] <- stencil@attribute
+  
   if (!is.na(stencil@GML_IDs[1])){
-    filterEL	<-	newXMLNode('ogc:Filter')
-    addChildren(queryEL,filterEL)
+    gmlid_list <- list()
     for (i in 1:length(stencil@GML_IDs)){
-      newXMLNode('ogc:GmlObjectId',attrs=c('gml:id'=stencil@GML_IDs[i]), parent = filterEL)  
+      gmlid_list <- c(gmlid_list, list(gmlid = stencil@GML_IDs[i]))
     }
+    geom_list["filter_gmlid"] <- list(list(gmlids = gmlid_list))
   }
   
-  return(xmlNodes)
+  return(list(wfs_reference = list(geom_list)))
 })
 
 setMethod(f = "addGeom",signature = c("ANY","ANY"),
@@ -156,35 +147,26 @@ setMethod(f = "addGeom",signature = c("ANY","ANY"),
 #'@importFrom sp coordinates
 setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
           definition = function(stencil, xmlNodes){
-            
-  filterID <- .FEATURE_ATTRIBUTE_NAME(stencil)
-  inEL <- findIdentifierNode(xmlNodes, 'FEATURE_COLLECTION')
-  inDatEL  <-	newXMLNode('wps:Data')
-  addChildren(inEL,inDatEL)
-  # parameterize this...
-  compDatEL	<-	newXMLNode('wps:ComplexData',
-                          attrs=c("mimeType"="text/xml",#,"encoding"="UTF-8",
-                                  "schema"="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd")) # schema needed?
-  addChildren(inDatEL,compDatEL)
   
-  gmlFeatEL <- newXMLNode('gml:featureMembers',
-                          namespaceDefinitions=c(
-                            'gml'="http://www.opengis.net/gml",
-                            'draw'= stencil@DRAW_NAMESPACE),
-                          attrs=c(
-                            "xsi:schemaLocation"=paste(c(stencil@DRAW_NAMESPACE,stencil@DRAW_SCHEMA),collapse=' '))
-  )
-  addChildren(compDatEL,gmlFeatEL)
+  simplegeom_list <- list()
+  
+  simplegeom_list["simplegeo_mimetype"] <- "text/xml" # "encoding"="UTF-8"?
+  simplegeom_list["simplegeo_schema"] <- 
+    "http://schemas.opengis.net/gml/3.1.1/base/feature.xsd"
+  simplegeom_list["gml_namespace"] <- "http://www.opengis.net/gml"
+  simplegeom_list["draw_namespace"] <- stencil@DRAW_NAMESPACE
+  simplegeom_list["draw_schema_location"] <- paste(c(stencil@DRAW_NAMESPACE,
+                                                     stencil@DRAW_SCHEMA),
+                                                   collapse=' ')
+  
   # loop this section for multiple polygons:
   
   geom <- stencil@sp
-  
+  poly_list <- list()
   for (j in seq_along(geom)){
     
-    gmlBoxEL  <-	newXMLNode('draw:poly',attrs=c("gml:id"=sprintf("poly.%s",j)))
-    
-    addChildren(gmlFeatEL,gmlBoxEL) 
-    gmlGeomEL  <-	newXMLNode('draw:the_geom')
+    geom_list <- list(poly_id = sprintf("poly.%s",j))
+    geom_list["geom_property"] <- "the_geom"
     
     ringCoords <- geom@polygons[[j]]@Polygons[[1]]@coords
     
@@ -194,31 +176,18 @@ setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
     ring.val	<-	paste(ring,collapse = ' ')
     drawID <- geom@polygons[[j]]@ID
 
-    drawName  <-	newXMLNode(paste0('draw:',filterID), newXMLTextNode(drawID))
-    addChildren(gmlBoxEL,gmlGeomEL, drawName)
+    geom_list["filter_id"] <- .FEATURE_ATTRIBUTE_NAME(stencil)
+    geom_list["ID_property"] <- drawID
+    geom_list["srsDimension"] <- "2"
+    geom_list["srsName"] <- "urn:x-ogc:def:crs:EPSG:4326" # FROM CRS in the future!!!
     
-    gmlPolyEL	<-	newXMLNode('gml:MultiSurface',
-                            attrs=c("srsDimension"="2",
-                                    "srsName"="urn:x-ogc:def:crs:EPSG:4326") # FROM CRS in the future!!!
-    )
-    addChildren(gmlGeomEL,gmlPolyEL)
+    geom_list["poslist"] <- ring.val
     
-    gmlPmEL  <-	newXMLNode('gml:surfaceMember')
-    addChildren(gmlPolyEL,gmlPmEL)
-    
-    gmlPgEL	<-	newXMLNode('gml:Polygon',attrs=c("srsDimension"="2"))
-    addChildren(gmlPmEL,gmlPgEL)
-    
-    gmlExEL	<-	newXMLNode('gml:exterior')
-    addChildren(gmlPgEL,gmlExEL)
-    
-    gmlLrEL	<-	newXMLNode('gml:LinearRing',attrs=c("srsDimension"="2"))
-    addChildren(gmlExEL,gmlLrEL)
-    
-    
-    
-    gmlPosEL	<-	newXMLNode('gml:posList',newXMLTextNode(ring.val))
-    addChildren(gmlLrEL,gmlPosEL)
+    poly_list <- c(poly_list,
+                   list(geom_list))
   }
-  return(xmlNodes)
+  simplegeom_list["polys"] <- list(poly_list)
+
+  return(list(simple_geometry = list(simplegeom_list)))
+  
 })
