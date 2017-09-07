@@ -1,5 +1,7 @@
 context("geoknife utils")
 
+default.sleep <- geoknife:::gconfig('sleep.time')
+geoknife:::gconfig(sleep.time=0.1)
 
 test_that("verbose", {
   testthat::skip_on_cran()
@@ -83,3 +85,5 @@ test_that("can create geojob from xml", {
   jobWithURL <- geojob(xml = xmlLoc, url = "foo")
   expect_equal(jobWithURL@url, "foo")
 })
+
+geoknife:::gconfig(sleep.time=default.sleep)

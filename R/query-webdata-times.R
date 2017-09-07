@@ -36,7 +36,7 @@ setMethod(f = "times_query",signature = c("webdata","webprocess"),
                                        make_getgridtimerange_execute_xml(fabric, knife))
             values <- tryCatch({
               nodes <- xml2::xml_find_all(gcontent(response),'//gdp:availabletimes/gdp:time')
-              as.POSIXct(sapply(nodes,xml2::xml_text), tz = 'UTC')
+              as.POSIXct(xml2::xml_text(nodes), tz = 'UTC')
             }, error = function(err) {
               return(as.POSIXct(c(NA,NA)))
             })

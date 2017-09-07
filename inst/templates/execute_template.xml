@@ -17,13 +17,18 @@
             <wfs:Query typeName="{{wfs_typename}}">
               <wfs:PropertyName>{{wfs_geom_property}}</wfs:PropertyName>
               <wfs:PropertyName>{{wfs_attribute_property}}</wfs:PropertyName>
-              {{#filter_gmlid}}
+              {{#filter_properties}}
               <ogc:Filter>
-                {{#gmlids}}
-                <ogc:GmlObjectId gml:id="{{gmlid}}"/>
-                {{/gmlids}}
+                <ogc:Or>
+                  {{#properties}}
+                  <ogc:PropertyIsEqualTo matchCase="{{match_case}}">
+                    <ogc:PropertyName>{{property_name}}</ogc:PropertyName>
+                    <ogc:Literal>{{property_literal}}</ogc:Literal>
+                  </ogc:PropertyIsEqualTo>
+                  {{/properties}}
+                </ogc:Or>
               </ogc:Filter>
-              {{/filter_gmlid}}
+              {{/filter_properties}}
             </wfs:Query>
           </wfs:GetFeature>
         </wps:Body>

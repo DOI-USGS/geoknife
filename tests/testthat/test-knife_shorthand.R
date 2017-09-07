@@ -8,19 +8,16 @@ test_that("character to knife", {
   
 })
 
-test_that("built in knifes are algorithms", {
+test_that("built in knifes are algorithms on prod", {
   testthat::skip_on_cran()
-  wps.url <- gconfig('wps.url')
-  gconfig('wps.url'="https://cida.usgs.gov/gdp/process/WebProcessingService")
-  web.knives <- unname(unlist(query(webprocess(),'algorithms')))
+  web.knives <- unname(unlist(readRDS("data/test_webprocess_algorithms_prod.rds")))
   pkg.knives <- unlist(unname(lapply(geoknife:::getKnives(),function(x) x[[1]][[1]])))
   
   expect_true(all(pkg.knives %in% web.knives))
-  gconfig('wps.url'=wps.url)
 })
 
 test_that('multi-args work with shorthand knife',{
-  wp <- webprocess('subset', OUTPUT_TYPE='geotiff')
+  wp <- webprocess('subset', OUTPUT_TYPE='geotiff') # this makes two describe process requests!!! HUH?
   expect_is(wp, 'webprocess')
   expect_equal(inputs(wp)$OUTPUT_TYPE, 'geotiff')
   

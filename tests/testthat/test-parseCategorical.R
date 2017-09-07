@@ -20,7 +20,7 @@ test_that('result works for categorical', {
   Srs1 = Polygons(list(Sr1), "sample.poly")
   stencil <- simplegeom(Srl = list(Srs1), proj4string = CRS("+proj=longlat +datum=WGS84"))
   
-  job <- geoknife(stencil, 'iclus', knife)
+  job <- geoknife(stencil, 'iclus', knife) # SLOW!!!
   expect_is(result(job), 'data.frame')
   cancel(job)
 })

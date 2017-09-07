@@ -2,6 +2,7 @@ context("gconfig")
 
 
 test_that("can get read.only variables", {
+  expect_equal(gconfig("wps.url"), "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
   expect_equal(gconfig(no.readonly = FALSE), gconfig())
   expect_false(length(gconfig(no.readonly = TRUE)) == length(gconfig()))
 })
@@ -22,5 +23,8 @@ test_that("can set !read.only variables", {
 test_that("can set !read.only variables on webprocess()", {
   testthat::skip_on_cran()
   gconfig('email'='none@gmail.com')
-  expect_equal(webprocess()@email, 'none@gmail.com')
+  wp <<-webprocess()
+  expect_equal(wp@email, 'none@gmail.com')
+  expect_is(webprocess(), "webprocess")
+  expect_is(wp@processInputs, "list")
 })

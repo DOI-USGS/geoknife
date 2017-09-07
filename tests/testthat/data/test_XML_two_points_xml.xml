@@ -10,7 +10,7 @@
     <wps:Input>
       <ows:Identifier>TIME_END</ows:Identifier>
       <wps:Data>
-        <wps:LiteralData>1895-01-01T00:00:00.000Z</wps:LiteralData>
+        <wps:LiteralData>1895-01-01T06:00:00.000Z</wps:LiteralData>
       </wps:Data>
     </wps:Input>
     <wps:Input>

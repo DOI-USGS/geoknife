@@ -1,38 +1,28 @@
-context("show webdata")
+context("show object methods")
 
 test_that("show webdata", {
-  expect_output(show(webdata()))
+  expect_output(show(readRDS("data/test_webdata_fabric.rds")))
 })
-
-context("show webgeom")
 
 test_that("show webgeom", {
-  expect_output(show(webgeom()))
+  expect_output(show(readRDS("data/test_webgeom_WI.rds")))
 })
 
-context("show simplegeom")
-
 test_that("show simplegeom", {
-  expect_output(show(simplegeom(c(-88.6, 45.2))))
+  expect_output(show(readRDS("data/test_simplegeom_two_points.rds")))
   expect_error(simplegeom(c(-88.6, 45.2,99)))
 })
 
-context("show datagroup")
-
 test_that("show datagroup", {
   testthat::skip_on_cran()
-  expect_output(show(query('webdata')))
+  expect_output(show(readRDS("data/test_query_webdata.rds")))
 })
-
-context("show geojob")
 
 test_that("show geojob", {
-  expect_output(show(geojob()))
+  expect_output(show(readRDS("data/test_email_gj.rds")))
 })
-
-context("show webprocess")
 
 test_that("show webprocess", {
   testthat::skip_on_cran()
-  expect_output(show(webprocess()))
+  expect_output(show(readRDS("data/test_webprocess_knife.rds")))
 })

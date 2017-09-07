@@ -69,16 +69,14 @@ webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54
   urls <- lapply(xml2::xml_find_all(response, xpath, ns = namespaces), 
                  xml2::xml_text)
   
-  abstracts = sapply(xml2::xml_find_all(response, 
-                                         paste0(parentxpath,'/gmd:abstract'), 
-                                         ns = namespaces), 
-                     xml2::xml_text)
+  abstracts = xml2::xml_text(xml2::xml_find_all(response,
+                                                paste0(parentxpath,'/gmd:abstract'),
+                                                ns = namespaces))
   
-  titles = sapply(xml2::xml_find_all(response,
+  titles = xml2::xml_text(xml2::xml_find_all(response,
                                       paste0(parentxpath,
     '/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString'), 
-                                      ns = namespaces), 
-                  xml2::xml_text)
+                                      ns = namespaces))
   
   group = list()
   sort.ix <- sort(titles, index.return = TRUE)$ix
@@ -87,10 +85,9 @@ webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54
     group[[i]] <- list(title = titles[sort.ix[i]], url=urls[[sort.ix[i]]], abstract = abstracts[sort.ix[i]])
   }
   
-  types = unname(sapply(xml2::xml_find_all(response, 
+  types = unname(xml2::xml_attrs(xml2::xml_find_all(response, 
                                            parentxpath, 
-                                           ns = namespaces), 
-                        xml2::xml_attrs))
+                                           ns = namespaces)))
   
   # removing all non-OPeNDAP endpoints
   group[which(substr(types[sort.ix],1,7) != "OPeNDAP")] <- NULL

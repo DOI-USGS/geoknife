@@ -127,12 +127,16 @@ setMethod(f = "addGeom",signature = c("webgeom","ANY"),
   # This is the attribute property that the GDP will use to label output
   geom_list["wfs_attribute_property"] <- stencil@attribute
   
-  if (!is.na(stencil@GML_IDs[1])){
-    gmlid_list <- list()
-    for (i in 1:length(stencil@GML_IDs)){
-      gmlid_list <- c(gmlid_list, list(gmlid = stencil@GML_IDs[i]))
+  if(!is.na(stencil@values[1])) {
+    properties <- list()
+    for (val in values(stencil)){
+      properties <- c(properties,
+                      list(list(match_case = "true",
+                                property_name = stencil@attribute,
+                                property_literal = val)))
     }
-    geom_list["filter_gmlid"] <- list(list(gmlids = gmlid_list))
+    
+    geom_list["filter_properties"] <- list(list(properties = properties))
   }
   
   return(list(wfs_reference = list(geom_list)))
