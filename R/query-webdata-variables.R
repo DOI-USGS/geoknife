@@ -34,7 +34,7 @@ setMethod(f = "variables_query",signature = c("webdata","webprocess"),
                                        make_listopendapgrids_execute_xml(fabric, knife))
 
             # will error if none found
-            values	<-	xml2::xml_text(
+            values <- xml2::xml_text(
               xml2::xml_find_all(gcontent(response),'//gdp:shortname'),)
             return(values)
           })
