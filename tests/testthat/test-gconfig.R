@@ -26,11 +26,5 @@ test_that("can set !read.only variables on webprocess()", {
   wp <<-webprocess()
   expect_equal(wp@email, 'none@gmail.com')
   expect_is(webprocess(), "webprocess")
-})
-
-context("Test geoknife connection to GDP")
-test_that("geoknife and algorithms return proper data and check connection to GDP", {
-  testthat::skip_on_cran()
-  expect_is(wp, "webprocess")
   expect_is(wp@processInputs, "list")
 })
