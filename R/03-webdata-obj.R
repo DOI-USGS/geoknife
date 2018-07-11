@@ -152,7 +152,7 @@ getPkgData <- function(){
               variables = 'housing_classes_iclus_a1_2010'),
        'daymet' = 
          list(times = as.POSIXct(c('2000-01-01 00:00:00','2001-01-01 00:00:00')),
-              url = 'http://thredds.daac.ornl.gov/thredds/dodsC/daymet-agg/daymet-agg.ncml',
+              url = 'https://thredds.daac.ornl.gov/thredds/dodsC/daymet-v3-agg/na.ncml',
               variables = 'prcp'),
        'stageiv' = 
          list(times = as.POSIXct(c('2010-01-01 00:00:00','2010-01-05 00:00:00')),
