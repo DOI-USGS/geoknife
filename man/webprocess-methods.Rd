@@ -4,19 +4,17 @@
 \name{webprocess}
 \alias{webprocess}
 \alias{webprocess,missing-method}
-\alias{webprocess}
 \alias{webprocess,character-method}
-\alias{webprocess}
 \alias{webprocess,ANY-method}
-\alias{webprocess}
 \title{create webprocess object}
 \usage{
 webprocess(.Object, ...)
 
 \S4method{webprocess}{missing}(.Object, ...)
 
-\S4method{webprocess}{character}(.Object = c("summary", "unweighted summary",
-  "coverage summary", "subset", "coverage subset"), ...)
+\S4method{webprocess}{character}(.Object = c("summary",
+  "unweighted summary", "coverage summary", "subset", "coverage subset"),
+  ...)
 
 \S4method{webprocess}{ANY}(.Object, ...)
 }

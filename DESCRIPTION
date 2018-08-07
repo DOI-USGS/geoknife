@@ -53,4 +53,4 @@ Suggests:
     rgdal,
     maps
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0

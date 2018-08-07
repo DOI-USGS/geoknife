@@ -4,11 +4,8 @@
 \name{values<-}
 \alias{values<-}
 \alias{values}
-\alias{values}
 \alias{values<-,webgeom-method}
-\alias{values}
 \alias{values,webgeom-method}
-\alias{values}
 \title{the values of a webgeom}
 \usage{
 values(.Object) <- value

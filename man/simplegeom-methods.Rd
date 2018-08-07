@@ -4,9 +4,7 @@
 \name{simplegeom}
 \alias{simplegeom}
 \alias{simplegeom,missing-method}
-\alias{simplegeom}
 \alias{simplegeom,ANY-method}
-\alias{simplegeom}
 \title{Create simplegeom object}
 \usage{
 simplegeom(.Object, ...)

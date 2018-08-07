@@ -4,19 +4,12 @@
 \name{url<-}
 \alias{url<-}
 \alias{url}
-\alias{url}
 \alias{url<-,ANY-method}
-\alias{url}
 \alias{url<-,webprocess-method}
-\alias{url}
 \alias{url,character-method}
-\alias{url}
 \alias{url,missing-method}
-\alias{url}
 \alias{url,datagroup-method}
-\alias{url}
 \alias{url,ANY-method}
-\alias{url}
 \title{the url of an object}
 \usage{
 url(.Object) <- value

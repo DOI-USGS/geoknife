@@ -5,7 +5,6 @@
 \alias{email}
 \alias{email,geojob-method}
 \alias{email,geojob,webprocess-method}
-\alias{email,geojob-method}
 \title{email user when processing job is complete}
 \usage{
 email(geojob, knife)

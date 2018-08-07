@@ -4,13 +4,9 @@
 \name{wait}
 \alias{wait}
 \alias{wait,geojob,numeric-method}
-\alias{wait}
 \alias{wait,geojob,missing-method}
-\alias{wait}
 \alias{wait,character,numeric-method}
-\alias{wait}
 \alias{wait,character,missing-method}
-\alias{wait}
 \title{hold up R while GDP is processing}
 \usage{
 wait(.Object, sleep.time)

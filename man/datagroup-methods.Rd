@@ -6,11 +6,8 @@
 \alias{datagroup,ANY-method}
 \alias{datagroup,datagroup-methods}
 \alias{length,datagroup-method}
-\alias{datagroup,datagroup-methods}
 \alias{[,datagroup-method}
-\alias{datagroup,datagroup-methods}
 \alias{[[,datagroup,ANY,ANY-method}
-\alias{datagroup,datagroup-methods}
 \title{create datagroup object}
 \usage{
 datagroup(...)

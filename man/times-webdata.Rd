@@ -4,12 +4,8 @@
 \name{times}
 \alias{times}
 \alias{times<-}
-\alias{times<-}
-\alias{times}
 \alias{times<-,webdata-method}
-\alias{times}
 \alias{times,webdata-method}
-\alias{times}
 \title{the times of an webdata object}
 \usage{
 times(.Object)

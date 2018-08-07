@@ -5,15 +5,10 @@
 \alias{inputs<-}
 \alias{inputs}
 \alias{inputs,webprocess-method}
-\alias{inputs}
 \alias{inputs,xml_document-method}
-\alias{inputs}
 \alias{inputs<-,webprocess,missing-method}
-\alias{inputs<-}
 \alias{inputs<-,webprocess,character-method}
-\alias{inputs<-}
 \alias{inputs<-,webprocess,list-method}
-\alias{inputs<-}
 \title{inputs of webprocess}
 \usage{
 inputs(.Object, ...) <- value
