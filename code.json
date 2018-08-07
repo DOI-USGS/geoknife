@@ -11,15 +11,15 @@
       "licenses": [
         {
           "name": "Public Domain, CC0-1.0",
-          "URL": "https://code.usgs.gov/WMA-Data-Science/dataRetrieval/blob/master/LICENSE.note"
+          "URL": "https://code.usgs.gov/water/geoknife/blob/master/LICENSE.note"
         }
         ]
     },
     
-    "homepageURL": "https://github.com/USGS-R/geoknife",
-    "downloadURL": "https://github.com/USGS-R/geoknife/releases/tag/v1.6.1",
-    "disclaimerURL": "https://github.com/USGS-R/geoknife/blob/master/DISCLAIMER.md",
-    "repositoryURL": "https://github.com/USGS-R/geoknife.git",
+    "homepageURL": "https://code.usgs.gov/water/geoknife",
+    "downloadURL": "https://code.usgs.gov/water/geoknife/tags/v1.6.1",
+    "disclaimerURL": "https://code.usgs.gov/water/geoknife/blob/master/DISCLAIMER.md",
+    "repositoryURL": "https://code.usgs.gov/water/geoknife.git",
     "vcs": "git",
     
     "laborHours": 500,
