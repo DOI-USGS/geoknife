@@ -3,7 +3,7 @@
 .travis.yml
 appveyor.yml
 cran-comments.md
-README.Rmd
+README.*
 CONDUCT.md
 LICENSE.note
 DISCLAIMER.md
