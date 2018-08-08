@@ -76,7 +76,7 @@ context("basics of geoknife processing job are as expected")
 
 test_that("algorithm version works", {
   fabric <- webdata('prism')
-  times(fabric)[2] <- '1895-01-01'
+  times(fabric)[2] <- as.POSIXct('1895-01-01', tz = "UTC")
   job <- geoknife(stencil = c(-89,42), fabric = fabric)
   expect_equal(job@algorithm.version, "1.0.0")
   cancel(job)
