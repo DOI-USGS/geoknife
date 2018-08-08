@@ -1,7 +1,7 @@
 ## Test environments
 * local OS X install, R 3.5.1
 * travis (Ubuntu 14.04.5 LTS, R 3.5.0)
-* win-builder
+* win-builder (R-devel)
 
 ## R CMD check results
 
