@@ -4,11 +4,8 @@
 \name{geom<-}
 \alias{geom<-}
 \alias{geom}
-\alias{geom}
 \alias{geom<-,webgeom-method}
-\alias{geom}
 \alias{geom,webgeom-method}
-\alias{geom}
 \title{the geom of an object}
 \usage{
 geom(.Object) <- value

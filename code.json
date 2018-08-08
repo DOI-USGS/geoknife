@@ -1,0 +1,48 @@
+[
+  {
+    "name": "geoknife",
+    "organization": "U.S. Geological Survey",
+    "description": "Processes gridded datasets found on the U.S. Geological Survey Geo Data Portal web application or elsewhere, using a web-enabled workflow that eliminates the need to download and store large datasets that are reliably hosted on the Internet. The package provides access to several data subset and summarization algorithms that are available on remote web processing servers.",
+    "version": "1.6.1",
+    "status": "Production",
+    
+    "permissions": {
+      "usageType": "openSource",
+      "licenses": [
+        {
+          "name": "Public Domain, CC0-1.0",
+          "URL": "https://code.usgs.gov/water/geoknife/blob/master/LICENSE.note"
+        }
+        ]
+    },
+    
+    "homepageURL": "https://code.usgs.gov/water/geoknife",
+    "downloadURL": "https://code.usgs.gov/water/geoknife/tags/v1.6.1",
+    "disclaimerURL": "https://code.usgs.gov/water/geoknife/blob/master/DISCLAIMER.md",
+    "repositoryURL": "https://code.usgs.gov/water/geoknife.git",
+    "vcs": "git",
+    
+    "laborHours": 500,
+    
+    "tags": [
+      "R",
+      "rstats",
+      "USGS",
+      "climate",
+      "geoprocessing"
+      ],
+    
+    "languages": [
+      "R"
+      ],
+    
+    "contact": {
+      "name": "Jordan Read",
+      "email": "jread@usgs.gov"
+    },
+    
+    "date": {
+      "metadataLastUpdated": "2018-08-07"
+    }
+  }
+  ]

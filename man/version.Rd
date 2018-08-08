@@ -4,11 +4,8 @@
 \name{version<-}
 \alias{version<-}
 \alias{version}
-\alias{version}
 \alias{version<-,ANY-method}
-\alias{version}
 \alias{version,ANY-method}
-\alias{version}
 \title{the version of an object}
 \usage{
 version(.Object) <- value

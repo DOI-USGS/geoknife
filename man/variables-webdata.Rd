@@ -4,7 +4,6 @@
 \name{variables}
 \alias{variables}
 \alias{variables<-}
-\alias{variables<-}
 \alias{variables,webdata-method}
 \alias{variables<-,webdata-method}
 \title{the variables of a webdata object}

@@ -4,13 +4,9 @@
 \name{download}
 \alias{download}
 \alias{download,geojob,missing-method}
-\alias{download}
 \alias{download,character,missing-method}
-\alias{download}
 \alias{download,geojob,character-method}
-\alias{download}
 \alias{download,character,character-method}
-\alias{download}
 \title{download output from geojob}
 \usage{
 download(.Object, destination, ...)

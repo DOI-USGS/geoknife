@@ -5,12 +5,7 @@
 \alias{abstract}
 \alias{title}
 \alias{abstract,datagroup-method}
-\alias{abstract}
-\alias{title}
-\alias{abstract}
 \alias{title,datagroup-method}
-\alias{abstract}
-\alias{title}
 \title{get abstract from a datagroup}
 \usage{
 abstract(.Object)

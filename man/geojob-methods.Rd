@@ -6,9 +6,7 @@
 \alias{geojob,missing-method}
 \alias{geojob,geojob-method}
 \alias{geojob,xml_document-method}
-\alias{geojob,geojob-method}
 \alias{geojob,character-method}
-\alias{geojob,geojob-method}
 \alias{xml<-}
 \alias{xml<-,geojob-method}
 \alias{xml}
@@ -16,12 +14,8 @@
 \alias{id<-}
 \alias{id,geojob-method}
 \alias{id}
-\alias{id,geojob-method}
 \alias{id<-,geojob-method}
-\alias{id,geojob-method}
-\alias{id,geojob-method}
 \alias{id,character-method}
-\alias{id,geojob-method}
 \title{create geojob object}
 \usage{
 geojob(xml, ...)

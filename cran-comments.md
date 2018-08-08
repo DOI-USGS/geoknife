@@ -1,5 +1,12 @@
-## Resubmission
-This is a resubmission. In this version I have:
+## Test environments
+* local OS X install, R 3.5.1
+* travis (Ubuntu 14.04.5 LTS, R 3.5.0)
+* win-builder (R-devel)
 
-* We have modfified tests to avoid web service calls which caused errors noted by CRAN maintainers.
+## R CMD check results
+
+No ERRORS, WARNINGS or NOTES
+
+## Downstream dependencies
+All checks passed with devtools::revdep_check()
 

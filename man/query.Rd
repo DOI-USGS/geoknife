@@ -6,11 +6,8 @@
 \alias{query}
 \alias{query,webdata-method}
 \alias{query,webdata,character-method}
-\alias{query,webdata-method}
 \alias{query,webdata,missing-method}
-\alias{query,webdata-method}
 \alias{query,character,missing-method}
-\alias{query,webdata-method}
 \alias{query,webgeom,character-method}
 \alias{query,webgeom-method}
 \alias{query,webprocess,character-method}

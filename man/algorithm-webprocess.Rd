@@ -4,14 +4,9 @@
 \name{algorithm}
 \alias{algorithm}
 \alias{algorithm<-}
-\alias{algorithm<-}
-\alias{algorithm}
 \alias{algorithm,webprocess-method}
-\alias{algorithm}
 \alias{algorithm<-,webprocess-method}
-\alias{algorithm}
 \alias{algorithm,xml_document-method}
-\alias{algorithm}
 \title{the algorithm of a webprocess object}
 \usage{
 algorithm(.Object)

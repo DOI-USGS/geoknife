@@ -4,9 +4,7 @@
 \name{result}
 \alias{result}
 \alias{result,geojob-method}
-\alias{result}
 \alias{result,character-method}
-\alias{result}
 \title{parse process output into R environment}
 \usage{
 result(.Object, ...)

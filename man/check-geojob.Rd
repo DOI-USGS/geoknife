@@ -4,9 +4,7 @@
 \name{check}
 \alias{check}
 \alias{check,geojob-method}
-\alias{check}
 \alias{check,character-method}
-\alias{check}
 \title{Check status of processing request}
 \usage{
 check(.Object)

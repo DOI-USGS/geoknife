@@ -4,9 +4,7 @@
 \name{webgeom}
 \alias{webgeom}
 \alias{webgeom,missing-method}
-\alias{webgeom}
 \alias{webgeom,ANY-method}
-\alias{webgeom}
 \title{create webgeom object}
 \usage{
 webgeom(.Object, ...)

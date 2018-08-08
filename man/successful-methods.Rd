@@ -4,8 +4,6 @@
 \alias{successful}
 \alias{running}
 \alias{error}
-\alias{running}
-\alias{error}
 \title{Convenience function for GDP process state}
 \usage{
 successful(.Object, retry)

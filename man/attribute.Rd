@@ -4,11 +4,8 @@
 \name{attribute<-}
 \alias{attribute<-}
 \alias{attribute}
-\alias{attribute}
 \alias{attribute<-,webgeom-method}
-\alias{attribute}
 \alias{attribute,webgeom-method}
-\alias{attribute}
 \title{the attribute of an webgeom object}
 \usage{
 attribute(.Object) <- value
