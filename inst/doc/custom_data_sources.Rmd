@@ -4,7 +4,7 @@ author: "David Blodgett"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Using `geoknife` with a custom webgeom and/or webdata}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,15 +12,15 @@ vignette: >
 library(geoknife)
 ```
 
-This vignette shows how to use a custom Web Feature Service with `geoknife`. In this case, we are using a WFS from [ScienceBase](https://www.sciencebase.gov/catalog/item/54296bf0e4b0ad29004c2fbb). The url used for the WFS can be found in the "Spatial Services" section of the sciencebase item. If the WFS url you have has parameters included, remove them when passing them to `geoknife`.  
-e.g. this: `https://www.sciencebase.gov/catalogMaps/mapping/ows/54296bf0e4b0ad29004c2fbb`  
-not this: `https://www.sciencebase.gov/catalogMaps/mapping/ows/54296bf0e4b0ad29004c2fbb?service=wfs&request=getcapabilities&version=1.0.0`
+This vignette shows how to use a custom Web Feature Service with `geoknife`. In this case, we are using a WFS from [ScienceBase](https://www.sciencebase.gov/catalog/item/5b68e7e3e4b006a11f75c06a). The url used for the WFS can be found in the "Spatial Services" section of the sciencebase item. If the WFS url you have has parameters included, remove them when passing them to `geoknife`.  
+e.g. this: `https://www.sciencebase.gov/catalogMaps/mapping/ows/5b68e7e3e4b006a11f75c06a`  
+not this: `https://www.sciencebase.gov/catalogMaps/mapping/ows/5b68e7e3e4b006a11f75c06a?service=wfs&request=getcapabilities&version=1.0.0`
 
 For advanced users, it may be interesting to see what `geoknife` is doing behind the scences. Switch `verbose=FALSE` to `verbose=TRUE` to see the web service request being made when you execute this vignette.
 
 ```{r stencil, echo=T, eval=T}
 gconfig(verbose=FALSE)
-stencil <- webgeom(url="https://www.sciencebase.gov/catalogMaps/mapping/ows/54296bf0e4b0ad29004c2fbb")
+stencil <- webgeom(url="https://www.sciencebase.gov/catalogMaps/mapping/ows/5b68e7e3e4b006a11f75c06a")
 
 stencil_geoms <- query(stencil, 'geoms')
 print(stencil_geoms)

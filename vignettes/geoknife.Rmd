@@ -23,6 +23,7 @@ library(geoknife)
 query <- geoknife::query
 `values<-` <- geoknife::`values<-`
 id <- geoknife::id
+knitr::opts_chunk$set(eval=nzchar(Sys.getenv("geoknife_vignette_eval")))
 
 ```
 

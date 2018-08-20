@@ -3,7 +3,7 @@ library(geoknife)
 
 ## ----stencil, echo=T, eval=T---------------------------------------------
 gconfig(verbose=FALSE)
-stencil <- webgeom(url="https://www.sciencebase.gov/catalogMaps/mapping/ows/54296bf0e4b0ad29004c2fbb")
+stencil <- webgeom(url="https://www.sciencebase.gov/catalogMaps/mapping/ows/5b68e7e3e4b006a11f75c06a")
 
 stencil_geoms <- query(stencil, 'geoms')
 print(stencil_geoms)
