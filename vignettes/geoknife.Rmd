@@ -23,7 +23,6 @@ library(geoknife)
 query <- geoknife::query
 `values<-` <- geoknife::`values<-`
 id <- geoknife::id
-knitr::opts_chunk$set(eval=nzchar(Sys.getenv("geoknife_vignette_eval")))
 
 ```
 
@@ -306,7 +305,7 @@ length(webdatasets)
 load(system.file('extdata', 'webdata_query.RData', package = 'geoknife'))
 length(webdatasets)
 ```
-Interogating datasets can be done with by printing for the returned dataset list, which displays the title and the url of each dataset by default (this example truncates the `r length(webdatasets)` datasets to display 5):
+Interrogating datasets can be done by printing the returned dataset list, which displays the title and the url of each dataset by default (this example truncates the `r length(webdatasets)` datasets to display 5):
 ```{r}
 webdatasets[61:65]
 ```
