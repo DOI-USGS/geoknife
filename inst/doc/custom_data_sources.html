@@ -12,7 +12,7 @@
 
 <meta name="author" content="David Blodgett" />
 
-<meta name="date" content="2018-08-08" />
+<meta name="date" content="2018-08-21" />
 
 <title>Using geoknife with a custom webgeom and/or webdata</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Using <code>geoknife</code> with a custom webgeom and/or webdata</h1>
 <h4 class="author"><em>David Blodgett</em></h4>
-<h4 class="date"><em>2018-08-08</em></h4>
+<h4 class="date"><em>2018-08-21</em></h4>
 
 
 
@@ -119,6 +119,7 @@ fabric_times &lt;-<span class="st"> </span><span class="kw">query</span>(fabric,
 <p>Now we can execute the <code>geoknife</code> job for the specified fabric and stencil. Note that we set <code>wait = TRUE</code> here so we can just wait for the result of the process.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prism_yahara_result &lt;-<span class="st"> </span><span class="kw">result</span>(<span class="kw">geoknife</span>(stencil, fabric, <span class="dt">wait =</span> <span class="ot">TRUE</span>))</code></pre></div>
 <pre><code>## 
+[===============================================================&gt;--]  97%
 [==================================================================] 100%</code></pre>
 <pre><code>## [1] &quot;The returned dataframe has 58 columns with names 'DateTime', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', 'variable', 'statistic' and 363 rows from 2000-01-01 to 2010-01-01&quot;</code></pre>
 

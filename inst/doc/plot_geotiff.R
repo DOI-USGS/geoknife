@@ -4,7 +4,7 @@ options(continue=" ")
 options(width=60)
 library(knitr)
 library(geoknife)
-
+knitr::opts_chunk$set(eval=nzchar(Sys.getenv("geoknife_vignette_eval")))
 
 ## ---- warning=FALSE, message=FALSE------------------------
 library(geoknife)
