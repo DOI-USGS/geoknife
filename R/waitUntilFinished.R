@@ -38,16 +38,21 @@ setMethod(f = "wait",signature(.Object = "character", sleep.time = "numeric"), d
   running <- running(.Object, retry = TRUE)
   pb <- progress_bar$new(total = 100, clear = FALSE)
   currentStatus <- 'unknown'
+  succeededYet <- FALSE
   while(running){
     Sys.sleep(sleep.time)
     running <- running(.Object, retry = TRUE)
     checkResult <- check(.Object)
-    if(!is.null(checkResult$percentComplete)) {
-      pb$update(as.numeric(checkResult$percentComplete)/100)
+    percentComplete <- checkResult$percentComplete
+    if(!is.null(percentComplete) && !succeededYet) {
+      pb$update(as.numeric(percentComplete)/100)
     } else if(checkResult$status != currentStatus) {
       message(checkResult$status)
     }
     currentStatus <- checkResult$status
+    if(checkResult$statusType == "ProcessSucceeded" && percentComplete == 100) {
+      succeededYet <- TRUE
+    }
   }
   invisible(.Object)
 })
