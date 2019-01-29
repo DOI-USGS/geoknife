@@ -75,6 +75,7 @@ test_that("we can set attributes on a webgeom", {
 context("basics of geoknife processing job are as expected")
 
 test_that("algorithm version works", {
+  testthat::skip_on_cran()
   fabric <- webdata('prism')
   times(fabric)[2] <- as.POSIXct('1895-01-01', tz = "UTC")
   job <- geoknife(stencil = c(-89,42), fabric = fabric)
@@ -83,6 +84,7 @@ test_that("algorithm version works", {
 })
 
 test_that("version method works", {
+  testthat::skip_on_cran()
   stencil <- webgeom()
   version(stencil) <- "2.0.0"
   expect_equal(version(stencil), "2.0.0")

@@ -47,16 +47,15 @@ test_that("check status of an ID that doesn't exist", {
   expect_equal(status$statusType, "unknown")
 })
 
-fabric <- webdata('prism', variables = 'wrong')
-job <- geoknife(c(-89,43), fabric, wait = TRUE)
-failed.id <- id(job)
+
 test_that("check status of an ID that failed", {
+  testthat::skip_on_cran()
+  fabric <- webdata('prism', variables = 'wrong')
+  job <- geoknife(c(-89,43), fabric, wait = TRUE)
+  failed.id <- id(job)
   testthat::skip_on_cran()
   status <- check(failed.id)
   expect_equal(status$statusType, "ProcessFailed")
-})
-
-test_that("result fails with failed job",{
   expect_error(result(failed.id), "processing is incomplete or has failed. See check()")
 })
 

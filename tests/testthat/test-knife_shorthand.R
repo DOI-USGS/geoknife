@@ -17,6 +17,7 @@ test_that("built in knifes are algorithms on prod", {
 })
 
 test_that('multi-args work with shorthand knife',{
+  testthat::skip_on_cran()
   wp <- webprocess('subset', OUTPUT_TYPE='geotiff') # this makes two describe process requests!!! HUH?
   expect_is(wp, 'webprocess')
   expect_equal(inputs(wp)$OUTPUT_TYPE, 'geotiff')
