@@ -15,6 +15,7 @@
 #'@aliases
 #'inputs<-
 #'@examples
+#'\dontrun{
 #'wp <- webprocess(DELIMITER = 'TAB')
 #'inputs(wp)
 #'
@@ -22,6 +23,7 @@
 #'inputs(wp)
 #'inputs(wp, "DELIMITER")
 #'inputs(wp, "DELIMITER") <- "TAB"
+#'}
 #'@export
 #'@keywords internal
 setGeneric(name="inputs<-",def=function(.Object, ..., value){
