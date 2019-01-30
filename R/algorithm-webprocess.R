@@ -7,8 +7,10 @@
 #'@param .Object a \linkS4class{webprocess} object
 #'@param value a list with name of algorithm and relative url endpoint
 #'@examples
+#'\dontrun{
 #'wp <- webprocess()
 #'algorithm(wp)
+#'}
 #'@aliases 
 #'algorithm
 #'algorithm<-
