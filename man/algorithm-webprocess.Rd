@@ -30,6 +30,8 @@ The algorithm is the type of process that will be used, and can be accessed
 or modified using the algorithm method.
 }
 \examples{
+\dontrun{
 wp <- webprocess()
 algorithm(wp)
+}
 }
