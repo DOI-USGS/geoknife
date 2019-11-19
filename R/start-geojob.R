@@ -35,9 +35,16 @@ setMethod(f = "start",signature(.Object = "geojob"),definition = function(.Objec
   }
 	requestXML <- xml(.Object)
 	data <- genericExecute(url = url(.Object), requestXML)
+
 	xmltext <- gcontent(data)
 	response <- xml2::xml_root(xmltext)
-	processID <- xml2::xml_attr(response,"statusLocation")
+	
+	if(xml2::xml_name(response) == "ExceptionReport") {
+	  cancel(.Object)
+	  stop(cat(xml2::xml_text(response)))
+	} else {
+	  processID <- xml2::xml_attr(response,"statusLocation")
+	}
 	
 	id(.Object)	<-	processID
   setJobState("ProcessStarted")
