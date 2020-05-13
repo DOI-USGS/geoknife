@@ -16,18 +16,10 @@ To install the `geoknife` from CRAN:
 install.packages("geoknife")
 ```
 
-To install the stable version of `geoknife` package with dependencies:
-
-``` r
-install.packages("geoknife", 
-    repos = c("https://owi.usgs.gov/R","https://cran.rstudio.com/"),
-    dependencies = TRUE)
-```
-
 Or to install the current development version of the package:
 
 ``` r
-install.packages("devtools")
+install.packages("remotes")
 devtools::install_github('USGS-R/geoknife')
 ```
 
