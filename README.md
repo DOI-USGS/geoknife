@@ -20,7 +20,7 @@ Or to install the current development version of the package:
 
 ``` r
 install.packages("remotes")
-devtools::install_github('USGS-R/geoknife')
+remotes::install_github('USGS-R/geoknife')
 ```
 
 ### Reporting bugs
