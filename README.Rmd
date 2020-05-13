@@ -33,17 +33,10 @@ install.packages("geoknife")
   opts_chunk$set(fig.path = "inst/", dev='png') 
 ```
 
-To install the stable version of `geoknife` package with dependencies:  
-```{r, eval=FALSE}
-install.packages("geoknife", 
-    repos = c("https://owi.usgs.gov/R","https://cran.rstudio.com/"),
-    dependencies = TRUE)
-```
-
 Or to install the current development version of the package:  
 ```{r, eval=FALSE}
-install.packages("devtools")
-devtools::install_github('USGS-R/geoknife')
+install.packages("remotes")
+remotes::install_github('USGS-R/geoknife')
 ```
 
 ### Reporting bugs
