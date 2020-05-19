@@ -48,6 +48,7 @@ booleans are changed to characters as 'true' and 'false'.
 access or set the inputs of a webprocess
 }
 \examples{
+\dontrun{
 wp <- webprocess(DELIMITER = 'TAB')
 inputs(wp)
 
@@ -55,5 +56,6 @@ inputs(wp) <- list(DELIMITER = 'COMMA', SUMMARIZE_FEATURE_ATTRIBUTE = 'false')
 inputs(wp)
 inputs(wp, "DELIMITER")
 inputs(wp, "DELIMITER") <- "TAB"
+}
 }
 \keyword{internal}
