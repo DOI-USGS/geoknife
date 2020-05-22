@@ -9,3 +9,5 @@ CONDUCT.md
 LICENSE.note
 DISCLAIMER.md
 code.json
+^doc$
+^Meta$
