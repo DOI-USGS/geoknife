@@ -22,7 +22,7 @@ a function for loading data into R from a file (or URL) from a completed process
 }
 \examples{
 local_file <- system.file('extdata','tsv_linear_ring.tsv', package = 'geoknife')
-output <- parseTimeseries(local_file, delim = '\\t')
+output <- parseTimeseries(local_file, delim = '\t')
 }
 \seealso{
 \code{\link{check}}, \code{\link{download}}, \code{\link{parseCategorical}}

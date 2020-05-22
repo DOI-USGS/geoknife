@@ -22,7 +22,7 @@ Start process for \code{\link{geojob}}
 \details{
 start a geo-web processing request
 
-start is a method for submitting a geo-web processing request.
+ start is a method for submitting a geo-web processing request.
 }
 \examples{
 wd <- webdata('prism')
