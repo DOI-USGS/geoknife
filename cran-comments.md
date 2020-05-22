@@ -1,12 +1,10 @@
 ## Test environments
-* local OS X install, R 3.5.1
-* travis (Ubuntu 14.04.5 LTS, R 3.5.0)
-* win-builder (R-devel)
+* local OS X install, R 3.6.3
+* travis (Ubuntu)
+* win-builder (R-release)
 
 ## R CMD check results
-
 No ERRORS, WARNINGS or NOTES
 
-## Downstream dependencies
-All checks passed with devtools::revdep_check()
+
 
