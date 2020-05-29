@@ -29,4 +29,4 @@ linearRing = bufferPoint(c(-111.48, 36.95))
 Jordan S. Read
 }
 \keyword{internal}
-\keyword{methods,}
+\keyword{methods}
