@@ -13,8 +13,11 @@ webdata(.Object, ...)
 
 \S4method{webdata}{missing}(.Object, ...)
 
-\S4method{webdata}{character}(.Object = c("prism", "iclus", "daymet",
-  "gldas", "nldas", "topowx", "solar", "metobs"), ...)
+\S4method{webdata}{character}(
+  .Object = c("prism", "iclus", "daymet", "gldas", "nldas", "topowx", "solar",
+    "metobs"),
+  ...
+)
 
 \S4method{webdata}{geojob}(.Object, ...)
 

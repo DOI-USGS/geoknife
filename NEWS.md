@@ -1,5 +1,4 @@
-geoknife 1.6.1
+geoknife 1.6.4
 ==========
-* Added progress bar to wait() function
-* Updated URL for daymet dataset
-* Dropped XML dependency in favor of xml2
+* Improved error handling for failed processing jobs
+* Fixed bug with supported CRS

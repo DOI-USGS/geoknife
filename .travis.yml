@@ -4,11 +4,11 @@
 
 language: r
 sudo: required
-dist: trusty
+dist: bionic
 warnings_are_errors: true
 
-r_build_args: --no-build-vignettes --no-manual
-r_check_args: --no-build-vignettes --no-manual --as-cran
+r_build_args: --no-manual
+r_check_args: --no-manual --as-cran
 
 repos:
   CRAN: https://cran.rstudio.com

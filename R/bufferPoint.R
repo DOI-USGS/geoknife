@@ -4,7 +4,7 @@
 #'@param point A vector of longitude and latitude values
 #'@return A linear ring (with closure) as a numeric vector 
 #'
-#'@keywords methods, internal
+#'@keywords methods internal
 #'@description Buffer ring creation from point
 #'@title Create linear ring from point
 #'@author Jordan S. Read
