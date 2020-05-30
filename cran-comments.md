@@ -6,5 +6,7 @@
 ## R CMD check results
 No ERRORS, WARNINGS or NOTES
 
+## Resubmission
+Removed comma from keywords in bufferPoint.Rd as requested, and added publication reference to description
 
 
