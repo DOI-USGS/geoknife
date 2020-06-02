@@ -23,7 +23,7 @@ Description: Processes gridded datasets found on the U.S. Geological Survey
     Geo Data Portal web application or elsewhere, using a web-enabled workflow
     that eliminates the need to download and store large datasets that are reliably
     hosted on the Internet. The package provides access to several data subset and
-    summarization algorithms that are available on remote web processing servers (Read et al. (2015) <https://doi.org/10.1111/ecog.01880>).
+    summarization algorithms that are available on remote web processing servers (Read et al. (2015) <doi:10.1111/ecog.01880>).
 License: CC0
 URL: https://github.com/USGS-R/geoknife
 BugReports: https://github.com/USGS-R/geoknife/issues
