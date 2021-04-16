@@ -26,12 +26,6 @@
       </wps:Data>
     </wps:Input>
     <wps:Input>
-      <ows:Identifier>DATASET_URI</ows:Identifier>
-      <wps:Data>
-        <wps:LiteralData>dods://cida.usgs.gov/thredds/dodsC/prism_v2</wps:LiteralData>
-      </wps:Data>
-    </wps:Input>
-    <wps:Input>
       <ows:Identifier>FEATURE_ATTRIBUTE_NAME</ows:Identifier>
       <wps:Data>
         <wps:LiteralData>GRIDCODE</wps:LiteralData>
@@ -44,15 +38,9 @@
       </wps:Data>
     </wps:Input>
     <wps:Input>
-      <ows:Identifier>GROUP_BY</ows:Identifier>
+      <ows:Identifier>DATASET_URI</ows:Identifier>
       <wps:Data>
-        <wps:LiteralData>STATISTIC</wps:LiteralData>
-      </wps:Data>
-    </wps:Input>
-    <wps:Input>
-      <ows:Identifier>REQUIRE_FULL_COVERAGE</ows:Identifier>
-      <wps:Data>
-        <wps:LiteralData>true</wps:LiteralData>
+        <wps:LiteralData>dods://cida.usgs.gov/thredds/dodsC/prism_v2</wps:LiteralData>
       </wps:Data>
     </wps:Input>
     <wps:Input>
@@ -74,9 +62,21 @@
       </wps:Data>
     </wps:Input>
     <wps:Input>
+      <ows:Identifier>REQUIRE_FULL_COVERAGE</ows:Identifier>
+      <wps:Data>
+        <wps:LiteralData>true</wps:LiteralData>
+      </wps:Data>
+    </wps:Input>
+    <wps:Input>
       <ows:Identifier>STATISTICS</ows:Identifier>
       <wps:Data>
         <wps:LiteralData>MEAN</wps:LiteralData>
+      </wps:Data>
+    </wps:Input>
+    <wps:Input>
+      <ows:Identifier>GROUP_BY</ows:Identifier>
+      <wps:Data>
+        <wps:LiteralData>STATISTIC</wps:LiteralData>
       </wps:Data>
     </wps:Input>
     <wps:Input>

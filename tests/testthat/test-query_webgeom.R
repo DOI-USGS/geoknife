@@ -42,5 +42,5 @@ test_that("two states", {
   xml <- geoknife:::wfsFilterFeatureXML(wg)
 
   fn <- "data/test_wfsgetfeature.xml"
-  expect_equal(xml,readChar(fn, file.info(fn)$size))
+  expect_equal(xml, gsub("\r", "", readChar(fn, file.info(fn)$size)))
 })

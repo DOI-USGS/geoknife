@@ -7,7 +7,7 @@ test_that("test data can be created", {
   if(!"geoknife/tests/testthat" == substr(getwd(), nchar(getwd())-22, nchar(getwd()))) {
     warning("this script assumes it is in the testthat directory of the geoknife package!!!")
   }
-  gconfig(wps.url = "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
+  # gconfig(wps.url = "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
   fabric <- webdata('prism')
   times(fabric)[2] <- "1895-01-01"
   saveRDS(fabric, "data/test_webdata_fabric.rds")
@@ -25,7 +25,7 @@ test_that("test data can be created", {
   saveRDS(wp, "data/test_webprocess_knife_prod.rds")
   saveRDS(query(wp, 'algorithms'), "data/test_webprocess_algorithms_prod.rds")
   
-  gconfig(wps.url = "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
+  # gconfig(wps.url = "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
   
   saveRDS(webgeom('HUC8::09020306'), "data/test_webgeom_huc08.rds")
   saveRDS(webgeom('state::Wisconsin'), "data/test_webgeom_WI.rds")

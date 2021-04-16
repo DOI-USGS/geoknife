@@ -1,5 +1,5 @@
 pkg.env <- new.env()
-pkg.env$gconfig <- list('wps.url'='https://cida.usgs.gov/gdp/process/WebProcessingService',
+pkg.env$gconfig <- list('wps.url'= process_base(),
                         'sleep.time' = 5, 
                         'wait' = FALSE,
                         'email' = as.character(NA),

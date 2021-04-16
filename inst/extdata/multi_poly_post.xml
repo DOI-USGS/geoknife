@@ -71,7 +71,7 @@
 			<ows:Identifier>FEATURE_COLLECTION</ows:Identifier>
 			<wps:Data>
 				<wps:ComplexData mimeType="text/xml" schema="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd">
-					<gml:featureMembers xmlns:gml="http://www.opengis.net/gml" xsi:schemaLocation="gov.usgs.cida.gdp.draw https://raw.githubusercontent.com/USGS-R/geoknife/master/inst/draw.xsd">
+					<gml:featureMembers xmlns:gml="http://www.opengis.net/gml" xsi:schemaLocation="gov.usgs.cida.gdp.draw https://cida.usgs.gov/gdp/geoserver/www/draw.xsd">
 						<draw:poly gml:id="poly.1">
 							<draw:the_geom>
 								<gml:MultiSurface srsDimension="2" srsName="urn:x-ogc:def:crs:EPSG:4326">

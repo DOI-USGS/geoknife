@@ -42,7 +42,7 @@ Srs2 <- Polygons(list(Sr2), "s2")
 test_that("geoknife converts SpatialPolygons to simplegeoms correctly", {
   
   SP <- SpatialPolygons(list(Srs1,Srs2), proj4string = CRS("+proj=longlat +datum=WGS84"))
-  expect_is(simplegeom(SP), 'simplegeom')
+  suppressWarnings(expect_is(simplegeom(SP), 'simplegeom'))
   expect_error(simplegeom(SpatialPolygons(list(Srs1,Srs2))))
 })
 

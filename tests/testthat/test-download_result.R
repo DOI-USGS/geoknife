@@ -1,6 +1,6 @@
 context("download and load")
 
-gconfig(wps.url = "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
+# gconfig(wps.url = "https://cida.usgs.gov/gdp/process/WebProcessingService")
 
 test_that("download from geojob works", {
   testthat::skip_on_cran()

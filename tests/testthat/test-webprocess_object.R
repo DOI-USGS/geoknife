@@ -4,9 +4,10 @@ test_that("webprocess object is modified correctly", {
   testthat::skip_on_cran()
   wp <- readRDS("data/test_webprocess_knife.rds")
   # test setting url also changes util
-  expect_equal(slot(wp, 'UTILITY_URL'), 'https://cida-test.er.usgs.gov/gdp/utility/WebProcessingService')
   url(wp) <- 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
-  expect_equal(url(wp), url(wp <- webprocess(url = 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService')))
+  expect_equal(slot(wp, 'UTILITY_URL'), "https://cida-test.er.usgs.gov/gdp/utility/WebProcessingService")
+  url(wp) <- 'https://cida.usgs.gov/gdp/process/WebProcessingService'
+  expect_equal(url(wp), url(wp <- webprocess(url = 'https://cida.usgs.gov/gdp/process/WebProcessingService')))
 
 })
 
@@ -58,7 +59,7 @@ test_that("error is thrown on job start for read only vars", {
 })
 
 context("create webprocess from geojob")
-gconfig(wps.url = "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
+# gconfig(wps.url = "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
 test_that("given a geojob, we can create a webprocess", {
   testthat::skip_on_cran()
   xml <- system.file("extdata/state_webgeom_post.xml", 
@@ -67,7 +68,7 @@ test_that("given a geojob, we can create a webprocess", {
   webprocess <- webprocess(geojob)
   expect_equal(algorithm(webprocess), list("Area Grid Statistics (weighted)"="gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"))
   expect_equal(version(webprocess), "1.0.0")
-  expect_equal(url(webprocess), "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
+  # expect_equal(url(webprocess), "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
   expect_equal(length(inputs(webprocess)), 11)
   expect_equal(inputs(webprocess)$`DATASET_ID`, "ppt")
 })
