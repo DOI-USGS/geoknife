@@ -30,7 +30,7 @@ test_that("Execute XML creation with two points works", {
   wp <- readRDS("data/test_webprocess_knife.rds")
   xml <- XML(wg, wd, wp)
   fn <- "data/test_XML_two_points_xml.xml"
-  expect_equal(nchar(xml),nchar(gsub("\r", "", readChar(fn, file.info(fn)$size))))
+  expect_equal(nchar(xml), nchar(gsub("\r", "", readChar(fn, file.info(fn)$size))))
 })
 
 test_that("Execute XML works with no gmlids and multiple variables", {

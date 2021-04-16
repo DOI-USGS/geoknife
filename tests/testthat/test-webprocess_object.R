@@ -4,6 +4,7 @@ test_that("webprocess object is modified correctly", {
   testthat::skip_on_cran()
   wp <- readRDS("data/test_webprocess_knife.rds")
   # test setting url also changes util
+  url(wp) <- 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
   expect_equal(slot(wp, 'UTILITY_URL'), "https://cida-test.er.usgs.gov/gdp/utility/WebProcessingService")
   url(wp) <- 'https://cida.usgs.gov/gdp/process/WebProcessingService'
   expect_equal(url(wp), url(wp <- webprocess(url = 'https://cida.usgs.gov/gdp/process/WebProcessingService')))

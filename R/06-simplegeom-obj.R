@@ -28,7 +28,7 @@ setClass(
 setMethod("initialize", signature = "simplegeom", 
           definition = function(.Object, ...) {
             .Object@DRAW_NAMESPACE = 'gov.usgs.cida.gdp.draw'
-            .Object@DRAW_SCHEMA = 'https://raw.githubusercontent.com/USGS-R/geoknife/master/inst/draw.xsd'
+            .Object@DRAW_SCHEMA = paste0(geoserver_base(), '/www/draw.xsd')
             .Object@sp <- SpatialPolygons(...)
             return(.Object)
           })

@@ -54,3 +54,11 @@ gconfig <- function(..., no.readonly = FALSE){
   else value
   
 }
+
+geoserver_base <- function() {
+  "https://cida.usgs.gov/gdp/geoserver"
+}
+
+process_base <- function() {
+  "https://cida.usgs.gov/gdp/process/WebProcessingService"
+}

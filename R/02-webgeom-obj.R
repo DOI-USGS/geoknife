@@ -25,7 +25,7 @@
 setClass(
   Class = "webgeom",
   prototype = prototype(
-    url = "https://cida.usgs.gov/gdp/geoserver/wfs",
+    url = paste0(geoserver_base(), "/wfs"),
     geom = as.character(NA), 
     attribute = as.character(NA),
     values = as.character(NA), 
@@ -42,8 +42,6 @@ setClass(
     GML_NAMESPACE = "character",
     GML_SCHEMA_LOCATION = "character")
 )
-
-
 
 setMethod("initialize", signature = "webgeom",
           definition = function(
