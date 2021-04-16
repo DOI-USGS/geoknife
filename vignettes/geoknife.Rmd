@@ -428,7 +428,7 @@ query(knife, 'algorithms')
 ```
 Changing the `webprocess` url will modify the endpoint for the query, and different algorithms may be available:
 ```{r,eval=FALSE}
-url(knife) <- 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
+url(knife) <- 'https://cida.usgs.gov/gdp/process/WebProcessingService'
 query(knife, 'algorithms')
 ```
 ```
@@ -463,7 +463,7 @@ getting and setting `processInputs` for `geoknife` is currently in. Check back l
 ### url
 The `url` field in `webprocess` can be accessed and set as expected:
 ```{r, eval=FALSE}
-url(knife) <- 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
+url(knife) <- 'https://cida.usgs.gov/gdp/process/WebProcessingService'
 ```
 
 ### `wait`

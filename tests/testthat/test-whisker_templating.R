@@ -6,7 +6,7 @@ test_that("basic email template works", {
   xml <- geoknife:::make_email_execute_xml(gj, wp)
   
   fn <- "data/test_email.xml"
-  expect_equal(xml,readChar(fn, file.info(fn)$size))
+  expect_equal(xml, gsub("\r", "", readChar(fn, file.info(fn)$size)))
 })
 
 context("test XML method templating")
@@ -17,11 +17,11 @@ test_that("basic XML creation works", {
   wp <- readRDS("data/test_webprocess_knife_prod.rds")
   xml <- XML(wg, wd, wp)
   fn <-"data/test_XML_wg_xml.xml"
-  expect_equal(xml,readChar(fn, file.info(fn)$size))
+  expect_equal(xml, gsub("\r", "", readChar(fn, file.info(fn)$size)))
   sg <- simplegeom(c(-89,45))
   xml <- XML(sg, wd, wp)
   fn <-"data/test_XML_sg_xml.xml"
-  expect_equal(nchar(xml),nchar(readChar(fn, file.info(fn)$size)))
+  expect_equal(nchar(xml), nchar(gsub("\r", "", readChar(fn, file.info(fn)$size))))
 }) 
 
 test_that("Execute XML creation with two points works", {
@@ -30,7 +30,7 @@ test_that("Execute XML creation with two points works", {
   wp <- readRDS("data/test_webprocess_knife.rds")
   xml <- XML(wg, wd, wp)
   fn <- "data/test_XML_two_points_xml.xml"
-  expect_equal(nchar(xml),nchar(readChar(fn, file.info(fn)$size)))
+  expect_equal(nchar(xml),nchar(gsub("\r", "", readChar(fn, file.info(fn)$size))))
 })
 
 test_that("Execute XML works with no gmlids and multiple variables", {
@@ -40,7 +40,7 @@ test_that("Execute XML works with no gmlids and multiple variables", {
   wp <- readRDS("data/test_webprocess_knife_prod.rds")
   xml <- XML(wg, wd, wp)
   fn <- "data/test_XML_no_gmlid_xml.xml"
-  expect_equal(xml,readChar(fn, file.info(fn)$size))
+  expect_equal(xml, gsub("\r", "", readChar(fn, file.info(fn)$size)))
 })
 
 test_that("you can set TAB delimited and get back the right XML", {
@@ -66,7 +66,7 @@ test_that("execute XML for getgridtimerange works", {
   xml <- geoknife:::make_listopendapgrids_execute_xml(wd, wp)
   
   fn <- "data/test_listopendapgrids.xml"
-  expect_equal(xml,readChar(fn, file.info(fn)$size))
+  expect_equal(xml, gsub("\r", "", readChar(fn, file.info(fn)$size)))
 })
 
 test_that("execute XML for getgridtimerange works", {
@@ -75,5 +75,5 @@ test_that("execute XML for getgridtimerange works", {
   xml <- geoknife:::make_getgridtimerange_execute_xml(wd, wp)
   
   fn <- "data/test_getgridtimerange.xml"
-  expect_equal(xml,readChar(fn, file.info(fn)$size))
+  expect_equal(xml, gsub("\r", "", readChar(fn, file.info(fn)$size)))
 })
