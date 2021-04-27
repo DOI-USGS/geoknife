@@ -42,7 +42,7 @@ attribute(stencil) <- stencil_attributes[2]
 print(query(stencil, 'values'))
 ```
 
-Now we'll set up our webdata with an OPeNDAP service as its url. Note that this can be any OPeNDAP service compatible with `geoknife` and the Geo Data Portal. What datasets are compatible is beyond the scope of this vignette, but is documented [here](https://my.usgs.gov/confluence/display/GeoDataPortal/Custom+Dataset+Use+Guidlines). The OPeNDAP dataset used here is from the [main USGS THREDDS archive](https://cida.usgs.gov/thredds) and is one included in `geoknife` but many other OPeNDAP datasets could be used by entering their OPeNDAP service base URL in the same way. 
+Now we'll set up our webdata with an OPeNDAP service as its url. Note that this can be any OPeNDAP service compatible with `geoknife` and the Geo Data Portal. What datasets are compatible is beyond the scope of this vignette, but is documented [here](https://my.usgs.gov/confluence/display/GeoDataPortal/Custom+Dataset+Use+Guidlines). The OPeNDAP dataset used here is from the [main USGS THREDDS archive](https://cida.usgs.gov/thredds/) and is one included in `geoknife` but many other OPeNDAP datasets could be used by entering their OPeNDAP service base URL in the same way. 
 
 ```{r fabric, echo=T}
 fabric <- webdata(url = 'https://cida.usgs.gov/thredds/dodsC/prism_v2', 
