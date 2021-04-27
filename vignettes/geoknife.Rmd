@@ -572,5 +572,5 @@ cancel()
 geoknife outsources all major geospatial processing tasks to a remote server. Because of this, users must have an active internet connection. Problems with connections to datasets or the processing resources are rare, but they do happen. When experiencing a connectivity problem, the best approach is often to try again later or email gdp@usgs.gov with any questions. The various web dependencies are described below. 
 
 ### Geo Data Portal
-The U.S. Geological Survey's "Geo Data Portal" (GDP) provides the data access and processing services that are leveraged by the `geoknife` package. See [cida.usgs.gov/gdp](https://cida.usgs.gov/gdp) for the GDP user interface.  
+The U.S. Geological Survey's "Geo Data Portal" (GDP) provides the data access and processing services that are leveraged by the `geoknife` package. See [cida.usgs.gov/gdp](https://cida.usgs.gov/gdp/) for the GDP user interface.  
 
