@@ -7,7 +7,7 @@ output:
   md_document:
     variant: markdown_github
 ---
-#`geoknife` package version `r packageVersion('geoknife')`
+# `geoknife` package version `r packageVersion('geoknife')`
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)
 [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife)
@@ -20,7 +20,7 @@ Tools for geo-web processing of gridded data via the [Geo Data Portal](https://c
 </p>  
 <br /> 
 
-###Installing `geoknife`
+### Installing `geoknife`
 
 
 To install the `geoknife` from CRAN:  
@@ -65,8 +65,9 @@ The `geoknife` package was created to support web-based geoprocessing of large g
 
 The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm parameters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `result`. 
 
-###What can `geoknife` do?
-#####define a stencil that represents the geographic region to slice out of the data
+### What can `geoknife` do?
+##### define a stencil that represents the geographic region to slice out of the data
+
 ```{r, message=FALSE, warning=FALSE}
 library(geoknife)
 # from a single point
@@ -84,7 +85,7 @@ stencil <- webgeom('state::New Hampshire,Wisconsin,Alabama')
 #for HUC8s from a web available dataset
 stencil <- webgeom('HUC8::09020306,14060009')
 ```
-#####define a fabric that represents the underlying data
+##### define a fabric that represents the underlying data
 ```{r}
 # from the prism dataset:
 fabric <- webdata('prism')

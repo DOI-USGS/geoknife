@@ -1,4 +1,4 @@
-\#`geoknife` package version 1.6.5
+# `geoknife` package version 1.6.5
 
 [![Build
 status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)
@@ -20,7 +20,7 @@ text, NetCDF, geotiff or other formats.
 
 <br />
 
-\#\#\#Installing `geoknife`
+### Installing `geoknife`
 
 To install the `geoknife` from CRAN:
 
@@ -92,8 +92,9 @@ the processing algorithm parameters (the `knife` argument in the
 `geoknife` function). The status of the `geojob` can be checked with
 `check`, and output can be loaded into a data.frame with `result`.
 
-\#\#\#What can `geoknife` do? \#\#\#\#\#define a stencil that represents
-the geographic region to slice out of the data
+### What can `geoknife` do?
+
+##### define a stencil that represents the geographic region to slice out of the data
 
 ``` r
 library(geoknife)
@@ -113,7 +114,7 @@ stencil <- webgeom('state::New Hampshire,Wisconsin,Alabama')
 stencil <- webgeom('HUC8::09020306,14060009')
 ```
 
-\#\#\#\#\#define a fabric that represents the underlying data
+##### define a fabric that represents the underlying data
 
 ``` r
 # from the prism dataset:
@@ -128,7 +129,7 @@ fabric <- webdata(list(
 times(fabric) <- as.POSIXct(c('2003-01-01','2005-01-01'))
 ```
 
-\#\#\#\#\#create the processing job that will carry out the
+#####create the processing job that will carry out the
 subsetting/summarization task
 
 ``` r
@@ -142,7 +143,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=d30aed09-361d-4b51-ac52-53ba8a48a1c3OUTPUT"
+    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=5be9f55d-0b4b-42e8-985b-bee37b2bbb98OUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -158,7 +159,7 @@ error(job)
 successful(job)
 ```
 
-\#\#\#\#\#plot the results
+#####plot the results
 
 ``` r
 data <- result(job)
@@ -167,17 +168,17 @@ plot(data[,1:2], ylab = variables(fabric))
 
 ![](inst/unnamed-chunk-6-1.png)
 
-\#\#\#\#\#use an email to listen for process completion
+#####use an email to listen for process completion
 
 ``` r
 job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
-\#\#\#`geoknife` Functions (as of v1.1.5) \| Function \| Title \| \|
-————- \|:————-\| \| `geoknife` \| slice up gridded data according to
-overlap with feature(s) \| \| `gconfig` \| set or query package settings
-for `geoknife` processing defaults \| \| `algorithm` \| the algorithm of
-a `webprocess` \| \| `attribute` \| the attribute of an `webgeom` \| \|
+##\#`geoknife` Functions (as of v1.1.5) \| Function \| Title \| \| ————-
+\|:————-\| \| `geoknife` \| slice up gridded data according to overlap
+with feature(s) \| \| `gconfig` \| set or query package settings for
+`geoknife` processing defaults \| \| `algorithm` \| the algorithm of a
+`webprocess` \| \| `attribute` \| the attribute of an `webgeom` \| \|
 `check` \| check status of `geojob` \| \| `download` \| download the
 results of a `geojob` \| \| `error` \| convenience function for state of
 `geojob` \| \| `running` \| convenience function for state of `geojob`
@@ -193,7 +194,7 @@ processing \| \| `times` \| the times of a `webdata` object \| \| `url`
 `version` \| the version of a `webgeom` or `webdata` \| \| `xml` \| the
 xml of a `geojob` \| \| `query` \| query datasets or variables \|
 
-\#\#\#`geoknife` classes (as of v0.12.0) \| Class \| Title \| \| ————-
+##\#`geoknife` classes (as of v0.12.0) \| Class \| Title \| \| ————-
 \|:————-\| \| `simplegeom` \| a simple geometric class. Extends
 `sp::SpatialPolygons` \| \| `webgeom` \| a web feature service geometry
 \| \| `webprocess` \| a web processing service \| \| `webdata` \| web
@@ -201,12 +202,12 @@ data \| \| `geojob` \| a geo data portal processing job \| \|
 `datagroup` \| a simple class that contains data lists that can be
 `webdata` \|
 
-\#\#What libraries does `geoknife` need? This version requires `httr`,
+##What libraries does `geoknife` need? This version requires `httr`,
 `sp`, and `XML`. All of these packages are available on CRAN, and will
 be installed automatically when using the `install.packages()`
 instructions above.
 
-\#\#Disclaimer This software is in the public domain because it contains
+##Disclaimer This software is in the public domain because it contains
 materials that originally came from the U.S. Geological Survey, an
 agency of the United States Department of Interior. For more
 information, see the [official USGS copyright
