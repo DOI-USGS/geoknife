@@ -94,7 +94,7 @@ the processing algorithm parameters (the `knife` argument in the
 
 ### What can `geoknife` do?
 
-##### define a stencil that represents the geographic region to slice out of the data
+##### Define a stencil that represents the geographic region to slice out of the data
 
 ``` r
 library(geoknife)
@@ -114,7 +114,7 @@ stencil <- webgeom('state::New Hampshire,Wisconsin,Alabama')
 stencil <- webgeom('HUC8::09020306,14060009')
 ```
 
-##### define a fabric that represents the underlying data
+##### Define a fabric that represents the underlying data
 
 ``` r
 # from the prism dataset:
@@ -129,8 +129,7 @@ fabric <- webdata(list(
 times(fabric) <- as.POSIXct(c('2003-01-01','2005-01-01'))
 ```
 
-#####create the processing job that will carry out the
-subsetting/summarization task
+##### Create the processing job that will carry out the subsetting/summarization task
 
 ``` r
 job <- geoknife(stencil, fabric, wait = TRUE)
@@ -143,7 +142,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=5be9f55d-0b4b-42e8-985b-bee37b2bbb98OUTPUT"
+    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=84123463-b314-488a-a451-17e1bbd83becOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -159,7 +158,7 @@ error(job)
 successful(job)
 ```
 
-#####plot the results
+##### Plot the results
 
 ``` r
 data <- result(job)
@@ -168,49 +167,63 @@ plot(data[,1:2], ylab = variables(fabric))
 
 ![](inst/unnamed-chunk-6-1.png)
 
-#####use an email to listen for process completion
+##### Use an email to listen for process completion
 
 ``` r
 job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
-##\#`geoknife` Functions (as of v1.1.5) \| Function \| Title \| \| ————-
-\|:————-\| \| `geoknife` \| slice up gridded data according to overlap
-with feature(s) \| \| `gconfig` \| set or query package settings for
-`geoknife` processing defaults \| \| `algorithm` \| the algorithm of a
-`webprocess` \| \| `attribute` \| the attribute of an `webgeom` \| \|
-`check` \| check status of `geojob` \| \| `download` \| download the
-results of a `geojob` \| \| `error` \| convenience function for state of
-`geojob` \| \| `running` \| convenience function for state of `geojob`
-\| \| `successful` \| convenience function for state of `geojob` \| \|
-`start` \| start a `geojob` \| \| `cancel` \| cancel a `geojob` \| \|
-`geom` \| the geom of a `webgeom` \| \| `inputs` \| the inputs of a
-`webprocess` \| \| `id` \| the process id of a `geojob` \| \| `values`
-\| the values of a `webgeom` \| \| `result` \| load the output of a
-completed `geojob` into data.frame \| \| `variables` \| the variables
-for a `webdata` object \| \| `wait` \| wait for a `geojob` to complete
-processing \| \| `times` \| the times of a `webdata` object \| \| `url`
-\| the url of a `webdata`, `webgeom`, `geojob`, or `webprocess` \| \|
-`version` \| the version of a `webgeom` or `webdata` \| \| `xml` \| the
-xml of a `geojob` \| \| `query` \| query datasets or variables \|
+### `geoknife` Functions (as of v1.1.5)
 
-##\#`geoknife` classes (as of v0.12.0) \| Class \| Title \| \| ————-
-\|:————-\| \| `simplegeom` \| a simple geometric class. Extends
-`sp::SpatialPolygons` \| \| `webgeom` \| a web feature service geometry
-\| \| `webprocess` \| a web processing service \| \| `webdata` \| web
-data \| \| `geojob` \| a geo data portal processing job \| \|
-`datagroup` \| a simple class that contains data lists that can be
-`webdata` \|
+| Function     | Title                                                            |
+|--------------|:-----------------------------------------------------------------|
+| `geoknife`   | slice up gridded data according to overlap with feature(s)       |
+| `gconfig`    | set or query package settings for `geoknife` processing defaults |
+| `algorithm`  | the algorithm of a `webprocess`                                  |
+| `attribute`  | the attribute of an `webgeom`                                    |
+| `check`      | check status of `geojob`                                         |
+| `download`   | download the results of a `geojob`                               |
+| `error`      | convenience function for state of `geojob`                       |
+| `running`    | convenience function for state of `geojob`                       |
+| `successful` | convenience function for state of `geojob`                       |
+| `start`      | start a `geojob`                                                 |
+| `cancel`     | cancel a `geojob`                                                |
+| `geom`       | the geom of a `webgeom`                                          |
+| `inputs`     | the inputs of a `webprocess`                                     |
+| `id`         | the process id of a `geojob`                                     |
+| `values`     | the values of a `webgeom`                                        |
+| `result`     | load the output of a completed `geojob` into data.frame          |
+| `variables`  | the variables for a `webdata` object                             |
+| `wait`       | wait for a `geojob` to complete processing                       |
+| `times`      | the times of a `webdata` object                                  |
+| `url`        | the url of a `webdata`, `webgeom`, `geojob`, or `webprocess`     |
+| `version`    | the version of a `webgeom` or `webdata`                          |
+| `xml`        | the xml of a `geojob`                                            |
+| `query`      | query datasets or variables                                      |
 
-##What libraries does `geoknife` need? This version requires `httr`,
-`sp`, and `XML`. All of these packages are available on CRAN, and will
-be installed automatically when using the `install.packages()`
-instructions above.
+### `geoknife` classes (as of v0.12.0)
 
-##Disclaimer This software is in the public domain because it contains
-materials that originally came from the U.S. Geological Survey, an
-agency of the United States Department of Interior. For more
-information, see the [official USGS copyright
+| Class        | Title                                                         |
+|--------------|:--------------------------------------------------------------|
+| `simplegeom` | a simple geometric class. Extends `sp::SpatialPolygons`       |
+| `webgeom`    | a web feature service geometry                                |
+| `webprocess` | a web processing service                                      |
+| `webdata`    | web data                                                      |
+| `geojob`     | a geo data portal processing job                              |
+| `datagroup`  | a simple class that contains data lists that can be `webdata` |
+
+## What libraries does `geoknife` need?
+
+This version requires `httr`, `sp`, and `XML`. All of these packages are
+available on CRAN, and will be installed automatically when using the
+`install.packages()` instructions above.
+
+## Disclaimer
+
+This software is in the public domain because it contains materials that
+originally came from the U.S. Geological Survey, an agency of the United
+States Department of Interior. For more information, see the [official
+USGS copyright
 policy](https://www2.usgs.gov/visual-id/credit_usgs.html#copyright/ "official USGS copyright policy")
 
 Although this software program has been used by the U.S. Geological
