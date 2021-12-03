@@ -85,6 +85,8 @@ setMethod(f="initialize",signature="webprocess",
             
             processInputs <- defaultProcessInputs(algorithm = .Object@algorithm[[1]], .Object@url, .Object@version)
             
+            if(is.null(processInputs)) return(NULL)
+            
             if (length(old.inputs) > 0 && old.algorithm[[1]] == algorithm[[1]]){
               which.replace <- unlist(unname(lapply(old.inputs, function(x) !is.null(x[[1]]) && !is.na(x[[1]])))) & names(old.inputs) %in% names(processInputs)
               which.to.rplc <- names(processInputs) %in% names(old.inputs[which.replace])
@@ -119,7 +121,11 @@ setGeneric("webprocess", function(.Object, ...) {
 #'@rdname webprocess-methods
 setMethod("webprocess", signature('missing'), function(.Object, ...) {
   ## create new webprocess object
-  webprocess <- new("webprocess",...)
+  webprocess <- try(new("webprocess",...))
+  
+  if(inherits(webprocess, "try-error")) {
+    return(NULL)
+  }
   return(webprocess)
 })
 
