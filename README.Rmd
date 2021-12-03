@@ -7,7 +7,7 @@ output:
   md_document:
     variant: markdown_github
 ---
-#`geoknife` package version `r packageVersion('geoknife')`
+# `geoknife` package version `r packageVersion('geoknife')`
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)
 [![Build Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife)
@@ -20,7 +20,7 @@ Tools for geo-web processing of gridded data via the [Geo Data Portal](https://c
 </p>  
 <br /> 
 
-###Installing `geoknife`
+### Installing `geoknife`
 
 
 To install the `geoknife` from CRAN:  
@@ -65,8 +65,9 @@ The `geoknife` package was created to support web-based geoprocessing of large g
 
 The main elements of setting up and carrying out a `geoknife` 'job' (`geojob`) include defining the feature of interest (the `stencil` argument in the `geoknife` function), the gridded web dataset to be processed (the `fabric` argument in the `geoknife` function), and the the processing algorithm parameters (the `knife` argument in the `geoknife` function). The status of the `geojob` can be checked with `check`, and output can be loaded into a data.frame with `result`. 
 
-###What can `geoknife` do?
-#####define a stencil that represents the geographic region to slice out of the data
+### What can `geoknife` do?
+##### Define a stencil that represents the geographic region to slice out of the data
+
 ```{r, message=FALSE, warning=FALSE}
 library(geoknife)
 # from a single point
@@ -84,7 +85,7 @@ stencil <- webgeom('state::New Hampshire,Wisconsin,Alabama')
 #for HUC8s from a web available dataset
 stencil <- webgeom('HUC8::09020306,14060009')
 ```
-#####define a fabric that represents the underlying data
+##### Define a fabric that represents the underlying data
 ```{r}
 # from the prism dataset:
 fabric <- webdata('prism')
@@ -97,7 +98,7 @@ fabric <- webdata(list(
 # modify the times field:
 times(fabric) <- as.POSIXct(c('2003-01-01','2005-01-01'))
 ```
-#####create the processing job that will carry out the subsetting/summarization task
+##### Create the processing job that will carry out the subsetting/summarization task
 ```{r}
 job <- geoknife(stencil, fabric, wait = TRUE)
 
@@ -110,18 +111,18 @@ running(job)
 error(job)
 successful(job)
 ```
-#####plot the results
+##### Plot the results
 ```{r, fig.height=3.5, fig.width=7}
 data <- result(job)
 plot(data[,1:2], ylab = variables(fabric))
 ```
 
-#####use an email to listen for process completion
+##### Use an email to listen for process completion
 ```{r, eval=FALSE}
 job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake.email@gmail.com')
 ```
 
-###`geoknife` Functions (as of v1.1.5)
+### `geoknife` Functions (as of v1.1.5)
 | Function       | Title           |
 | ------------- |:-------------|
 | `geoknife` | slice up gridded data according to overlap with feature(s) |
@@ -148,7 +149,7 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 | `xml` | the xml of a `geojob` |
 | `query` | query datasets or variables |
 
-###`geoknife` classes (as of v0.12.0)
+### `geoknife` classes (as of v0.12.0)
 | Class       | Title           |
 | ------------- |:-------------|
 | `simplegeom` | a simple geometric class. Extends `sp::SpatialPolygons` |
@@ -158,10 +159,10 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 | `geojob` | a geo data portal processing job |
 | `datagroup` | a simple class that contains data lists that can be `webdata` |
 
-##What libraries does `geoknife` need?
+## What libraries does `geoknife` need?
 This version requires `httr`, `sp`, and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
 
-##Disclaimer
+## Disclaimer
 This software is in the public domain because it contains materials that originally came from the U.S. Geological Survey, an agency of the United States Department of Interior. For more information, see the [official USGS copyright policy](https://www2.usgs.gov/visual-id/credit_usgs.html#copyright/ "official USGS copyright policy")
 
 Although this software program has been used by the U.S. Geological Survey (USGS), no warranty, expressed or implied, is made by the USGS or the U.S. Government as to the accuracy and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and no responsibility is assumed by the USGS in connection therewith.
