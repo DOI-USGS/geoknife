@@ -1,15 +1,15 @@
 Package: geoknife
 Type: Package
 Title: Web-Processing of Large Gridded Datasets
-Version: 1.6.5
+Version: 1.6.6
 Date: 2021-04-26
-Authors@R: c( person("Jordan", "Read", role = c("aut","cre"),
+Authors@R: c( person("Jordan", "Read", role = c("aut"),
     email = "jread@usgs.gov"),
     person("Jordan", "Walker", role = c("aut"),
     email = "jiwalker@usgs.gov"),
     person("Alison", "Appling", role = c("aut"),
     email = "aappling@usgs.gov"),
-    person("David", "Blodgett", role = c("aut"),
+    person("David", "Blodgett", role = c("aut", "cre"),
     email = "dblodgett@usgs.gov"),
     person("Emily", "Read", role = c("aut"),
     email = "eread@usgs.gov"),
@@ -31,7 +31,7 @@ Copyright: This software is in the public domain because it contains materials
     that originally came from the United States Geological Survey, an agency of
     the United States Department of Interior. 
 Depends:
-    R (>= 3.0)
+    R (>= 3.5)
 Imports:
     whisker,
     xml2,
@@ -53,4 +53,4 @@ Suggests:
     rgdal,
     maps
 VignetteBuilder: knitr
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.2

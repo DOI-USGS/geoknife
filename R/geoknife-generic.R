@@ -51,6 +51,10 @@
 #'@export
 geoknife <- function(stencil, fabric, knife = webprocess(...), ...){
   
+  if(is.null(knife)) {
+    return(NULL)
+  }
+  
   knife <- as(knife, Class = "webprocess")
   if (!missing(...)){
     # if ... are specified, pass in additional args through ... to modify. 

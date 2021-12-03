@@ -121,7 +121,7 @@ setGeneric("webprocess", function(.Object, ...) {
 #'@rdname webprocess-methods
 setMethod("webprocess", signature('missing'), function(.Object, ...) {
   ## create new webprocess object
-  webprocess <- try(new("webprocess",...))
+  webprocess <- try(new("webprocess",...), silent = TRUE)
   
   if(inherits(webprocess, "try-error")) {
     return(NULL)

@@ -7,7 +7,7 @@ test_that("webprocess can set algorithms", {
   algs <- readRDS("data/test_webprocess_algorithms.rds")
   expect_error(algorithm(wp)<-'bad.char')
   expect_error(algorithm(wp)<-NULL)
-  expect_error(algorithm(wp)<-list('junk'='will break process'))
+  expect_error(suppressWarnings(algorithm(wp)<-list('junk'='will break process')))
   
   algorithm(wp) <- algs[1]
   # test that it properly sets
