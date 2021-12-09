@@ -2,7 +2,7 @@ Package: geoknife
 Type: Package
 Title: Web-Processing of Large Gridded Datasets
 Version: 1.6.6
-Date: 2021-04-26
+Date: 2021-12-09
 Authors@R: c( person("Jordan", "Read", role = c("aut"),
     email = "jread@usgs.gov"),
     person("Jordan", "Walker", role = c("aut"),
