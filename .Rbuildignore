@@ -12,3 +12,4 @@ code.json
 ^doc$
 ^Meta$
 .github
+Dockerfile
