@@ -162,6 +162,16 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 ## What libraries does `geoknife` need?
 This version requires `httr`, `sp`, and `XML`. All of these packages are available on CRAN, and will be installed automatically when using the `install.packages()` instructions above.
 
+
+## Check Notes:
+In addition to typical R package checking, a Dockerfile is included in this repository. Once built, it can be run with the following command.
+
+```
+docker build -t geoknife_test .
+
+docker run --rm -it -v %cd%:/src geoknife_test /bin/bash -c "cp -r /src/* /check/ && cp /src/.Rbuildignore /check/ && cd /check && Rscript -e 'devtools::build()' && R CMD check --as-cran ../geoknife_*"
+```
+
 ## Disclaimer
 This software is in the public domain because it contains materials that originally came from the U.S. Geological Survey, an agency of the United States Department of Interior. For more information, see the [official USGS copyright policy](https://www2.usgs.gov/visual-id/credit_usgs.html#copyright/ "official USGS copyright policy")
 

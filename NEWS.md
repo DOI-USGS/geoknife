@@ -1,3 +1,7 @@
+geoknife 1.6.6
+==========
+* Modified error handling when Geo Data Portal is offline.
+
 geoknife 1.6.5
 ==========
 * Updated schema for jobs that use geoknife generated geometry

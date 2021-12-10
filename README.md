@@ -1,4 +1,4 @@
-# `geoknife` package version 1.6.5
+# `geoknife` package version 1.6.6
 
 [![Build
 status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)
@@ -133,7 +133,11 @@ times(fabric) <- as.POSIXct(c('2003-01-01','2005-01-01'))
 
 ``` r
 job <- geoknife(stencil, fabric, wait = TRUE)
+```
 
+    ## Process Accepted
+
+``` r
 # use existing convienence functions to check on the job:
 check(job)
 ```
@@ -142,7 +146,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=84123463-b314-488a-a451-17e1bbd83becOUTPUT"
+    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=45218971-3739-468c-aaae-60bf8607386cOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -217,6 +221,15 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 This version requires `httr`, `sp`, and `XML`. All of these packages are
 available on CRAN, and will be installed automatically when using the
 `install.packages()` instructions above.
+
+## Check Notes:
+
+In addition to typical R package checking, a Dockerfile is included in
+this repository. Once built, it can be run with the following command.
+
+    docker build -t geoknife_test .
+
+    docker run --rm -it -v %cd%:/src geoknife_test /bin/bash -c "cp -r /src/* /check/ && cp /src/.Rbuildignore /check/ && cd /check && Rscript -e 'devtools::build()' && R CMD check --as-cran ../geoknife_*"
 
 ## Disclaimer
 

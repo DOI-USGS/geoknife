@@ -1,9 +1,8 @@
 ## Test environments
-* local windows and ubuntu
-* rhub windows and ubuntu
+* local windows and github ubuntu
 
-## R CMD check results
-No ERRORS, WARNINGS or NOTES
+## Comment
+* submission corrects error condition when primary web dependency is offline.
 
-## Resubmission
-Applied URL redirect for citation
+## Review 1
+* date updated
