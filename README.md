@@ -2,10 +2,8 @@
 
 [![Build
 status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)
-[![Build
-Status](https://travis-ci.org/USGS-R/geoknife.svg)](https://travis-ci.org/USGS-R/geoknife)
-[![Coverage
-Status](https://coveralls.io/repos/github/USGS-R/geoknife/badge.svg?branch=master)](https://coveralls.io/github/USGS-R/geoknife?branch=master)
+![R-CMD-check](https://github.com/usgs-r/geoknife/workflows/R-CMD-check/badge.svg)
+[![codecov](https://codecov.io/gh/usgs-r/geoknife/branch/master/graph/badge.svg)](https://codecov.io/gh/usgs-r/geoknife)
 [![Download
 Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)  
 [![status](https://img.shields.io/badge/USGS-Core-green.svg)](https://owi.usgs.gov/R/packages.html#core)
@@ -133,11 +131,7 @@ times(fabric) <- as.POSIXct(c('2003-01-01','2005-01-01'))
 
 ``` r
 job <- geoknife(stencil, fabric, wait = TRUE)
-```
 
-    ## Process Accepted
-
-``` r
 # use existing convienence functions to check on the job:
 check(job)
 ```
@@ -146,7 +140,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=45218971-3739-468c-aaae-60bf8607386cOUTPUT"
+    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=d727473c-c48c-41ad-8cc6-a8129581f26eOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
