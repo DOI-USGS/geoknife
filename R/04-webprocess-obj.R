@@ -3,7 +3,7 @@
 #' @slot url URL for webprocessing service. 
 #' Can be set or accessed using \code{\link[geoknife]{url}}
 #' @slot algorithm a list for algorithm used. 
-#' Can be set or accessed using \code{\link[geoknife]{algorithm}}
+#' Can be set or accessed using \code{\link{algorithm}}
 #' @slot version a character specifying the wep processing service version to use. 
 #' Can be set or accessed using \code{\link[geoknife]{version}}
 #' @slot email an email to send finished process alert to
@@ -23,7 +23,7 @@
 #' @slot emailK (_private) relative url for email when complete utility. 
 #' @rdname webprocess-class
 #' @seealso \code{\link{webprocess}}, \code{\link[geoknife]{url}}, 
-#' \code{\link[geoknife]{algorithm}}, \code{\link[geoknife]{version}}
+#' \code{\link{algorithm}}, \code{\link[geoknife]{version}}
 #' @aliases
 #' webprocess-class
 #' @exportClass webprocess

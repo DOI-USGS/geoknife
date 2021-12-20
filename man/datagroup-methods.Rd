@@ -6,7 +6,7 @@
 \alias{datagroup,datagroup-methods}
 \alias{length,datagroup-method}
 \alias{[,datagroup-method}
-\alias{[[,datagroup,ANY,ANY-method}
+\alias{[[,datagroup-method}
 \title{create datagroup object}
 \usage{
 datagroup(...)
@@ -17,7 +17,7 @@ datagroup(...)
 
 \S4method{[}{datagroup}(x, i, j, ..., drop = TRUE)
 
-\S4method{[[}{datagroup,ANY,ANY}(x, i, j, ..., drop = TRUE)
+\S4method{[[}{datagroup}(x, i, j, ..., drop = TRUE)
 }
 \arguments{
 \item{...}{additional arguments passed to initialize method}

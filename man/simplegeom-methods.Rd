@@ -28,11 +28,11 @@ A simple geom is a simple set of geometries specified locally. See
 
 simplegeom(c(-88.6, 45.2))
 
-p1 <- st_polygon(list(cbind(c(-89.0001,-89,-88.9999,-89,-89.0001),
-                            c(46,46.0001,46,45.9999,46))))
+p1 <- sf::st_polygon(list(cbind(c(-89.0001,-89,-88.9999,-89,-89.0001),
+                                c(46,46.0001,46,45.9999,46))))
 
-p2 <- st_polygon(list(cbind(c(-88.6,-88.5999,-88.5999,-88.6,-88.6),
-                            c(45.2,45.2,45.1999,45.1999,45.2))))
+p2 <- sf::st_polygon(list(cbind(c(-88.6,-88.5999,-88.5999,-88.6,-88.6),
+                                c(45.2,45.2,45.1999,45.1999,45.2))))
 
 P <- simplegeom(
   sf::st_sf(geo = sf::st_sfc(list(p1, p2), crs = 4326))

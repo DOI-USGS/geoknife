@@ -23,12 +23,12 @@ setOldClass("sf")
 setClass(
   Class = "simplegeom",
   representation(sf= "sf",
-                 sp = "SpatialPolygons",
+                 sp = "ANY",
                  DRAW_NAMESPACE = "character",
                  DRAW_SCHEMA = "character")
 )
 
-#'@importFrom sf st_sf
+#'@importFrom sf st_sf as_Spatial
 setMethod("initialize", signature = "simplegeom", 
           definition = function(.Object, ...) {
             .Object@DRAW_NAMESPACE = 'gov.usgs.cida.gdp.draw'
@@ -51,11 +51,11 @@ setMethod("initialize", signature = "simplegeom",
 #' 
 #' simplegeom(c(-88.6, 45.2))
 #' 
-#' p1 <- st_polygon(list(cbind(c(-89.0001,-89,-88.9999,-89,-89.0001),
-#'                             c(46,46.0001,46,45.9999,46))))
+#' p1 <- sf::st_polygon(list(cbind(c(-89.0001,-89,-88.9999,-89,-89.0001),
+#'                                 c(46,46.0001,46,45.9999,46))))
 #' 
-#' p2 <- st_polygon(list(cbind(c(-88.6,-88.5999,-88.5999,-88.6,-88.6),
-#'                             c(45.2,45.2,45.1999,45.1999,45.2))))
+#' p2 <- sf::st_polygon(list(cbind(c(-88.6,-88.5999,-88.5999,-88.6,-88.6),
+#'                                 c(45.2,45.2,45.1999,45.1999,45.2))))
 #' 
 #' P <- simplegeom(
 #'   sf::st_sf(geo = sf::st_sfc(list(p1, p2), crs = 4326))
@@ -79,7 +79,21 @@ setGeneric("simplegeom", function(.Object, ...) {
 #' @aliases simplegeom
 setMethod("simplegeom", signature("missing"), function(.Object, ...) {
   ## create new simplegeom object
-  simplegeom <- new("simplegeom", ...)
+  
+  simplegeom <- tryCatch({
+    
+    new("simplegeom", ...)
+    
+  }, error = function(e) {
+    
+    warning("SpatialPolygons support is deprecated.")
+    
+    if(!requireNamespace("sp")) stop("sp required for spatialpolygons support")
+    
+    as(sp::SpatialPolygons(...), "simplegeom")
+    
+  })
+  
   return(simplegeom)
 })
 
@@ -122,9 +136,9 @@ setAs("data.frame", "simplegeom", function(from) {
     sf::st_polygon(list(matrix(x, ncol = 2, byrow = TRUE)))
   })
   
-  poly <- sf::st_sfc(poly, crs = 4326)
+  poly <- sf::st_sf(sf::st_sfc(poly, crs = 4326))
   
-  simplegeom <- new("simplegeom", poly)
+  simplegeom <- as(poly, "simplegeom")
   
   return(simplegeom)
 })
@@ -152,6 +166,13 @@ setAs("sf", "simplegeom", function(from) {
   
   return(simplegeom)
   
+})
+
+setAs("SpatialPolygons", "simplegeom", function(from) {
+  
+  from <- as(sf::st_as_sf(from), "simplegeom")
+  
+  return(from)
 })
 
 setMethod("show", "simplegeom", function(object){
