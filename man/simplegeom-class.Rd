@@ -16,13 +16,16 @@ located on a web server that offers geometries using the web feature service (WF
 specification. \linkS4class{simplegeom} are typically local data that can be accessed 
 within an R session. Within reason, anything that can be represented as a 
 \linkS4class{webgeom} (or WFS) can also be represented by a \linkS4class{simplegeom} 
-For example, a state or watershed can be read in as \code{\link[sp]{SpatialPolygons}} 
-object and turned into a \linkS4class{simplegeom}.
+For example, a state or watershed can be read in as \code{\link[sf]{read_sf}} 
+object and turned into a \linkS4class{simplegeom}. IDs of a web geom are the
+row order of the geometries.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{sp}}{a \code{\link[sp]{SpatialPolygons}} object}
+\item{\code{sf}}{an sf data.frame object with polygon geometries}
+
+\item{\code{sp}}{an sp object provided for backward compatibility}
 
 \item{\code{DRAW_NAMESPACE}}{(_private) web location of draw namespace}
 

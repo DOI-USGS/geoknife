@@ -1,8 +1,11 @@
+setOldClass("sf")
+
 #' @title simplegeom class
 #' @description The \code{simplegeom} class represents geometries that can 
 #' be coerced into polygon features. This is one of two \code{stencil} types 
 #' accepted by \code{\link{geoknife}} (the other being \linkS4class{webgeom}).
-#' @slot sp a \code{\link[sp]{SpatialPolygons}} object
+#' @slot sf an sf data.frame object with polygon geometries
+#' @slot sp an sp object provided for backward compatibility
 #' @slot DRAW_NAMESPACE (_private) web location of draw namespace
 #' @slot DRAW_SCHEMA (_private) web location of draw schema
 #' @details The difference between \linkS4class{webgeom} and \linkS4class{simplegeom} 
@@ -11,25 +14,27 @@
 #' specification. \linkS4class{simplegeom} are typically local data that can be accessed 
 #' within an R session. Within reason, anything that can be represented as a 
 #' \linkS4class{webgeom} (or WFS) can also be represented by a \linkS4class{simplegeom} 
-#' For example, a state or watershed can be read in as \code{\link[sp]{SpatialPolygons}} 
-#' object and turned into a \linkS4class{simplegeom}. 
+#' For example, a state or watershed can be read in as \code{\link[sf]{read_sf}} 
+#' object and turned into a \linkS4class{simplegeom}. IDs of a web geom are the
+#' row order of the geometries.
 #' 
 #' @rdname simplegeom-class
-#'@importClassesFrom sp SpatialPolygons
-#'@exportClass simplegeom
+#' @exportClass simplegeom
 setClass(
   Class = "simplegeom",
-  representation(sp="SpatialPolygons",
+  representation(sf= "sf",
+                 sp = "SpatialPolygons",
                  DRAW_NAMESPACE = "character",
                  DRAW_SCHEMA = "character")
 )
 
-#'@importFrom sp SpatialPolygons
+#'@importFrom sf st_sf
 setMethod("initialize", signature = "simplegeom", 
           definition = function(.Object, ...) {
             .Object@DRAW_NAMESPACE = 'gov.usgs.cida.gdp.draw'
             .Object@DRAW_SCHEMA = paste0(geoserver_base(), '/www/draw.xsd')
-            .Object@sp <- SpatialPolygons(...)
+            .Object@sf = st_sf(...)
+            .Object@sp = as_Spatial(.Object@sf)
             return(.Object)
           })
 
@@ -40,20 +45,28 @@ setMethod("initialize", signature = "simplegeom",
 #' \code{\link{webgeom}} for web features. 
 #' 
 #' @param .Object any object that can be coerced into \linkS4class{simplegeom}
-#' @param ... additional arguments passed to SpatialPolygonsDataFrame
+#' @param ... additional arguments passed to \code{\link[sf]{st_sf}}
 #' @return the simplegeom object
 #' @examples 
+#' 
 #' simplegeom(c(-88.6, 45.2))
+#' 
+#' p1 <- st_polygon(list(cbind(c(-89.0001,-89,-88.9999,-89,-89.0001),
+#'                             c(46,46.0001,46,45.9999,46))))
+#' 
+#' p2 <- st_polygon(list(cbind(c(-88.6,-88.5999,-88.5999,-88.6,-88.6),
+#'                             c(45.2,45.2,45.1999,45.1999,45.2))))
+#' 
+#' P <- simplegeom(
+#'   sf::st_sf(geo = sf::st_sfc(list(p1, p2), crs = 4326))
+#' )
+#' 
 #' \dontrun{
-#' library(sp)
-#' Sr1 <- Polygon(cbind(c(-89.0001,-89,-88.9999,-89,-89.0001),c(46,46.0001,46,45.9999,46)))
-#' Sr2 <- Polygon(cbind(c(-88.6,-88.5999,-88.5999,-88.6,-88.6),c(45.2,45.2,45.1999,45.1999,45.2)))
-#' Srs1 <- Polygons(list(Sr1), "s1")
-#' Srs2 <- Polygons(list(Sr2), "s2")
-#' SP <- SpatialPolygons(list(Srs1,Srs2), proj4string = CRS("+proj=longlat +datum=WGS84"))
-#' result(geoknife(simplegeom(SP), 'prism', wait=TRUE))
+#' result(geoknife(P, "prism", wait = TRUE))
 #' }
+#' 
 #' simplegeom(data.frame('point1'=c(-89, 46), 'point2'=c(-88.6, 45.2)))
+#' 
 #' @author Jordan S Read
 #' @rdname simplegeom-methods
 #' @export
@@ -66,8 +79,7 @@ setGeneric("simplegeom", function(.Object, ...) {
 #' @aliases simplegeom
 setMethod("simplegeom", signature("missing"), function(.Object, ...) {
   ## create new simplegeom object
-  # ... are additional arguments passed to SpatialPolygonsDataFrame
-  simplegeom <- new("simplegeom",...)
+  simplegeom <- new("simplegeom", ...)
   return(simplegeom)
 })
 
@@ -75,7 +87,7 @@ setMethod("simplegeom", signature("missing"), function(.Object, ...) {
 #' @aliases simplegeom
 setMethod("simplegeom", signature("ANY"), function(.Object, ...) {
   ## create new simplegeom object
-  # ... are additional arguments passed to SpatialPolygonsDataFrame
+  # ... are additional arguments passed to sf::st_sf
   simplegeom <- as(.Object, "simplegeom")
   if (!missing(...)){
     simplegeom <- initialize(simplegeom, ...)
@@ -96,7 +108,7 @@ setAs("numeric","simplegeom",function(from) {
   return(as(ring, 'simplegeom'))
 })
 
-#'@importFrom sp Polygons Polygon CRS
+#'@importFrom sf st_polygon st_sfc 
 setAs("data.frame", "simplegeom", function(from) {
   
   ## create new simplegeom object based on a lon lat pair
@@ -105,24 +117,44 @@ setAs("data.frame", "simplegeom", function(from) {
   } else {
     stop('data.frame input to simplegeom needs to be have 2 rows: longitude & latitude')
   }
-  Srl = list()
-  for (i in 1:ncol(from)){
-    # growing this w/o preallocating ... get sp error w/ rbind
-    Srl[[i]] <- Polygons(list(Polygon(matrix(ring[, i], ncol=2, byrow=TRUE))), names(from)[i])
-  }
   
-  simplegeom <- new("simplegeom", Srl, proj4string = CRS("+proj=longlat +datum=WGS84"))
+  poly <- apply(ring, 2, function(x) {
+    sf::st_polygon(list(matrix(x, ncol = 2, byrow = TRUE)))
+  })
+  
+  poly <- sf::st_sfc(poly, crs = 4326)
+  
+  simplegeom <- new("simplegeom", poly)
+  
   return(simplegeom)
 })
 
-#'@importFrom sp Polygons Polygon CRS proj4string
-setAs("SpatialPolygons", "simplegeom", function(from) {
-
-  if (!(grepl("+proj=longlat", as.character(proj4string(from))) & 
-              grepl("+proj=longlat", as.character(proj4string(from))))) {
-    stop('"',proj4string(from), '" not supported for "simplegeom", use "+proj=longlat +datum=WGS84"')
+#' @importFrom sf st_crs st_transform st_geometry_type
+setAs("sf", "simplegeom", function(from) {
+  
+  if(is.na(sf::st_crs(from))) {
+    stop("No CRS provided to simplegeom.")
   }
   
-  simplegeom <- new("simplegeom", from@polygons, proj4string = CRS(proj4string(from)))
+  if (sf::st_crs(from) != sf::st_crs(4326)) {
+    warning("CRS of input not WGS84 lon/lat -- transformation is being applied")
+    
+    from <- sf::st_transform(from, 4326)
+    
+  }  
+  
+  if(!grepl("polygon", st_geometry_type(from, by_geometry = FALSE), 
+            ignore.case = TRUE)) {
+    stop("sf data.frame must contain polygon or multipolygon geometries.")
+  }
+  
+  simplegeom <- new("simplegeom", from)
+  
   return(simplegeom)
+  
+})
+
+setMethod("show", "simplegeom", function(object){
+  cat('An object of class "simplegeom":\n')
+  print(object@sf)
 })

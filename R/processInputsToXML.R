@@ -148,10 +148,9 @@ setMethod(f = "addGeom",signature = c("ANY","ANY"),
             return(addGeom(stencil, xmlNodes))
 })
 
-#'@importFrom sp coordinates
 setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
           definition = function(stencil, xmlNodes){
-  
+            
   simplegeom_list <- list()
   
   simplegeom_list["simplegeo_mimetype"] <- "text/xml" # "encoding"="UTF-8"?
