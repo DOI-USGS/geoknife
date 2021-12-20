@@ -52,7 +52,7 @@ test_that("you can set booleans and they will be lowercase strings for post",{
 })
 
 default.sleep <- gconfig("sleep.time")
-gconfig('sleep.time' = 0.1)
+gconfig('sleep.time' = 1)
 test_that("you can set booleans as pass through and that require_full_coverage works",{
   testthat::skip_on_cran()
   cancel()
