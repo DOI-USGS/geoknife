@@ -8,20 +8,23 @@
 \alias{wait,character,missing-method}
 \title{hold up R while GDP is processing}
 \usage{
-wait(.Object, sleep.time)
+wait(.Object, sleep.time, ...)
 
-\S4method{wait}{geojob,numeric}(.Object, sleep.time)
+\S4method{wait}{geojob,numeric}(.Object, sleep.time, ...)
 
-\S4method{wait}{geojob,missing}(.Object, sleep.time)
+\S4method{wait}{geojob,missing}(.Object, sleep.time, ...)
 
-\S4method{wait}{character,numeric}(.Object, sleep.time)
+\S4method{wait}{character,numeric}(.Object, sleep.time, ...)
 
-\S4method{wait}{character,missing}(.Object, sleep.time)
+\S4method{wait}{character,missing}(.Object, sleep.time, ...)
 }
 \arguments{
 \item{.Object}{a geojob}
 
 \item{sleep.time}{a number of seconds to wait in between checking the process}
+
+\item{...}{optionally accepts a logical input `progress` to 
+display progress bar or not. If missing, is derived from \code{\link{gconfig}}.}
 }
 \value{
 invisible return of .Object, unaltered
@@ -32,7 +35,7 @@ Will drop out of loop whenever !running(geojob)
 }
 \examples{
 \dontrun{
-job <- geoknife(stencil = c(-89,42), fabric = 'prism')
+job <- geoknife(stencil = c(-89,42), fabric = 'prism', wait = TRUE, show_progress = TRUE)
 2+2
 wait(job)
 check(job) # should be complete

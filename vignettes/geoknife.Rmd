@@ -33,7 +33,7 @@ The **geoknife** package was created to support web-based geoprocessing of large
 
 Because communication with web resources are central to geoknife operations, users must have an active internet connection. geoknife interacts with a remote server to discover processing capabilities, find already available geospatial areas of interest (these are normally user-uploaded shapefiles), get gridded dataset characteristics, execute geoprocessing requests, and get geoprocessing results. 
 
-The main elements of setting up and carrying out a geoknife 'job' (geojob) include defining the feature of interest (the stencil argument in the geoknife function), the gridded web dataset to be processed (the fabric argument in the geoknife function), and the the processing algorithm parameters (the knife argument in the geoknife function). The status of the geojob can be checked with check, and output can be loaded into a data.frame with results. See below for more details.
+The main elements of setting up and carrying out a geoknife 'job' (a `geojob` object) include defining the feature of interest 'stencil' (a `webgeom` or `simplegeom` object), the gridded web dataset 'fabric' to be processed (a webdata object), and the the processing algorithm 'knife' parameters (a `webprocess` object). The status of the geojob can be checked with `check`, and output can be loaded into a data.frame with `results`. See below for more details.
 
 ##Installation
 To install the stable version of **geoknife** package with dependencies:

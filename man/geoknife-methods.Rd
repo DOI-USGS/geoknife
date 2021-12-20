@@ -5,7 +5,7 @@
 \alias{geoknife}
 \title{geoknife}
 \usage{
-geoknife(stencil, fabric, knife = webprocess(...), ...)
+geoknife(stencil, fabric, knife = webprocess(...), show_progress = TRUE, ...)
 }
 \arguments{
 \item{stencil}{a \code{\link{webgeom}}, \code{\link{simplegeom}}, or any type 
@@ -15,6 +15,8 @@ that can be coerced into \code{\link{simplegeom}}.}
 can be coerced into \code{\link{webdata}}}
 
 \item{knife}{(optional) a \code{\link{webprocess}} object}
+
+\item{show_progress}{logical (optional) display progress bar?}
 
 \item{...}{additional arguments passed to \code{new} \code{\link{webprocess}}. 
 Can also be used to modify the \code{knife} argument, if it is supplied.}

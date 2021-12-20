@@ -1,3 +1,22 @@
+geoserver_base <- function() {
+  "https://cida.usgs.gov/gdp/geoserver"
+}
+
+process_base <- function() {
+  "https://cida.usgs.gov/gdp/process/WebProcessingService"
+}
+
+pkg.env <- new.env()
+pkg.env$gconfig <- list('wps.url'= process_base(),
+                        'sleep.time' = 5, 
+                        'wait' = FALSE,
+                        'email' = as.character(NA),
+                        'algorithm' = list('Area Grid Statistics (weighted)' = 
+                                             "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
+                        'verbose' = FALSE,
+                        'retries' = 1,
+                        'version' = '1.0.0',
+                        'show.progress' = TRUE)
 
 #' configure geoknife settings
 #' 
@@ -18,6 +37,7 @@
 #' gconfig('wait')
 #' gconfig('sleep.time' = 10)
 #' gconfig('sleep.time' = 8, wait=TRUE)
+#' gconfig('progress' = FALSE)
 gconfig <- function(..., no.readonly = FALSE){
   
   .gconfig.readonly <- c('version') 
@@ -53,12 +73,4 @@ gconfig <- function(..., no.readonly = FALSE){
   }
   else value
   
-}
-
-geoserver_base <- function() {
-  "https://cida.usgs.gov/gdp/geoserver"
-}
-
-process_base <- function() {
-  "https://cida.usgs.gov/gdp/process/WebProcessingService"
 }

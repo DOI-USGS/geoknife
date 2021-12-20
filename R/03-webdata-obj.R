@@ -1,13 +1,3 @@
-pkg.env <- new.env()
-pkg.env$gconfig <- list('wps.url'= process_base(),
-                        'sleep.time' = 5, 
-                        'wait' = FALSE,
-                        'email' = as.character(NA),
-                        'algorithm' = list('Area Grid Statistics (weighted)' = 
-                                             "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
-                        'verbose' = FALSE,
-                        'retries' = 1,
-                        'version' = '1.0.0')
 pkg.env$NAMESPACES <- c(wps = 'http://www.opengis.net/wps/1.0.0',
                         xsi = 'http://www.w3.org/2001/XMLSchema-instance',
                         xlink = 'http://www.w3.org/1999/xlink',
