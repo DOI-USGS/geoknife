@@ -51,7 +51,6 @@ Suggests:
     rasterVis,
     ggplot2,
     rgdal,
-    maps,
     sp
 VignetteBuilder: knitr
 Encoding: UTF-8
