@@ -422,9 +422,6 @@ query(knife, 'algorithms')
 ## 
 ## $`Area Grid Statistics (weighted)`
 ## [1] "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"
-## 
-## $`WCS Subset`
-## [1] "gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageIntersectionAlgorithm"
 ```
 Changing the `webprocess` url will modify the endpoint for the query, and different algorithms may be available:
 ```{r,eval=FALSE}
@@ -443,9 +440,6 @@ query(knife, 'algorithms')
 ## 
 ## $`Area Grid Statistics (weighted)`
 ## [1] "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"
-## 
-## $`WCS Subset`
-## [1] "gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageIntersectionAlgorithm"
 ```
 
 ### algorithm

@@ -131,7 +131,11 @@ times(fabric) <- as.POSIXct(c('2003-01-01','2005-01-01'))
 
 ``` r
 job <- geoknife(stencil, fabric, wait = TRUE)
+```
 
+    ## Process Accepted
+
+``` r
 # use existing convienence functions to check on the job:
 check(job)
 ```
@@ -140,7 +144,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=d727473c-c48c-41ad-8cc6-a8129581f26eOUTPUT"
+    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=35f236e4-0b1e-47e9-b65e-4502bb97a7ebOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"

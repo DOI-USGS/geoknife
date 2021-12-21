@@ -167,11 +167,7 @@ getKnives <- function(){
        'subset' = 
          list(algorithm=
                 list('OPeNDAP Subset' =
-                       "gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm")),
-       'coverage subset' = 
-         list(algorithm=
-                list('WCS Subset' = 
-                       "gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageIntersectionAlgorithm")))
+                       "gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageOPeNDAPIntersectionAlgorithm")))
 }
 setAs("character", "webprocess", function(from){
   ## create new webdata object with a character input (for dataset matching)

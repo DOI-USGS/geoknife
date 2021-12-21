@@ -26,7 +26,7 @@ library(methods)
 #' webdata class
 #' 
 #' a class for specifying details of web datasets (webdata!). These datasets have to be  
-#' accessible through the OPeNDAP protocol or as WCS (web coverage services). 
+#' accessible through the OPeNDAP protocol. 
 #' 
 #' @slot times vector of POSIXct dates (specifying start and end time of processing)
 #' @slot url URL of web data
