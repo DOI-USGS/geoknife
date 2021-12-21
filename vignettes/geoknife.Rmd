@@ -118,7 +118,7 @@ head(HUCs)
 ```
 
 #### define a fabric that represents the underlying data
-The Geo Data Portal's web data catalog is quite extensive, and inludes many datasets that can all be processed with `geoknife`. Check it out at cida.usgs.gov/gdp. This is not a complete list of all relevant datasets that can be accessed and processed. The `geoknife` package has a number of quick access datasets build in (similar to quick start `webgeom` objects). 
+The Geo Data Portal's web data catalog is quite extensive, and includes many datasets that can all be processed with `geoknife`. Check it out at cida.usgs.gov/gdp. This is not a complete list of all relevant datasets that can be accessed and processed. The `geoknife` package has a number of quick access datasets build in (similar to quick start `webgeom` objects). 
 
 An example of a quick start dataset:
 ```{r}
@@ -274,7 +274,7 @@ The `fabric` concept in `geoknife` represents the gridded dataset that will be o
 ### `webdata` object
 The `webdata` class holds all the important information for webdatasets in order to make them available for processing by geoknife's outsourced geoprocessing engine, the Geo Data Portal. Public fields in `webdata`:
 
- * `times`: a POSIXct vector of length 2. This specifies the start and end time of the process request. If `times()[1]` is `NA`, the start time will be the begining of the dataset. If `times()[2]` is `NA` the end time will be the end of the dataset. `times` must be `as.POSIXct(c(NA,NC))` for datasets without a time dimension. 
+ * `times`: a POSIXct vector of length 2. This specifies the start and end time of the process request. If `times()[1]` is `NA`, the start time will be the beginning of the dataset. If `times()[2]` is `NA` the end time will be the end of the dataset. `times` must be `as.POSIXct(c(NA,NC))` for datasets without a time dimension. 
  * `url`: a character for the location of a web available dataset. This URL will be queried for data access and used for the processing task.
  * `variables`: a character vector for the variables of the dataset to use. Must be valid variables that exist within the dataset specified with `url`.
 
@@ -537,7 +537,7 @@ check(job)
 ## [1] "ProcessStarted"
 ```
 
-use other convienence functions related to `check` to return boolean (`TRUE` or `FALSE`) responses
+use other convenience functions related to `check` to return boolean (`TRUE` or `FALSE`) responses
 ```{r, eval=FALSE}
 running(job)
 error(job)
