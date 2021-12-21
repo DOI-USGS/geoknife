@@ -2,29 +2,33 @@
 % Please edit documentation in R/waitUntilFinished.R
 \name{wait}
 \alias{wait}
-\alias{wait,geojob,numeric-method}
-\alias{wait,geojob,missing-method}
-\alias{wait,character,numeric-method}
-\alias{wait,character,missing-method}
+\alias{wait,geojob-method}
+\alias{wait,character-method}
 \title{hold up R while GDP is processing}
 \usage{
-wait(.Object, sleep.time, ...)
+wait(.Object, ...)
 
-\S4method{wait}{geojob,numeric}(.Object, sleep.time, ...)
+\S4method{wait}{geojob}(
+  .Object,
+  sleep.time = gconfig("sleep.time"),
+  show.progress = gconfig("show.progress")
+)
 
-\S4method{wait}{geojob,missing}(.Object, sleep.time, ...)
-
-\S4method{wait}{character,numeric}(.Object, sleep.time, ...)
-
-\S4method{wait}{character,missing}(.Object, sleep.time, ...)
+\S4method{wait}{character}(
+  .Object,
+  sleep.time = gconfig("sleep.time"),
+  show.progress = gconfig("show.progress")
+)
 }
 \arguments{
 \item{.Object}{a geojob}
 
-\item{sleep.time}{a number of seconds to wait in between checking the process}
+\item{...}{other arguments passed to methods}
 
-\item{...}{optionally accepts a logical input `progress` to 
-display progress bar or not. If missing, is derived from \code{\link{gconfig}}.}
+\item{sleep.time}{numeric (optional) a number of seconds to wait in 
+between checking the process}
+
+\item{show.progress}{logical (optional) show progress bar or not}
 }
 \value{
 invisible return of .Object, unaltered
@@ -35,9 +39,9 @@ Will drop out of loop whenever !running(geojob)
 }
 \examples{
 \dontrun{
-job <- geoknife(stencil = c(-89,42), fabric = 'prism', wait = TRUE, show_progress = TRUE)
+job <- geoknife(stencil = c(-89,42), fabric = 'prism')
 2+2
-wait(job)
+wait(job, show.progress = TRUE)
 check(job) # should be complete
 }
 }

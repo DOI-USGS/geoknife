@@ -7,55 +7,48 @@
 #' Will drop out of loop whenever !running(geojob)
 #' 
 #' @param .Object a geojob
-#' @param sleep.time a number of seconds to wait in between checking the process
-#' @param ... optionally accepts a logical input `progress` to 
-#' display progress bar or not. If missing, is derived from \code{\link{gconfig}}.
+#' @param ... other arguments passed to methods
 #' @return invisible return of .Object, unaltered
 #' @importFrom progress progress_bar
 #' @examples
 #' \dontrun{
-#' job <- geoknife(stencil = c(-89,42), fabric = 'prism', wait = TRUE, show_progress = TRUE)
+#' job <- geoknife(stencil = c(-89,42), fabric = 'prism')
 #' 2+2
-#' wait(job)
+#' wait(job, show.progress = TRUE)
 #' check(job) # should be complete
 #' }
 #' @export
 setGeneric(name = "wait", 
-           def = function(.Object, sleep.time, ...) {
+           def = function(.Object, ...) {
              standardGeneric("wait")
            })
 
+#' @param show.progress logical (optional) show progress bar or not
+#' @param sleep.time numeric (optional) a number of seconds to wait in 
+#' between checking the process
 #' @rdname wait
 #' @aliases wait
 setMethod(f = "wait", 
-          signature(.Object = "geojob", sleep.time = "numeric"), 
-          definition = function(.Object, sleep.time, ...){
-            wait(id(.Object), sleep.time = sleep.time, ...)
+          signature(.Object = "geojob"), 
+          definition = function(.Object, 
+                                sleep.time = gconfig('sleep.time'), 
+                                show.progress = gconfig("show.progress")){
+            wait(id(.Object), 
+                 sleep.time = gconfig('sleep.time'), 
+                 show.progress = show.progress)
           })
 
 #' @rdname wait
 #' @aliases wait
 setMethod(f = "wait", 
-          signature(.Object = "geojob", sleep.time = "missing"), 
-          definition = function(.Object, sleep.time, ...){
-            wait(id(.Object), sleep.time = gconfig('sleep.time'), ...)
-          })
-
-#' @rdname wait
-#' @aliases wait
-setMethod(f = "wait", 
-          signature(.Object = "character", sleep.time = "numeric"), 
-          definition = function(.Object, sleep.time, ...){
-            
-            
+          signature(.Object = "character"), 
+          definition = function(.Object, 
+                                sleep.time = gconfig('sleep.time'), 
+                                show.progress = gconfig("show.progress")){
             
             running <- running(.Object, retry = TRUE)
             
-            if(!exists("show_progress")) {
-              show_progress <- gconfig("show.progress")
-            }
-            
-            if(show_progress) { 
+            if(show.progress) { 
               pb <- progress_bar$new(total = 100, clear = FALSE)
             }
             
@@ -72,7 +65,7 @@ setMethod(f = "wait",
               
               if(!is.null(percentComplete) && !succeededYet) {
     
-                if(show_progress) pb$update(as.numeric(percentComplete)/100)
+                if(show.progress) pb$update(as.numeric(percentComplete)/100)
     
               } else if(checkResult$status != currentStatus) {
                 
@@ -86,12 +79,4 @@ setMethod(f = "wait",
               }
             }
             invisible(.Object)
-          })
-
-#' @rdname wait
-#' @aliases wait
-setMethod(f = "wait", 
-          signature(.Object = "character", sleep.time = "missing"), 
-          definition = function(.Object, sleep.time, ...){
-            wait(.Object, sleep.time = gconfig('sleep.time'), ...)
           })
