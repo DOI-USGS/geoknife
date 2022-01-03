@@ -33,7 +33,7 @@ The **geoknife** package was created to support web-based geoprocessing of large
 
 Because communication with web resources are central to geoknife operations, users must have an active internet connection. geoknife interacts with a remote server to discover processing capabilities, find already available geospatial areas of interest (these are normally user-uploaded shapefiles), get gridded dataset characteristics, execute geoprocessing requests, and get geoprocessing results. 
 
-The main elements of setting up and carrying out a geoknife 'job' (geojob) include defining the feature of interest (the stencil argument in the geoknife function), the gridded web dataset to be processed (the fabric argument in the geoknife function), and the the processing algorithm parameters (the knife argument in the geoknife function). The status of the geojob can be checked with check, and output can be loaded into a data.frame with results. See below for more details.
+The main elements of setting up and carrying out a geoknife 'job' (a `geojob` object) include defining the feature of interest 'stencil' (a `webgeom` or `simplegeom` object), the gridded web dataset 'fabric' to be processed (a webdata object), and the the processing algorithm 'knife' parameters (a `webprocess` object). The status of the geojob can be checked with `check`, and output can be loaded into a data.frame with `results`. See below for more details.
 
 ##Installation
 To install the stable version of **geoknife** package with dependencies:
@@ -118,7 +118,7 @@ head(HUCs)
 ```
 
 #### define a fabric that represents the underlying data
-The Geo Data Portal's web data catalog is quite extensive, and inludes many datasets that can all be processed with `geoknife`. Check it out at cida.usgs.gov/gdp. This is not a complete list of all relevant datasets that can be accessed and processed. The `geoknife` package has a number of quick access datasets build in (similar to quick start `webgeom` objects). 
+The Geo Data Portal's web data catalog is quite extensive, and includes many datasets that can all be processed with `geoknife`. Check it out at cida.usgs.gov/gdp. This is not a complete list of all relevant datasets that can be accessed and processed. The `geoknife` package has a number of quick access datasets build in (similar to quick start `webgeom` objects). 
 
 An example of a quick start dataset:
 ```{r}
@@ -274,7 +274,7 @@ The `fabric` concept in `geoknife` represents the gridded dataset that will be o
 ### `webdata` object
 The `webdata` class holds all the important information for webdatasets in order to make them available for processing by geoknife's outsourced geoprocessing engine, the Geo Data Portal. Public fields in `webdata`:
 
- * `times`: a POSIXct vector of length 2. This specifies the start and end time of the process request. If `times()[1]` is `NA`, the start time will be the begining of the dataset. If `times()[2]` is `NA` the end time will be the end of the dataset. `times` must be `as.POSIXct(c(NA,NC))` for datasets without a time dimension. 
+ * `times`: a POSIXct vector of length 2. This specifies the start and end time of the process request. If `times()[1]` is `NA`, the start time will be the beginning of the dataset. If `times()[2]` is `NA` the end time will be the end of the dataset. `times` must be `as.POSIXct(c(NA,NC))` for datasets without a time dimension. 
  * `url`: a character for the location of a web available dataset. This URL will be queried for data access and used for the processing task.
  * `variables`: a character vector for the variables of the dataset to use. Must be valid variables that exist within the dataset specified with `url`.
 
@@ -422,9 +422,6 @@ query(knife, 'algorithms')
 ## 
 ## $`Area Grid Statistics (weighted)`
 ## [1] "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"
-## 
-## $`WCS Subset`
-## [1] "gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageIntersectionAlgorithm"
 ```
 Changing the `webprocess` url will modify the endpoint for the query, and different algorithms may be available:
 ```{r,eval=FALSE}
@@ -443,9 +440,6 @@ query(knife, 'algorithms')
 ## 
 ## $`Area Grid Statistics (weighted)`
 ## [1] "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"
-## 
-## $`WCS Subset`
-## [1] "gov.usgs.cida.gdp.wps.algorithm.FeatureCoverageIntersectionAlgorithm"
 ```
 
 ### algorithm
@@ -537,7 +531,7 @@ check(job)
 ## [1] "ProcessStarted"
 ```
 
-use other convienence functions related to `check` to return boolean (`TRUE` or `FALSE`) responses
+use other convenience functions related to `check` to return boolean (`TRUE` or `FALSE`) responses
 ```{r, eval=FALSE}
 running(job)
 error(job)

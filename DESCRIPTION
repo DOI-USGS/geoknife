@@ -38,9 +38,9 @@ Imports:
     methods,
     httr (>= 1.0.0),
     curl,
-    sp,
     utils,
-    progress (>= 1.1.2)
+    progress (>= 1.1.2),
+    sf
 Suggests:
     testthat,
     xtable,
@@ -51,6 +51,7 @@ Suggests:
     rasterVis,
     ggplot2,
     rgdal,
-    maps
+    sp
 VignetteBuilder: knitr
+Encoding: UTF-8
 RoxygenNote: 7.1.2

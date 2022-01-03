@@ -1,3 +1,44 @@
+geoserver_base <- function() {
+  "https://cida.usgs.gov/gdp/geoserver"
+}
+
+process_base <- function() {
+  "https://cida.usgs.gov/gdp/process/WebProcessingService"
+}
+
+pkg.env <- new.env()
+pkg.env$gconfig <- list('wps.url'= process_base(),
+                        'sleep.time' = 5, 
+                        'wait' = FALSE,
+                        'email' = as.character(NA),
+                        'algorithm' = list('Area Grid Statistics (weighted)' = 
+                                             "gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm"),
+                        'verbose' = FALSE,
+                        'retries' = 1,
+                        'version' = '1.0.0',
+                        'show.progress' = TRUE)
+
+pkg.env$NAMESPACES <- c(wps = 'http://www.opengis.net/wps/1.0.0',
+                        xsi = 'http://www.w3.org/2001/XMLSchema-instance',
+                        xlink = 'http://www.w3.org/1999/xlink',
+                        ogc = 'http://www.opengis.net/ogc',
+                        ows = 'http://www.opengis.net/ows/1.1',
+                        gml = 'http://www.opengis.net/gml',
+                        wfs = 'http://www.opengis.net/wfs')
+
+pkg.env$SCHEMA_LOCATIONS <- c(WPS_SCHEMA_LOCATION = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd',
+                              XSI_SCHEMA_LOCATION = 'http://www.opengis.net/wfs ../wfs/1.1.0/WFS.xsd',
+                              GML_SCHEMA_LOCATION = 'http://schemas.opengis.net/gml/3.1.1/base/feature.xsd')
+
+#' @importFrom utils lsf.str packageName
+.onLoad <- function(libname, pkgname){
+  setJobState()
+  funs <- unclass(lsf.str(envir = asNamespace(packageName()), all = TRUE))
+  pkg.env$private.funs <- funs[substr(funs,1,1) == '.']
+  rm(funs)
+}
+
+library(methods)
 
 #' configure geoknife settings
 #' 
@@ -18,6 +59,7 @@
 #' gconfig('wait')
 #' gconfig('sleep.time' = 10)
 #' gconfig('sleep.time' = 8, wait=TRUE)
+#' gconfig('progress' = FALSE)
 gconfig <- function(..., no.readonly = FALSE){
   
   .gconfig.readonly <- c('version') 
@@ -53,12 +95,4 @@ gconfig <- function(..., no.readonly = FALSE){
   }
   else value
   
-}
-
-geoserver_base <- function() {
-  "https://cida.usgs.gov/gdp/geoserver"
-}
-
-process_base <- function() {
-  "https://cida.usgs.gov/gdp/process/WebProcessingService"
 }

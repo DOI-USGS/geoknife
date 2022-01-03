@@ -86,7 +86,7 @@
                   </gml:surfaceMember>
                 </gml:MultiSurface>
               </draw:the_geom>
-              <draw:ID>bufferedPoint</draw:ID>
+              <draw:ID>1</draw:ID>
             </draw:poly>
           </gml:featureMembers>
         </wps:ComplexData>

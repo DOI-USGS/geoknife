@@ -18,7 +18,8 @@ test_that('result works for categorical', {
   Sr1 = Polygon(cbind(c(-89,-89.2,-89.3,-89.2,-89),c(42,42.1,42,41.9,42)))
   
   Srs1 = Polygons(list(Sr1), "sample.poly")
-  stencil <- simplegeom(Srl = list(Srs1), proj4string = CRS("+proj=longlat +datum=WGS84"))
+  expect_warning(
+    stencil <- simplegeom(Srl = list(Srs1), proj4string = CRS("+proj=longlat +datum=WGS84")))
   
   job <- geoknife(stencil, 'iclus', knife) # SLOW!!!
   expect_is(result(job), 'data.frame')

@@ -25,8 +25,11 @@ test_that("creation of webprocess object", {
   job <- geoknife(stencil = c(-89,42), fabric, wait=FALSE)
   expect_equal(2+2, 4)
   expect_true(running(job))
-  wait(job)
+  m <- capture_messages(wait(job, show.progress = TRUE))
   expect_false(running(job))
+  
+  expect_equal(m, "Process Accepted\n")
+
 })
 
 geoknife:::gconfig(sleep.time=default.sleep)

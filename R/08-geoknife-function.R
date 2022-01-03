@@ -8,6 +8,7 @@
 #'@param fabric a dataset. A \code{\link{webdata}} or any type that 
 #'can be coerced into \code{\link{webdata}}
 #'@param knife (optional) a \code{\link{webprocess}} object
+#'@param show.progress logical (optional) display progress bar?
 #'@param ... additional arguments passed to \code{new} \code{\link{webprocess}}. 
 #'Can also be used to modify the \code{knife} argument, if it is supplied.
 #'@return and object of class \linkS4class{geojob}
@@ -49,7 +50,7 @@
 #' 
 #'}
 #'@export
-geoknife <- function(stencil, fabric, knife = webprocess(...), ...){
+geoknife <- function(stencil, fabric, knife = webprocess(...), show.progress = TRUE, ...){
   
   if(is.null(knife)) {
     return(NULL)
@@ -81,8 +82,9 @@ geoknife <- function(stencil, fabric, knife = webprocess(...), ...){
   }
   
   if (knife@wait){
-    wait(geojob, sleep.time = knife@sleep.time)
+    wait(geojob, sleep.time = knife@sleep.time, show.progress = show.progress)
   }
+  
   return(geojob)
 }
 

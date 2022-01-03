@@ -60,8 +60,7 @@ query(webgeom(), 'geoms') # discover sample:Counties
 #2) locate the \code{attribute} for county names by looking at the options for attributes
 query(webgeom(geom='sample:Counties'), 'attributes') # discover FIPS
 #3) find the appropriate fip code for the county:
-howard.fips <- maps::county.fips \%>\% 
-   dplyr::filter(polyname == 'texas,howard') \%>\% .$fips \%>\% as.character
+howard.fips <- "48227"
 #4) create a webgeom for the Howard County in Texas
 stencil <- webgeom(geom='sample:Counties', attribute='FIPS', values=howard.fips)
 #5) get data for Howard County

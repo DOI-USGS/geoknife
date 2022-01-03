@@ -14,7 +14,7 @@ A class representing geoknife web processing specifications
 Can be set or accessed using \code{\link[geoknife]{url}}}
 
 \item{\code{algorithm}}{a list for algorithm used. 
-Can be set or accessed using \code{\link[geoknife]{algorithm}}}
+Can be set or accessed using \code{\link{algorithm}}}
 
 \item{\code{version}}{a character specifying the wep processing service version to use. 
 Can be set or accessed using \code{\link[geoknife]{version}}}
@@ -50,5 +50,5 @@ public slot \code{url}}
 
 \seealso{
 \code{\link{webprocess}}, \code{\link[geoknife]{url}}, 
-\code{\link[geoknife]{algorithm}}, \code{\link[geoknife]{version}}
+\code{\link{algorithm}}, \code{\link[geoknife]{version}}
 }
