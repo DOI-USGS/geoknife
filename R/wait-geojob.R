@@ -54,6 +54,7 @@ setMethod(f = "wait",
             
             currentStatus <- 'unknown'
             succeededYet <- FALSE
+            currentProgress = 0
             while(running){
               
               Sys.sleep(sleep.time)
@@ -65,7 +66,17 @@ setMethod(f = "wait",
               
               if(!is.null(percentComplete) && !succeededYet) {
     
-                if(show.progress) pb$update(as.numeric(percentComplete)/100)
+                if(show.progress) {
+                  
+                  if(currentProgress != 100 & as.numeric(percentComplete) <= 100) {
+
+                    pb$update(as.numeric(percentComplete)/100)
+                  
+                  }
+                  
+                  currentProgress <- as.numeric(percentComplete)
+                  
+                }
     
               } else if(checkResult$status != currentStatus) {
                 
@@ -74,7 +85,7 @@ setMethod(f = "wait",
               }
               
               currentStatus <- checkResult$status
-              if(checkResult$statusType == "ProcessSucceeded" && percentComplete == 100) {
+              if(checkResult$statusType == "ProcessSucceeded" && currentProgress == 100) {
                 succeededYet <- TRUE
               }
             }
