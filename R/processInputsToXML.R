@@ -177,7 +177,10 @@ setMethod(f = "addGeom",signature = c("simplegeom","ANY"),
     ring[seq(from = 1,by = 2,length.out = nrow(ringCoords))] <- ringCoords[,2]
     ring[seq(from = 2,by = 2,length.out = nrow(ringCoords))] <- ringCoords[,1]
     ring.val	<-	paste(ring,collapse = ' ')
-    drawID <- names(geom@polygons)[j]
+    
+    if(is.null(drawID <- names(geom@polygons)[j])) 
+      drawID <- paste0("point", as.character(j))
+    
 
     geom_list["filter_id"] <- .FEATURE_ATTRIBUTE_NAME(stencil)
     geom_list["ID_property"] <- drawID
