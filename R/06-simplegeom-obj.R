@@ -136,7 +136,7 @@ setAs("data.frame", "simplegeom", function(from) {
     sf::st_polygon(list(matrix(x, ncol = 2, byrow = TRUE)))
   })
   
-  poly <- sf::st_sf(sf::st_sfc(poly, crs = 4326))
+  poly <- sf::st_sf(ID = names(poly), geom = sf::st_sfc(poly, crs = 4326))
   
   simplegeom <- as(poly, "simplegeom")
   
