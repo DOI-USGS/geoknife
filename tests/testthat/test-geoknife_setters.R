@@ -46,6 +46,23 @@ test_that("geoknife converts SpatialPolygons to simplegeoms correctly", {
   expect_error(simplegeom(SpatialPolygons(list(Srs1,Srs2))))
 })
 
+test_that("data.frame includes names in simplegeom", {
+  df <- structure(list(mn_washington = c(-93.4785963708254, 45.0159250122303), 
+                      mn_hennepin = c(-92.889497952532, 45.0392357530942)), 
+                 class = "data.frame", row.names = c("X", "Y"))
+  sg <- simplegeom(df)
+  
+  expect_equal(names(sg@sp@polygons), names(df))
+  
+  testthat::skip_on_cran()
+  job <- geoknife(sg, 'prism', wait = TRUE)
+  
+  data_out <- result(job)
+  
+  expect_equal(names(data_out), 
+              c("DateTime", "mn_hennepin", "mn_washington", "variable", "statistic"))
+})
+
 context("geoknife w/ knife modified in line")
 test_that("geoknife sets knife correctly", {
   testthat::skip_on_cran()
