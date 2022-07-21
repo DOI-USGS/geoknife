@@ -30,7 +30,7 @@ wd <- webdata('prism')
 wg <- webgeom('state::New Hampshire')
 wp <- webprocess()
 
-if(!is.null(wp)) {
+if(!any(is.null(wp), is.null(wg), is.null(wd))) {
  gj <- geojob()
  xml(gj) <- XML(wg, wd, wp)
  url(gj) <- url(wp)

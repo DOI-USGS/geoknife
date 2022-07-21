@@ -3,6 +3,3 @@
 
 ## Comment
 * submission corrects error condition when primary web dependency is offline.
-
-## Review 1
-* date updated
