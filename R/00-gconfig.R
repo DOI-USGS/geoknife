@@ -6,6 +6,10 @@ process_base <- function() {
   "https://cida.usgs.gov/gdp/process/WebProcessingService"
 }
 
+get_csw_url <- function() {
+  "https://www.sciencebase.gov/catalog/item/62844f66d34e3bef0c9a48f9/csw"
+}
+
 pkg.env <- new.env()
 pkg.env$gconfig <- list('wps.url'= process_base(),
                         'sleep.time' = 5, 
