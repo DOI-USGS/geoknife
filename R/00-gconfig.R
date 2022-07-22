@@ -1,13 +1,11 @@
-geoserver_base <- function() {
-  "https://cida.usgs.gov/gdp/geoserver"
-}
-
-process_base <- function() {
-  "https://cida.usgs.gov/gdp/process/WebProcessingService"
-}
 
 pkg.env <- new.env()
-pkg.env$gconfig <- list('wps.url'= process_base(),
+
+pkg.env$urls <- list(geoserver_base = "https://cida.usgs.gov/gdp/geoserver",
+                     process_base = "https://cida.usgs.gov/gdp/process/WebProcessingService",
+                     csw_url = "https://www.sciencebase.gov/catalog/item/62844f66d34e3bef0c9a48f9/csw")
+
+pkg.env$gconfig <- list('wps.url'= pkg.env$urls$process_base,
                         'sleep.time' = 5, 
                         'wait' = FALSE,
                         'email' = as.character(NA),

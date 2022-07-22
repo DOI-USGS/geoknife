@@ -25,7 +25,7 @@
 setClass(
   Class = "webgeom",
   prototype = prototype(
-    url = paste0(geoserver_base(), "/wfs"),
+    url = paste0(pkg.env$urls$geoserver_base, "/wfs"),
     geom = as.character(NA), 
     attribute = as.character(NA),
     values = as.character(NA), 

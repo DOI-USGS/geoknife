@@ -55,7 +55,7 @@ setMethod(f = "query",signature("character",'missing'),
 )
 
 #' @importFrom httr content_type_xml
-webdata_query <- function(csw_url = 'https://www.sciencebase.gov/catalog/item/54dd2326e4b08de9379b2fb1/csw'){
+webdata_query <- function(csw_url = pkg.env$urls$csw_url){
   request = '<csw:GetRecords xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2" resultType="results" outputSchema="http://www.isotc211.org/2005/gmd" maxRecords="1000">
     <csw:Query typeNames="csw:Record">
     <csw:ElementSetName>full</csw:ElementSetName>
