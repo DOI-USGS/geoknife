@@ -1,4 +1,4 @@
-# `geoknife` package version 1.6.6
+# `geoknife` package version 1.6.7
 
 [![Build
 status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)
@@ -8,10 +8,10 @@ status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/mast
 Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)  
 [![status](https://img.shields.io/badge/USGS-Core-green.svg)](https://owi.usgs.gov/R/packages.html#core)
 Tools for geo-web processing of gridded data via the [Geo Data
-Portal](https://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices
-up gridded data according to overlap with irregular features, such as
-watersheds, lakes, points, etc. The result is subsetted data in plain
-text, NetCDF, geotiff or other formats.
+Portal](https://labs.waterdata.usgs.gov/gdp_web/ "Geo Data Portal").
+`geoknife` slices up gridded data according to overlap with irregular
+features, such as watersheds, lakes, points, etc. The result is
+subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
 <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
 </p>
@@ -144,7 +144,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=35f236e4-0b1e-47e9-b65e-4502bb97a7ebOUTPUT"
+    ## [1] "https://labs.waterdata.usgs.gov:443/gdp-process-wps/RetrieveResultServlet?id=a5990f31-3e7f-481b-a372-a62d6f2c7becOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -178,7 +178,7 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 ### `geoknife` Functions (as of v1.1.5)
 
 | Function     | Title                                                            |
-|--------------|:-----------------------------------------------------------------|
+|-----------------------------------|:------------------------------------|
 | `geoknife`   | slice up gridded data according to overlap with feature(s)       |
 | `gconfig`    | set or query package settings for `geoknife` processing defaults |
 | `algorithm`  | the algorithm of a `webprocess`                                  |
@@ -206,7 +206,7 @@ job <- geoknife(webgeom('state::New Hampshire'), fabric = 'prism', email = 'fake
 ### `geoknife` classes (as of v0.12.0)
 
 | Class        | Title                                                         |
-|--------------|:--------------------------------------------------------------|
+|-----------------------------------|:------------------------------------|
 | `simplegeom` | a simple geometric class. Extends `sp::SpatialPolygons`       |
 | `webgeom`    | a web feature service geometry                                |
 | `webprocess` | a web processing service                                      |

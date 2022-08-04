@@ -21,13 +21,13 @@ test_that("create webdata from geojob", {
   
   #test XML missing time slots
   testthat::skip_on_cran()
-  noTimesJob <- geojob('https://cida.usgs.gov/gdp/process/request?id=b327be82-8bd5-4a7e-8fda-4288c1a6ef3d')
+  noTimesJob <- geojob("data/test_notimesjob.xml")
   wd <- webdata(noTimesJob)
   expect_equal(length(times(wd)), 2)
   expect_is(times(wd), "POSIXct")
   
   #make sure times aren't dropped
-  wd <- webdata(geojob(xml = 'https://cida.usgs.gov:443/gdp/process/request?id=dded6ef9-1e52-4fec-b14d-6a93606e7b1f'))
+  wd <- webdata(geojob(xml = "data/test_keeptimes.xml"))
   n <- nchar(as.character(times(wd)))
   expect_true(all(n > 10))
 })

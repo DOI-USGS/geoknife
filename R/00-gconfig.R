@@ -1,8 +1,8 @@
 
 pkg.env <- new.env()
 
-pkg.env$urls <- list(geoserver_base = "https://cida.usgs.gov/gdp/geoserver",
-                     process_base = "https://cida.usgs.gov/gdp/process/WebProcessingService",
+pkg.env$urls <- list(geoserver_base = "https://labs.waterdata.usgs.gov/gdp_web/geoserver",
+                     process_base = "https://labs.waterdata.usgs.gov/gdp-process-wps/WebProcessingService",
                      csw_url = "https://www.sciencebase.gov/catalog/item/62844f66d34e3bef0c9a48f9/csw")
 
 pkg.env$gconfig <- list('wps.url'= pkg.env$urls$process_base,

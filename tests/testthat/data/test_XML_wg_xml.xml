@@ -69,7 +69,7 @@
     </wps:Input>
     <wps:Input>
       <ows:Identifier>FEATURE_COLLECTION</ows:Identifier>
-      <wps:Reference xlink:href="https://cida.usgs.gov/gdp/geoserver/wfs">
+      <wps:Reference xlink:href="https://labs.waterdata.usgs.gov/gdp_web/geoserver/wfs">
         <wps:Body>
           <wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" xmlns:gml="http://www.opengis.net/gml" service="WFS" version="1.1.0" outputFormat="text/xml; subtype=gml/3.1.1">
             <wfs:Query typeName="sample:CONUS_states">
