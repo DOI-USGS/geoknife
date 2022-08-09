@@ -39,7 +39,7 @@ The main elements of setting up and carrying out a geoknife 'job' (a `geojob` ob
 To install the stable version of **geoknife** package with dependencies:
 ```{r, eval=FALSE}
 install.packages("geoknife", 
-    repos = c("https://owi.usgs.gov/R","https://cran.rstudio.com/"),
+    repos = c("https://cran.rstudio.com/"),
     dependencies = TRUE)
 ```
 Or to install the current development version of the package:
@@ -118,7 +118,7 @@ head(HUCs)
 ```
 
 #### define a fabric that represents the underlying data
-The Geo Data Portal's web data catalog is quite extensive, and includes many datasets that can all be processed with `geoknife`. Check it out at cida.usgs.gov/gdp. This is not a complete list of all relevant datasets that can be accessed and processed. The `geoknife` package has a number of quick access datasets build in (similar to quick start `webgeom` objects). 
+The Geo Data Portal's web data catalog is quite extensive, and includes many datasets that can all be processed with `geoknife`. Check it out at labs.waterdata.usgs.gov/gdp_web. This is not a complete list of all relevant datasets that can be accessed and processed. The `geoknife` package has a number of quick access datasets build in (similar to quick start `webgeom` objects). 
 
 An example of a quick start dataset:
 ```{r}
@@ -425,7 +425,7 @@ query(knife, 'algorithms')
 ```
 Changing the `webprocess` url will modify the endpoint for the query, and different algorithms may be available:
 ```{r,eval=FALSE}
-url(knife) <- 'https://cida.usgs.gov/gdp/process/WebProcessingService'
+url(knife) <- 'https://labs.waterdata.usgs.gov/gdp-process-wps/WebProcessingService'
 query(knife, 'algorithms')
 ```
 ```
@@ -457,7 +457,7 @@ getting and setting `processInputs` for `geoknife` is currently in. Check back l
 ### url
 The `url` field in `webprocess` can be accessed and set as expected:
 ```{r, eval=FALSE}
-url(knife) <- 'https://cida.usgs.gov/gdp/process/WebProcessingService'
+url(knife) <- 'https://labs.waterdata.usgs.gov/gdp-process-wps/WebProcessingService'
 ```
 
 ### `wait`
@@ -468,7 +468,7 @@ knife
 ```
 ```
 ## An object of class "webprocess":
-## url: https://cida.usgs.gov/gdp/process/WebProcessingService 
+## url: https://labs.waterdata.usgs.gov/gdp-process-wps/WebProcessingService 
 ## algorithm: Area Grid Statistics (weighted) 
 ## web processing service version: 1.0.0 
 ## process inputs: 
@@ -490,7 +490,7 @@ knife
 ```
 ```
 ## An object of class "webprocess":
-## url: https://cida.usgs.gov/gdp/process/WebProcessingService 
+## url: https://labs.waterdata.usgs.gov/gdp-process-wps/WebProcessingService 
 ## algorithm: Area Grid Statistics (weighted) 
 ## web processing service version: 1.0.0 
 ## process inputs: 
@@ -547,7 +547,7 @@ Cancel a running job but retain the details:
 id(job)
 ```
 ```
-## [1] "https://cida.usgs.gov:80/gdp/process/RetrieveResultServlet?id=a264a88c-9672-4029-915b-a09b1403d26a"
+## [1] "https://https://labs.waterdata.usgs.gov/gdp-process-wps/RetrieveResultServlet?id=a264a88c-9672-4029-915b-a09b1403d26a"
 ```
 ```{r, echo=FALSE}
 job <- geojob()
@@ -566,5 +566,5 @@ cancel()
 geoknife outsources all major geospatial processing tasks to a remote server. Because of this, users must have an active internet connection. Problems with connections to datasets or the processing resources are rare, but they do happen. When experiencing a connectivity problem, the best approach is often to try again later or email gdp@usgs.gov with any questions. The various web dependencies are described below. 
 
 ### Geo Data Portal
-The U.S. Geological Survey's "Geo Data Portal" (GDP) provides the data access and processing services that are leveraged by the `geoknife` package. See [cida.usgs.gov/gdp](https://cida.usgs.gov/gdp/) for the GDP user interface.  
+The U.S. Geological Survey's "Geo Data Portal" (GDP) provides the data access and processing services that are leveraged by the `geoknife` package. See [labs.waterdata.usgs.gov/gdp_web](https://labs.waterdata.usgs.gov/gdp_web) for the GDP user interface.  
 

@@ -13,7 +13,7 @@ output:
 ![R-CMD-check](https://github.com/usgs-r/geoknife/workflows/R-CMD-check/badge.svg) [![codecov](https://codecov.io/gh/usgs-r/geoknife/branch/master/graph/badge.svg)](https://codecov.io/gh/usgs-r/geoknife)
 [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)  
 [![status](https://img.shields.io/badge/USGS-Core-green.svg)](https://owi.usgs.gov/R/packages.html#core)
-Tools for geo-web processing of gridded data via the [Geo Data Portal](https://cida.usgs.gov/gdp/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
+Tools for geo-web processing of gridded data via the [Geo Data Portal](https://labs.waterdata.usgs.gov/gdp_web/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
   <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
 </p>  

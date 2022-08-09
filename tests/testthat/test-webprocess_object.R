@@ -6,8 +6,8 @@ test_that("webprocess object is modified correctly", {
   # test setting url also changes util
   url(wp) <- 'https://cida-test.er.usgs.gov/gdp/process/WebProcessingService'
   expect_equal(slot(wp, 'UTILITY_URL'), "https://cida-test.er.usgs.gov/gdp/utility/WebProcessingService")
-  url(wp) <- 'https://cida.usgs.gov/gdp/process/WebProcessingService'
-  expect_equal(url(wp), url(wp <- webprocess(url = 'https://cida.usgs.gov/gdp/process/WebProcessingService')))
+  url(wp) <- 'https://labs.waterdata.usgs.gov/gdp-process-wps/WebProcessingService'
+  expect_equal(url(wp), url(wp <- webprocess(url = 'https://labs.waterdata.usgs.gov/gdp-process-wps/WebProcessingService')))
 
 })
 

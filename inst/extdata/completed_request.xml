@@ -77,7 +77,7 @@ gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm
 </wps:Input>
 <wps:Input xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink">
 <ows:Identifier>FEATURE_COLLECTION</ows:Identifier>
-<wps:Reference xlink:href="https://cida.usgs.gov/gdp/geoserver/wfs">
+<wps:Reference xlink:href="https://labs.waterdata.usgs.gov/gdp_web/geoserver/wfs">
 <wps:Body>
 <wfs:GetFeature xmlns:gml="http://www.opengis.net/gml" xmlns:wfs="http://www.opengis.net/wfs" outputFormat="text/xml; subtype=gml/3.1.1" service="WFS" version="1.1.0">
 <wfs:Query typeName="sample:CONUS_states">
@@ -96,7 +96,7 @@ gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm
 <wps:Output>
 <ows:Identifier>OUTPUT</ows:Identifier>
 <ows:Title>Output File</ows:Title>
-<wps:Reference mimeType="text/csv" href="https://cida.usgs.gov:443/gdp/process/RetrieveResultServlet?id=e0577fe5-2690-4140-8e95-7be4fa7ebec7OUTPUT"/>
+<wps:Reference mimeType="text/csv" href="https://labs.waterdata.usgs.gov:443/gdp-process-wps/RetrieveResultServlet?id=e0577fe5-2690-4140-8e95-7be4fa7ebec7OUTPUT"/>
 </wps:Output>
 </wps:ProcessOutputs>
 </wps:ExecuteResponse>

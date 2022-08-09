@@ -20,12 +20,10 @@ test_that("test data can be created", {
   
   saveRDS(webprocess(DELIMITER = 'TAB'), "data/test_webprocess_tab.rds")
   
-  gconfig('wps.url'="https://cida.usgs.gov/gdp/process/WebProcessingService")
+  gconfig('wps.url'="https://labs.waterdata.usgs.gov/gdp-process-wps/WebProcessingService")
   wp <- webprocess()
   saveRDS(wp, "data/test_webprocess_knife_prod.rds")
   saveRDS(query(wp, 'algorithms'), "data/test_webprocess_algorithms_prod.rds")
-  
-  # gconfig(wps.url = "https://cida-test.er.usgs.gov/gdp/process/WebProcessingService")
   
   saveRDS(webgeom('HUC8::09020306'), "data/test_webgeom_huc08.rds")
   saveRDS(webgeom('state::Wisconsin'), "data/test_webgeom_WI.rds")
