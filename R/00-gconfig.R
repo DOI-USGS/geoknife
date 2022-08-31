@@ -3,7 +3,8 @@ pkg.env <- new.env()
 
 pkg.env$urls <- list(geoserver_base = "https://labs.waterdata.usgs.gov/gdp_web/geoserver",
                      process_base = "https://labs.waterdata.usgs.gov/gdp-process-wps/WebProcessingService",
-                     csw_url = "https://www.sciencebase.gov/catalog/item/62844f66d34e3bef0c9a48f9/csw")
+                     csw_url = "https://www.sciencebase.gov/catalog/item/62844f66d34e3bef0c9a48f9/csw",
+                     draw_schema = "https://raw.githubusercontent.com/USGS-R/geoknife/main/inst/draw.xsd")
 
 pkg.env$gconfig <- list('wps.url'= pkg.env$urls$process_base,
                         'sleep.time' = 5, 

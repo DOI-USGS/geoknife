@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:draw="gov.usgs.cida.gdp.draw" xmlns:gml="http://www.opengis.net/gml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="gov.usgs.cida.gdp.draw">
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:draw="gov.usgs.wma.gdp.draw" xmlns:gml="http://www.opengis.net/gml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="gov.usgs.wma.gdp.draw">
   <xsd:import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
   <xsd:complexType name="polyType">
     <xsd:complexContent>
