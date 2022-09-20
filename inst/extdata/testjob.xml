@@ -73,7 +73,7 @@ gov.usgs.cida.gdp.wps.algorithm.FeatureWeightedGridStatisticsAlgorithm
 <ows:Identifier>FEATURE_COLLECTION</ows:Identifier>
 <wps:Data>
 <wps:ComplexData mimeType="text/xml" schema="http://schemas.opengis.net/gml/3.1.1/base/feature.xsd">
-<gml:featureMembers xmlns:draw="gov.usgs.cida.gdp.draw" xmlns:gml="http://www.opengis.net/gml" xsi:schemaLocation="gov.usgs.cida.gdp.draw https://cida.usgs.gov/gdp/geoserver/www/draw.xsd">
+<gml:featureMembers xmlns:draw="gov.usgs.cida.gdp.draw" xmlns:gml="http://www.opengis.net/gml" xsi:schemaLocation="gov.usgs.wma.gdp.draw https://code.usgs.gov/wma/nhgf/geo-data-portal/geoknife/-/raw/v1.6.7/inst/draw.xsd">
 <draw:poly gml:id="poly.1">
 <draw:the_geom>
 <gml:MultiSurface srsDimension="2" srsName="urn:x-ogc:def:crs:EPSG:4326">

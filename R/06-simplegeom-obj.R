@@ -31,11 +31,8 @@ setClass(
 #'@importFrom sf st_sf as_Spatial
 setMethod("initialize", signature = "simplegeom", 
           definition = function(.Object, ...) {
-            .Object@DRAW_NAMESPACE = 'gov.usgs.cida.gdp.draw'
-            .Object@DRAW_SCHEMA = "https://cida.usgs.gov/gdp/geoserver/www/draw.xsd"
-            # FIXME switch back when draw schema is available via labs
-            # .Object@DRAW_SCHEMA = paste0(pkg.env$urls$geoserver_base, 
-            #                              '/www/draw.xsd')
+            .Object@DRAW_NAMESPACE = 'gov.usgs.wma.gdp.draw'
+            .Object@DRAW_SCHEMA = pkg.env$urls$draw_schema
             .Object@sf = st_sf(...)
             .Object@sp = as_Spatial(.Object@sf)
             return(.Object)
