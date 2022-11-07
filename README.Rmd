@@ -171,9 +171,25 @@ docker build -t geoknife_test .
 docker run --rm -it -v %cd%:/src geoknife_test /bin/bash -c "cp -r /src/* /check/ && cp /src/.Rbuildignore /check/ && cd /check && Rscript -e 'devtools::build()' && R CMD check --as-cran ../geoknife_*"
 ```
 
-## Disclaimer
-This software is in the public domain because it contains materials that originally came from the U.S. Geological Survey, an agency of the United States Department of Interior. For more information, see the [official USGS copyright policy](https://www2.usgs.gov/visual-id/credit_usgs.html#copyright/ "official USGS copyright policy")
+## Release Procedure
 
-Although this software program has been used by the U.S. Geological Survey (USGS), no warranty, expressed or implied, is made by the USGS or the U.S. Government as to the accuracy and functioning of the program and related program material nor shall the fact of distribution constitute any such warranty, and no responsibility is assumed by the USGS in connection therewith.
+For release of the sbtools package, a number of steps are required.
 
-This software is provided "AS IS."
+1. Ensure all checks pass and code coverage is adequate.
+1. Ensure `NEWS.md` reflects updates in version.
+1. Update `DESCRIPTION` to reflect release version.
+1. Convert `DISCLAIMER.md` to approved language and rebuild `README.Rmd`.
+1. Create release candidate branch and commit release candidate.
+1. Build source package and upload to CRAN.
+1. Once accepted to CRAN, tag release candidate branch an push to repositories.
+1. Change `DISCLAIMER.md` back to development mode and increment description version.
+1. Merge release candidate and commit.
+1. Open PR/MR in development state.
+
+```{r disclaimer, child="DISCLAIMER.md", eval=TRUE}
+
+```
+
+ [
+    ![CC0](https://i.creativecommons.org/p/zero/1.0/88x31.png)
+  ](https://creativecommons.org/publicdomain/zero/1.0/)

@@ -1,5 +1,5 @@
 ## Test environments
-* local windows and github ubuntu
+* rhub::check_for_cran w/ defaults
 
 ## Comment
-* submission corrects error condition when primary web dependency is offline.
+* Submission corrects duplicated documentation of "..." parameter.

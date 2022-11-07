@@ -10,8 +10,11 @@ vignette: >
 ---
 ```{r init, echo=FALSE, include=FALSE}
 library(geoknife)
-knitr::opts_chunk$set(eval=nzchar(Sys.getenv("geoknife_vignette_eval")))
+# knitr::opts_chunk$set(eval=nzchar(Sys.getenv("geoknife_vignette_eval")))
+knitr::opts_chunk$set(eval=FALSE)
 ```
+
+*Sciencebase WFS is offline at this time and this vignette will not be built.*
 
 This vignette shows how to use a custom Web Feature Service with `geoknife`. In this case, we are using a WFS from [ScienceBase](https://www.sciencebase.gov/catalog/item/5b68e7e3e4b006a11f75c06a). The url used for the WFS can be found in the "Spatial Services" section of the sciencebase item. If the WFS url you have has parameters included, remove them when passing them to `geoknife`.  
 e.g. this: `https://www.sciencebase.gov/catalogMaps/mapping/ows/5b68e7e3e4b006a11f75c06a`  

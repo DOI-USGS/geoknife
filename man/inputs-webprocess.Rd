@@ -30,8 +30,6 @@ inputs(.Object, ..., value)
 \item{\dots}{arguments matching fields in .Object's processInputs slot}
 
 \item{value}{a field pair for .Object processInputs}
-
-\item{...}{arguments matching fields in .Object's processInputs slot}
 }
 \description{
 The webprocess inputs are a list of parameter names and their associated values.  
