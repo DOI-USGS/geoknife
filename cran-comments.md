@@ -3,3 +3,4 @@
 
 ## Comment
 * Submission corrects duplicated documentation of "..." parameter.
+* replace journal url with doi
