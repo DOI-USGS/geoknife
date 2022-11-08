@@ -10,8 +10,7 @@ vignette: >
 ---
 ```{r init, echo=FALSE, include=FALSE}
 library(geoknife)
-# knitr::opts_chunk$set(eval=nzchar(Sys.getenv("geoknife_vignette_eval")))
-knitr::opts_chunk$set(eval=FALSE)
+knitr::opts_chunk$set(eval=nzchar(Sys.getenv("geoknife_vignette_eval")))
 ```
 
 *Sciencebase WFS is offline at this time and this vignette will not be built.*
