@@ -33,7 +33,6 @@ setGeneric(name="inputs<-",def=function(.Object, ..., value){
 #'@title inputs of webprocess
 #'@description access or set the inputs of a webprocess
 #'@param .Object a webprocessing object
-#'@param ... arguments matching fields in .Object's processInputs slot
 #'@rdname inputs-webprocess
 #'@aliases inputs
 #'@export

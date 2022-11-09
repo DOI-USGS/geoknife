@@ -1,3 +1,12 @@
+geoknife 1.6.9
+==========
+* fixed documentation with duplicate "..." parameter.
+
+geoknife 1.6.8
+==========
+* fix cran test failure when web services unavailable.
+* migrate to use of an AWS-based instance of the GDP web service.
+
 geoknife 1.6.7
 ==========
 * fixed issue with names from simplegeoms created from data.frames

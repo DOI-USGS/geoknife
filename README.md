@@ -1,4 +1,4 @@
-# `geoknife` package version 1.6.7
+# `geoknife` package version 1.6.9
 
 [![Build
 status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)
@@ -144,7 +144,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://labs.waterdata.usgs.gov:443/gdp-process-wps/RetrieveResultServlet?id=a5990f31-3e7f-481b-a372-a62d6f2c7becOUTPUT"
+    ## [1] "https://labs.waterdata.usgs.gov:443/gdp-process-wps/RetrieveResultServlet?id=79a95bbe-4090-480d-b768-a156ece62ffdOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
@@ -229,19 +229,34 @@ this repository. Once built, it can be run with the following command.
 
     docker run --rm -it -v %cd%:/src geoknife_test /bin/bash -c "cp -r /src/* /check/ && cp /src/.Rbuildignore /check/ && cd /check && Rscript -e 'devtools::build()' && R CMD check --as-cran ../geoknife_*"
 
-## Disclaimer
+## Release Procedure
 
-This software is in the public domain because it contains materials that
-originally came from the U.S. Geological Survey, an agency of the United
-States Department of Interior. For more information, see the [official
-USGS copyright
-policy](https://www2.usgs.gov/visual-id/credit_usgs.html#copyright/ "official USGS copyright policy")
+For release of the sbtools package, a number of steps are required.
 
-Although this software program has been used by the U.S. Geological
-Survey (USGS), no warranty, expressed or implied, is made by the USGS or
-the U.S. Government as to the accuracy and functioning of the program
-and related program material nor shall the fact of distribution
-constitute any such warranty, and no responsibility is assumed by the
-USGS in connection therewith.
+1.  Ensure all checks pass and code coverage is adequate.
+2.  Ensure `NEWS.md` reflects updates in version.
+3.  Update `DESCRIPTION` to reflect release version.
+4.  Convert `DISCLAIMER.md` to approved language and rebuild
+    `README.Rmd`.
+5.  Create release candidate branch and commit release candidate.
+6.  Build source package and upload to CRAN.
+7.  Once accepted to CRAN, tag release candidate branch an push to
+    repositories.
+8.  Change `DISCLAIMER.md` back to development mode and increment
+    description version.
+9.  Merge release candidate and commit.
+10. Open PR/MR in development state.
 
-This software is provided “AS IS.”
+# Disclaimer
+
+This software is preliminary or provisional and is subject to revision.
+It is being provided to meet the need for timely best science. The
+software has not received final approval by the U.S. Geological Survey
+(USGS). No warranty, expressed or implied, is made by the USGS or the
+U.S. Government as to the functionality of the software and related
+material nor shall the fact of release constitute any such warranty. The
+software is provided on the condition that neither the USGS nor the U.S.
+Government shall be held liable for any damages resulting from the
+authorized or unauthorized use of the software.
+
+[![CC0](https://i.creativecommons.org/p/zero/1.0/88x31.png)](https://creativecommons.org/publicdomain/zero/1.0/)

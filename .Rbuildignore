@@ -13,3 +13,4 @@ code.json
 ^Meta$
 .github
 Dockerfile
+^CRAN-SUBMISSION$
