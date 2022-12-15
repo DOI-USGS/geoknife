@@ -15,7 +15,7 @@ output:
 
 Tools for geo-web processing of gridded data via the [Geo Data Portal](https://labs.waterdata.usgs.gov/gdp_web/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
-  <img src="http://doi-usgs.github.io/images/geoknife.png" alt="GDP" align="center">
+  <img src="docs/geoknife.png" alt="GDP" align="center">
 </p>  
 <br /> 
 
@@ -42,10 +42,6 @@ remotes::install_github('DOI-USGS/geoknife')
 
 Please consider reporting bugs and asking questions on the Issues page:
 [https://github.com/DOI-USGS/geoknife/issues](https://github.com/DOI-USGS/geoknife/issues)
-
-Follow `@USGS_R` on Twitter for updates on USGS R packages:
-
-[![Twitter Follow](https://img.shields.io/twitter/follow/USGS_R.svg?style=social&label=Follow%20USGS_R)](https://twitter.com/USGS_R)
 
 ### Code of Conduct
 
