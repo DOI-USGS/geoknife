@@ -12,7 +12,7 @@ Portal](https://labs.waterdata.usgs.gov/gdp_web/ "Geo Data Portal").
 features, such as watersheds, lakes, points, etc. The result is
 subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
-<img src="http://doi-usgs.github.io/images/geoknife.png" alt="GDP" align="center">
+<img src="docs/geoknife.png" alt="GDP" align="center">
 </p>
 
 <br />
@@ -36,11 +36,6 @@ remotes::install_github('DOI-USGS/geoknife')
 
 Please consider reporting bugs and asking questions on the Issues page:
 <https://github.com/DOI-USGS/geoknife/issues>
-
-Follow `@USGS_R` on Twitter for updates on USGS R packages:
-
-[![Twitter
-Follow](https://img.shields.io/twitter/follow/USGS_R.svg?style=social&label=Follow%20USGS_R)](https://twitter.com/USGS_R)
 
 ### Code of Conduct
 
@@ -139,7 +134,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://labs.waterdata.usgs.gov:443/gdp-process-wps/RetrieveResultServlet?id=5efbd033-6d22-453d-aaac-224b3c1b57f8OUTPUT"
+    ## [1] "https://labs.waterdata.usgs.gov:443/gdp-process-wps/RetrieveResultServlet?id=3362d55f-6d35-4e21-baf6-51a2583bc8bdOUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
