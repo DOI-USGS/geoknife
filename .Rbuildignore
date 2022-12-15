@@ -14,3 +14,4 @@ code.json
 .github
 Dockerfile
 ^CRAN-SUBMISSION$
+temp.R

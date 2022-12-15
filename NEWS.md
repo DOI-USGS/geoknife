@@ -1,3 +1,8 @@
+geoknife 1.6.10
+==========
+* updates urls to reflect new repository
+* remove suggests on rgdal
+
 geoknife 1.6.9
 ==========
 * fixed documentation with duplicate "..." parameter.

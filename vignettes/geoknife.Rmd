@@ -45,7 +45,7 @@ install.packages("geoknife",
 Or to install the current development version of the package:
 ```{r, eval=FALSE}
 install.packages("devtools")
-devtools::install_github('USGS-R/geoknife')
+devtools::install_github('DOI-USGS/geoknife')
 ```
 
 ## getting started

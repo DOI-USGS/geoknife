@@ -1,19 +1,18 @@
-# `geoknife` package version 1.6.9
+# `geoknife` package version 1.6.10
 
-[![Build
-status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)
-![R-CMD-check](https://github.com/usgs-r/geoknife/workflows/R-CMD-check/badge.svg)
-[![codecov](https://codecov.io/gh/usgs-r/geoknife/branch/master/graph/badge.svg)](https://codecov.io/gh/usgs-r/geoknife)
+<!-- ![R-CMD-check](https://github.com/doi-usgs/geoknife/workflows/R-CMD-check/badge.svg) [![codecov](https://codecov.io/gh/doi-usgs/geoknife/branch/master/graph/badge.svg)](https://codecov.io/gh/doi-usgs/geoknife) -->
+
+[![CRAN](https://www.r-pkg.org/badges/version/geoknife)](https://cran.r-project.org/package=geoknife)
 [![Download
-Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)  
-[![status](https://img.shields.io/badge/USGS-Core-green.svg)](https://owi.usgs.gov/R/packages.html#core)
+Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)
+
 Tools for geo-web processing of gridded data via the [Geo Data
 Portal](https://labs.waterdata.usgs.gov/gdp_web/ "Geo Data Portal").
 `geoknife` slices up gridded data according to overlap with irregular
 features, such as watersheds, lakes, points, etc. The result is
 subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
-<img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
+<img src="http://doi-usgs.github.io/images/geoknife.png" alt="GDP" align="center">
 </p>
 
 <br />
@@ -30,13 +29,13 @@ Or to install the current development version of the package:
 
 ``` r
 install.packages("remotes")
-remotes::install_github('USGS-R/geoknife')
+remotes::install_github('DOI-USGS/geoknife')
 ```
 
 ### Reporting bugs
 
 Please consider reporting bugs and asking questions on the Issues page:
-<https://github.com/USGS-R/geoknife/issues>
+<https://github.com/DOI-USGS/geoknife/issues>
 
 Follow `@USGS_R` on Twitter for updates on USGS R packages:
 
@@ -47,8 +46,8 @@ Follow](https://img.shields.io/twitter/follow/USGS_R.svg?style=social&label=Foll
 
 We want to encourage a warm, welcoming, and safe environment for
 contributing to this project. See the [code of
-conduct](https://github.com/USGS-R/geoknife/blob/master/CONDUCT.md) for
-more information.
+conduct](https://github.com/DOI-USGS/geoknife/blob/master/CONDUCT.md)
+for more information.
 
 ### Package Support
 
@@ -59,7 +58,7 @@ maintenance and responding to user questions. Priorities on the
 development of new features are determined by the `geoknife` development
 team.
 
-[![USGS](http://usgs-r.github.io/images/usgs.png)](https://www.usgs.gov/)
+[![USGS](http://doi-usgs.github.io/images/usgs.png)](https://www.usgs.gov/)
 
 ## `geoknife` overview
 
@@ -131,11 +130,7 @@ times(fabric) <- as.POSIXct(c('2003-01-01','2005-01-01'))
 
 ``` r
 job <- geoknife(stencil, fabric, wait = TRUE)
-```
 
-    ## Process Accepted
-
-``` r
 # use existing convienence functions to check on the job:
 check(job)
 ```
@@ -144,7 +139,7 @@ check(job)
     ## [1] "Process successful"
     ## 
     ## $URL
-    ## [1] "https://labs.waterdata.usgs.gov:443/gdp-process-wps/RetrieveResultServlet?id=79a95bbe-4090-480d-b768-a156ece62ffdOUTPUT"
+    ## [1] "https://labs.waterdata.usgs.gov:443/gdp-process-wps/RetrieveResultServlet?id=5efbd033-6d22-453d-aaac-224b3c1b57f8OUTPUT"
     ## 
     ## $statusType
     ## [1] "ProcessSucceeded"
