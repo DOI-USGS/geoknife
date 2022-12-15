@@ -9,13 +9,13 @@ output:
 ---
 # `geoknife` package version `r packageVersion('geoknife')`
 
-[![Build status](https://ci.appveyor.com/api/projects/status/0iacmg82mp50426o/branch/master)](https://ci.appveyor.com/project/jread-usgs/geoknife/branch/master)
-![R-CMD-check](https://github.com/usgs-r/geoknife/workflows/R-CMD-check/badge.svg) [![codecov](https://codecov.io/gh/usgs-r/geoknife/branch/master/graph/badge.svg)](https://codecov.io/gh/usgs-r/geoknife)
+<!-- ![R-CMD-check](https://github.com/doi-usgs/geoknife/workflows/R-CMD-check/badge.svg) [![codecov](https://codecov.io/gh/doi-usgs/geoknife/branch/master/graph/badge.svg)](https://codecov.io/gh/doi-usgs/geoknife) -->
+[![CRAN](https://www.r-pkg.org/badges/version/geoknife)](https://cran.r-project.org/package=geoknife)
 [![Download Count](http://cranlogs.r-pkg.org/badges/geoknife)](https://cran.r-project.org/package=geoknife)  
-[![status](https://img.shields.io/badge/USGS-Core-green.svg)](https://owi.usgs.gov/R/packages.html#core)
+
 Tools for geo-web processing of gridded data via the [Geo Data Portal](https://labs.waterdata.usgs.gov/gdp_web/ "Geo Data Portal"). `geoknife` slices up gridded data according to overlap with irregular features, such as watersheds, lakes, points, etc. The result is subsetted data in plain text, NetCDF, geotiff or other formats.
 <p align="center">
-  <img src="http://usgs-r.github.io/images/geoknife.png" alt="GDP" align="center">
+  <img src="http://doi-usgs.github.io/images/geoknife.png" alt="GDP" align="center">
 </p>  
 <br /> 
 
@@ -35,13 +35,13 @@ install.packages("geoknife")
 Or to install the current development version of the package:  
 ```{r, eval=FALSE}
 install.packages("remotes")
-remotes::install_github('USGS-R/geoknife')
+remotes::install_github('DOI-USGS/geoknife')
 ```
 
 ### Reporting bugs
 
 Please consider reporting bugs and asking questions on the Issues page:
-[https://github.com/USGS-R/geoknife/issues](https://github.com/USGS-R/geoknife/issues)
+[https://github.com/DOI-USGS/geoknife/issues](https://github.com/DOI-USGS/geoknife/issues)
 
 Follow `@USGS_R` on Twitter for updates on USGS R packages:
 
@@ -49,13 +49,13 @@ Follow `@USGS_R` on Twitter for updates on USGS R packages:
 
 ### Code of Conduct
 
-We want to encourage a warm, welcoming, and safe environment for contributing to this project. See the [code of conduct](https://github.com/USGS-R/geoknife/blob/master/CONDUCT.md) for more information.
+We want to encourage a warm, welcoming, and safe environment for contributing to this project. See the [code of conduct](https://github.com/DOI-USGS/geoknife/blob/master/CONDUCT.md) for more information.
 
 ### Package Support
 
 The Water Mission Area of the USGS supports the development and maintenance of `geoknife` through September 2018, and most likely further into the future. Resources are available primarily for maintenance and responding to user questions. Priorities on the development of new features are determined by the `geoknife` development team.
 
-[![USGS](http://usgs-r.github.io/images/usgs.png)](https://www.usgs.gov/)
+[![USGS](http://doi-usgs.github.io/images/usgs.png)](https://www.usgs.gov/)
 
 ## `geoknife` overview
 The `geoknife` package was created to support web-based geoprocessing of large gridded datasets according to their overlap with landscape (or aquatic/ocean) features that are often irregularly shaped. `geoknife` creates data access and subsequent geoprocessing requests for the USGS's Geo Data Portal to carry out on a web server. The results of these requests are available for download after the processes have been completed. This type of workflow has three main advantages: 1) it allows the user to avoid downloading large datasets, 2) it avoids reinventing the wheel for the creation and optimization of complex geoprocessing algorithms, and 3) computing resources are dedicated elsewhere, so `geoknife` operations do not have much of an impact on a local computer. 

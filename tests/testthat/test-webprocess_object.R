@@ -1,6 +1,7 @@
 context('test modifying webprocess object')
 
 test_that("webprocess object is modified correctly", {
+  testthat::skip("no public qa")
   testthat::skip_on_cran()
   wp <- readRDS("data/test_webprocess_knife.rds")
   # test setting url also changes util

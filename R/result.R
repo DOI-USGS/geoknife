@@ -65,7 +65,7 @@ algorithmParseDetails <- function(jobID){
   
   if (!algorithm.name %in% names(function.handlers)){
     stop('parser for ',algorithm.name, 
-         ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new', call. = FALSE)
+         ' not currently supported. Create an issue to suggest it: https://github.com/DOI-USGS/geoknife/issues/new', call. = FALSE)
   }
   parse.details <- c(function.handlers[[algorithm.name]], 'delimiter'=outputDelimiter(jobID))
   return(parse.details)
@@ -80,7 +80,7 @@ outputDelimiter <- function(jobID){
   doc <-  xml2::read_html(resp)
   type <- xml2::xml_attr(xml2::xml_find_all(doc,"//reference[@mimetype]")[[1]],'mimetype')
   if (!type %in% names(delimiters)){
-    stop('output ',type, ' not currently supported. Create an issue to suggest it: https://github.com/USGS-R/geoknife/issues/new', call. = FALSE)
+    stop('output ',type, ' not currently supported. Create an issue to suggest it: https://github.com/DOI-USGS/geoknife/issues/new', call. = FALSE)
   }
   return(delimiters[[type]])
 }
